@@ -1,5 +1,5 @@
 //
-//  TripsScreen.swift
+//  MyTripsScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/31/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TripsScreen: View {
+struct MyTripsScreen: View {
     @State private var selection: TripOption = .upcoming
     
     var body: some View {
@@ -25,8 +25,8 @@ struct TripsScreen: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 
-                NextAdventureCard()
-                    .padding()
+                NextAdventureCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
+                    .padding(20)
                 
                 Text("Future Plans")
                     .foregroundStyle(Color.textColor.placeholderText)
@@ -34,7 +34,9 @@ struct TripsScreen: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                 
-
+                FuturePlansCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
+                    .padding(20)
+                
             }
             .scrollContentBackground(.hidden)
             .background(Color.backgroundColor.primaryBackground)
@@ -49,5 +51,5 @@ struct TripsScreen: View {
 }
 
 #Preview {
-    TripsScreen()
+    MyTripsScreen()
 }

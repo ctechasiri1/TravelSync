@@ -8,57 +8,75 @@
 import SwiftUI
 
 struct NextAdventureCard: View {
+    let urlString: String
+    let imageHeight: CGFloat
+    let travelDestination: String
+    let travelDate: String
+    
     var body: some View {
         VStack {
-            Color.backgroundColor.tertiaryBackground
-                .frame(maxWidth: .infinity)
+            ImageWithPlaceHolder(urlString: urlString, imageHeight: imageHeight)
             
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Tokyo, Japan")
-                        .font(.system(.title, weight: .bold))
-                    
-                    HStack {
-                        Image(systemName: "calendar")
-                            .foregroundStyle(Color.accentBlue)
-                        Text("Jan 15 - Jan 22, 2026")
-                            .foregroundStyle(Color.secondaryText)
-                    }
-                }
+            VStack {
+                TravelInformation(travelDestination: travelDestination, travelDate: travelDate)
+                    .padding()
                 
-                Spacer()
+                Divider()
                 
-                Image(systemName: "airplane.departure")
-                    .bold()
-                    .foregroundStyle(Color.accentBlue)
-                    .background(
-                        Circle()
-                            .fill(Color.accentBlue.opacity(0.1))
-                            .strokeBorder(Color.accentBlue.opacity(0.5), lineWidth: 0.2)
-                            .frame(width: 50, height: 50)
-                    )
+                TravelItinerary()
             }
-            .padding()
-            
-            Divider()
-            
-            HStack {
-                Image(systemName: "circle.fill")
-                
-                Spacer()
-                
-                Text("View Itinerary")
-                Image(systemName: "arrow.forward")
-            }
-            .bold()
-            .foregroundStyle(Color.accentBlue)
             .padding()
         }
-        .padding()
         .background(
-            RoundedRectangle(cornerRadius: 10)
+            RoundedRectangle(cornerRadius: 30)
                 .fill(Color.secondaryBackground)
         )
-        .shadow(color: Color.black.opacity(0.1), radius: 10)
+        .shadow(color: Color.black.opacity(0.1), radius: 5)
     }
+}
+
+private struct TravelInformation: View {
+    let travelDestination: String
+    let travelDate: String
+    
+    var body: some View {
+        HStack {
+            VStack(alignment: .leading) {
+                Text(travelDestination)
+                    .font(.system(.title, weight: .bold))
+                
+                HStack {
+                    Image(systemName: "calendar")
+                        .foregroundStyle(Color.accentBlue)
+                    Text(travelDate)
+                        .foregroundStyle(Color.secondaryText)
+                }
+            }
+            
+            Spacer()
+            
+            CircleIcon(iconName: "airplane.departure")
+        }
+    }
+}
+
+// TODO: Need to add link to navigate to the itinerary
+private struct TravelItinerary: View {
+    var body: some View {
+        HStack {
+            Image(systemName: "circle.fill")
+            
+            Spacer()
+            
+            Text("View Itinerary")
+            Image(systemName: "arrow.forward")
+        }
+        .bold()
+        .foregroundStyle(Color.accentBlue)
+        .padding()
+    }
+}
+
+#Preview {
+    NextAdventureCard(urlString: "https://example.com/image.png", imageHeight: 300, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
 }
