@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CircleIcon: View {
     let iconName: String
+    let width: CGFloat
+    let height: CGFloat
     
     var body: some View {
         Image(systemName: iconName)
@@ -18,11 +20,11 @@ struct CircleIcon: View {
                 Circle()
                     .fill(Color.accentBlue.opacity(0.1))
                     .strokeBorder(Color.accentBlue.opacity(0.5), lineWidth: 0.2)
-                    .frame(width: 50, height: 50)
+                    .frame(width: width, height: height)
             )
     }
 }
 
 #Preview {
-    CircleIcon(iconName: "airplane.departure")
+    CircleIcon(iconName: "airplane.departure", width: 50, height: 50)
 }

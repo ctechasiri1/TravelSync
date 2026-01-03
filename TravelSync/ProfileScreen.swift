@@ -8,6 +8,19 @@
 import SwiftUI
 
 struct ProfileScreen: View {
+    
+    @State private var isShowingSettings: Bool = false
+    
+    private let profileOptions: [CardOption] = [
+        CardOption(title: "Favorite Places", iconName: "heart.fill"),
+        CardOption(title: "My Map", iconName: "map.fill"),
+        CardOption(title: "Review", iconName: "star.bubble")
+    ]
+    private let profilePreference: [CardOption] = [
+        CardOption(title: "Notification", iconName: "bell.fill"),
+        CardOption(title: "Privacy", iconName: "lock.fill")
+    ]
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -26,13 +39,28 @@ struct ProfileScreen: View {
                     ProfileInformation()
                     
                     TravelBadges()
+                    
+                    OptionsCard(options: profileOptions, useCircleIcon: true, padding: 30)
+                    
+                    VStack(spacing: 15) {
+                        Text("Future Plans")
+                            .sectionTitleStyle()
+                        
+                        OptionsCard(options: profilePreference, useCircleIcon: false, padding: 20)
+                    }
+                    
+                    LogoutButton()
                 }
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.backgroundColor.primaryBackground)
+            .setScrollViewBackground()
             .toolbar(content: {
                 CircleButton(imageName: "pencil", action: {})
-                CircleButton(imageName: "gear", action: {} )
+                CircleButton(imageName: "gear", action: {
+                    isShowingSettings = true
+                } )
+            })
+            .navigationDestination(isPresented: $isShowingSettings, destination: {
+                SettingsScreen()
             })
             .navigationTitle("Profile")
         }
@@ -83,7 +111,7 @@ private struct ProfileInformation: View {
                 Text("24")
                 Text("Posts")
             }
-
+            
         }
     }
 }
@@ -103,10 +131,10 @@ private struct TravelBadges: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 20) {
+                LazyHStack(spacing: 20) {
                     ForEach(0..<6) { _ in
                         VStack(spacing: 25) {
-                            CircleIcon(iconName: "airplane")
+                            CircleIcon(iconName: "airplane", width: 50, height: 50)
                             
                             Text("Frequent Flyer")
                                 .multilineTextAlignment(.center)
@@ -117,13 +145,27 @@ private struct TravelBadges: View {
                 .padding([.horizontal, .bottom])
             }
         }
+        .createCardBackgroud()
+        .padding([.top, .horizontal])
+    }
+}
+
+struct LogoutButton: View {
+    var body: some View {
+        Button {
+            
+        } label: {
+            Text("Logout")
+                .foregroundStyle(Color.accentWarning)
+        }
+        .frame(maxWidth: .infinity)
+        .padding()
         .background(
             RoundedRectangle(cornerRadius: 20)
                 .foregroundStyle(Color.backgroundColor.secondaryBackground)
         )
         .shadow(color: Color.black.opacity(0.1), radius: 5)
-        .padding()
-
+        .padding(.horizontal)
     }
 }
 

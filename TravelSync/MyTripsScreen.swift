@@ -17,29 +17,22 @@ struct MyTripsScreen: View {
                 
                 CustomSegmentButton(selection: $selection,
                                     options: TripOption.allCases)
-                    .padding()
+                .padding()
                 
                 Text("Next Adventure")
-                    .foregroundStyle(Color.textColor.placeholderText)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .sectionTitleStyle()
                 
-                NextAdventureCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
+                NextTripCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
                     .padding(20)
                 
                 Text("Future Plans")
-                    .foregroundStyle(Color.textColor.placeholderText)
-                    .bold()
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
+                    .sectionTitleStyle()
                 
-                FuturePlansCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
+                FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
                     .padding(20)
                 
             }
-            .scrollContentBackground(.hidden)
-            .background(Color.backgroundColor.primaryBackground)
+            .setScrollViewBackground()
             .navigationTitle(Text("My Trips"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -47,6 +40,99 @@ struct MyTripsScreen: View {
                 }
             }
         }
+    }
+}
+
+private struct NextTripCard: View {
+    let urlString: String
+    let imageHeight: CGFloat
+    let travelDestination: String
+    let travelDate: String
+    
+    var body: some View {
+        VStack {
+            ImageWithPlaceHolder(urlString: urlString, imageHeight: imageHeight)
+            
+            VStack {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(travelDestination)
+                            .font(.system(.title, weight: .bold))
+                        
+                        HStack {
+                            Image(systemName: "calendar")
+                                .foregroundStyle(Color.accentBlue)
+                            Text(travelDate)
+                                .foregroundStyle(Color.secondaryText)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    CircleIcon(iconName: "airplane.departure", width: 50, height: 50)
+                }
+                .padding()
+                
+                Divider()
+                
+                HStack {
+                    Image(systemName: "circle.fill")
+                    
+                    Spacer()
+                    
+                    Text("View Itinerary")
+                    Image(systemName: "arrow.forward")
+                }
+                .bold()
+                .foregroundStyle(Color.accentBlue)
+                .padding()
+            }
+            .padding()
+        }
+        .createCardBackgroud()
+    }
+}
+
+private struct FutureTripCard: View {
+    let urlString: String
+    let imageHeight: CGFloat
+    let travelDestination: String
+    let travelDate: String
+    
+    var body: some View {
+        VStack {
+            ImageWithPlaceHolder(urlString: urlString, imageHeight: imageHeight)
+            
+            VStack {
+                HStack {
+                    VStack(alignment: .leading, spacing: 10) {
+                        HStack {
+                            Text(travelDestination)
+                                .font(.system(.title, weight: .bold))
+                            
+                            Spacer()
+                            
+                            Text("45 days")
+                                .padding(10)
+                                .foregroundStyle(Color.accentConfirmation)
+                                .background(Color.green.opacity(0.2))
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                            
+                        }
+                        
+                        Text(travelDate)
+                            .foregroundStyle(Color.secondaryText)
+                        
+                        Text("5 days till trip")
+                            .font(.system(.subheadline, weight: .regular))
+                            .foregroundStyle(Color.accentBlue)
+                    }
+                }
+                .padding()
+            }
+            .padding()
+        }
+        .createCardBackgroud()
     }
 }
 

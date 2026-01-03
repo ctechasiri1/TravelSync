@@ -12,7 +12,7 @@ struct CustomSegmentButton: View {
     let options: [TripOption]
     
     @Namespace private var namespace
-
+    
     var body: some View {
         HStack(spacing: 0) {
             ForEach(options, id: \.self) { option in
