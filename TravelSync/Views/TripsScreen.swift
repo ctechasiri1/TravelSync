@@ -1,5 +1,5 @@
 //
-//  MyTripsScreen.swift
+//  TripsScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/31/25.
@@ -7,29 +7,35 @@
 
 import SwiftUI
 
-struct MyTripsScreen: View {
-    @State private var selection: TripOption = .upcoming
+struct TripsScreen: View {
+    @State private var viewModel: TripsViewModel = TripsViewModel()
     
     var body: some View {
+        @Bindable var viewModel = viewModel
+        
         NavigationStack {
             ScrollView {
                 Divider()
                 
-                CustomSegmentButton(selection: $selection,
+                CustomSegmentButton(selection: $viewModel.selection,
                                     options: TripOption.allCases)
                 .padding()
                 
                 Text("Next Adventure")
                     .sectionTitleStyle()
                 
-                NextTripCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
-                    .padding(20)
+                if let location = viewModel.trips.first?.location {
+                    NextTripCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: location, travelDate: "Jan 15 - 25 2026")
+                        .padding(5)
+                }
                 
                 Text("Future Plans")
                     .sectionTitleStyle()
                 
-                FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: "Tokyo, Japan", travelDate: "Jan 15 - 25 2026")
-                    .padding(20)
+                ForEach(viewModel.trips.dropFirst()) { trip in
+                    FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: trip.location, travelDate: "Jan 15 - 25 2026")
+                        .padding(5)
+                }
                 
             }
             .setScrollViewBackground()
@@ -69,7 +75,7 @@ private struct NextTripCard: View {
                     
                     Spacer()
                     
-                    CircleIcon(iconName: "airplane.departure", width: 50, height: 50)
+                    CircleIcon(iconName: "airplane.departure", iconColor: Color.accentBlue, width: 50, height: 50)
                 }
                 .padding()
                 
@@ -137,5 +143,5 @@ private struct FutureTripCard: View {
 }
 
 #Preview {
-    MyTripsScreen()
+    TripsScreen()
 }

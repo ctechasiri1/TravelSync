@@ -10,16 +10,7 @@ import SwiftUI
 struct ProfileScreen: View {
     
     @State private var isShowingSettings: Bool = false
-    
-    private let profileOptions: [CardOption] = [
-        CardOption(title: "Favorite Places", iconName: "heart.fill"),
-        CardOption(title: "My Map", iconName: "map.fill"),
-        CardOption(title: "Review", iconName: "star.bubble")
-    ]
-    private let profilePreference: [CardOption] = [
-        CardOption(title: "Notification", iconName: "bell.fill"),
-        CardOption(title: "Privacy", iconName: "lock.fill")
-    ]
+    @State private var viewModel: ProfileViewModel = ProfileViewModel()
     
     var body: some View {
         NavigationStack {
@@ -40,16 +31,9 @@ struct ProfileScreen: View {
                     
                     TravelBadges()
                     
-                    OptionsCard(options: profileOptions, useCircleIcon: true, padding: 30)
+                    FuturePlansOptions()
                     
-                    VStack(spacing: 15) {
-                        Text("Future Plans")
-                            .sectionTitleStyle()
-                        
-                        OptionsCard(options: profilePreference, useCircleIcon: false, padding: 20)
-                    }
-                    
-                    LogoutButton()
+                    LogOutButton()
                 }
             }
             .setScrollViewBackground()
@@ -63,6 +47,7 @@ struct ProfileScreen: View {
                 SettingsScreen()
             })
             .navigationTitle("Profile")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
@@ -134,7 +119,7 @@ private struct TravelBadges: View {
                 LazyHStack(spacing: 20) {
                     ForEach(0..<6) { _ in
                         VStack(spacing: 25) {
-                            CircleIcon(iconName: "airplane", width: 50, height: 50)
+                            CircleIcon(iconName: "airplane", iconColor: Color.accentBlue, width: 50, height: 50)
                             
                             Text("Frequent Flyer")
                                 .multilineTextAlignment(.center)
@@ -146,26 +131,28 @@ private struct TravelBadges: View {
             }
         }
         .createCardBackgroud()
-        .padding([.top, .horizontal])
+        .padding(.top)
     }
 }
 
-struct LogoutButton: View {
+private struct FuturePlansOptions: View {
     var body: some View {
-        Button {
+        OptionsCard(title: "") {
+            NavigationOptionRow(title: "Favorite Places", iconName: "heart.fill", iconColor: Color.accentBlue, destination: EmptyView(), useCircleIcon: true)
+                .padding(.top, 15)
+                .padding(.bottom, 7)
             
-        } label: {
-            Text("Logout")
-                .foregroundStyle(Color.accentWarning)
+            Divider()
+            
+            NavigationOptionRow(title: "My Map", iconName: "map.fill", iconColor: Color.accentConfirmation, destination: EmptyView(), useCircleIcon: true)
+                .padding(.vertical, 5)
+            
+            Divider()
+            
+            NavigationOptionRow(title: "Reviews", iconName: "star.bubble.fill", iconColor: Color.green, destination: EmptyView(), useCircleIcon: true)
+                .padding(.top, 7)
+                .padding(.bottom, 15)
         }
-        .frame(maxWidth: .infinity)
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .foregroundStyle(Color.backgroundColor.secondaryBackground)
-        )
-        .shadow(color: Color.black.opacity(0.1), radius: 5)
-        .padding(.horizontal)
     }
 }
 

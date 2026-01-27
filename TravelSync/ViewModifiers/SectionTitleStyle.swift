@@ -10,7 +10,7 @@ import SwiftUI
 struct SectionTitleStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .bold()
+            .font(.system(size: 15, weight: .bold))
             .foregroundStyle(Color.textColor.placeholderText)
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.horizontal, 25)

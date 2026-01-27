@@ -11,7 +11,7 @@ import SwiftUI
 struct TravelSyncApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeScreen()
         }
     }
 }

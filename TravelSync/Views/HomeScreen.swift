@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  HomeScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/29/25.
@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeScreen: View {
     var body: some View {
         TabView {
             Tab("Trips", systemImage: "circle.dashed") {
-                MyTripsScreen()
+                TripsScreen()
             }
             Tab("Profile", systemImage: "person.fill") {
                 ProfileScreen()
@@ -21,5 +21,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    HomeScreen()
 }
