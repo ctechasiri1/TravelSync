@@ -11,6 +11,7 @@ import Foundation
 @Observable
 class TripsViewModel {
     var selection: TripOption = .upcoming
+    var showPlanNewTrip: Bool = false
     let trips: [Trip] = [
         Trip(location: "Tokyo, Japan", startDate: "02/05/2026", endDate: "02/15/2026"),
         Trip(location: "Bangkok, Thailand", startDate: "03/05/2026", endDate: "03/15/2026"),

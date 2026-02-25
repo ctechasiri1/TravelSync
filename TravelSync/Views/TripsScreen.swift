@@ -36,9 +36,14 @@ struct TripsScreen: View {
                     FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: trip.location, travelDate: "Jan 15 - 25 2026")
                         .padding(5)
                 }
+
+                AddTripCard(showPlanNewTrip: $viewModel.showPlanNewTrip)
                 
             }
             .setScrollViewBackground()
+            .sheet(isPresented: $viewModel.showPlanNewTrip, content: {
+                PlanNewTrip()
+            })
             .navigationTitle(Text("My Trips"))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -139,6 +144,38 @@ private struct FutureTripCard: View {
             .padding()
         }
         .createCardBackgroud()
+    }
+}
+
+private struct AddTripCard: View {
+    @Binding var showPlanNewTrip: Bool
+    
+    var body: some View {
+        Button {
+            showPlanNewTrip = true
+        } label: {
+            HStack {
+                Image(systemName: "plus.circle.fill")
+                    .foregroundStyle(Color(.systemBlue))
+                
+                Text("Plan a new trip")
+                    .font(.system(size: 18, weight: .semibold, design: .default))
+            }
+            .frame(height: 60)
+            .frame(maxWidth: .infinity)
+            .background(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(Color(Color.accentBlue.opacity(0.05)))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(
+                        Color.blue.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 2, dash: [10, 5])
+                    )
+            )
+            .padding(.horizontal, 25)
+        }
     }
 }
 
