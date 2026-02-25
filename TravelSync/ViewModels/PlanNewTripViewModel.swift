@@ -9,6 +9,7 @@ import Observation
 import Foundation
 
 class PlanNewTripViewModel {
+    var pushNotificationsIsOn: Bool = true
     var tripName: String = ""
     var locationName: String = ""
     var startDate: Date = Date()

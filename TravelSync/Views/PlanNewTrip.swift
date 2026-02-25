@@ -8,8 +8,87 @@
 import SwiftUI
 
 struct PlanNewTrip: View {
+    @State private var viewModel: PlanNewTripViewModel = PlanNewTripViewModel()
+    
+    var body: some View {
+        ScrollView {
+            NavigationOption()
+            
+            ImageWithPlaceHolder(
+                urlString: "https://example.com/image.png",
+                imageHeight: 250
+            )
+            .cornerRadius(16)
+            .padding()
+            
+            VStack(alignment: .leading) {
+                VStack(alignment: .leading) {
+                    Text("Where to next?")
+                        .font(.system(size: 30, weight: .semibold))
+                    Text("Start planning your next adventure.")
+                        .foregroundStyle(Color.secondaryText)
+                }
+                .padding()
+                
+                InputTextField(
+                    text: $viewModel.locationName,
+                    fieldTitle: "LOCATION",
+                    fieldImage: "location.fill",
+                    fieldContent: "City, airport, or hotel"
+                )
+                
+                InputTextField(
+                    text: $viewModel.tripName,
+                    fieldTitle: "TRIP NAME",
+                    fieldImage: "pencil",
+                    fieldContent: "e.g. Summer in Toyko"
+                )
+                
+                HStack {
+                    CustomDatePicker(
+                        selectedDate: $viewModel.startDate,
+                        pickerTitle: "START DATE"
+                    )
+                    
+                    Image(systemName: "arrow.right")
+                        .foregroundStyle(Color.accentBlue)
+                        .padding(.top, 25)
+                    
+                    CustomDatePicker(
+                        selectedDate: $viewModel.endDate,
+                        pickerTitle: "END DATE"
+                    )
+                }
+                .padding(.leading, 10)
+                
+                OptionsCard(title: "PREFERNCES") {
+                    ToggleOptionRow(
+                        title: "Auto Time Zone",
+                        iconName: "clock.fill",
+                        isOn: $viewModel.pushNotificationsIsOn
+                    )
+                    .padding(.top, 15)
+                    
+                    Divider()
+                        .padding(.vertical, 5)
+                    
+                    ToggleOptionRow(
+                        title: "Notifications",
+                        iconName: "bell.fill",
+                        isOn: $viewModel.pushNotificationsIsOn
+                    )
+                    .padding(.bottom, 15)
+                }
+                
+                CreateTripButton()
+                    .padding()
+            }
+        }
+    }
+}
+
+private struct NavigationOption: View {
     @Environment(\.dismiss) private var dismiss
-    @State private var planNewTripViewModel: PlanNewTripViewModel = PlanNewTripViewModel()
     
     var body: some View {
         HStack {
@@ -18,51 +97,20 @@ struct PlanNewTrip: View {
             } label: {
                 Text("Cancel")
             }
+            .frame(maxWidth: .infinity)
+            
+            Text("Add a trip")
+                .foregroundStyle(Color.primaryText)
+                .font(.system(size: 20, weight: .semibold))
+                .padding(.leading, 5)
+                .frame(maxWidth: .infinity)
             
             Button {
                 
             } label: {
                 Text("Save")
             }
-
-        }
-        
-        VStack(alignment: .leading) {
-            VStack(alignment: .leading) {
-                Text("Where to next?")
-                    .font(.system(size: 30, weight: .semibold))
-                Text("Start planning your next adventure.")
-                    .foregroundStyle(Color.secondaryText)
-            }
-            .padding()
-            
-            InputTextField(
-                text: $planNewTripViewModel.locationName,
-                fieldTitle: "LOCATION",
-                fieldImage: "location.fill",
-                fieldContent: "City, airport, or hotel"
-            )
-            
-            InputTextField(
-                text: $planNewTripViewModel.tripName,
-                fieldTitle: "TRIP NAME",
-                fieldImage: "pencil",
-                fieldContent: "e.g. Summer in Toyko"
-            )
-            
-            HStack {
-                CustomDatePicker(selectedDate: $planNewTripViewModel.startDate, pickerTitle: "START DATE")
-                
-                Image(systemName: "arrow.right")
-                    .foregroundStyle(Color.accentBlue)
-                    .padding(.top, 25)
-                
-                CustomDatePicker(selectedDate: $planNewTripViewModel.endDate, pickerTitle: "END DATE")
-            }
-            .padding(.leading, 10)
-            
-            PreferenceSection()
-                .padding()
+            .frame(maxWidth: .infinity)
         }
     }
 }
@@ -90,7 +138,10 @@ private struct InputTextField: View {
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.secondaryText.opacity(0.2), style: StrokeStyle(lineWidth: 1))
+                    .stroke(
+                        Color.secondaryText.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 1)
+                    )
             )
         }
         .padding()
@@ -119,9 +170,16 @@ private struct CustomDatePicker: View {
             .padding()
             .overlay {
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color.secondaryText.opacity(0.2), style: StrokeStyle(lineWidth: 1))
+                    .stroke(
+                        Color.secondaryText.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 1)
+                    )
                 
-                DatePicker(selection: $selectedDate, displayedComponents: .date) {}
+                DatePicker(
+                    selection: $selectedDate,
+                    displayedComponents: .date
+                ) {
+                }
                 .labelsHidden()
                 .colorMultiply(.clear)
             }
@@ -130,15 +188,29 @@ private struct CustomDatePicker: View {
     }
 }
 
-private struct PreferenceSection: View {
+private struct CreateTripButton: View {
     var body: some View {
-        Text("PREFERENCES")
-            .foregroundStyle(Color.primaryText)
-            .font(.system(size: 15, weight: .semibold))
-            .padding(.leading, 5)
+        Button {
+            
+        } label: {
+            HStack {
+                Image(systemName: "plus.circle.fill")
+                Text("Create Trip")
+            }
+            .padding()
+            .foregroundStyle(Color.white)
+            .frame(maxWidth: .infinity)
+            .background(
+                LinearGradient(
+                    colors: [Color.orange, Color.pink],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing)
+            )
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+        }
+        .frame(maxWidth: .infinity)
     }
 }
-
 
 #Preview {
     PlanNewTrip()

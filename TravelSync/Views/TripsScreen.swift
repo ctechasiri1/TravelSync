@@ -37,11 +37,11 @@ struct TripsScreen: View {
                         .padding(5)
                 }
 
-                AddTripCard(showPlanNewTrip: $viewModel.showPlanNewTrip)
+                AddTripButton(showPlanNewTrip: $viewModel.showPlanNewTrip)
                 
             }
             .setScrollViewBackground()
-            .sheet(isPresented: $viewModel.showPlanNewTrip, content: {
+            .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
                 PlanNewTrip()
             })
             .navigationTitle(Text("My Trips"))
@@ -147,7 +147,7 @@ private struct FutureTripCard: View {
     }
 }
 
-private struct AddTripCard: View {
+private struct AddTripButton: View {
     @Binding var showPlanNewTrip: Bool
     
     var body: some View {

@@ -37,7 +37,7 @@ struct SettingsScreen: View {
 private struct AccountOptions: View {
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             

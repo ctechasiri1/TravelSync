@@ -13,4 +13,9 @@ class SettingsViewModel {
     var pushNotificationsIsOn: Bool = false
     var emailNotificationsIsOn: Bool = false
     var darkModeIsOn: Bool = false
+    
+    var fullName: String = ""
+    var emailAddress: String = ""
+    var phoneNumber: String = ""
+    var location: String = ""
 }
