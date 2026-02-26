@@ -1,0 +1,24 @@
+//
+//  Localizable.strings
+//  TravelSync
+//
+//  Created by Chiraphat Techasiri on 2/25/26.
+//
+
+"acceptance_of_terms_title" = "1. Acceptance of Terms";
+"acceptance_of_terms_content" = "By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.";
+
+"user_accounts_title" = "2. User Accounts";
+"user_accounts_content" = "When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, which may result in immediate termination of your account on our Service. \n\nYou are responsbile for safeguarding the password that you use to access the Service and for any activities or actions under your password, whether your password is with our Service or a third-party service.";
+
+"content_title" = "3. Content";
+"content_content" = "Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ('Content'). You are responsible for the Content that you post to the Service, including its legality, reliability, and appropriatesness.";
+
+"intellectual_property_title" = "4. Intellectual Property";
+"intellectual_property_content" = "The Services and its original content (excluding Content provided by users), features and functionality are and will remain the exclusive property of TravelSync Inc. and its licensors. The Service is protected by copyright, trademark, and other laws of both the United States and foreign countries.";
+
+"termination_title" = "5. Termination";
+"termination_content" = "We may terminate or suspend access to our Service immediately, without prior notice or liability, for any reason whatsoever, including without limitation if you breach the Terms.";
+
+"changes_title" = "6. Changes";
+"changes_content" = "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.";

@@ -29,9 +29,33 @@
 		510725802F0374CC003E21C0 /* TravelSyncUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TravelSyncUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		51C9E5EC2F4FD41D00193A58 /* Exceptions for "TravelSync" folder in "TravelSync" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Localizable.strings,
+			);
+			target = 510725682F0374CB003E21C0 /* TravelSync */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		51C9E5ED2F4FD41D00193A58 /* Exceptions for "TravelSync" folder in "Compile Sources" phase from "TravelSync" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 510725652F0374CB003E21C0 /* Sources */;
+			membershipExceptions = (
+				Localizable.strings,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5107256B2F0374CB003E21C0 /* TravelSync */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				51C9E5EC2F4FD41D00193A58 /* Exceptions for "TravelSync" folder in "TravelSync" target */,
+				51C9E5ED2F4FD41D00193A58 /* Exceptions for "TravelSync" folder in "Compile Sources" phase from "TravelSync" target */,
+			);
 			path = TravelSync;
 			sourceTree = "<group>";
 		};
