@@ -95,7 +95,7 @@ private struct SupportOptions: View {
             
             Divider()
             
-            NavigationOptionRow(title: "Terms of Service", iconName: "book.pages.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
+            NavigationOptionRow(title: "Terms of Service", iconName: "book.pages.fill", iconColor: .secondary, destination: TermsOfServiceScreen(), useCircleIcon: false)
                 .padding(.top, 10)
                 .padding(.bottom, 10)
             
