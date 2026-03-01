@@ -11,6 +11,8 @@ struct TermsOfServiceScreen: View {
     var body: some View {
         NavigationStack {
             ScrollView {
+                Spacer()
+                
                 TermsOfServiceSection(title: "acceptance_of_terms_title", content: "acceptance_of_terms_content")
                 
                 TermsOfServiceSection(title: "user_accounts_title", content: "user_accounts_content")
@@ -52,7 +54,7 @@ private struct TermsOfServiceSection: View {
                 .foregroundStyle(Color.secondaryText)
                 .font(.system(.subheadline))
         }
-        .padding(12)
+        .padding(15)
     }
 }
 

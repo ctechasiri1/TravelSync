@@ -6,6 +6,8 @@
 //
 
 //MARK: This is for the 'Terms of Service' screen
+"warning_content" = "Please read thse Terms of Service ('Terms', 'Terms of Service') carefully before using the TravelSync mobile application (the 'Service') operated by TravelSync Inc. ('us', 'we', or 'our').";
+
 "acceptance_of_terms_title" = "1. Acceptance of Terms";
 "acceptance_of_terms_content" = "By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.";
 
@@ -32,15 +34,21 @@
 
 "data_we_collect_title" = "2. Date We Collect";
 "data_we_collect_content" = "We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows:";
-"data_we_collect_bullet_one" = "**Identitfy Data:** includes first name, last name, username or similar identifier.";
-"data_we_collect_bullet_two" = "**Contact Data:** includes email address and telephone numbers.";
-"data_we_collect_bullet_three" = "**Travel Data:** includes your preferences, booking history, and itinerary details.";
-"data_we_collect_bullet_four" = "**Location Data:** includes your current location when using location-based features.";
+"data_we_collect_bullet_one_title" = "**Identitfy Data:**";
+"data_we_collect_bullet_one_content" = "includes first name, last name, username or similar identifier.";
+"data_we_collect_bullet_two_title" = "**Contact Data:**";
+"data_we_collect_bullet_two_content" = "includes email address and telephone numbers.";
+"data_we_collect_bullet_three_title" = "**Travel Data:**";
+"data_we_collect_bullet_three_content" = "includes your preferences, booking history, and itinerary details.";
+"data_we_collect_bullet_four_title" = "**Location Data:**";
+"data_we_collect_bullet_four_content" = "includes your current location when using location-based features.";
 
 "how_we_use_your_data_title" = "3. How We Use Your Data";
 "how_we_use_your_data_content" = "We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the follow circumstances:";
-"how_we_use_your_data_bullet_one" = "**Service Provision:** to manage your trips and provide travel recommendations.";
-"how_we_use_your_data_bullet_two" = "**Improvements:** to improve our website, products/services, marketing, customer relationships and experiences.";
+"how_we_use_your_data_bullet_one_title" = "**Service Provision:**";
+"how_we_use_your_data_bullet_one_content" = "to manage your trips and provide travel recommendations.";
+"how_we_use_your_data_bullet_two_title" = "**Improvements:**=";
+"how_we_use_your_data_bullet_two_content" = "to improve our website, products/services, marketing, customer relationships and experiences.";
 
 "data_security_title" = "4. Data Security";
 "data_security_content" = "We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthroized way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.";

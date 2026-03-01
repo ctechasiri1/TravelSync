@@ -11,26 +11,28 @@ struct PrivacyPolicyScreen: View {
     var body: some View {
         NavigationStack {
             ScrollView {
+                Spacer()
+                
                 PrivacyPolicySection(title: "introduction_title", content: "introduction_content")
                 
                 PrivacyPolicySection(title: "data_we_collect_title", content: "data_we_collect_content")
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    PrivacyPolicyBulletPoint(bulletPointContent: "data_we_collect_bullet_one")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_one_title", bulletPointContent: "data_we_collect_bullet_one_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointContent: "data_we_collect_bullet_two")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_two_title", bulletPointContent: "data_we_collect_bullet_two_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointContent: "data_we_collect_bullet_three")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_three_title", bulletPointContent: "data_we_collect_bullet_three_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointContent: "data_we_collect_bullet_four")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_four_title", bulletPointContent: "data_we_collect_bullet_four_content")
                 }
                 
                 PrivacyPolicySection(title: "how_we_use_your_data_title", content: "how_we_use_your_data_content")
                 
                 VStack(alignment: .leading, spacing: 10) {
-                    PrivacyPolicyBulletPoint(bulletPointContent: "how_we_use_your_data_bullet_one")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_one_title", bulletPointContent: "how_we_use_your_data_bullet_one_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointContent: "how_we_use_your_data_bullet_two")
+                    PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_two_title", bulletPointContent: "how_we_use_your_data_bullet_two_content")
                 }
                 
                 PrivacyPolicySection(title: "data_security_title", content: "data_security_content")
@@ -66,18 +68,22 @@ private struct PrivacyPolicySection: View {
                 .multilineTextAlignment(.leading)
                 .font(.system(.subheadline))
         }
-        .padding(12)
+        .padding(15)
     }
 }
 
 private struct PrivacyPolicyBulletPoint: View {
+    let bulletPointTitle: LocalizedStringKey
     let bulletPointContent: LocalizedStringKey
     
     var body: some View {
         HStack(alignment: .top) {
             Text("•")
             
+            Text(bulletPointTitle)
+            
             Text(bulletPointContent)
+                .foregroundStyle(Color.secondaryText)
         }
         .font(.system(.subheadline))
         .padding(.horizontal)
