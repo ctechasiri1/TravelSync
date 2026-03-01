@@ -5,6 +5,7 @@
 //  Created by Chiraphat Techasiri on 2/25/26.
 //
 
+//MARK: This is for the 'Terms of Service' screen
 "acceptance_of_terms_title" = "1. Acceptance of Terms";
 "acceptance_of_terms_content" = "By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.";
 
@@ -22,3 +23,28 @@
 
 "changes_title" = "6. Changes";
 "changes_content" = "We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to provide at least 30 days notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion.";
+
+"questions_content" = "If you have any questions about these Terms, please contact us at support@travelsync.com";
+
+//MARK: This is for the 'Privacy Policy' screen
+"introduction_title" = "1. Introduction";
+"introduction_content" = "Welcome to our Travel Planning App. We respect your privacy and are committed to protecting your personl data. This privacy policy will inform you as to how we look after your personal data when you visit our application and tell you about your privacy rights and how the law protects you.";
+
+"data_we_collect_title" = "2. Date We Collect";
+"data_we_collect_content" = "We may collect, use, store and transfer different kinds of personal data about you which we have grouped together follows:";
+"data_we_collect_bullet_one" = "**Identitfy Data:** includes first name, last name, username or similar identifier.";
+"data_we_collect_bullet_two" = "**Contact Data:** includes email address and telephone numbers.";
+"data_we_collect_bullet_three" = "**Travel Data:** includes your preferences, booking history, and itinerary details.";
+"data_we_collect_bullet_four" = "**Location Data:** includes your current location when using location-based features.";
+
+"how_we_use_your_data_title" = "3. How We Use Your Data";
+"how_we_use_your_data_content" = "We will only use your personal data when the law allows us to. Most commonly, we will use your personal data in the follow circumstances:";
+"how_we_use_your_data_bullet_one" = "**Service Provision:** to manage your trips and provide travel recommendations.";
+"how_we_use_your_data_bullet_two" = "**Improvements:** to improve our website, products/services, marketing, customer relationships and experiences.";
+
+"data_security_title" = "4. Data Security";
+"data_security_content" = "We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthroized way, altered or disclosed. In addition, we limit access to your personal data to those employees, agents, contractors and other third parties who have a business need to know.";
+
+"contact_us_title" = "5. Contact User";
+"contact_us_content" = "If you have any questions about this privacy policy or our privacy practices, please contact our data privacy manager.";
+

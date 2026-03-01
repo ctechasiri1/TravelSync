@@ -101,7 +101,7 @@ private struct SupportOptions: View {
             
             Divider()
             
-            NavigationOptionRow(title: "Privacy Policy", iconName: "lock.shield.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
+            NavigationOptionRow(title: "Privacy Policy", iconName: "lock.shield.fill", iconColor: .secondary, destination: PrivacyPolicyScreen(), useCircleIcon: false)
                 .padding(.top, 10)
                 .padding(.bottom, 20)
         }
