@@ -11,42 +11,46 @@ struct PrivacyPolicyScreen: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                Spacer()
-                
-                PrivacyPolicySection(title: "introduction_title", content: "introduction_content")
-                
-                PrivacyPolicySection(title: "data_we_collect_title", content: "data_we_collect_content")
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_one_title", bulletPointContent: "data_we_collect_bullet_one_content")
+                VStack(alignment:.leading) {
+                    Spacer()
                     
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_two_title", bulletPointContent: "data_we_collect_bullet_two_content")
+                    PrivacyPolicySection(title: "introduction_title", content: "introduction_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_three_title", bulletPointContent: "data_we_collect_bullet_three_content")
+                    PrivacyPolicySection(title: "data_we_collect_title", content: "data_we_collect_content")
                     
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_four_title", bulletPointContent: "data_we_collect_bullet_four_content")
+                    VStack(alignment: .leading, spacing: 10) {
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_one_title", bulletPointContent: "data_we_collect_bullet_one_content")
+                        
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_two_title", bulletPointContent: "data_we_collect_bullet_two_content")
+                        
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_three_title", bulletPointContent: "data_we_collect_bullet_three_content")
+                        
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "data_we_collect_bullet_four_title", bulletPointContent: "data_we_collect_bullet_four_content")
+                    }
+                    .padding(.bottom, 20)
+                    
+                    PrivacyPolicySection(title: "how_we_use_your_data_title", content: "how_we_use_your_data_content")
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_one_title", bulletPointContent: "how_we_use_your_data_bullet_one_content")
+                        
+                        PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_two_title", bulletPointContent: "how_we_use_your_data_bullet_two_content")
+                    }
+                    .padding(.bottom, 20)
+                    
+                    PrivacyPolicySection(title: "data_security_title", content: "data_security_content")
+                    
+                    PrivacyPolicySection(title: "contact_us_title", content: "contact_us_content")
+                    
+                    HStack {
+                        Image(systemName: "envelope.fill")
+                            .foregroundStyle(Color.accentBlue)
+                        
+                        Text("privacy@travelsync.com")
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
                 }
-                
-                PrivacyPolicySection(title: "how_we_use_your_data_title", content: "how_we_use_your_data_content")
-                
-                VStack(alignment: .leading, spacing: 10) {
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_one_title", bulletPointContent: "how_we_use_your_data_bullet_one_content")
-                    
-                    PrivacyPolicyBulletPoint(bulletPointTitle: "how_we_use_your_data_bullet_two_title", bulletPointContent: "how_we_use_your_data_bullet_two_content")
-                }
-                
-                PrivacyPolicySection(title: "data_security_title", content: "data_security_content")
-                
-                PrivacyPolicySection(title: "contact_us_title", content: "contact_us_content")
-                
-                HStack {
-                    Image(systemName: "envelope.fill")
-                        .foregroundStyle(Color.accentBlue)
-                    
-                    Text("privacy@travelsync.com")
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
             }
         }
         .navigationTitle("Privacy Policy")
@@ -65,6 +69,7 @@ private struct PrivacyPolicySection: View {
                 .padding(.bottom, 10)
             
             Text(content)
+                .foregroundStyle(Color.secondaryText)
                 .multilineTextAlignment(.leading)
                 .font(.system(.subheadline))
         }
@@ -80,10 +85,18 @@ private struct PrivacyPolicyBulletPoint: View {
         HStack(alignment: .top) {
             Text("•")
             
+            (
             Text(bulletPointTitle)
+            
+            +
+            
+            Text(" ")
+            
+            +
             
             Text(bulletPointContent)
                 .foregroundStyle(Color.secondaryText)
+            )
         }
         .font(.system(.subheadline))
         .padding(.horizontal)
