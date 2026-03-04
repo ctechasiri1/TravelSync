@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct TravelSyncApp: App {
+    @State private var appState = AppState()
+    
     var body: some Scene {
         WindowGroup {
             HomeScreen()
+                .environment(appState)
         }
     }
 }

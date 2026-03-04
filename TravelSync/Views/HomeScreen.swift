@@ -22,4 +22,5 @@ struct HomeScreen: View {
 
 #Preview {
     HomeScreen()
+        .environment(AppState())
 }

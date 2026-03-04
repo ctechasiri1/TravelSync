@@ -5,8 +5,11 @@
 //  Created by Chiraphat Techasiri on 1/26/26.
 //
 
-import Observation
+
 import Foundation
+import Observation
+import PhotosUI
+import SwiftUI
 
 @Observable
 class SettingsViewModel {
@@ -18,4 +21,17 @@ class SettingsViewModel {
     var emailAddress: String = ""
     var phoneNumber: String = ""
     var location: String = ""
+    
+    // Holds the selection from the picker
+    var selectedItem: PhotosPickerItem? = nil
+    // Holds the actual image to display
+    var profileUIImage: UIImage? = nil
+    
+    var displayImage: Image {
+        if let uiImage = profileUIImage {
+            return Image(uiImage: uiImage)
+        } else {
+            return Image(systemName: "person.circle.fill")
+        }
+    }
 }

@@ -8,22 +8,24 @@
 import SwiftUI
 
 struct PersonalInfoScreen: View {
-    @State private var viewModel: SettingsViewModel = SettingsViewModel()
+    @Environment(AppState.self) private var appState
     
     var body: some View {
+        @Bindable var settingsViewModel = appState.settings
+        
         NavigationStack {
             ScrollView {
                 ProfileImage()
                     .padding(.vertical, 50)
                 
                 VStack(spacing: 15) {
-                    EditCard(field: $viewModel.fullName, cardName: "FULL NAME")
+                    EditCard(field: $settingsViewModel.fullName, cardName: "FULL NAME")
                     
-                    EditCard(field: $viewModel.emailAddress, cardName: "EMAIL")
+                    EditCard(field: $settingsViewModel.emailAddress, cardName: "EMAIL")
                     
-                    EditCard(field: $viewModel.phoneNumber, cardName: "PHONE NUMBER")
+                    EditCard(field: $settingsViewModel.phoneNumber, cardName: "PHONE NUMBER")
                     
-                    EditCard(field: $viewModel.location, cardName: "LOCATION")
+                    EditCard(field: $settingsViewModel.location, cardName: "LOCATION")
                 }
 
                 PersonalInfoButtonOptions()
@@ -111,4 +113,5 @@ private struct PersonalInfoButtonOptions: View {
 
 #Preview {
     PersonalInfoScreen()
+        .environment(SettingsViewModel())
 }

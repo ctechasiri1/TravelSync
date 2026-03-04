@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    
+    @Environment(AppState.self) private var appState
     @State private var isShowingSettings: Bool = false
-    @State private var viewModel: ProfileViewModel = ProfileViewModel()
-    
+   
     var body: some View {
+        let settingsViewModel = appState.settings
+        
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
@@ -45,9 +46,11 @@ struct ProfileScreen: View {
             })
             .navigationDestination(isPresented: $isShowingSettings, destination: {
                 SettingsScreen()
+                    .environment(settingsViewModel)
             })
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
+            
         }
     }
 }
@@ -135,4 +138,5 @@ private struct FuturePlansOptions: View {
 
 #Preview {
     ProfileScreen()
+        .environment(AppState())
 }

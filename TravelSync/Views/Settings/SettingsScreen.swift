@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    @State private var viewModel: SettingsViewModel = SettingsViewModel()
+    @Environment(AppState.self) private var appState
     
     var body: some View {
+        @Bindable var settingsViewModel = appState.settings
+        
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
                     AccountOptions()
                     
-                    PreferencesOptions(viewModel: viewModel)
+                    PreferencesOptions(viewModel: settingsViewModel)
                     
                     SupportOptions()
                     
@@ -37,7 +39,7 @@ struct SettingsScreen: View {
 private struct AccountOptions: View {
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen().environment(SettingsViewModel()), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
@@ -111,4 +113,5 @@ private struct SupportOptions: View {
 
 #Preview {
     SettingsScreen()
+        .environment(AppState())
 }
