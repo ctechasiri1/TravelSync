@@ -32,7 +32,7 @@ struct PersonalInfoScreen: View {
                     .padding()
             }
             .setScrollViewBackground()
-            .toolbarVisibility(.hidden, for: .bottomBar)
+            .toolbar(.hidden, for: .tabBar)
             .navigationTitle("Personal Information")
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -113,5 +113,5 @@ private struct PersonalInfoButtonOptions: View {
 
 #Preview {
     PersonalInfoScreen()
-        .environment(SettingsViewModel())
+        .environment(AppState())
 }

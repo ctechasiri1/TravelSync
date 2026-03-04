@@ -36,6 +36,7 @@ struct TermsOfServiceScreen: View {
         }
         .navigationTitle("Terms of Service")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

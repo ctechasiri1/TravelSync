@@ -35,6 +35,8 @@ struct ProfileScreen: View {
                     FuturePlansOptions()
                     
                     LogOutButton()
+                    
+                    Spacer()
                 }
             }
             .setScrollViewBackground()

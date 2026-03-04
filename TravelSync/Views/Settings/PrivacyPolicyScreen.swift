@@ -55,6 +55,7 @@ struct PrivacyPolicyScreen: View {
         }
         .navigationTitle("Privacy Policy")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

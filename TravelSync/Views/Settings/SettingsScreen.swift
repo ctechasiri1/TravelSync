@@ -31,6 +31,7 @@ struct SettingsScreen: View {
                 .padding(.top)
                 .navigationTitle("Settings")
                 .navigationBarTitleDisplayMode(.inline)
+                .toolbar(.hidden, for: .tabBar)
             }
         }
     }
