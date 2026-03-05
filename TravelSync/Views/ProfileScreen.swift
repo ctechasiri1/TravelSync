@@ -20,10 +20,24 @@ struct ProfileScreen: View {
                     ProfileImage()
                     
                     VStack {
-                        Text("Sarah Jenkins")
+                        // MARK: This condition is temporary until backend is complete
+                        Group {
+                            if !settingsViewModel.fullName.isEmpty {
+                                Text(settingsViewModel.fullName)
+                            } else {
+                                Text("Test User")
+                            }
+                        }
                             .font(.system(.title3, weight: .bold))
                         
-                        Text("@sarhj_travels")
+                        // MARK: This condition is temporary until backend is complete
+                        Group {
+                            if !settingsViewModel.userName.isEmpty {
+                                Text("@" + settingsViewModel.userName)
+                            } else {
+                                Text("@testuser")
+                            }
+                        }
                             .foregroundStyle(Color.textColor.secondaryText)
                             .font(.system(.subheadline, weight: .regular))
                     }

@@ -17,6 +17,7 @@ class SettingsViewModel {
     var emailNotificationsIsOn: Bool = false
     var darkModeIsOn: Bool = false
     
+    var userName: String = ""
     var fullName: String = ""
     var emailAddress: String = ""
     var phoneNumber: String = ""

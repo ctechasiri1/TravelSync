@@ -39,6 +39,7 @@ struct TripsScreen: View {
 
                 AddTripButton(showPlanNewTrip: $viewModel.showPlanNewTrip)
                 
+                Spacer()
             }
             .setScrollViewBackground()
             .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {

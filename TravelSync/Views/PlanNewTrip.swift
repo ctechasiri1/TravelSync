@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct PlanNewTrip: View {
-    @State private var viewModel: PlanNewTripViewModel = PlanNewTripViewModel()
+    @Environment(AppState.self) private var appState
     
     var body: some View {
+        @Bindable var planNewTripViewModel = appState.planNewTrip
+        
         ScrollView {
             NavigationOption()
             
-            ImageWithPlaceHolder(
-                urlString: "https://example.com/image.png",
-                imageHeight: 250
-            )
-            .cornerRadius(16)
-            .padding()
+            CoverImage()
+                .padding()
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
@@ -31,14 +29,14 @@ struct PlanNewTrip: View {
                 .padding()
                 
                 InputTextField(
-                    text: $viewModel.locationName,
+                    text: $planNewTripViewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel"
                 )
                 
                 InputTextField(
-                    text: $viewModel.tripName,
+                    text: $planNewTripViewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko"
@@ -46,7 +44,7 @@ struct PlanNewTrip: View {
                 
                 HStack {
                     CustomDatePicker(
-                        selectedDate: $viewModel.startDate,
+                        selectedDate: $planNewTripViewModel.startDate,
                         pickerTitle: "START DATE"
                     )
                     
@@ -55,17 +53,17 @@ struct PlanNewTrip: View {
                         .padding(.top, 25)
                     
                     CustomDatePicker(
-                        selectedDate: $viewModel.endDate,
+                        selectedDate: $planNewTripViewModel.endDate,
                         pickerTitle: "END DATE"
                     )
                 }
-                .padding(.leading, 10)
+                .padding(.leading, 35)
                 
                 OptionsCard(title: "PREFERNCES") {
                     ToggleOptionRow(
                         title: "Auto Time Zone",
                         iconName: "clock.fill",
-                        isOn: $viewModel.pushNotificationsIsOn
+                        isOn: $planNewTripViewModel.pushNotificationsIsOn
                     )
                     .padding(.top, 15)
                     
@@ -75,15 +73,17 @@ struct PlanNewTrip: View {
                     ToggleOptionRow(
                         title: "Notifications",
                         iconName: "bell.fill",
-                        isOn: $viewModel.pushNotificationsIsOn
+                        isOn: $planNewTripViewModel.pushNotificationsIsOn
                     )
                     .padding(.bottom, 15)
                 }
+                .padding(.top, 20)
                 
                 CreateTripButton()
                     .padding()
             }
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
@@ -214,4 +214,5 @@ private struct CreateTripButton: View {
 
 #Preview {
     PlanNewTrip()
+        .environment(AppState())
 }

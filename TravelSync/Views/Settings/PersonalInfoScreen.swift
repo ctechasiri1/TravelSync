@@ -19,13 +19,15 @@ struct PersonalInfoScreen: View {
                     .padding(.vertical, 50)
                 
                 VStack(spacing: 15) {
-                    EditCard(field: $settingsViewModel.fullName, cardName: "FULL NAME")
+                    EditCard(field: $settingsViewModel.fullName, cardName: "USERNAME", placeholder: "Edit Username")
                     
-                    EditCard(field: $settingsViewModel.emailAddress, cardName: "EMAIL")
+                    EditCard(field: $settingsViewModel.fullName, cardName: "FULL NAME", placeholder: "Edit Name")
                     
-                    EditCard(field: $settingsViewModel.phoneNumber, cardName: "PHONE NUMBER")
+                    EditCard(field: $settingsViewModel.emailAddress, cardName: "EMAIL", placeholder: "Edit Email")
                     
-                    EditCard(field: $settingsViewModel.location, cardName: "LOCATION")
+                    EditCard(field: $settingsViewModel.phoneNumber, cardName: "PHONE NUMBER", placeholder: "Edit Phone Number")
+                    
+                    EditCard(field: $settingsViewModel.location, cardName: "LOCATION", placeholder: "Edit Location")
                 }
 
                 PersonalInfoButtonOptions()
@@ -42,26 +44,30 @@ struct PersonalInfoScreen: View {
 private struct EditCard: View {
     @Binding var field: String
     let cardName: String
+    let placeholder: String
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 8) {
             Text(cardName)
                 .sectionTitleStyle()
             
             HStack {
-                Text("Name")
+                TextField(placeholder, text: $field)
+                    .font(.system(.body, weight: .medium))
+                    .foregroundStyle(.primaryText)
+                    .autocorrectionDisabled()
                 
-                Spacer()
-                
-                Button {
-                    
-                } label: {
-                    Image(systemName: "pencil")
+                if !field.isEmpty {
+                    Button {
+                        field = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(Color.secondary.opacity(0.5))
+                    }
                 }
             }
-            .padding([.horizontal, .bottom], 10)
-            .padding(.top, 5)
-            .padding(.horizontal, 15)
+            .padding(.horizontal, 26)
+            .padding(.vertical, 12)
         }
         .padding(.vertical)
         .createCardBackgroud()
