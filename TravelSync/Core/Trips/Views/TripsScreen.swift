@@ -8,41 +8,49 @@
 import SwiftUI
 
 struct TripsScreen: View {
-    @State private var viewModel: TripsViewModel = TripsViewModel()
+    @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var viewModel = viewModel
+        @Bindable var tripsViewModel = appState.trips
         
         NavigationStack {
             ScrollView {
                 Divider()
                 
-                CustomSegmentButton(selection: $viewModel.selection,
+                CustomSegmentButton(selection: $tripsViewModel.selection,
                                     options: TripOption.allCases)
                 .padding()
                 
-                Text("Next Adventure")
-                    .sectionTitleStyle()
-                
-                if let location = viewModel.trips.first?.location {
-                    NextTripCard(urlString: "https://example.com/image.png", imageHeight: 250, travelDestination: location, travelDate: "Jan 15 - 25 2026")
-                        .padding(5)
+                if !tripsViewModel.trips.isEmpty {
+                    Text("Next Adventure")
+                        .sectionTitleStyle()
                 }
                 
-                Text("Future Plans")
-                    .sectionTitleStyle()
+                if let trip = tripsViewModel.trips.first {
+                    NextTripCard(
+                        urlString: "https://example.com/image.png",
+                        imageHeight: 250,
+                        travelDestination: trip.location,
+                        travelDate: trip.dateRangeString
+                    )
+                }
                 
-                ForEach(viewModel.trips.dropFirst()) { trip in
+                if tripsViewModel.trips.count > 1 {
+                    Text("Future Plans")
+                        .sectionTitleStyle()
+                }
+
+                ForEach(tripsViewModel.trips.dropFirst()) { trip in
                     FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: trip.location, travelDate: "Jan 15 - 25 2026")
                         .padding(5)
                 }
 
-                AddTripButton(showPlanNewTrip: $viewModel.showPlanNewTrip)
+                AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
                 
                 Spacer()
             }
             .setScrollViewBackground()
-            .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
+            .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
                 PlanNewTrip()
             })
             .navigationTitle(Text("My Trips"))
@@ -182,4 +190,5 @@ private struct AddTripButton: View {
 
 #Preview {
     TripsScreen()
+        .environment(AppState())
 }

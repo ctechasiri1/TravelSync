@@ -12,5 +12,4 @@ class AppState {
     var settings = SettingsViewModel()
     var trips = TripsViewModel()
     var profile = ProfileViewModel()
-    var planNewTrip = PlanNewTripViewModel()
 }

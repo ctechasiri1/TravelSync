@@ -12,7 +12,7 @@ struct CoverImage: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var planNewTripViewModel = appState.planNewTrip
+        @Bindable var planNewTripViewModel = appState.trips
         
         ZStack(alignment: .bottomTrailing) {
             planNewTripViewModel.displayImage
@@ -44,7 +44,7 @@ struct CoverImage: View {
         }
     }
     
-    private func handleImageChange(_ item: PhotosPickerItem?, in viewModel: PlanNewTripViewModel) {
+    private func handleImageChange(_ item: PhotosPickerItem?, in viewModel: TripsViewModel) {
         Task {
             if let data = try? await item?.loadTransferable(type: Data.self),
                let uiImage = UIImage(data: data) {

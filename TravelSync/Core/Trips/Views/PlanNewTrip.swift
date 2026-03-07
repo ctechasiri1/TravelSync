@@ -11,7 +11,7 @@ struct PlanNewTrip: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var planNewTripViewModel = appState.planNewTrip
+        @Bindable var tripsViewModel = appState.trips
         
         ScrollView {
             NavigationOption()
@@ -29,14 +29,14 @@ struct PlanNewTrip: View {
                 .padding()
                 
                 InputTextField(
-                    text: $planNewTripViewModel.locationName,
+                    text: $tripsViewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel"
                 )
                 
                 InputTextField(
-                    text: $planNewTripViewModel.tripName,
+                    text: $tripsViewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko"
@@ -44,7 +44,7 @@ struct PlanNewTrip: View {
                 
                 HStack {
                     CustomDatePicker(
-                        selectedDate: $planNewTripViewModel.startDate,
+                        selectedDate: $tripsViewModel.startDate,
                         pickerTitle: "START DATE"
                     )
                     
@@ -53,7 +53,7 @@ struct PlanNewTrip: View {
                         .padding(.top, 25)
                     
                     CustomDatePicker(
-                        selectedDate: $planNewTripViewModel.endDate,
+                        selectedDate: $tripsViewModel.endDate,
                         pickerTitle: "END DATE"
                     )
                 }
@@ -63,7 +63,7 @@ struct PlanNewTrip: View {
                     ToggleOptionRow(
                         title: "Auto Time Zone",
                         iconName: "clock.fill",
-                        isOn: $planNewTripViewModel.pushNotificationsIsOn
+                        isOn: $tripsViewModel.pushNotificationsIsOn
                     )
                     .padding(.top, 15)
                     
@@ -73,14 +73,24 @@ struct PlanNewTrip: View {
                     ToggleOptionRow(
                         title: "Notifications",
                         iconName: "bell.fill",
-                        isOn: $planNewTripViewModel.pushNotificationsIsOn
+                        isOn: $tripsViewModel.pushNotificationsIsOn
                     )
                     .padding(.bottom, 15)
                 }
                 .padding(.top, 20)
                 
-                CreateTripButton()
-                    .padding()
+                CreateTripButton() {
+                    do {
+                        try tripsViewModel.addTrip()
+                    } catch {
+                        tripsViewModel.errorMessage = error.localizedDescription
+                        tripsViewModel.showErrorAlert = true
+                    }
+                    
+                }
+                .padding()
+                .disabled(!tripsViewModel.canCreateTrip)
+                .opacity(!tripsViewModel.canCreateTrip ? 1.0 : 0.5)
             }
         }
         .toolbar(.hidden, for: .tabBar)
@@ -189,9 +199,13 @@ private struct CustomDatePicker: View {
 }
 
 private struct CreateTripButton: View {
+    @Environment(\.dismiss) var dismiss
+    let action: () -> Void
+    
     var body: some View {
         Button {
-            
+            action()
+            dismiss()
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")
