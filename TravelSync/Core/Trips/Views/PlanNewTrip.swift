@@ -159,7 +159,7 @@ private struct InputTextField: View {
 }
 
 private struct CustomDatePicker: View {
-    @Binding var selectedDate: Date
+    @Binding var selectedDate: Date?
     let pickerTitle: String
     
     var body: some View {
@@ -169,27 +169,32 @@ private struct CustomDatePicker: View {
                 .font(.system(size: 15, weight: .semibold))
             
             HStack {
-                if selectedDate != Date() {
-                    Text("\(selectedDate, style: .date)")
-                } else {
-                    Image(systemName: "calendar")
-                    Text("Select")
-                }
+                Text(selectedDate?.formatted(date: .abbreviated, time: .omitted) ?? "Select Date")
+                    .foregroundStyle(selectedDate == nil ? .secondary : .primary)
+                
+                Spacer()
+                
+                Image(systemName: "calendar")
+                    .foregroundStyle(.accentBlue)
             }
-            .foregroundStyle(Color.secondaryText.opacity(0.5))
             .padding()
-            .overlay {
+            .background(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(
                         Color.secondaryText.opacity(0.2),
                         style: StrokeStyle(lineWidth: 1)
                     )
-                
+            )
+            .overlay {
+                // MARK: I need to review this logic
                 DatePicker(
-                    selection: $selectedDate,
+                    "",
+                    selection: Binding(
+                        get: { selectedDate ?? .now },
+                        set: { selectedDate = $0 }
+                    ),
                     displayedComponents: .date
-                ) {
-                }
+                )
                 .labelsHidden()
                 .colorMultiply(.clear)
             }
