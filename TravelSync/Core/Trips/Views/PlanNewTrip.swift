@@ -42,6 +42,7 @@ struct PlanNewTrip: View {
                     fieldContent: "e.g. Summer in Toyko"
                 )
                 
+                // TODO: Fix the spacing in the start and end date section
                 HStack {
                     CustomDatePicker(
                         selectedDate: $tripsViewModel.startDate,
@@ -186,7 +187,7 @@ private struct CustomDatePicker: View {
                     )
             )
             .overlay {
-                // MARK: I need to review this logic
+                // TODO: I need to review this logic
                 DatePicker(
                     "",
                     selection: Binding(
