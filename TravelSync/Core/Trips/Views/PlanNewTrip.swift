@@ -14,7 +14,14 @@ struct PlanNewTrip: View {
         @Bindable var tripsViewModel = appState.trips
         
         ScrollView {
-            NavigationOption()
+            NavigationOption() {
+                do {
+                    try tripsViewModel.addTrip()
+                } catch {
+                    tripsViewModel.errorMessage = error.localizedDescription
+                    tripsViewModel.showErrorAlert = true
+                }
+            }
             
             CoverImage()
                 .padding()
@@ -42,7 +49,6 @@ struct PlanNewTrip: View {
                     fieldContent: "e.g. Summer in Toyko"
                 )
                 
-                // TODO: Fix the spacing in the start and end date section
                 HStack {
                     CustomDatePicker(
                         selectedDate: $tripsViewModel.startDate,
@@ -58,7 +64,7 @@ struct PlanNewTrip: View {
                         pickerTitle: "END DATE"
                     )
                 }
-                .padding(.leading, 35)
+                .padding(.horizontal)
                 
                 OptionsCard(title: "PREFERNCES") {
                     ToggleOptionRow(
@@ -87,11 +93,11 @@ struct PlanNewTrip: View {
                         tripsViewModel.errorMessage = error.localizedDescription
                         tripsViewModel.showErrorAlert = true
                     }
-                    
                 }
                 .padding()
                 .disabled(!tripsViewModel.canCreateTrip)
-                .opacity(!tripsViewModel.canCreateTrip ? 1.0 : 0.5)
+                .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
+                .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
             }
         }
         .toolbar(.hidden, for: .tabBar)
@@ -100,8 +106,12 @@ struct PlanNewTrip: View {
 
 private struct NavigationOption: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(AppState.self) private var appState
+    let saveAction: () -> Void
     
     var body: some View {
+        let tripsViewModel = appState.trips
+        
         HStack {
             Button {
                 dismiss()
@@ -117,11 +127,14 @@ private struct NavigationOption: View {
                 .frame(maxWidth: .infinity)
             
             Button {
-                
+                saveAction()
             } label: {
                 Text("Save")
             }
             .frame(maxWidth: .infinity)
+            .disabled(!tripsViewModel.canCreateTrip)
+            .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
+            .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
         }
     }
 }
@@ -140,12 +153,16 @@ private struct InputTextField: View {
                 .padding(.leading, 5)
             
             HStack {
-                Image(systemName: fieldImage)
+                if text.isEmpty {
+                    Image(systemName: fieldImage)
+                        .foregroundStyle(.accentBlue)
+                }
+    
                 TextField(text: $text) {
                     Text(fieldContent)
                 }
+                .foregroundStyle(.primary)
             }
-            .foregroundStyle(Color.secondaryText.opacity(0.5))
             .padding()
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
@@ -172,6 +189,7 @@ private struct CustomDatePicker: View {
             HStack {
                 Text(selectedDate?.formatted(date: .abbreviated, time: .omitted) ?? "Select Date")
                     .foregroundStyle(selectedDate == nil ? .secondary : .primary)
+                    .animation(.default, value: selectedDate)
                 
                 Spacer()
                 
@@ -187,7 +205,7 @@ private struct CustomDatePicker: View {
                     )
             )
             .overlay {
-                // TODO: I need to review this logic
+                // uses proxy binding for the date picker to work around the optional value
                 DatePicker(
                     "",
                     selection: Binding(

@@ -19,7 +19,7 @@ struct PersonalInfoScreen: View {
                     .padding(.vertical, 50)
                 
                 VStack(spacing: 15) {
-                    EditCard(field: $settingsViewModel.fullName, cardName: "USERNAME", placeholder: "Edit Username")
+                    EditCard(field: $settingsViewModel.userName, cardName: "USERNAME", placeholder: "Edit Username")
                     
                     EditCard(field: $settingsViewModel.fullName, cardName: "FULL NAME", placeholder: "Edit Name")
                     

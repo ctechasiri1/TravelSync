@@ -23,7 +23,7 @@ struct CustomSegmentButton: View {
                 } label: {
                     Text(option.title)
                         .font(.subheadline.weight(.medium))
-                        .foregroundColor(selection == option ? Color.primaryText : Color.secondaryText )
+                        .foregroundColor(selection == option ? Color.primaryText.opacity(0.7) : Color.secondaryText )
                         .padding(.vertical, 8)
                         .frame(maxWidth: .infinity)
                         .background {

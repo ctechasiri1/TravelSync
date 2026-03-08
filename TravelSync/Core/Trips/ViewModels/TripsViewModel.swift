@@ -16,7 +16,7 @@ class TripsViewModel {
     // this is for the Trips Screen
     var selection: TripOption = .upcoming
     var showPlanNewTrip: Bool = false
-    var trips: [Trip] = []
+    var trips: [Trip] = [Trip(tripName: "Land of Smiles", location: "Bangkok, Thailand", startDate: .now, endDate: .distantFuture, coverImage: nil)]
     
     // this is for the Plan New Trips Screen
     var pushNotificationsIsOn: Bool = true
@@ -31,12 +31,12 @@ class TripsViewModel {
     // Holds the selection from the picker
     var selectedItem: PhotosPickerItem? = nil
     // Holds the actual image to display
-    var profileUIImage: UIImage? = nil
+    var coverUIImage: UIImage? = nil
     
     //MARK: Computed Variables
     // converts the selected UIImage from photos to Image
     var displayImage: Image {
-        if let uiImage = profileUIImage {
+        if let uiImage = coverUIImage {
             return Image(uiImage: uiImage)
         } else {
             return Image("Temp_Background")
@@ -66,7 +66,7 @@ class TripsViewModel {
             throw TripError.emptyLocation
         }
         
-        let newTrip = Trip(location: locationName, startDate: start, endDate: end)
+        let newTrip = Trip(tripName: tripName, location: locationName, startDate: start, endDate: end, coverImage: coverUIImage)
         trips.append(newTrip)
         
         resetForm()
@@ -78,5 +78,6 @@ class TripsViewModel {
         locationName = ""
         startDate = nil
         endDate = nil
+        coverUIImage = nil
     }
 }

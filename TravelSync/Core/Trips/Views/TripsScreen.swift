@@ -26,13 +26,8 @@ struct TripsScreen: View {
                         .sectionTitleStyle()
                 }
                 
-                if let trip = tripsViewModel.trips.first {
-                    NextTripCard(
-                        urlString: "https://example.com/image.png",
-                        imageHeight: 250,
-                        travelDestination: trip.location,
-                        travelDate: trip.dateRangeString
-                    )
+                if let firstTrip = tripsViewModel.trips.first {
+                    TripCard(trip: firstTrip)
                 }
                 
                 if tripsViewModel.trips.count > 1 {
@@ -40,12 +35,17 @@ struct TripsScreen: View {
                         .sectionTitleStyle()
                 }
 
-                ForEach(tripsViewModel.trips.dropFirst()) { trip in
-                    FutureTripCard(urlString: "https://example.com/image.png", imageHeight: 150, travelDestination: trip.location, travelDate: "Jan 15 - 25 2026")
-                        .padding(5)
-                }
+//                ForEach(tripsViewModel.trips.dropFirst()) { trip in
+//                    TripCard(
+//                        coverImage: trip.coverImage,
+//                        travelDestination: trip.location,
+//                        travelDate: trip.dateRangeString
+//                    )
+//                        .padding(5)
+//                }
 
                 AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
+                    .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
                 
                 Spacer()
             }
@@ -63,26 +63,34 @@ struct TripsScreen: View {
     }
 }
 
-private struct NextTripCard: View {
-    let urlString: String
-    let imageHeight: CGFloat
-    let travelDestination: String
-    let travelDate: String
+private struct TripCard: View {
+    let trip: Trip
     
     var body: some View {
         VStack {
-            ImageWithPlaceHolder(urlString: urlString, imageHeight: imageHeight)
+            Group {
+                if let image = trip.coverImage {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                } else {
+                    Image("Temp_Background")
+                        .resizable()
+                        .scaledToFit()
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: 15))
             
             VStack {
                 HStack {
                     VStack(alignment: .leading) {
-                        Text(travelDestination)
+                        Text(trip.location)
                             .font(.system(.title, weight: .bold))
                         
                         HStack {
                             Image(systemName: "calendar")
                                 .foregroundStyle(Color.accentBlue)
-                            Text(travelDate)
+                            Text(trip.dateRangeString)
                                 .foregroundStyle(Color.secondaryText)
                         }
                     }
@@ -100,54 +108,16 @@ private struct NextTripCard: View {
                     
                     Spacer()
                     
-                    Text("View Itinerary")
+                    NavigationLink {
+                        TripScreen(trip: trip)
+                    } label: {
+                        Text("View Itinerary")
+                    }
+
                     Image(systemName: "arrow.forward")
                 }
                 .bold()
                 .foregroundStyle(Color.accentBlue)
-                .padding()
-            }
-            .padding()
-        }
-        .createCardBackgroud()
-    }
-}
-
-private struct FutureTripCard: View {
-    let urlString: String
-    let imageHeight: CGFloat
-    let travelDestination: String
-    let travelDate: String
-    
-    var body: some View {
-        VStack {
-            ImageWithPlaceHolder(urlString: urlString, imageHeight: imageHeight)
-            
-            VStack {
-                HStack {
-                    VStack(alignment: .leading, spacing: 10) {
-                        HStack {
-                            Text(travelDestination)
-                                .font(.system(.title, weight: .bold))
-                            
-                            Spacer()
-                            
-                            Text("45 days")
-                                .padding(10)
-                                .foregroundStyle(Color.accentConfirmation)
-                                .background(Color.green.opacity(0.2))
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            
-                        }
-                        
-                        Text(travelDate)
-                            .foregroundStyle(Color.secondaryText)
-                        
-                        Text("5 days till trip")
-                            .font(.system(.subheadline, weight: .regular))
-                            .foregroundStyle(Color.accentBlue)
-                    }
-                }
                 .padding()
             }
             .padding()

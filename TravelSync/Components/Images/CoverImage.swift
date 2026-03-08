@@ -48,7 +48,7 @@ struct CoverImage: View {
         Task {
             if let data = try? await item?.loadTransferable(type: Data.self),
                let uiImage = UIImage(data: data) {
-                viewModel.profileUIImage = uiImage
+                viewModel.coverUIImage = uiImage
             }
         }
     }
