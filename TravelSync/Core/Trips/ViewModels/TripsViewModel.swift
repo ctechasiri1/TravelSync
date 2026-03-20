@@ -16,7 +16,7 @@ class TripsViewModel {
     // this is for the Trips Screen
     var selection: TripOption = .upcoming
     var showPlanNewTrip: Bool = false
-    var trips: [Trip] = [Trip(tripName: "Land of Smiles", location: "Bangkok, Thailand", startDate: .now, endDate: .distantFuture, coverImage: nil)]
+    var trips: [Trip] = [Trip.example]
     
     // this is for the Plan New Trips Screen
     var pushNotificationsIsOn: Bool = true

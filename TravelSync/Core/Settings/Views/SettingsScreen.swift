@@ -22,13 +22,14 @@ struct SettingsScreen: View {
                     
                     SupportOptions()
                     
-                    LogOutButton()
+                    LogOutButton{ } 
                     
                     Text("Version 2.4.0 (145)")
                         .font(.subheadline)
                         .foregroundStyle(Color.textColor.secondaryText)
                 }
                 .padding(.top)
+                .padding(.horizontal)
                 .navigationTitle("Settings")
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.hidden, for: .tabBar)

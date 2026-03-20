@@ -29,6 +29,7 @@ struct PersonalInfoScreen: View {
                     
                     EditCard(field: $settingsViewModel.location, cardName: "LOCATION", placeholder: "Edit Location")
                 }
+                .padding(.horizontal)
 
                 PersonalInfoButtonOptions()
                     .padding()

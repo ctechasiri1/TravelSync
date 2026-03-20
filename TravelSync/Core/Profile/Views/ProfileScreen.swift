@@ -44,11 +44,14 @@ struct ProfileScreen: View {
                     
                     ProfileInformation()
                     
-                    TravelBadges()
-                    
-                    FuturePlansOptions()
-                    
-                    LogOutButton()
+                    Group {
+                        TravelBadges()
+                        
+                        FuturePlansOptions()
+                        
+                        LogOutButton { }
+                    }
+                    .padding(.horizontal)
                     
                     Spacer()
                 }

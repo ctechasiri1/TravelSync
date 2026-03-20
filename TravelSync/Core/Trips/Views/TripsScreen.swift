@@ -27,7 +27,8 @@ struct TripsScreen: View {
                 }
                 
                 if let firstTrip = tripsViewModel.trips.first {
-                    TripCard(trip: firstTrip)
+                    TripCard(trip: firstTrip, upcomingTrip: true)
+                        .padding(.horizontal)
                 }
                 
                 if tripsViewModel.trips.count > 1 {
@@ -65,6 +66,7 @@ struct TripsScreen: View {
 
 private struct TripCard: View {
     let trip: Trip
+    let upcomingTrip: Bool
     
     var body: some View {
         VStack {
@@ -109,7 +111,7 @@ private struct TripCard: View {
                     Spacer()
                     
                     NavigationLink {
-                        TripScreen(trip: trip)
+                        TripScreen(trip: trip, upcomingTrip: upcomingTrip)
                     } label: {
                         Text("View Itinerary")
                     }

@@ -9,9 +9,8 @@ import SwiftUI
 
 struct CustomSegmentButton: View {
     @Binding var selection: TripOption
-    let options: [TripOption]
-    
     @Namespace private var namespace
+    let options: [TripOption]
     
     var body: some View {
         HStack(spacing: 0) {
