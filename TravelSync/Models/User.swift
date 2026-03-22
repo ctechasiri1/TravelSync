@@ -14,6 +14,5 @@ struct User {
     let phoneNumber: String
     let email: String
     let profileImage: String
-    let pastTrips: [Trip]
-    let currentTrips: [Trip]
+    let trips: [Trip]
 }

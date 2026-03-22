@@ -100,7 +100,7 @@ private struct TripImageOverlay: View {
                 Spacer()
                 
                 Text(upcomingTrip ? "UPCOMING" : "FUTURE")
-                    .padding(10)
+                    .padding(6)
                     .font(.system(.caption, weight: .bold))
                     .background(.blue)
                     .clipShape(RoundedRectangle(cornerRadius: 15))

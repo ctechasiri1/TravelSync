@@ -10,7 +10,8 @@ import SwiftUI
 struct ProfileScreen: View {
     @Environment(AppState.self) private var appState
     @State private var isShowingSettings: Bool = false
-   
+    @State private var isShowingPersonalInfo: Bool = false
+    
     var body: some View {
         let settingsViewModel = appState.settings
         
@@ -58,14 +59,18 @@ struct ProfileScreen: View {
             }
             .setScrollViewBackground()
             .toolbar(content: {
-                CircleButton(imageName: "pencil", action: {})
+                CircleButton(imageName: "pencil", action: {
+                    isShowingPersonalInfo = true
+                })
                 CircleButton(imageName: "gear", action: {
                     isShowingSettings = true
                 } )
             })
             .navigationDestination(isPresented: $isShowingSettings, destination: {
                 SettingsScreen()
-                    .environment(settingsViewModel)
+            })
+            .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
+                PersonalInfoScreen()
             })
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
