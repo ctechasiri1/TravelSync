@@ -254,6 +254,14 @@ private struct TripBudgetCard: View {
 }
 
 #Preview {
-    TripScreen(trip: Trip.example, upcomingTrip: true)
+    TripScreen(
+        trip: Trip(
+            tripName: "Summer in Thailand",
+            location: "Bangkok, Thailand",
+            budget: "1_000",
+            startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
+            endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
+            coverImage: UIImage(named: "Temp_Background")),
+        upcomingTrip: true)
         .environment(AppState())
 }

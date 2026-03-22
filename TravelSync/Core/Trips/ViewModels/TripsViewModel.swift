@@ -16,7 +16,7 @@ class TripsViewModel {
     // this is for the Trips Screen
     var selection: TripOption = .upcoming
     var showPlanNewTrip: Bool = false
-    var trips: [Trip] = [Trip.example]
+    var trips: [Trip] = Trip.example
     
     // this is for the Plan New Trips Screen
     var pushNotificationsIsOn: Bool = true
@@ -52,6 +52,18 @@ class TripsViewModel {
             return hasLocation && hasDates && (end > start)
         }
         return false
+    }
+    
+    var upcomingTrips: [Trip] {
+        return trips.filter { $0.startDate >= Date.now}
+    }
+    
+    var pastTrips: [Trip] {
+        return trips.filter { $0.startDate < Date.now}
+    }
+    
+    var isUpcomingTrip: Bool {
+        return selection == .upcoming
     }
     
     //MARK: Methods

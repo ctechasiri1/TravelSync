@@ -17,15 +17,32 @@ struct Trip: Identifiable, Equatable {
     let endDate: Date
     let coverImage: UIImage?
     
-    static var example: Trip {
-        return Trip(
-            tripName: "Summer in Thailand",
-            location: "Bangkok, Thailand",
-            budget: "1,000",
-            startDate: .now,
-            endDate: Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now,
-            coverImage: UIImage(named: "Temp_Background")
-        )
+    static var example: [Trip] {
+        return [
+            Trip(
+                tripName: "Summer in Thailand",
+                location: "Bangkok, Thailand",
+                budget: "1_000",
+                startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
+                endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
+                coverImage: UIImage(named: "Temp_Background")
+            ),
+            Trip(
+                tripName: "Eating Pho in Vietnam",
+                location: "Saigon, Vietnam",
+                budget: "2_000",
+                startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
+                endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
+                coverImage: UIImage(named: "Temp_Background")
+            ),
+            Trip(tripName: "Travel to Taiwan",
+                 location: "Taipei, Taiwan",
+                 budget: "3_000",
+                 startDate: Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now,
+                 endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date.now) ?? .now,
+                 coverImage: UIImage(named: "Temp_Background")
+                )
+        ]
     }
 }
 
@@ -43,7 +60,7 @@ extension Trip {
         differnceFormatter.allowedUnits = .day
         differnceFormatter.unitsStyle = .full
         
-        if let dateDiffernce = differnceFormatter.string(from: startDate, to: endDate) {
+        if let dateDiffernce = differnceFormatter.string(from: .now, to: startDate) {
             return dateDiffernce.capitalized
         } else {
             print("There was an error getting date differnce")

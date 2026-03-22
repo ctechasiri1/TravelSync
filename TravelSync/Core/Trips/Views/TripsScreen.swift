@@ -21,28 +21,32 @@ struct TripsScreen: View {
                                     options: TripOption.allCases)
                 .padding()
                 
-                if !tripsViewModel.trips.isEmpty {
-                    Text("Next Adventure")
+                if !tripsViewModel.upcomingTrips.isEmpty {
+                    Text(tripsViewModel.isUpcomingTrip ? "Next Adventure" : "Recent Adventure")
                         .sectionTitleStyle()
                 }
                 
-                if let firstTrip = tripsViewModel.trips.first {
-                    TripCard(trip: firstTrip, upcomingTrip: true)
+                if let firstTripUpcoming = tripsViewModel.upcomingTrips.first,
+                   let firstTripPast = tripsViewModel.pastTrips.first {
+                    TripCard(trip: tripsViewModel.isUpcomingTrip ? firstTripUpcoming : firstTripPast, upcomingTrip: true)
                         .padding(.horizontal)
                 }
                 
-                if tripsViewModel.trips.count > 1 {
-                    Text("Future Plans")
+                if tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.count > 1 : tripsViewModel.pastTrips.count > 1 {
+                    Text(tripsViewModel.isUpcomingTrip ? "Future Plans" : "Past Plans")
                         .sectionTitleStyle()
+                        .padding(.top)
                 }
 
-                ForEach(tripsViewModel.trips.dropFirst()) { trip in
+                ForEach(tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.dropFirst() : tripsViewModel.pastTrips.dropFirst()) { trip in
                     TripCard(trip: trip, upcomingTrip: false)
-                        .padding(5)
+                        .padding(.horizontal, 25)
                 }
 
-                AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
-                    .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
+                if tripsViewModel.isUpcomingTrip {
+                    AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
+                        .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
+                }
                 
                 Spacer()
             }
