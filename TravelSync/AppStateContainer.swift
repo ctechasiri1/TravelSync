@@ -12,4 +12,5 @@ class AppState {
     var settings = SettingsViewModel()
     var trips = TripsViewModel()
     var profile = ProfileViewModel()
+    var currentTrip = TripViewModel()
 }

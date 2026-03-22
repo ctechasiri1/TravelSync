@@ -1,5 +1,5 @@
 //
-//  PlanNewTrip.swift
+//  PlanNewTripScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 2/24/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PlanNewTrip: View {
+struct PlanNewTripScreen: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
@@ -18,8 +18,8 @@ struct PlanNewTrip: View {
                 do {
                     try tripsViewModel.addTrip()
                 } catch {
-                    tripsViewModel.errorMessage = error.localizedDescription
-                    tripsViewModel.showErrorAlert = true
+//                    tripsViewModel.errorMessage = error.localizedDescription
+//                    tripsViewModel.showErrorAlert = true
                 }
             }
             
@@ -90,8 +90,8 @@ struct PlanNewTrip: View {
                     do {
                         try tripsViewModel.addTrip()
                     } catch {
-                        tripsViewModel.errorMessage = error.localizedDescription
-                        tripsViewModel.showErrorAlert = true
+//                        tripsViewModel.errorMessage = error.localizedDescription
+//                        tripsViewModel.showErrorAlert = true
                     }
                 }
                 .padding()
@@ -251,6 +251,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTrip()
+    PlanNewTripScreen()
         .environment(AppState())
 }

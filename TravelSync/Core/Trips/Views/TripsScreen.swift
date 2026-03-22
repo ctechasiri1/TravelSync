@@ -36,14 +36,10 @@ struct TripsScreen: View {
                         .sectionTitleStyle()
                 }
 
-//                ForEach(tripsViewModel.trips.dropFirst()) { trip in
-//                    TripCard(
-//                        coverImage: trip.coverImage,
-//                        travelDestination: trip.location,
-//                        travelDate: trip.dateRangeString
-//                    )
-//                        .padding(5)
-//                }
+                ForEach(tripsViewModel.trips.dropFirst()) { trip in
+                    TripCard(trip: trip, upcomingTrip: false)
+                        .padding(5)
+                }
 
                 AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
                     .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
@@ -52,7 +48,7 @@ struct TripsScreen: View {
             }
             .setScrollViewBackground()
             .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
-                PlanNewTrip()
+                PlanNewTripScreen()
             })
             .navigationTitle(Text("My Trips"))
             .toolbar {

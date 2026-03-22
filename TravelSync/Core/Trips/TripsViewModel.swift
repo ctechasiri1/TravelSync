@@ -24,8 +24,6 @@ class TripsViewModel {
     var locationName: String = ""
     var startDate: Date? = nil
     var endDate: Date? = nil
-    var errorMessage: String? = nil
-    var showErrorAlert: Bool = false
     
     // this is for handling the Cover Image
     // Holds the selection from the picker

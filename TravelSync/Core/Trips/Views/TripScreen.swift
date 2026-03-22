@@ -61,13 +61,17 @@ struct TripScreen: View {
                             value: "\(trip.dateDiffernce ?? "0 Days") Left",
                             iconName: "map.fill",
                             iconColor: .accentBlue
-                        )
+                        ) {
+                            ItineraryScreen()
+                        }
                         
                         TripQuickAccessCard(
                             title: "Documents",
                             value: "\(trip.dateDiffernce ?? "0 Days") Left",
                             iconName: "ticket.fill", iconColor: .accentConfirmation
-                        )
+                        ) {
+                            ItineraryScreen()
+                        }
                     }
                     .padding(.horizontal)
                     
@@ -154,40 +158,50 @@ struct TripInformationCard: View {
     }
 }
 
-struct TripQuickAccessCard: View {
+struct TripQuickAccessCard<T:View>: View {
     let title: String
     let value: String
     let iconName: String
     let iconColor: Color
+    @ViewBuilder let content: T
     
     var body: some View {
-        OptionsCard(title: "") {
-            HStack {
-                VStack(alignment: .leading) {
-                    SquareIcon(
-                        iconName: iconName,
-                        iconColor: iconColor,
-                        width: 50,
-                        height: 50
-                    )
-                    .padding(.leading, 5)
-                    .padding([.top, .bottom], 10)
-                    .imageScale(.large)
-                    
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(title)
-                            .font(.system(size: 18, weight: .semibold))
+        NavigationLink {
+            content
+        } label: {
+            OptionsCard(title: "") {
+                HStack {
+                    VStack(alignment: .leading) {
+                        SquareIcon(
+                            iconName: iconName,
+                            iconColor: iconColor,
+                            width: 50,
+                            height: 50
+                        )
+                        .padding(.leading, 5)
+                        .padding([.top, .bottom], 10)
+                        .imageScale(.large)
                         
-                        Text(value)
-                            .font(.system(size: 13))
-                            .foregroundStyle(.secondaryText)
-                            
+
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(title)
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(.black)
+                                
+                            Text(value)
+                                .font(.system(size: 13))
+                                .foregroundStyle(.secondaryText)
+                                
+                        }
+                        .padding([.top, .bottom, .trailing], 15)
+                        
+                        HStack {
+                            Spacer()
+                            Image(systemName: "arrow.right")
+                        }
                     }
-                    .padding([.top, .bottom, .trailing], 10)
+                    .padding(20)
                 }
-                .padding(20)
-                
-                Spacer()
             }
         }
     }

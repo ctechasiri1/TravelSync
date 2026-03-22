@@ -8,9 +8,9 @@
 import SwiftUI
 
 // This creates a 'group' for multiples views to be passed into
-struct OptionsCard<Content: View>: View {
+struct OptionsCard<T: View>: View {
     let title: String?
-    @ViewBuilder let content: Content
+    @ViewBuilder let content: T
     
     var body: some View {
         VStack(spacing: 10) {
