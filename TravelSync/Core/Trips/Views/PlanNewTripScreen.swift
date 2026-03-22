@@ -18,8 +18,8 @@ struct PlanNewTripScreen: View {
                 do {
                     try tripsViewModel.addTrip()
                 } catch {
-                    tripsViewModel.showErrorAlert = true
-                    print(error.localizedDescription)
+//                    tripsViewModel.showErrorAlert = true
+//                    print(error.localizedDescription)
                 }
             }
             

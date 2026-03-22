@@ -66,7 +66,7 @@ class TripsViewModel {
             throw TripError.emptyLocation
         }
         
-        let newTrip = Trip(tripName: tripName, location: locationName, budget: budget, startDate: start, endDate: end,  coverImage: coverUIImage)
+        let newTrip = Trip(tripName: tripName, location: locationName,budget: budget, startDate: start, endDate: end,  coverImage: coverUIImage)
         trips.append(newTrip)
         
         resetForm()
