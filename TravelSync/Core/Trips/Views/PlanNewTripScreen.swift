@@ -18,8 +18,8 @@ struct PlanNewTripScreen: View {
                 do {
                     try tripsViewModel.addTrip()
                 } catch {
-//                    tripsViewModel.errorMessage = error.localizedDescription
-//                    tripsViewModel.showErrorAlert = true
+                    tripsViewModel.showErrorAlert = true
+                    print(error.localizedDescription)
                 }
             }
             
@@ -49,6 +49,13 @@ struct PlanNewTripScreen: View {
                     fieldContent: "e.g. Summer in Toyko"
                 )
                 
+                InputTextField(
+                    text: $tripsViewModel.budget,
+                    fieldTitle: "BUDGET",
+                    fieldImage: "banknote.fill",
+                    fieldContent: "e.g. 10,000"
+                )
+                
                 HStack {
                     CustomDatePicker(
                         selectedDate: $tripsViewModel.startDate,
@@ -64,7 +71,6 @@ struct PlanNewTripScreen: View {
                         pickerTitle: "END DATE"
                     )
                 }
-                .padding(.horizontal)
                 
                 OptionsCard(title: "PREFERNCES") {
                     ToggleOptionRow(
@@ -90,8 +96,8 @@ struct PlanNewTripScreen: View {
                     do {
                         try tripsViewModel.addTrip()
                     } catch {
-//                        tripsViewModel.errorMessage = error.localizedDescription
-//                        tripsViewModel.showErrorAlert = true
+                        tripsViewModel.showErrorAlert = true
+                        print(error.localizedDescription)
                     }
                 }
                 .padding()
@@ -99,6 +105,7 @@ struct PlanNewTripScreen: View {
                 .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
                 .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
             }
+            .padding(.horizontal)
         }
         .toolbar(.hidden, for: .tabBar)
     }
@@ -172,7 +179,7 @@ private struct InputTextField: View {
                     )
             )
         }
-        .padding()
+        .padding(.vertical, 10)
     }
 }
 
@@ -205,7 +212,6 @@ private struct CustomDatePicker: View {
                     )
             )
             .overlay {
-                // uses proxy binding for the date picker to work around the optional value
                 DatePicker(
                     "",
                     selection: Binding(

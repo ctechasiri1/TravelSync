@@ -12,6 +12,7 @@ struct Trip: Identifiable, Equatable {
     let id: UUID = UUID()
     let tripName: String
     let location: String
+    let budget: String
     let startDate: Date
     let endDate: Date
     let coverImage: UIImage?
@@ -20,6 +21,7 @@ struct Trip: Identifiable, Equatable {
         return Trip(
             tripName: "Summer in Thailand",
             location: "Bangkok, Thailand",
+            budget: "1,000",
             startDate: .now,
             endDate: Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now,
             coverImage: UIImage(named: "Temp_Background")

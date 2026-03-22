@@ -90,7 +90,7 @@ struct TripScreen: View {
     }
 }
 
-struct TripImageOverlay: View {
+private struct TripImageOverlay: View {
     let trip: Trip
     let upcomingTrip: Bool
     
@@ -127,7 +127,7 @@ struct TripImageOverlay: View {
     }
 }
 
-struct TripInformationCard: View {
+private struct TripInformationCard: View {
     let title: String
     let value: String
     let iconName: String
@@ -158,7 +158,7 @@ struct TripInformationCard: View {
     }
 }
 
-struct TripQuickAccessCard<T:View>: View {
+private struct TripQuickAccessCard<T:View>: View {
     let title: String
     let value: String
     let iconName: String
@@ -207,7 +207,7 @@ struct TripQuickAccessCard<T:View>: View {
     }
 }
 
-struct TripBudgetCard: View {
+private struct TripBudgetCard: View {
     let title: String
     let value: String
     let iconName: String

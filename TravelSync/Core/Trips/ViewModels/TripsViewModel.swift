@@ -22,8 +22,10 @@ class TripsViewModel {
     var pushNotificationsIsOn: Bool = true
     var tripName: String = ""
     var locationName: String = ""
+    var budget: String = ""
     var startDate: Date? = nil
     var endDate: Date? = nil
+    var showErrorAlert: Bool = false
     
     // this is for handling the Cover Image
     // Holds the selection from the picker
@@ -64,7 +66,7 @@ class TripsViewModel {
             throw TripError.emptyLocation
         }
         
-        let newTrip = Trip(tripName: tripName, location: locationName, startDate: start, endDate: end, coverImage: coverUIImage)
+        let newTrip = Trip(tripName: tripName, location: locationName, budget: budget, startDate: start, endDate: end,  coverImage: coverUIImage)
         trips.append(newTrip)
         
         resetForm()
@@ -74,6 +76,7 @@ class TripsViewModel {
     func resetForm() -> Void {
         tripName = ""
         locationName = ""
+        budget = ""
         startDate = nil
         endDate = nil
         coverUIImage = nil

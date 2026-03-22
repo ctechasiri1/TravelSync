@@ -35,11 +35,18 @@ struct ItineraryScreen: View {
                 DetailedItinerary(events: currentTripViewModel.events)
             }
         }
-
     }
 }
 
-struct ManageButton: View {
+//private struct GroupBucketList: View {
+//    var body: some View {
+//        ScrollView(.horizontal) {
+//            
+//        }
+//    }
+//}
+
+private struct ManageButton: View {
     let action: () -> Void
     
     var body: some View {
@@ -60,7 +67,7 @@ struct ManageButton: View {
     }
 }
 
-struct DetailedItinerary: View {
+private struct DetailedItinerary: View {
     let events: [Event]
     
     var body: some View {
@@ -96,6 +103,7 @@ struct DetailedItinerary: View {
                                     
                                     HStack {
                                         Image(systemName: "clock.fill")
+                                        
                                         Text(event.timeDuration + " duration")
                                     }
                                     .padding(5)
