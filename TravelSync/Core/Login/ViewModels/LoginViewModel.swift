@@ -10,9 +10,11 @@ import Foundation
 
 @Observable
 class LoginViewModel {
-    // For Login Screen
+    // For Login & Sign Up Screen
     var email: String = ""
     var password: String = ""
+    var fullName: String = ""
+    var username: String = ""
     
     // For Loading Screen
     var loadingValue: Float = 0

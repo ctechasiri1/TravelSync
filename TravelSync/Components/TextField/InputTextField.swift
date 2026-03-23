@@ -16,7 +16,6 @@ struct InputTextField: View {
     let fieldContent: String
     let iconColor: Color
     
-    
     var body: some View {
         VStack(alignment: .leading) {
             Text(fieldTitle)

@@ -16,20 +16,44 @@ struct PersonalInfoScreen: View {
         NavigationStack {
             ScrollView {
                 ProfileImage()
-                    .padding(.vertical, 50)
+                    .padding(.vertical, 10)
                 
-                VStack(spacing: 15) {
-                    EditCard(field: $settingsViewModel.userName, cardName: "USERNAME", placeholder: "Edit Username")
+                VStack(spacing: 5) {
+                    InputTextField(
+                        text: $settingsViewModel.userName,
+                        fieldTitle: "USERNAME",
+                        fieldImage: "pencil",
+                        fieldContent: "Edit Username",
+                        iconColor: .gray
+                    )
                     
-                    EditCard(field: $settingsViewModel.fullName, cardName: "FULL NAME", placeholder: "Edit Name")
+                    InputTextField(
+                        text: $settingsViewModel.fullName,
+                        fieldTitle: "FULL NAME",
+                        fieldImage: "person.fill",
+                        fieldContent: "Edit Name",
+                        iconColor: .gray
+                    )
                     
-                    EditCard(field: $settingsViewModel.emailAddress, cardName: "EMAIL", placeholder: "Edit Email")
+                    InputTextField(
+                        text: $settingsViewModel.emailAddress,
+                        fieldTitle: "EMAIL",
+                        fieldImage: "envelope.fill",
+                        fieldContent: "Edit Email",
+                        iconColor: .gray
+                    )
                     
-                    EditCard(field: $settingsViewModel.phoneNumber, cardName: "PHONE NUMBER", placeholder: "Edit Phone Number")
-                    
-                    EditCard(field: $settingsViewModel.location, cardName: "LOCATION", placeholder: "Edit Location")
+                    InputTextField(
+                        text: $settingsViewModel.password,
+                        isSecureField: true,
+                        toggleSecurityButton: true,
+                        fieldTitle: "PASSWORD",
+                        fieldImage: "lock.fill",
+                        fieldContent: "Edit Password",
+                        iconColor: .gray
+                    )
                 }
-                .padding(.horizontal)
+                .padding()
 
                 PersonalInfoButtonOptions()
                     .padding()
@@ -104,7 +128,7 @@ private struct PersonalInfoButtonOptions: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.white)
-                    .background(.accentBlue)
+                    .background(.accentPrimary)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 
             }

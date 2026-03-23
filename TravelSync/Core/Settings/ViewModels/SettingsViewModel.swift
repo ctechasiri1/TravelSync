@@ -20,8 +20,7 @@ class SettingsViewModel {
     var userName: String = ""
     var fullName: String = ""
     var emailAddress: String = ""
-    var phoneNumber: String = ""
-    var location: String = ""
+    var password: String = ""
     
     // Holds the selection from the picker
     var selectedItem: PhotosPickerItem? = nil
