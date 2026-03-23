@@ -13,74 +13,78 @@ struct LoginScreen: View {
     var body: some View {
         @Bindable var loginViewModel = appState.login
         
-        ZStack {
-            Color.secondaryBackground
-            OptionsCard(title: "") {
-                VStack(alignment: .leading) {
-                    LoginIcon()
-                        .padding()
-                        .padding(.top, 20)
-                    
-                    Text("Welcome Back,")
-                        .font(.system(.title, weight: .semibold))
-                    
-                    Text("Explorer!")
-                        .font(.system(.title, weight: .semibold))
-                        .foregroundStyle(.orange)
-                    
-                    Text("Continue to your adventure where you left off.")
-                        .font(.system(.subheadline))
-                        .foregroundStyle(.secondaryText.opacity(0.6))
-                    
-                    InputTextField(
-                        text: $loginViewModel.email,
-                        fieldTitle: "Email or Username",
-                        fieldImage: "envelope",
-                        fieldContent: "hello@example.com",
-                        iconColor: .gray
-                    )
-                    
-                    InputTextField(
-                        text: $loginViewModel.password,
-                        isSecureField: true,
-                        toggleSecurityButton: true,
-                        fieldTitle: "Password",
-                        fieldImage: "lock",
-                        fieldContent: "••••••••••",
-                        iconColor: .gray
-                    )
-                    
-                    TextButton(text: "Forgot Password?") { }
-                    .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.bottom)
-
-                    
-                    LoginButton { }
-                    
-                    LoginDivider()
-                        .padding()
-                    
-                    HStack(spacing: 20) {
-                        LoginOptionButton(iconImage: "googleIcon", text: "Google") { }
-                        LoginOptionButton(iconImage: "appleIcon", text: "Apple") { }
-                    }
-                    .frame(maxWidth: .infinity)
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Text("Don't have an account?")
+        NavigationStack {
+            ZStack {
+                Color.secondaryBackground
+                OptionsCard(title: "") {
+                    VStack(alignment: .leading) {
+                        LoginIcon()
+                            .padding()
+                            .padding(.top, 20)
+                        
+                        Text("Welcome Back,")
+                            .font(.system(.title, weight: .semibold))
+                        
+                        Text("Explorer!")
+                            .font(.system(.title, weight: .semibold))
+                            .foregroundStyle(.accentPrimary)
+                        
+                        Text("Continue to your adventure where you left off.")
+                            .font(.system(.subheadline))
                             .foregroundStyle(.secondaryText.opacity(0.6))
                         
-                        TextButton(text: "Sign Up") { }
+                        InputTextField(
+                            text: $loginViewModel.email,
+                            fieldTitle: "Email or Username",
+                            fieldImage: "envelope",
+                            fieldContent: "hello@example.com",
+                            iconColor: .gray
+                        )
+                        
+                        InputTextField(
+                            text: $loginViewModel.password,
+                            isSecureField: true,
+                            toggleSecurityButton: true,
+                            fieldTitle: "Password",
+                            fieldImage: "lock",
+                            fieldContent: "••••••••••",
+                            iconColor: .gray
+                        )
+                        
+                        TextButton(text: "Forgot Password?") { }
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                            .padding(.bottom)
+                        
+                        
+                        LoginButton { }
+                        
+                        LoginDivider()
+                            .padding()
+                        
+                        HStack(spacing: 20) {
+                            LoginOptionButton(iconImage: "googleIcon", text: "Google") { }
+                            LoginOptionButton(iconImage: "appleIcon", text: "Apple") { }
+                        }
+                        .frame(maxWidth: .infinity)
+                        
+                        Spacer()
+                        
+                        HStack {
+                            Text("Don't have an account?")
+                                .foregroundStyle(.secondaryText.opacity(0.6))
+                            
+                            TextButton(text: "Sign Up") { }
+                        }
+                        .padding()
+                        .font(.system(.subheadline))
+                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .font(.system(.subheadline))
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             }
-            .padding()
+            .navigationBarBackButtonHidden()
         }
     }
 }
@@ -92,7 +96,7 @@ private struct LoginIcon: View {
             .foregroundStyle(.white)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(.orange)
+                    .fill(.accentPrimary)
                     .frame(width: 50, height: 50)
             )
     }
@@ -126,7 +130,7 @@ private struct TextButton: View {
         } label: {
             Text(text)
                 .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(.orange)
+                .foregroundStyle(.accentPrimary)
         }
     }
 }
@@ -143,7 +147,7 @@ private struct LoginButton: View {
                 .padding()
                 .foregroundStyle(Color.white)
                 .frame(maxWidth: .infinity)
-                .background(.orange)
+                .background(.accentPrimary)
                 .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }

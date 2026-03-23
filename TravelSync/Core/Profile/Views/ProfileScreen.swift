@@ -110,7 +110,7 @@ private struct TravelBadges: View {
         VStack {
             HStack {
                 Image(systemName: "medal.fill")
-                    .foregroundStyle(Color.accentBlue)
+                    .foregroundStyle(.accentBlue)
                 
                 Text("Travel Badges")
                     .font(.system(.headline, weight: .bold))
@@ -123,7 +123,7 @@ private struct TravelBadges: View {
                 LazyHStack(spacing: 20) {
                     ForEach(0..<6) { _ in
                         VStack(spacing: 25) {
-                            CircleIcon(iconName: "airplane", iconColor: Color.accentBlue, width: 50, height: 50)
+                            CircleIcon(iconName: "airplane", iconColor: .accentBlue, width: 50, height: 50)
                             
                             Text("Frequent Flyer")
                                 .multilineTextAlignment(.center)

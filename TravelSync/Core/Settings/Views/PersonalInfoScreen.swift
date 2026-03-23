@@ -104,13 +104,7 @@ private struct PersonalInfoButtonOptions: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .foregroundStyle(Color.white)
-                    .background(
-                        LinearGradient(
-                            colors: [Color.orange, Color.pink],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                    .background(.accentBlue)
                     .clipShape(RoundedRectangle(cornerRadius: 20))
                 
             }

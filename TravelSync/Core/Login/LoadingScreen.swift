@@ -15,49 +15,54 @@ struct LoadingScreen: View {
     let progressTotal: Float = 100
     
     var body: some View {
-        let loginViewModel = appState.login
+        @Bindable var loginViewModel = appState.login
         
-        ZStack {
-            Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
-            
-            LazyVGrid(columns: Array(repeating: GridItem(.fixed(dotSize), spacing: spacing), count: 20), spacing: spacing) {
-                ForEach(0..<1000) { _ in
-                    Circle()
-                        .frame(width: dotSize, height: dotSize)
-                        .foregroundColor(dotColor)
+        NavigationStack {
+            ZStack {
+                Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
+                
+                LazyVGrid(columns: Array(repeating: GridItem(.fixed(dotSize), spacing: spacing), count: 20), spacing: spacing) {
+                    ForEach(0..<1000) { _ in
+                        Circle()
+                            .frame(width: dotSize, height: dotSize)
+                            .foregroundColor(dotColor)
+                    }
                 }
-            }
-            .padding(spacing / 2)
-            
-            VStack {
-                Image("travelSyncIcon")
-                    .resizable()
-                    .frame(width: 150, height: 150)
-                    .scaledToFit()
+                .padding(spacing / 2)
                 
                 VStack {
-                    Text("TravelSync")
-                        .font(.system(.largeTitle, weight: .bold))
+                    Image("travelSyncIcon")
+                        .resizable()
+                        .frame(width: 150, height: 150)
+                        .scaledToFit()
                     
-                    Text("Plan. Track. Explore")
-                        .font(.system(.headline, weight: .semibold))
+                    VStack {
+                        Text("TravelSync")
+                            .font(.system(.largeTitle, weight: .bold))
+                        
+                        Text("Plan. Track. Explore")
+                            .font(.system(.headline, weight: .semibold))
+                            .foregroundStyle(.secondaryText.opacity(0.6))
+                    }
+                    .padding(.bottom, 50)
+                    
+                    ProgressView(value: loginViewModel.loadingValue, total: progressTotal)
+                        .tint(.accentPrimary)
+                        .progressViewStyle(.linear)
+                        .scaleEffect(y: 2.0)
+                        .padding(.horizontal, 120)
+                    
+                    Text("LOADING YOUR JOURNEY...")
+                        .font(.system(.caption2))
                         .foregroundStyle(.secondaryText.opacity(0.6))
                 }
-                .padding(.bottom, 50)
-                
-                ProgressView(value: loginViewModel.loadingValue, total: progressTotal)
-                    .tint(.orange)
-                    .progressViewStyle(.linear)
-                    .scaleEffect(y: 2.0)
-                    .padding(.horizontal, 120)
-                
-                Text("LOADING YOUR JOURNEY...")
-                    .font(.system(.caption2))
-                    .foregroundStyle(.secondaryText.opacity(0.6))
             }
-        }
-        .onAppear {
-            loginViewModel.startLoading()
+            .navigationDestination(isPresented: $loginViewModel.navigateToLoginScreen) {
+                LoginScreen()
+            }
+            .onAppear {
+                loginViewModel.startLoading()
+            }
         }
     }
 }

@@ -91,7 +91,7 @@ private struct TripCard: View {
                         
                         HStack {
                             Image(systemName: "calendar")
-                                .foregroundStyle(Color.accentBlue)
+                                .foregroundStyle(.accentBlue)
                             Text(trip.dateRangeString)
                                 .foregroundStyle(Color.secondaryText)
                         }
@@ -99,7 +99,7 @@ private struct TripCard: View {
                     
                     Spacer()
                     
-                    CircleIcon(iconName: "airplane.departure", iconColor: Color.accentBlue, width: 50, height: 50)
+                    CircleIcon(iconName: "airplane.departure", iconColor: .accentBlue, width: 50, height: 50)
                 }
                 .padding()
                 
@@ -119,7 +119,7 @@ private struct TripCard: View {
                     Image(systemName: "arrow.forward")
                 }
                 .bold()
-                .foregroundStyle(Color.accentBlue)
+                .foregroundStyle(.accentBlue)
                 .padding()
             }
             .padding()
@@ -137,11 +137,11 @@ private struct AddTripButton: View {
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")
-                    .foregroundStyle(Color(.systemBlue))
                 
                 Text("Plan a new trip")
                     .font(.system(size: 18, weight: .semibold, design: .default))
             }
+            .foregroundStyle(Color(.accentBlue))
             .frame(height: 60)
             .frame(maxWidth: .infinity)
             .background(
@@ -151,7 +151,7 @@ private struct AddTripButton: View {
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
                     .stroke(
-                        Color.blue.opacity(0.2),
+                        Color.accentBlue.opacity(0.2),
                         style: StrokeStyle(lineWidth: 2, dash: [10, 5])
                     )
             )

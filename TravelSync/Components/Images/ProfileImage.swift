@@ -23,7 +23,7 @@ struct ProfileImage: View {
                 .overlay {
                     Circle().strokeBorder(
                         LinearGradient(
-                            colors: [Color.orange, Color.pink],
+                            colors: [Color.orange, Color.accentPrimary],
                             startPoint: .topLeading,
                             endPoint: .bottomTrailing
                         ),
@@ -37,7 +37,7 @@ struct ProfileImage: View {
                         Circle()
                             .fill(
                                 LinearGradient(
-                                    colors: [Color.orange, Color.pink],
+                                    colors: [Color.orange, Color.accentPrimary],
                                     startPoint: .topLeading,
                                     endPoint: .bottomTrailing
                             ))

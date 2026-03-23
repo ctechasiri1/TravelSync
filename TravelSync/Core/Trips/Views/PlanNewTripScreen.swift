@@ -65,7 +65,7 @@ struct PlanNewTripScreen: View {
                     )
                     
                     Image(systemName: "arrow.right")
-                        .foregroundStyle(Color.accentBlue)
+                        .foregroundStyle(.accentBlue)
                         .padding(.top, 25)
                     
                     CustomDatePicker(
@@ -102,7 +102,7 @@ struct PlanNewTripScreen: View {
                         print(error.localizedDescription)
                     }
                 }
-                .padding()
+                .padding(.vertical)
                 .disabled(!tripsViewModel.canCreateTrip)
                 .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
                 .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
@@ -211,7 +211,7 @@ private struct CreateTripButton: View {
             .frame(maxWidth: .infinity)
             .background(
                 LinearGradient(
-                    colors: [Color.orange, Color.pink],
+                    colors: [Color.orange, Color.accentPrimary],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing)
             )
