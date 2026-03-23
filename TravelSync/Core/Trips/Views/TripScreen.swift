@@ -20,7 +20,7 @@ struct TripScreen: View {
                             Image(uiImage: image)
                                 .resizable()
                         } else {
-                            Image("Temp_Background")
+                            Image("tempBackground")
                                 .resizable()
                         }
                     }
@@ -261,7 +261,7 @@ private struct TripBudgetCard: View {
             budget: "1_000",
             startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
             endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
-            coverImage: UIImage(named: "Temp_Background")),
+            coverImage: UIImage(named: "tempBackground")),
         upcomingTrip: true)
         .environment(AppState())
 }

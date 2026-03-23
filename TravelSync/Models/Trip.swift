@@ -25,7 +25,7 @@ struct Trip: Identifiable, Equatable {
                 budget: "1_000",
                 startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
                 endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
-                coverImage: UIImage(named: "Temp_Background")
+                coverImage: UIImage(named: "tempBackground")
             ),
             Trip(
                 tripName: "Eating Pho in Vietnam",
@@ -33,14 +33,14 @@ struct Trip: Identifiable, Equatable {
                 budget: "2_000",
                 startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
                 endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
-                coverImage: UIImage(named: "Temp_Background")
+                coverImage: UIImage(named: "tempBackground")
             ),
             Trip(tripName: "Travel to Taiwan",
                  location: "Taipei, Taiwan",
                  budget: "3_000",
                  startDate: Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now,
                  endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date.now) ?? .now,
-                 coverImage: UIImage(named: "Temp_Background")
+                 coverImage: UIImage(named: "tempBackground")
                 )
         ]
     }

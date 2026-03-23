@@ -76,7 +76,7 @@ private struct TripCard: View {
                         .resizable()
                         .scaledToFit()
                 } else {
-                    Image("Temp_Background")
+                    Image("tempBackground")
                         .resizable()
                         .scaledToFit()
                 }

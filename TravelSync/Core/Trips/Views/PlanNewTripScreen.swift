@@ -18,8 +18,7 @@ struct PlanNewTripScreen: View {
                 do {
                     try tripsViewModel.addTrip()
                 } catch {
-//                    tripsViewModel.showErrorAlert = true
-//                    print(error.localizedDescription)
+                    tripsViewModel.showErrorAlert = true
                 }
             }
             
@@ -39,21 +38,24 @@ struct PlanNewTripScreen: View {
                     text: $tripsViewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
-                    fieldContent: "City, airport, or hotel"
+                    fieldContent: "City, airport, or hotel",
+                    iconColor: .accentBlue
                 )
                 
                 InputTextField(
                     text: $tripsViewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
-                    fieldContent: "e.g. Summer in Toyko"
+                    fieldContent: "e.g. Summer in Toyko",
+                    iconColor: .accentBlue
                 )
                 
                 InputTextField(
                     text: $tripsViewModel.budget,
                     fieldTitle: "BUDGET",
                     fieldImage: "banknote.fill",
-                    fieldContent: "e.g. 10,000"
+                    fieldContent: "e.g. 10,000",
+                    iconColor: .accentBlue
                 )
                 
                 HStack {
@@ -143,43 +145,6 @@ private struct NavigationOption: View {
             .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
             .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
         }
-    }
-}
-
-private struct InputTextField: View {
-    @Binding var text: String
-    let fieldTitle: String
-    let fieldImage: String
-    let fieldContent: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(fieldTitle)
-                .foregroundStyle(Color.primaryText)
-                .font(.system(size: 15, weight: .semibold))
-                .padding(.leading, 5)
-            
-            HStack {
-                if text.isEmpty {
-                    Image(systemName: fieldImage)
-                        .foregroundStyle(.accentBlue)
-                }
-    
-                TextField(text: $text) {
-                    Text(fieldContent)
-                }
-                .foregroundStyle(.primary)
-            }
-            .padding()
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(
-                        Color.secondaryText.opacity(0.2),
-                        style: StrokeStyle(lineWidth: 1)
-                    )
-            )
-        }
-        .padding(.vertical, 10)
     }
 }
 
