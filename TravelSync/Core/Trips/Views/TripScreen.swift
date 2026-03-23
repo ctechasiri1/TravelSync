@@ -12,81 +12,79 @@ struct TripScreen: View {
     let upcomingTrip: Bool
     
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack {
-                    Group {
-                        if let image = trip.coverImage {
-                            Image(uiImage: image)
-                                .resizable()
-                        } else {
-                            Image("tempBackground")
-                                .resizable()
-                        }
+        ScrollView {
+            VStack {
+                Group {
+                    if let image = trip.coverImage {
+                        Image(uiImage: image)
+                            .resizable()
+                    } else {
+                        Image("tempBackground")
+                            .resizable()
                     }
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .overlay {
-                        TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
-                    }
+                }
+                .scaledToFit()
+                .clipShape(RoundedRectangle(cornerRadius: 15))
+                .overlay {
+                    TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
+                }
+                .padding()
+                    
+                HStack(spacing: 20){
+                    TripInformationCard(
+                        title: "STATUS",
+                        value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                        iconName: "gauge.with.needle.fill",
+                        iconColor: .accentBlue,
+                        textColor: .accentBlue
+                    )
+                        
+                    TripInformationCard(
+                        title: trip.city,
+                        value: "18 ℃",
+                        iconName: "sun.max.trianglebadge.exclamationmark.fill",
+                        iconColor: .accentConfirmation,
+                        textColor: .black
+                    )
+                }
+                .padding(.horizontal)
+                    
+                Text("Quick Access")
+                    .font(.system(.title3, weight: .semibold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                     
-                    HStack(spacing: 20){
-                        TripInformationCard(
-                            title: "STATUS",
-                            value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                            iconName: "gauge.with.needle.fill",
-                            iconColor: .accentBlue,
-                            textColor: .accentBlue
-                        )
-                        
-                        TripInformationCard(
-                            title: trip.city,
-                            value: "18 ℃",
-                            iconName: "sun.max.trianglebadge.exclamationmark.fill",
-                            iconColor: .accentConfirmation,
-                            textColor: .black
-                        )
+                HStack(spacing: 20) {
+                    TripQuickAccessCard(
+                        title: "Itinerary",
+                        value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                        iconName: "map.fill",
+                        iconColor: .accentBlue
+                    ) {
+                        ItineraryScreen()
                     }
-                    .padding(.horizontal)
-                    
-                    Text("Quick Access")
-                        .font(.system(.title3, weight: .semibold))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding()
-                    
-                    HStack(spacing: 20) {
-                        TripQuickAccessCard(
-                            title: "Itinerary",
-                            value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                            iconName: "map.fill",
-                            iconColor: .accentBlue
-                        ) {
-                            ItineraryScreen()
-                        }
                         
-                        TripQuickAccessCard(
-                            title: "Documents",
-                            value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                            iconName: "ticket.fill", iconColor: .accentConfirmation
-                        ) {
-                            ItineraryScreen()
-                        }
-                    }
-                    .padding(.horizontal)
-                    
-                    TripBudgetCard(
+                    TripQuickAccessCard(
                         title: "Documents",
                         value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                        iconName: "ticket.fill",
-                        iconColor: .accentConfirmation
-                    )
-                    .padding()
+                        iconName: "ticket.fill", iconColor: .accentConfirmation
+                    ) {
+                        ItineraryScreen()
+                    }
                 }
+                .padding(.horizontal)
+                    
+                TripBudgetCard(
+                    title: "Documents",
+                    value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                    iconName: "ticket.fill",
+                    iconColor: .accentConfirmation
+                )
+                .padding()
             }
-            .navigationTitle("\(trip.tripName)")
-            .navigationBarTitleDisplayMode(.inline)
         }
+        .navigationTitle("\(trip.tripName)")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
@@ -198,6 +196,7 @@ private struct TripQuickAccessCard<T:View>: View {
                         HStack {
                             Spacer()
                             Image(systemName: "arrow.right")
+                                .foregroundStyle(.accentBlue)
                         }
                     }
                     .padding(20)

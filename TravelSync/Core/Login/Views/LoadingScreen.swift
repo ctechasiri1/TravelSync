@@ -46,12 +46,15 @@ struct LoadingScreen: View {
                     }
                     .padding(.bottom, 50)
                     
-                    ProgressView(value: loginViewModel.loadingValue, total: progressTotal)
-                        .tint(.accentPrimary)
-                        .progressViewStyle(.linear)
-                        .scaleEffect(y: 2.0)
-                        .padding(.horizontal, 120)
-                    
+                    ProgressView(
+                        value: loginViewModel.loadingValue,
+                        total: progressTotal
+                    )
+                    .tint(.accentPrimary)
+                    .progressViewStyle(.linear)
+                    .scaleEffect(y: 2.0)
+                    .padding(.horizontal, 120)
+
                     Text("LOADING YOUR JOURNEY...")
                         .font(.system(.caption2))
                         .foregroundStyle(.secondaryText.opacity(0.6))
