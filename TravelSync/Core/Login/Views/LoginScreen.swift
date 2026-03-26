@@ -13,97 +13,95 @@ struct LoginScreen: View {
     var body: some View {
         @Bindable var loginViewModel = appState.login
         
-        NavigationStack {
-            ZStack {
-                Color.secondaryBackground
-                OptionsCard(title: "") {
-                    VStack(alignment: .leading) {
-                        LoginIcon()
-                            .padding()
-                            .padding(.top, 20)
-                        
-                        Text("Welcome Back,")
-                            .font(.system(.title, weight: .semibold))
-                        
-                        Text("Explorer!")
-                            .font(.system(.title, weight: .semibold))
-                            .foregroundStyle(.accentPrimary)
-                        
-                        Text("Continue to your adventure where you left off.")
-                            .font(.system(.subheadline))
+        ZStack {
+            Color.secondaryBackground
+            OptionsCard(title: "") {
+                VStack(alignment: .leading) {
+                    LoginIcon()
+                        .padding()
+                        .padding(.top, 20)
+                            
+                    Text("Welcome Back,")
+                        .font(.system(.title, weight: .semibold))
+                            
+                    Text("Explorer!")
+                        .font(.system(.title, weight: .semibold))
+                        .foregroundStyle(.accentPrimary)
+                            
+                    Text("Continue to your adventure where you left off.")
+                        .font(.system(.subheadline))
+                        .foregroundStyle(.secondaryText.opacity(0.6))
+                            
+                    InputTextField(
+                        text: $loginViewModel.email,
+                        fieldTitle: "Email",
+                        fieldImage: "envelope",
+                        fieldContent: "hello@example.com",
+                        iconColor: .gray
+                    )
+                            
+                    InputTextField(
+                        text: $loginViewModel.password,
+                        isSecureField: true,
+                        toggleSecurityButton: true,
+                        fieldTitle: "Password",
+                        fieldImage: "lock",
+                        fieldContent: "••••••••••",
+                        iconColor: .gray
+                    )
+                            
+                    TextNavigationButton(text: "Forgot Password?") {
+                        SignUpScreen()
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                            
+                    LoginButton {
+                        Task {
+                            await loginViewModel.login()
+                        }
+                    }
+                            
+                    LoginDivider()
+                        .padding()
+                            
+                    HStack(spacing: 20) {
+                        LoginOptionButton(
+                            iconImage: "googleIcon",
+                            text: "Google"
+                        ) {
+                                    
+                        }
+                            
+                        LoginOptionButton(
+                            iconImage: "appleIcon",
+                            text: "Apple"
+                        ) {
+                                    
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                            
+                    Spacer()
+                            
+                    HStack {
+                        Text("Don't have an account?")
                             .foregroundStyle(.secondaryText.opacity(0.6))
-                        
-                        InputTextField(
-                            text: $loginViewModel.email,
-                            fieldTitle: "Email",
-                            fieldImage: "envelope",
-                            fieldContent: "hello@example.com",
-                            iconColor: .gray
-                        )
-                        
-                        InputTextField(
-                            text: $loginViewModel.password,
-                            isSecureField: true,
-                            toggleSecurityButton: true,
-                            fieldTitle: "Password",
-                            fieldImage: "lock",
-                            fieldContent: "••••••••••",
-                            iconColor: .gray
-                        )
-                        
-                        TextNavigationButton(text: "Forgot Password?") {
+                                
+                        TextNavigationButton(text: "Sign Up") {
                             SignUpScreen()
                         }
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                        
-                        LoginButton {
-                            Task {
-                                await loginViewModel.login()
-                            }
-                        }
-                        
-                        LoginDivider()
-                            .padding()
-                        
-                        HStack(spacing: 20) {
-                            LoginOptionButton(
-                                iconImage: "googleIcon",
-                                text: "Google"
-                            ) {
-                                
-                            }
-                            LoginOptionButton(
-                                iconImage: "appleIcon",
-                                text: "Apple"
-                            ) {
-                                
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        
-                        Spacer()
-                        
-                        HStack {
-                            Text("Don't have an account?")
-                                .foregroundStyle(.secondaryText.opacity(0.6))
-                            
-                            TextNavigationButton(text: "Sign Up") {
-                                SignUpScreen()
-                            }
-                        }
-                        .padding()
-                        .font(.system(.subheadline))
-                        .frame(maxWidth: .infinity, alignment: .center)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
+                    .font(.system(.subheadline))
+                    .frame(maxWidth: .infinity, alignment: .center)
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             }
-            .showLoading(if: loginViewModel.isNetworkActive)
-            .navigationBarBackButtonHidden(true)
-            .navigationDestination(isPresented: $loginViewModel.isAuthenticated) { HomeScreen() }
+            .padding()
         }
+        .showLoading(if: loginViewModel.isNetworkActive)
+        .navigationBarBackButtonHidden(true)
     }
 }
 

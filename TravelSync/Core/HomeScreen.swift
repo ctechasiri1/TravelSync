@@ -10,14 +10,23 @@ import SwiftUI
 struct HomeScreen: View {
     var body: some View {
         TabView {
-            Tab("Trips", systemImage: "circle.dashed") {
+            NavigationStack {
                 TripsScreen()
+                    .navigationTitle("Home")
             }
-            Tab("Profile", systemImage: "person.fill") {
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            
+            NavigationStack {
                 ProfileScreen()
+                    .navigationTitle("Profile")
             }
+            .tabItem {
+                Label("Profile", systemImage: "person.fill")
+            }
+
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 

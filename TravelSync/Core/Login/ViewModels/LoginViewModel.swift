@@ -8,6 +8,12 @@
 import Observation
 import Foundation
 
+enum LoginState {
+    case loading
+    case unauthenticated
+    case authenticated
+}
+
 @Observable
 class LoginViewModel {
     // For Login & Sign Up Screen
@@ -18,14 +24,13 @@ class LoginViewModel {
 
     // MARK: - UI State Properties (Bound to Alerts, Spinners, and Navigation)
     var isNetworkActive = false
-    var isAuthenticated = false
     var showErrorAlert = false
     var errorMessage: String?
     
     // For Loading Screen
     var loadingValue: Float = 0
     var loadingTimer: Timer?
-    var navigateToLoginScreen: Bool = false
+    var loginAppState: LoginState = .loading
     
     // 2. Dependency Injection: Better for testing!
     private let userAuthService: UserAuthServiceProtocol
@@ -40,7 +45,7 @@ class LoginViewModel {
             print("Loading: \(self.loadingValue)")
             
             if self.loadingValue > 100 {
-                self.navigateToLoginScreen = true
+                self.loginAppState = .unauthenticated
                 timer.invalidate()
                 self.loadingValue = 0
                 print("Loading Finished")
@@ -73,12 +78,27 @@ class LoginViewModel {
             let request = UserLoginRequest(username: self.email, password: self.password)
             let _ = try await userAuthService.login(requestBody: request)
             
-            isAuthenticated = true
+            loginAppState = .authenticated
         } catch {
             self.errorMessage = "Login failed. Please check your email and password"
             self.showErrorAlert = true
             print("Login Error: \(error.localizedDescription)")
         }
         isNetworkActive = false
+    }
+    
+    func checkUserAuthentication() async {
+        do {
+            try await Task.sleep(nanoseconds: 1_500_000_000)
+            
+            if KeychainManager.shared.getToken() != nil {
+                self.loginAppState = .authenticated
+            } else {
+                self.loginAppState = .unauthenticated
+            }
+            
+        } catch {
+            print("There was an error running the timer.")
+        }
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 final class UserAuthService: UserAuthServiceProtocol {
+    // MARK: Encode the DTO to JSON and decodes the JSON
     func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
         /// 1. checks if the urlString is valid
         guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users") else {
@@ -29,6 +30,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         )
     }
     
+    // MARK: Encode the DTO to Form Data and decodes the JSON
     func login(requestBody: UserLoginRequest) async throws -> TokenResponse {
         /// 1. checks if the urlString is valid
         guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/token") else {
