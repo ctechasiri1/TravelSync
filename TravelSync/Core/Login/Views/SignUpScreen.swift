@@ -27,7 +27,15 @@ struct SignUpScreen: View {
                         .font(.system(.subheadline))
                         .foregroundStyle(.secondaryText.opacity(0.6))
                         .padding(.bottom)
-                        
+                    
+                    InputTextField(
+                        text: $loginViewModel.fullName,
+                        fieldTitle: "Full Name",
+                        fieldImage: "pencil",
+                        fieldContent: "Enter your name",
+                        iconColor: .gray
+                    )
+                    
                     InputTextField(
                         text: $loginViewModel.username,
                         fieldTitle: "Username",
@@ -54,7 +62,11 @@ struct SignUpScreen: View {
                         iconColor: .gray
                     )
                         
-                    SignUpButton { }
+                    SignUpButton {
+                        Task {
+                            await loginViewModel.signup()
+                        }
+                    }
                         
                     SignUpDivider()
                         .padding()

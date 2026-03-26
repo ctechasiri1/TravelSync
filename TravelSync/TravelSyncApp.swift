@@ -13,7 +13,7 @@ struct TravelSyncApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeScreen()
+            LoadingScreen()
                 .environment(appState)
         }
     }

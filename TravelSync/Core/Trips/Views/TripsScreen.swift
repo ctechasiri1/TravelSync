@@ -13,52 +13,61 @@ struct TripsScreen: View {
     var body: some View {
         @Bindable var tripsViewModel = appState.trips
         
-        NavigationStack {
-            ScrollView {
-                Divider()
+        ScrollView {
+            Divider()
                 
-                CustomSegmentButton(selection: $tripsViewModel.selection,
-                                    options: TripOption.allCases)
-                .padding()
+            CustomSegmentButton(selection: $tripsViewModel.selection,
+                                options: TripOption.allCases)
+            .padding()
                 
-                if !tripsViewModel.upcomingTrips.isEmpty {
-                    Text(tripsViewModel.isUpcomingTrip ? "Next Adventure" : "Recent Adventure")
-                        .sectionTitleStyle()
-                }
-                
-                if let firstTripUpcoming = tripsViewModel.upcomingTrips.first,
-                   let firstTripPast = tripsViewModel.pastTrips.first {
-                    TripCard(trip: tripsViewModel.isUpcomingTrip ? firstTripUpcoming : firstTripPast, upcomingTrip: true)
-                        .padding(.horizontal)
-                }
-                
-                if tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.count > 1 : tripsViewModel.pastTrips.count > 1 {
-                    Text(tripsViewModel.isUpcomingTrip ? "Future Plans" : "Past Plans")
-                        .sectionTitleStyle()
-                        .padding(.top)
-                }
-
-                ForEach(tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.dropFirst() : tripsViewModel.pastTrips.dropFirst()) { trip in
-                    TripCard(trip: trip, upcomingTrip: false)
-                        .padding(.horizontal, 25)
-                }
-
-                if tripsViewModel.isUpcomingTrip {
-                    AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
-                        .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
-                }
-                
-                Spacer()
+            if !tripsViewModel.upcomingTrips.isEmpty {
+                Text(
+                    tripsViewModel.isUpcomingTrip ? "Next Adventure" : "Recent Adventure"
+                )
+                .sectionTitleStyle()
             }
-            .setScrollViewBackground()
-            .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
-                PlanNewTripScreen()
-            })
-            .navigationTitle(Text("My Trips"))
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    CircleButton(imageName: "magnifyingglass") { }
-                }
+                
+            if let firstTripUpcoming = tripsViewModel.upcomingTrips.first,
+               let firstTripPast = tripsViewModel.pastTrips.first {
+                TripCard(
+                    trip: tripsViewModel.isUpcomingTrip ? firstTripUpcoming : firstTripPast,
+                    upcomingTrip: true
+                )
+                .padding(.horizontal)
+            }
+                
+            if tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.count > 1 : tripsViewModel.pastTrips.count > 1 {
+                Text(
+                    tripsViewModel.isUpcomingTrip ? "Future Plans" : "Past Plans"
+                )
+                .sectionTitleStyle()
+                .padding(.top)
+            }
+
+            ForEach(
+                tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips
+                    .dropFirst() : tripsViewModel.pastTrips
+                    .dropFirst()
+            ) { trip in
+                TripCard(trip: trip, upcomingTrip: false)
+                    .padding(.horizontal, 25)
+            }
+
+            if tripsViewModel.isUpcomingTrip {
+                AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
+                    .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
+            }
+                
+            Spacer()
+        }
+        .setScrollViewBackground()
+        .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
+            PlanNewTripScreen()
+        })
+        .navigationTitle(Text("My Trips"))
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                CircleButton(imageName: "magnifyingglass") { }
             }
         }
     }

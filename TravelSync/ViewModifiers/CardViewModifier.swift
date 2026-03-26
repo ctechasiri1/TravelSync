@@ -15,7 +15,6 @@ struct CardViewModifier: ViewModifier {
                     .foregroundStyle(Color.backgroundColor.secondaryBackground)
             )
             .shadow(color: Color.black.opacity(0.1), radius: 5, y: 2)
-//            .padding(.horizontal)
     }
 }
 

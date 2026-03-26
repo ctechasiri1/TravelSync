@@ -17,6 +17,7 @@ struct HomeScreen: View {
                 ProfileScreen()
             }
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 
