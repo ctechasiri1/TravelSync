@@ -10,8 +10,9 @@ import Foundation
 
 enum LoginState {
     case loading
-    case unauthenticated
-    case authenticated
+    case signUp
+    case login
+    case home
 }
 
 @Observable
@@ -23,14 +24,15 @@ class LoginViewModel {
     var password: String = ""
 
     // MARK: - UI State Properties (Bound to Alerts, Spinners, and Navigation)
-    var isNetworkActive = false
-    var showErrorAlert = false
+    var isNetworkActive: Bool = false
+    var showErrorAlert: Bool = false
     var errorMessage: String?
     
     // For Loading Screen
     var loadingValue: Float = 0
     var loadingTimer: Timer?
     var loginAppState: LoginState = .loading
+    
     
     // 2. Dependency Injection: Better for testing!
     private let userAuthService: UserAuthServiceProtocol
@@ -45,7 +47,7 @@ class LoginViewModel {
             print("Loading: \(self.loadingValue)")
             
             if self.loadingValue > 100 {
-                self.loginAppState = .unauthenticated
+                self.loginAppState = .login
                 timer.invalidate()
                 self.loadingValue = 0
                 print("Loading Finished")
@@ -78,7 +80,7 @@ class LoginViewModel {
             let request = UserLoginRequest(username: self.email, password: self.password)
             let _ = try await userAuthService.login(requestBody: request)
             
-            loginAppState = .authenticated
+            loginAppState = .home
         } catch {
             self.errorMessage = "Login failed. Please check your email and password"
             self.showErrorAlert = true
@@ -92,9 +94,9 @@ class LoginViewModel {
             try await Task.sleep(nanoseconds: 1_500_000_000)
             
             if KeychainManager.shared.getToken() != nil {
-                self.loginAppState = .authenticated
+                self.loginAppState = .home
             } else {
-                self.loginAppState = .unauthenticated
+                self.loginAppState = .login
             }
             
         } catch {

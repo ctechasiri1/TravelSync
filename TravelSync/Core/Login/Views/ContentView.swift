@@ -1,5 +1,5 @@
 //
-//  LoadingStateScreen.swift
+//  ContentView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/26/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoadingStateScreen: View {
+struct ContentView: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
@@ -17,18 +17,17 @@ struct LoadingStateScreen: View {
             switch loginViewModel.loginAppState {
             case .loading:
                 LoadingScreen()
-            case .unauthenticated:
+            case .signUp:
+                SignUpScreen()
+            case .login:
                 LoginScreen()
-            case .authenticated:
+            case .home:
                 HomeScreen()
             }
-        }
-        .task {
-            await loginViewModel.checkUserAuthentication()
         }
     }
 }
 
 #Preview {
-    LoadingStateScreen()
+    ContentView()
 }

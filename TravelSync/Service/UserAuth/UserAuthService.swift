@@ -41,11 +41,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         /// in this we are making a POST request, sending a form data to FastAPI
         var urlRequest = URLRequest(url: endpoint)
         urlRequest.httpMethod = "POST"
-        urlRequest
-            .setValue(
-                "application/x-www-form-urlencoded",
-                forHTTPHeaderField: "Content-Type"
-            )
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         /// 3. encodes the DTO (UserLoginRequest) components to form data
         var components = URLComponents()

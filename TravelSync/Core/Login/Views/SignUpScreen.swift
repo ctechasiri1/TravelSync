@@ -15,6 +15,7 @@ struct SignUpScreen: View {
         
         ZStack {
             Color.secondaryBackground
+            Spacer()
             OptionsCard(title: "") {
                 Spacer()
                     
@@ -91,7 +92,7 @@ struct SignUpScreen: View {
                             .foregroundStyle(.secondaryText.opacity(0.6))
                             
                         TextNavigationButton(text: "Sign In") {
-                            LoginScreen()
+                            loginViewModel.loginAppState = .login
                         }
                     }
                     .padding()
@@ -125,13 +126,13 @@ private struct SignUpDivider: View {
     }
 }
 
-private struct TextNavigationButton<T:View>: View {
+private struct TextNavigationButton: View {
     let text: String
-    @ViewBuilder let content: T
+    let action: () -> Void
     
     var body: some View {
-        NavigationLink {
-            content
+        Button {
+            action()
         } label: {
             Text(text)
                 .font(.system(.subheadline, weight: .semibold))

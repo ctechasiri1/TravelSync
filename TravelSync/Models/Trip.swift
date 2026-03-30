@@ -74,3 +74,34 @@ extension Trip {
         return String(cityCountryPairArray[0]).uppercased()
     }
 }
+
+// MARK: DTO (Date Transfer Object) for the networking layer
+struct TripCreateRequest {
+    let tripName: String
+    let location: String
+    let budget: String
+    let startDate: Date
+    let endDate: Date
+    let coverImageData: Data?
+}
+
+
+struct TripPrivateResponse: Codable {
+    let id: String
+    let tripName: String
+    let location: String
+    let budget: String?
+    let startDate: Date
+    let endDate: Date
+    let imageString: String?
+    
+    enum CodingKeys: String, CodingKey {
+            case id
+            case tripName = "title"
+            case location
+            case budget
+            case startDate = "start_date"   
+            case endDate = "end_date"
+            case imageString = "cover_image"
+        }
+}

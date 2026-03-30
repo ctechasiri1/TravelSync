@@ -51,7 +51,7 @@ struct LoginScreen: View {
                     )
                             
                     TextNavigationButton(text: "Forgot Password?") {
-                        SignUpScreen()
+                        
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                             
@@ -88,7 +88,7 @@ struct LoginScreen: View {
                             .foregroundStyle(.secondaryText.opacity(0.6))
                                 
                         TextNavigationButton(text: "Sign Up") {
-                            SignUpScreen()
+                            loginViewModel.loginAppState = .signUp
                         }
                     }
                     .padding()
@@ -101,7 +101,6 @@ struct LoginScreen: View {
             .padding()
         }
         .showLoading(if: loginViewModel.isNetworkActive)
-        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -136,13 +135,13 @@ private struct LoginDivider: View {
     }
 }
 
-private struct TextNavigationButton<T:View>: View {
+private struct TextNavigationButton: View {
     let text: String
-    @ViewBuilder let content: T
+    let action: () -> Void
     
     var body: some View {
-        NavigationLink {
-            content
+        Button {
+            action()
         } label: {
             Text(text)
                 .font(.system(.subheadline, weight: .semibold))

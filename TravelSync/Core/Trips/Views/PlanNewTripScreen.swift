@@ -15,10 +15,8 @@ struct PlanNewTripScreen: View {
         
         ScrollView {
             NavigationOption() {
-                do {
-                    try tripsViewModel.addTrip()
-                } catch {
-                    tripsViewModel.showErrorAlert = true
+                Task {
+                    tripsViewModel.canCreateTrip
                 }
             }
             
@@ -95,11 +93,8 @@ struct PlanNewTripScreen: View {
                 .padding(.top, 20)
                 
                 CreateTripButton() {
-                    do {
-                        try tripsViewModel.addTrip()
-                    } catch {
-                        tripsViewModel.showErrorAlert = true
-                        print(error.localizedDescription)
+                    Task {
+                        try await tripsViewModel.addTrip()
                     }
                 }
                 .padding(.vertical)

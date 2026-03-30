@@ -33,6 +33,8 @@ class TripsViewModel {
     // Holds the actual image to display
     var coverUIImage: UIImage? = nil
     
+    private let tripService: TripServiceProtocol
+    
     //MARK: Computed Variables
     // converts the selected UIImage from photos to Image
     var displayImage: Image {
@@ -66,9 +68,18 @@ class TripsViewModel {
         return selection == .upcoming
     }
     
+    
+    var convertImageToData: Data? {
+        return coverUIImage?.jpegData(compressionQuality: 0.8)
+    }
+    
+    init(tripService: TripServiceProtocol = TripService()) {
+        self.tripService = tripService
+    }
+    
     //MARK: Methods
     // adds the new trip to the trips list
-    func addTrip() throws -> Void {
+    func addTrip() async throws {
         guard let start = startDate, let end = endDate else {
             throw TripError.missingDates
         }
@@ -78,10 +89,21 @@ class TripsViewModel {
             throw TripError.emptyLocation
         }
         
-        let newTrip = Trip(tripName: tripName, location: locationName,budget: budget, startDate: start, endDate: end,  coverImage: coverUIImage)
-        trips.append(newTrip)
+        let newTrip = TripCreateRequest(
+            tripName: tripName,
+            location: locationName,
+            budget: budget,
+            startDate: start,
+            endDate: end,
+            coverImageData: convertImageToData
+        )
         
-        resetForm()
+        do {
+            let _ = try await tripService.createTrip(trip: newTrip)
+            resetForm()
+        } catch {
+            print(error.localizedDescription)
+        }
     }
     
     // resets the information in the form

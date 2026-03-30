@@ -18,6 +18,8 @@ final class NetworkRequestManager {
             /// 1. this sends the data to FastAPI then waits for a response
             let (data, response) = try await URLSession.shared.data(for: requestBody)
             
+            print("FASTAPI ERROR RESPONSE: \(String(data: data, encoding: .utf8) ?? "No Data")")
+            
             /// 2. checks the response (convert it to HTTPURLResponse type) making sure it has a successful status code
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 throw APIError.invalidResponse
