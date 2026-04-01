@@ -14,21 +14,13 @@ struct TripScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                Group {
-                    if let image = trip.coverImage {
-                        Image(uiImage: image)
-                            .resizable()
-                    } else {
-                        Image("tempBackground")
-                            .resizable()
+                AsyncImage(url: trip.imageURLString)
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+                    .overlay {
+                        TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
                     }
-                }
-                .scaledToFit()
-                .clipShape(RoundedRectangle(cornerRadius: 15))
-                .overlay {
-                    TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
-                }
-                .padding()
+                    .padding()
                     
                 HStack(spacing: 20){
                     TripInformationCard(
@@ -252,15 +244,15 @@ private struct TripBudgetCard: View {
     }
 }
 
-#Preview {
-    TripScreen(
-        trip: Trip(
-            tripName: "Summer in Thailand",
-            location: "Bangkok, Thailand",
-            budget: "1_000",
-            startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
-            endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
-            coverImage: UIImage(named: "tempBackground")),
-        upcomingTrip: true)
-        .environment(AppState())
-}
+//#Preview {
+//    TripScreen(
+//        trip: Trip(
+//            tripName: "Summer in Thailand",
+//            location: "Bangkok, Thailand",
+//            budget: "1_000",
+//            startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
+//            endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
+//            coverImage: UIImage(named: "tempBackground")),
+//        upcomingTrip: true)
+//        .environment(AppState())
+//}

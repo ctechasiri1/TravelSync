@@ -60,6 +60,13 @@ struct TripsScreen: View {
                 
             Spacer()
         }
+        .task {
+            do {
+                try await tripsViewModel.getTrip()
+            } catch {
+                
+            }
+        }
         .setScrollViewBackground()
         .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
             PlanNewTripScreen()
@@ -79,18 +86,8 @@ private struct TripCard: View {
     
     var body: some View {
         VStack {
-            Group {
-                if let image = trip.coverImage {
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFit()
-                } else {
-                    Image("tempBackground")
-                        .resizable()
-                        .scaledToFit()
-                }
-            }
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            AsyncImage(url: trip.imageURLString)
+                .clipShape(RoundedRectangle(cornerRadius: 15))
             
             VStack {
                 HStack {

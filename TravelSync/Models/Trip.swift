@@ -7,6 +7,7 @@
 
 import Foundation
 import PhotosUI
+import SwiftUI
 
 struct Trip: Identifiable, Equatable {
     let id: UUID = UUID()
@@ -15,35 +16,7 @@ struct Trip: Identifiable, Equatable {
     let budget: String
     let startDate: Date
     let endDate: Date
-    let coverImage: UIImage?
-    
-    static var example: [Trip] {
-        return [
-            Trip(
-                tripName: "Summer in Thailand",
-                location: "Bangkok, Thailand",
-                budget: "1_000",
-                startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
-                endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
-                coverImage: UIImage(named: "tempBackground")
-            ),
-            Trip(
-                tripName: "Eating Pho in Vietnam",
-                location: "Saigon, Vietnam",
-                budget: "2_000",
-                startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
-                endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
-                coverImage: UIImage(named: "tempBackground")
-            ),
-            Trip(tripName: "Travel to Taiwan",
-                 location: "Taipei, Taiwan",
-                 budget: "3_000",
-                 startDate: Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now,
-                 endDate: Calendar.current.date(byAdding: .day, value: 7, to: Date.now) ?? .now,
-                 coverImage: UIImage(named: "tempBackground")
-                )
-        ]
-    }
+    let imageURLString: URL?
 }
 
 extension Trip {
@@ -85,23 +58,52 @@ struct TripCreateRequest {
     let coverImageData: Data?
 }
 
-
 struct TripPrivateResponse: Codable {
-    let id: String
+    let id: Int
     let tripName: String
     let location: String
-    let budget: String?
-    let startDate: Date
-    let endDate: Date
-    let imageString: String?
+    let budget: String
+    let startDateString: String
+    let endDateString: String
+    let imageURLString: String
     
     enum CodingKeys: String, CodingKey {
             case id
             case tripName = "title"
             case location
             case budget
-            case startDate = "start_date"   
-            case endDate = "end_date"
-            case imageString = "cover_image"
+            case startDateString = "start_date"
+            case endDateString = "end_date"
+            case imageURLString = "cover_image"
         }
+}
+
+extension TripPrivateResponse {
+    var startDate: Date {
+        let isoDateFormatter = ISO8601DateFormatter()
+        
+        if let dateObject = isoDateFormatter.date(from: startDateString) {
+            return dateObject
+        } else {
+            return Date()
+        }
+    }
+    
+    var endDate: Date {
+        let isoDateFormatter = ISO8601DateFormatter()
+        
+        if let dateObject = isoDateFormatter.date(from: endDateString) {
+            return dateObject
+        } else {
+            return Date()
+        }
+    }
+    
+    var imageURL: URL? {
+        if let url = URL(string: imageURLString) {
+            return url
+        } else {
+            return nil
+        }
+    }
 }

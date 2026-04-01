@@ -25,7 +25,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         request.httpBody = try JSONEncoder().encode(requestBody)
 
         return try await NetworkRequestManager.shared.sendRequest(
-            requestBody: request,
+            request: request,
             responseType: UserPrivateResponse.self
         )
     }
@@ -63,7 +63,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         
         /// 6. sends the request to FastAPI
         let tokenResponse = try await NetworkRequestManager.shared.sendRequest(
-            requestBody: urlRequest,
+            request: urlRequest,
             responseType: TokenResponse.self
         )
             

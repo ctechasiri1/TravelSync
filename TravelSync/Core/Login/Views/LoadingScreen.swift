@@ -20,21 +20,6 @@ struct LoadingScreen: View {
         ZStack {
             Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
                     
-            LazyVGrid(
-                columns: Array(
-                    repeating: GridItem(.fixed(dotSize), spacing: spacing),
-                    count: 20
-                ),
-                spacing: spacing
-            ) {
-                ForEach(0..<1000) { _ in
-                    Circle()
-                        .frame(width: dotSize, height: dotSize)
-                        .foregroundColor(dotColor)
-                }
-            }
-            .padding(spacing / 2)
-                    
             VStack {
                 Image("travelSyncIcon")
                     .resizable()

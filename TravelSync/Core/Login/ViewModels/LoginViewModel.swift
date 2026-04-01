@@ -8,33 +8,21 @@
 import Observation
 import Foundation
 
-enum LoginState {
-    case loading
-    case signUp
-    case login
-    case home
-}
-
 @Observable
 class LoginViewModel {
-    // For Login & Sign Up Screen
     var fullName: String = ""
     var username: String = ""
     var email: String = ""
     var password: String = ""
 
-    // MARK: - UI State Properties (Bound to Alerts, Spinners, and Navigation)
     var isNetworkActive: Bool = false
     var showErrorAlert: Bool = false
     var errorMessage: String?
     
-    // For Loading Screen
     var loadingValue: Float = 0
     var loadingTimer: Timer?
     var loginAppState: LoginState = .loading
     
-    
-    // 2. Dependency Injection: Better for testing!
     private let userAuthService: UserAuthServiceProtocol
         
     init(userAuthService: UserAuthServiceProtocol = UserAuthService()) {
@@ -44,13 +32,11 @@ class LoginViewModel {
     func startLoading() {
         loadingTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
             self.loadingValue += 10
-            print("Loading: \(self.loadingValue)")
             
             if self.loadingValue > 100 {
+                self.loadingValue = 0
                 self.loginAppState = .login
                 timer.invalidate()
-                self.loadingValue = 0
-                print("Loading Finished")
             }
         })
     }

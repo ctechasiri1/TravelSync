@@ -13,12 +13,12 @@ final class NetworkRequestManager {
     private init() { }
     
     // MARK: Sends the request and returns the response from FastAPI
-    func sendRequest<Output: Decodable>(requestBody: URLRequest, responseType: Output.Type) async throws -> Output {
+    func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
         do {
             /// 1. this sends the data to FastAPI then waits for a response
-            let (data, response) = try await URLSession.shared.data(for: requestBody)
+            let (data, response) = try await URLSession.shared.data(for: request)
             
-            print("FASTAPI ERROR RESPONSE: \(String(data: data, encoding: .utf8) ?? "No Data")")
+            print("FASTAPI RESPONSE: \(String(data: data, encoding: .utf8) ?? "No Data")")
             
             /// 2. checks the response (convert it to HTTPURLResponse type) making sure it has a successful status code
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {

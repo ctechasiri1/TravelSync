@@ -65,6 +65,22 @@ final class TripService: TripServiceProtocol {
         
         request.httpBody = body
         
-        return try await NetworkRequestManager.shared.sendRequest(requestBody: request, responseType: TripPrivateResponse.self)
+        return try await NetworkRequestManager.shared.sendRequest(request: request, responseType: TripPrivateResponse.self)
+    }
+    
+    func getTrip() async throws -> [TripPrivateResponse] {
+        guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
+            throw APIError.invalidURL
+        }
+        
+        var request = URLRequest(url: urlEndpoint)
+        request.httpMethod = "GET"
+        
+        if let token = KeychainManager.shared.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        return try await NetworkRequestManager.shared.sendRequest(request: request, responseType: [TripPrivateResponse].self)
+        
     }
 }
