@@ -10,7 +10,7 @@ import PhotosUI
 import SwiftUI
 
 struct Trip: Identifiable, Equatable {
-    let id: UUID = UUID()
+    let id: Int
     let tripName: String
     let location: String
     let budget: String
@@ -68,13 +68,13 @@ struct TripPrivateResponse: Codable {
     let imageURLString: String
     
     enum CodingKeys: String, CodingKey {
-            case id
+            case id = "user_id"
             case tripName = "title"
             case location
             case budget
             case startDateString = "start_date"
             case endDateString = "end_date"
-            case imageURLString = "cover_image"
+            case imageURLString = "cover_image_path"
         }
 }
 

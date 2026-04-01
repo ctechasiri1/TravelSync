@@ -102,6 +102,7 @@ class TripsViewModel {
             await MainActor.run {
                 self.trips = trips.compactMap {
                     Trip(
+                        id: $0.id,
                         tripName: $0.tripName,
                         location: $0.location,
                         budget: $0.budget,
