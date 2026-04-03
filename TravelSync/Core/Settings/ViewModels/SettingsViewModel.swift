@@ -34,4 +34,6 @@ class SettingsViewModel {
             return Image(systemName: "person.circle.fill")
         }
     }
+    
+    
 }

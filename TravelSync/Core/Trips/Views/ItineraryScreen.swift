@@ -38,14 +38,6 @@ struct ItineraryScreen: View {
     }
 }
 
-//private struct GroupBucketList: View {
-//    var body: some View {
-//        ScrollView(.horizontal) {
-//            
-//        }
-//    }
-//}
-
 private struct ManageButton: View {
     let action: () -> Void
     

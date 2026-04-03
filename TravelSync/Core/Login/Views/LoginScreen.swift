@@ -39,7 +39,7 @@ struct LoginScreen: View {
                         fieldContent: "hello@example.com",
                         iconColor: .gray
                     )
-                            
+                    
                     InputTextField(
                         text: $loginViewModel.password,
                         isSecureField: true,

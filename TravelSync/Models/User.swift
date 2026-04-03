@@ -8,13 +8,11 @@
 import Foundation
 
 struct User {
-    let id: UUID = UUID()
+    let id: Int
     let username: String
     let fullName: String
     let email: String
-    let password: String
     let profileImage: String
-    let trips: [Trip]
 }
 
 // MARK: DTO (Date Transfer Object) for the networking layer
@@ -44,7 +42,7 @@ struct UserPrivateResponse: Decodable {
         case username
         case fullName = "full_name"
         case email
-        case imagePath = "image_path"
+        case imagePath = "profile_image"
     }
 }
 

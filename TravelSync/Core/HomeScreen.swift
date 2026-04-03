@@ -12,7 +12,6 @@ struct HomeScreen: View {
         TabView {
             NavigationStack {
                 TripsScreen()
-                    .navigationTitle("Home")
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
@@ -20,12 +19,10 @@ struct HomeScreen: View {
             
             NavigationStack {
                 ProfileScreen()
-                    .navigationTitle("Profile")
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")
             }
-
         }
     }
 }

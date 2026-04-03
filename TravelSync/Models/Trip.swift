@@ -68,7 +68,7 @@ struct TripPrivateResponse: Codable {
     let imageURLString: String
     
     enum CodingKeys: String, CodingKey {
-            case id = "user_id"
+            case id
             case tripName = "title"
             case location
             case budget
@@ -80,20 +80,22 @@ struct TripPrivateResponse: Codable {
 
 extension TripPrivateResponse {
     var startDate: Date {
-        let isoDateFormatter = ISO8601DateFormatter()
-        
-        if let dateObject = isoDateFormatter.date(from: startDateString) {
-            return dateObject
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        if let date = dateFormatter.date(from: startDateString) {
+            print("START DATE TRIGGERED")
+            return date
         } else {
             return Date()
         }
     }
     
     var endDate: Date {
-        let isoDateFormatter = ISO8601DateFormatter()
-        
-        if let dateObject = isoDateFormatter.date(from: endDateString) {
-            return dateObject
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
+        if let date = dateFormatter.date(from: endDateString) {
+            print("END DATE TRIGGERED")
+            return date
         } else {
             return Date()
         }

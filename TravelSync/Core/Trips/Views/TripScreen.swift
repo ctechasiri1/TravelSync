@@ -14,14 +14,19 @@ struct TripScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                AsyncImage(url: trip.imageURLString)
-                    .scaledToFit()
-                    .clipShape(RoundedRectangle(cornerRadius: 15))
-                    .overlay {
-                        TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
-                    }
-                    .padding()
-                    
+                AsyncImage(url: trip.imageURLString) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 15))
+                        .overlay {
+                            TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
+                        }
+                } placeholder: {
+                    ProgressView()
+                }
+                .padding()
+
                 HStack(spacing: 20){
                     TripInformationCard(
                         title: "STATUS",

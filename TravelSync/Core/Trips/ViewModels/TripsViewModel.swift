@@ -96,7 +96,7 @@ class TripsViewModel {
         }
     }
     
-    func getTrip() async throws -> Void {
+    func getTrip() async -> Void {
         do {
             let trips = try await tripService.getTrip()
             await MainActor.run {
@@ -112,9 +112,8 @@ class TripsViewModel {
                     )
                 }
             }
-            print(self.trips)
         } catch {
-            print(error.localizedDescription)
+            print("There was an error get your trips: \(error.localizedDescription)")
         }
     }
     

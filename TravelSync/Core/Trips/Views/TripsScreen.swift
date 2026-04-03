@@ -13,69 +13,96 @@ struct TripsScreen: View {
     var body: some View {
         @Bindable var tripsViewModel = appState.trips
         
-        ScrollView {
+        VStack {
             Divider()
-                
+            
             CustomSegmentButton(selection: $tripsViewModel.selection,
                                 options: TripOption.allCases)
             .padding()
-                
-            if !tripsViewModel.upcomingTrips.isEmpty {
-                Text(
-                    tripsViewModel.isUpcomingTrip ? "Next Adventure" : "Recent Adventure"
-                )
-                .sectionTitleStyle()
-            }
-                
-            if let firstTripUpcoming = tripsViewModel.upcomingTrips.first,
-               let firstTripPast = tripsViewModel.pastTrips.first {
-                TripCard(
-                    trip: tripsViewModel.isUpcomingTrip ? firstTripUpcoming : firstTripPast,
-                    upcomingTrip: true
-                )
-                .padding(.horizontal)
-            }
-                
-            if tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips.count > 1 : tripsViewModel.pastTrips.count > 1 {
-                Text(
-                    tripsViewModel.isUpcomingTrip ? "Future Plans" : "Past Plans"
-                )
-                .sectionTitleStyle()
-                .padding(.top)
-            }
-
-            ForEach(
-                tripsViewModel.isUpcomingTrip ? tripsViewModel.upcomingTrips
-                    .dropFirst() : tripsViewModel.pastTrips
-                    .dropFirst()
-            ) { trip in
-                TripCard(trip: trip, upcomingTrip: false)
-                    .padding(.horizontal, 25)
-            }
-
-            if tripsViewModel.isUpcomingTrip {
-                AddTripButton(showPlanNewTrip: $tripsViewModel.showPlanNewTrip)
+            
+            ScrollView {
+                if tripsViewModel.isUpcomingTrip {
+                    UpcomingTrips(
+                        upcomingTrips: tripsViewModel.upcomingTrips
+                    )
+                        
+                    AddTripButton(
+                        showPlanNewTrip: $tripsViewModel.showPlanNewTrip
+                    )
                     .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
+                } else {
+                    PastTrips(pastTrips: tripsViewModel.pastTrips)
+                }
+                    
+                Spacer()
             }
-                
-            Spacer()
         }
-        .task {
-            do {
-                try await tripsViewModel.getTrip()
-            } catch {
-                
-            }
+        .refreshable {
+            await tripsViewModel.getTrip()
         }
         .setScrollViewBackground()
+        .task {
+            await tripsViewModel.getTrip()
+        }
         .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
             PlanNewTripScreen()
         })
-        .navigationTitle(Text("My Trips"))
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .topBarLeading) {
+                Text("My Trips")
+                    .padding()
+                    .font(.system(.largeTitle, weight: .bold))
+                    .fixedSize(horizontal: true, vertical: false)
+            }
+            .sharedBackgroundVisibility(.hidden)
+            
+            ToolbarItem(placement: .topBarTrailing) {
                 CircleButton(imageName: "magnifyingglass") { }
             }
+        }
+    }
+}
+
+private struct UpcomingTrips: View {
+    let upcomingTrips: [Trip]
+    
+    var body: some View {
+        if !upcomingTrips.isEmpty {
+            Text("Next Adventure")
+                .sectionTitleStyle()
+        }
+        
+        if let firstUpcomingTrip = upcomingTrips.first {
+            TripCard(trip: firstUpcomingTrip, upcomingTrip: true)
+        }
+        
+        if upcomingTrips.count > 1 {
+            Text("Future Plans")
+                .sectionTitleStyle()
+                .padding(.top)
+        }
+        
+        ForEach(upcomingTrips) { trip in
+            TripCard(trip: trip, upcomingTrip: true)
+                .padding(.bottom, 20)
+                .padding(.horizontal, 25)
+        }
+    }
+}
+
+private struct PastTrips: View {
+    let pastTrips: [Trip]
+    
+    var body: some View {
+        if !pastTrips.isEmpty {
+            Text(pastTrips.count == 1 ? "Recent Adventure" : "Recent Adventure")
+                .sectionTitleStyle()
+        }
+        
+        ForEach(pastTrips) { trip in
+            TripCard(trip: trip, upcomingTrip: false)
+                .padding(.bottom, 20)
+                .padding(.horizontal, 25)
         }
     }
 }
@@ -86,8 +113,14 @@ private struct TripCard: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: trip.imageURLString)
-                .clipShape(RoundedRectangle(cornerRadius: 15))
+            AsyncImage(url: trip.imageURLString) { image in
+                image
+                    .resizable()
+                    .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
+            } placeholder: {
+                ProgressView()
+            }
             
             VStack {
                 HStack {

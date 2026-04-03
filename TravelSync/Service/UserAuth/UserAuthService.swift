@@ -39,9 +39,9 @@ final class UserAuthService: UserAuthServiceProtocol {
         
         /// 2. add metadata to the HTTP Request line and headers
         /// in this we are making a POST request, sending a form data to FastAPI
-        var urlRequest = URLRequest(url: endpoint)
-        urlRequest.httpMethod = "POST"
-        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        var request = URLRequest(url: endpoint)
+        request.httpMethod = "POST"
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         /// 3. encodes the DTO (UserLoginRequest) components to form data
         var components = URLComponents()
@@ -58,12 +58,12 @@ final class UserAuthService: UserAuthServiceProtocol {
         }
         
         /// 5. set the requset body with the raw bytes
-        urlRequest.httpBody = bodyData
+        request.httpBody = bodyData
         
         
         /// 6. sends the request to FastAPI
         let tokenResponse = try await NetworkRequestManager.shared.sendRequest(
-            request: urlRequest,
+            request: request,
             responseType: TokenResponse.self
         )
             

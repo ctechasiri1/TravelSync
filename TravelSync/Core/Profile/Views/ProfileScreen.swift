@@ -13,7 +13,7 @@ struct ProfileScreen: View {
     @State private var isShowingPersonalInfo: Bool = false
     
     var body: some View {
-        let settingsViewModel = appState.settings
+        var profileViewModel = appState.profile
         
         NavigationStack {
             ScrollView {
@@ -21,26 +21,25 @@ struct ProfileScreen: View {
                     ProfileImage()
                     
                     VStack {
-                        // MARK: This condition is temporary until backend is complete
                         Group {
-                            if !settingsViewModel.fullName.isEmpty {
-                                Text(settingsViewModel.fullName)
+                            if let name = profileViewModel.currentUser?.fullName {
+                                Text(name)
                             } else {
-                                Text("Test User")
+                                Text("N/A")
                             }
                         }
-                            .font(.system(.title3, weight: .bold))
+                        .font(.system(.title3, weight: .bold))
                         
-                        // MARK: This condition is temporary until backend is complete
                         Group {
-                            if !settingsViewModel.userName.isEmpty {
-                                Text("@" + settingsViewModel.userName)
+                            if let name = profileViewModel.currentUser?.username {
+                                Text(name)
+                                    .font(.system(.title3, weight: .bold))
                             } else {
-                                Text("@testuser")
+                                Text("N/A")
                             }
                         }
-                            .foregroundStyle(Color.textColor.secondaryText)
-                            .font(.system(.subheadline, weight: .regular))
+                        .foregroundStyle(Color.textColor.secondaryText)
+                        .font(.system(.subheadline, weight: .regular))
                     }
                     
                     ProfileInformation()
@@ -56,6 +55,9 @@ struct ProfileScreen: View {
                     
                     Spacer()
                 }
+            }
+            .task {
+                await profileViewModel.getUser()
             }
             .setScrollViewBackground()
             .toolbar(content: {
