@@ -19,7 +19,7 @@ class LoginViewModel {
     var showErrorAlert: Bool = false
     var errorMessage: String?
     
-    var loadingValue: Float = 0
+    var loadingValue: Double = 0
     var loadingTimer: Timer?
     var loginAppState: LoginState = .loading
     
@@ -31,9 +31,9 @@ class LoginViewModel {
     
     func startLoading() {
         loadingTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { timer in
-            self.loadingValue += 10
+            self.loadingValue += 0.2
             
-            if self.loadingValue > 100 {
+            if self.loadingValue > 1 {
                 self.loadingValue = 0
                 self.loginAppState = .login
                 timer.invalidate()

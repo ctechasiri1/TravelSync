@@ -14,26 +14,50 @@ struct TripsScreen: View {
         @Bindable var tripsViewModel = appState.trips
         
         VStack {
-            Divider()
-            
-            CustomSegmentButton(selection: $tripsViewModel.selection,
-                                options: TripOption.allCases)
+            CustomSegmentButton(
+                selection: $tripsViewModel.selection,
+                options: TripOption.allCases
+            )
             .padding()
             
             ScrollView {
-                if tripsViewModel.isUpcomingTrip {
-                    UpcomingTrips(
-                        upcomingTrips: tripsViewModel.upcomingTrips
-                    )
+                if tripsViewModel.trips.isEmpty {
+                    VStack {
+                        Image("home_image")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 250, height: 150)
+                            .clipped()
                         
-                    AddTripButton(
-                        showPlanNewTrip: $tripsViewModel.showPlanNewTrip
-                    )
-                    .padding(.top, !tripsViewModel.trips.isEmpty ? 20 : 0)
+                        VStack {
+                            Text("Where to next?")
+                                .font(.system(.largeTitle, weight: .bold))
+                            
+                            Text("Your travel adventure starts here. Plan your first trip to see if listed.")
+                                .foregroundStyle(.secondaryText)
+                                .font(.system(.subheadline, weight: .light))
+                                .multilineTextAlignment(.center)
+                                .frame(width: 200)
+                        }
+                        .padding()
+                        
+                        AddTripButton(
+                            showPlanNewTrip: $tripsViewModel.showPlanNewTrip
+                        )
+                        .padding()
+                    }
+                    .padding(.top, 80)
                 } else {
-                    PastTrips(pastTrips: tripsViewModel.pastTrips)
+                    Group {
+                        if tripsViewModel.isUpcomingTrip {
+                            UpcomingTrips(
+                                upcomingTrips: tripsViewModel.upcomingTrips
+                            )
+                        } else {
+                            PastTrips(pastTrips: tripsViewModel.pastTrips)
+                        }
+                    }
                 }
-                    
                 Spacer()
             }
         }
@@ -50,15 +74,17 @@ struct TripsScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Text("My Trips")
-                    .padding()
                     .font(.system(.largeTitle, weight: .bold))
                     .fixedSize(horizontal: true, vertical: false)
             }
             .sharedBackgroundVisibility(.hidden)
             
             ToolbarItem(placement: .topBarTrailing) {
-                CircleButton(imageName: "magnifyingglass") { }
+                ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
+                    tripsViewModel.showPlanNewTrip = true
+                }
             }
+            .sharedBackgroundVisibility(.hidden)
         }
     }
 }
@@ -180,19 +206,12 @@ private struct AddTripButton: View {
                 Text("Plan a new trip")
                     .font(.system(size: 18, weight: .semibold, design: .default))
             }
-            .foregroundStyle(Color(.accentBlue))
+            .foregroundStyle(.white)
             .frame(height: 60)
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(Color(Color.accentBlue.opacity(0.05)))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(
-                        Color.accentBlue.opacity(0.2),
-                        style: StrokeStyle(lineWidth: 2, dash: [10, 5])
-                    )
+                    .fill(Color(Color.accentPrimary))
             )
             .padding(.horizontal, 25)
         }

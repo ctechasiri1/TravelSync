@@ -39,7 +39,7 @@ class TripsViewModel {
         if let uiImage = coverUIImage {
             return Image(uiImage: uiImage)
         } else {
-            return Image("tempBackground")
+            return Image("default_cover")
         }
     }
 

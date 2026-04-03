@@ -30,21 +30,17 @@ struct LoadingScreen: View {
                     Text("TravelSync")
                         .font(.system(.largeTitle, weight: .bold))
                             
-                    Text("Plan. Track. Explore")
+                    Text("Plan. Track. Explore.")
                         .font(.system(.headline, weight: .semibold))
                         .foregroundStyle(.secondaryText.opacity(0.6))
                 }
-                .padding(.bottom, 50)
+                .padding(.bottom, 40)
                         
-                ProgressView(
-                    value: loginViewModel.loadingValue,
-                    total: progressTotal
-                )
-                .tint(.accentPrimary)
-                .progressViewStyle(.linear)
-                .scaleEffect(y: 2.0)
-                .padding(.horizontal, 120)
-
+                LinearProgressBar(value: loginViewModel.loadingValue, shape: RoundedRectangle(cornerRadius: 20))
+                    .tint(.accentPrimary)
+                    .frame(height: 10)
+                    .padding(.horizontal, 110)
+                
                 Text("LOADING YOUR JOURNEY...")
                     .font(.system(.caption2))
                     .foregroundStyle(.secondaryText.opacity(0.6))

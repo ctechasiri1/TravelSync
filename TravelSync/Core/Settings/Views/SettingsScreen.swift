@@ -22,7 +22,12 @@ struct SettingsScreen: View {
                     
                     SupportOptions()
                     
-                    LogOutButton{ } 
+                    AuthButton(
+                        text: "Log Out",
+                        foregroundColor: .accentPrimary,
+                        backgroundColor: .white) {
+                            
+                        }
                     
                     Text("Version 2.4.0 (145)")
                         .font(.subheadline)

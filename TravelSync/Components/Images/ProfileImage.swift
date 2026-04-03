@@ -10,6 +10,7 @@ import SwiftUI
 
 struct ProfileImage: View {
     @Environment(AppState.self) private var appState
+    let canEditPhoto: Bool = false
     
     var body: some View {
         @Bindable var settingsViewModel = appState.settings
@@ -18,35 +19,26 @@ struct ProfileImage: View {
             settingsViewModel.displayImage
                 .resizable()
                 .scaledToFill()
-                .frame(width: 100, height: 100)
                 .clipShape(Circle())
-                .overlay {
-                    Circle().strokeBorder(
-                        LinearGradient(
-                            colors: [Color.orange, Color.accentPrimary],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        ),
-                        lineWidth: 5)
+            if canEditPhoto {
+                PhotosPicker(selection: $settingsViewModel.selectedItem) {
+                    Image(systemName: "camera.fill")
+                        .foregroundStyle(Color.white)
+                        .background(
+                            Circle()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [Color.orange, Color.accentPrimary],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    ))
+                                .strokeBorder(Color.white, lineWidth: 2)
+                                .frame(width: 40, height: 40)
+                                .foregroundStyle(Color.accentBlue)
+                        )
+                        .frame(width: 30, height: 30)
+                        .offset(x: -1, y: -1)
                 }
-            
-            PhotosPicker(selection: $settingsViewModel.selectedItem) {
-                Image(systemName: "camera.fill")
-                    .foregroundStyle(Color.white)
-                    .background(
-                        Circle()
-                            .fill(
-                                LinearGradient(
-                                    colors: [Color.orange, Color.accentPrimary],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                            ))
-                            .strokeBorder(Color.white, lineWidth: 2)
-                            .frame(width: 40, height: 40)
-                            .foregroundStyle(Color.accentBlue)
-                    )
-                    .frame(width: 30, height: 30)
-                    .offset(x: -1, y: -1)
             }
         }
         .onChange(of: settingsViewModel.selectedItem) { _, newItem in

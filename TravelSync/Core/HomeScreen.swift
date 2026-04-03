@@ -24,6 +24,7 @@ struct HomeScreen: View {
                 Label("Profile", systemImage: "person.fill")
             }
         }
+        .tint(.accentPrimary)
     }
 }
 

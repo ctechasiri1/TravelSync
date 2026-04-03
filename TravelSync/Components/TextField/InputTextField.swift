@@ -60,7 +60,6 @@ struct InputTextField: View {
                     )
             )
         }
-        .padding(.vertical, 10)
     }
 }
 

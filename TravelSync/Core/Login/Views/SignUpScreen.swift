@@ -15,10 +15,8 @@ struct SignUpScreen: View {
         
         ZStack {
             Color.secondaryBackground
-            Spacer()
+
             OptionsCard(title: "") {
-                Spacer()
-                    
                 VStack(alignment: .center) {
                     Text("Create Your Account")
                         .font(.system(.title, weight: .semibold))
@@ -29,45 +27,51 @@ struct SignUpScreen: View {
                         .foregroundStyle(.secondaryText.opacity(0.6))
                         .padding(.bottom)
                     
-                    InputTextField(
-                        text: $loginViewModel.fullName,
-                        fieldTitle: "Full Name",
-                        fieldImage: "pencil",
-                        fieldContent: "Enter your name",
-                        iconColor: .gray
-                    )
-                    
-                    InputTextField(
-                        text: $loginViewModel.username,
-                        fieldTitle: "Username",
-                        fieldImage: "person.fill",
-                        fieldContent: "Enter your username",
-                        iconColor: .gray
-                    )
+                    VStack(spacing: 15) {
+                        InputTextField(
+                            text: $loginViewModel.fullName,
+                            fieldTitle: "Full Name",
+                            fieldImage: "pencil",
+                            fieldContent: "Enter your name",
+                            iconColor: .gray
+                        )
                         
-                    InputTextField(
-                        text: $loginViewModel.email,
-                        fieldTitle: "Email",
-                        fieldImage: "envelope",
-                        fieldContent: "hello@example.com",
-                        iconColor: .gray
-                    )
+                        InputTextField(
+                            text: $loginViewModel.username,
+                            fieldTitle: "Username",
+                            fieldImage: "person.fill",
+                            fieldContent: "Enter your username",
+                            iconColor: .gray
+                        )
                         
-                    InputTextField(
-                        text: $loginViewModel.password,
-                        isSecureField: true,
-                        toggleSecurityButton: true,
-                        fieldTitle: "Password",
-                        fieldImage: "lock",
-                        fieldContent: "••••••••••",
-                        iconColor: .gray
-                    )
+                        InputTextField(
+                            text: $loginViewModel.email,
+                            fieldTitle: "Email",
+                            fieldImage: "envelope",
+                            fieldContent: "hello@example.com",
+                            iconColor: .gray
+                        )
                         
-                    SignUpButton {
-                        Task {
-                            await loginViewModel.signup()
-                        }
+                        InputTextField(
+                            text: $loginViewModel.password,
+                            isSecureField: true,
+                            toggleSecurityButton: true,
+                            fieldTitle: "Password",
+                            fieldImage: "lock",
+                            fieldContent: "••••••••••",
+                            iconColor: .gray
+                        )
                     }
+                        
+                    AuthButton(
+                        text: "Sign Up",
+                        foregroundColor: .white,
+                        backgroundColor: .accentPrimary) {
+                            Task {
+                                await loginViewModel.signup()
+                            }
+                        }
+                        .padding(.top)
                         
                     SignUpDivider()
                         .padding()
@@ -103,6 +107,7 @@ struct SignUpScreen: View {
                 .padding()
             }
             .padding()
+            .padding(.vertical, 20)
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -114,7 +119,7 @@ private struct SignUpDivider: View {
             Rectangle()
                 .frame(height: 0.5)
 
-            Text("Or continue with")
+            Text("Or sign up with")
                 .font(.system(size: 15))
                 .frame(width: 120)
                 
@@ -137,24 +142,6 @@ private struct TextNavigationButton: View {
             Text(text)
                 .font(.system(.subheadline, weight: .semibold))
                 .foregroundStyle(.accentPrimary)
-        }
-    }
-}
-
-private struct SignUpButton: View {
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text("Sign Up")
-                .font(.system(.subheadline, weight: .semibold))
-                .padding()
-                .foregroundStyle(Color.white)
-                .frame(maxWidth: .infinity)
-                .background(.accentPrimary)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }
 }

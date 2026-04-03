@@ -22,12 +22,12 @@ struct CustomSegmentButton: View {
                 } label: {
                     Text(option.title)
                         .font(.subheadline.weight(.medium))
-                        .foregroundColor(selection == option ? Color.primaryText.opacity(0.7) : Color.secondaryText )
+                        .foregroundColor(selection == option ? Color.primaryText.opacity(0.7) : Color.secondaryText)
                         .padding(.vertical, 8)
                         .frame(maxWidth: .infinity)
                         .background {
                             if selection == option {
-                                Capsule()
+                                RoundedRectangle(cornerRadius: 10)
                                     .fill(Color.secondaryBackground)
                                     .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                                     .matchedGeometryEffect(id: "selection", in: namespace)
@@ -36,11 +36,9 @@ struct CustomSegmentButton: View {
                 }
             }
         }
-        /// inner background
         .padding(2)
         .background(Color.tertiaryBackground)
-        .clipShape(Capsule())
-        /// outer background
+        .clipShape(RoundedRectangle(cornerRadius: 15))
         .padding(5)
         .background(
             Capsule()
@@ -48,7 +46,7 @@ struct CustomSegmentButton: View {
                 .background(Color.tertiaryBackground)
                 .clipped()
         )
-        .clipShape(Capsule())
+        .clipShape(RoundedRectangle(cornerRadius: 15))
     }
 }
 

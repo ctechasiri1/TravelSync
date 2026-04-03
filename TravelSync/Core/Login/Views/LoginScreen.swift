@@ -31,35 +31,41 @@ struct LoginScreen: View {
                     Text("Continue to your adventure where you left off.")
                         .font(.system(.subheadline))
                         .foregroundStyle(.secondaryText.opacity(0.6))
-                            
-                    InputTextField(
-                        text: $loginViewModel.email,
-                        fieldTitle: "Email",
-                        fieldImage: "envelope",
-                        fieldContent: "hello@example.com",
-                        iconColor: .gray
-                    )
                     
-                    InputTextField(
-                        text: $loginViewModel.password,
-                        isSecureField: true,
-                        toggleSecurityButton: true,
-                        fieldTitle: "Password",
-                        fieldImage: "lock",
-                        fieldContent: "••••••••••",
-                        iconColor: .gray
-                    )
+                    VStack(spacing: 15) {
+                        InputTextField(
+                            text: $loginViewModel.email,
+                            fieldTitle: "Email",
+                            fieldImage: "envelope",
+                            fieldContent: "hello@example.com",
+                            iconColor: .gray
+                        )
+                        .padding(.top)
+                        
+                        InputTextField(
+                            text: $loginViewModel.password,
+                            isSecureField: true,
+                            toggleSecurityButton: true,
+                            fieldTitle: "Password",
+                            fieldImage: "lock",
+                            fieldContent: "••••••••••",
+                            iconColor: .gray
+                        )
+                    }
                             
                     TextNavigationButton(text: "Forgot Password?") {
                         
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                            
-                    LoginButton {
-                        Task {
-                            await loginViewModel.login()
+                    
+                    AuthButton(
+                        text: "Login",
+                        foregroundColor: .white,
+                        backgroundColor: .accentPrimary) {
+                            Task {
+                                await loginViewModel.login()
+                            }
                         }
-                    }
                             
                     LoginDivider()
                         .padding()
@@ -100,7 +106,7 @@ struct LoginScreen: View {
             }
             .padding()
         }
-        .showLoading(if: loginViewModel.isNetworkActive)
+//        .showLoading(if: loginViewModel.isNetworkActive)
     }
 }
 
@@ -146,24 +152,6 @@ private struct TextNavigationButton: View {
             Text(text)
                 .font(.system(.subheadline, weight: .semibold))
                 .foregroundStyle(.accentPrimary)
-        }
-    }
-}
-
-private struct LoginButton: View {
-    let action: () -> Void
-
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text("Login")
-                .font(.system(.subheadline, weight: .semibold))
-                .padding()
-                .foregroundStyle(Color.white)
-                .frame(maxWidth: .infinity)
-                .background(.accentPrimary)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
         }
     }
 }

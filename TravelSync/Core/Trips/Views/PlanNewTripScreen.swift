@@ -37,7 +37,7 @@ struct PlanNewTripScreen: View {
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
-                    iconColor: .accentBlue
+                    iconColor: .accentPrimary
                 )
                 
                 InputTextField(
@@ -45,7 +45,7 @@ struct PlanNewTripScreen: View {
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko",
-                    iconColor: .accentBlue
+                    iconColor: .accentPrimary
                 )
                 
                 InputTextField(
@@ -53,7 +53,7 @@ struct PlanNewTripScreen: View {
                     fieldTitle: "BUDGET",
                     fieldImage: "banknote.fill",
                     fieldContent: "e.g. 10,000",
-                    iconColor: .accentBlue
+                    iconColor: .accentPrimary
                 )
                 
                 HStack {
@@ -63,7 +63,7 @@ struct PlanNewTripScreen: View {
                     )
                     
                     Image(systemName: "arrow.right")
-                        .foregroundStyle(.accentBlue)
+                        .foregroundStyle(.accentPrimary)
                         .padding(.top, 25)
                     
                     CustomDatePicker(
@@ -161,7 +161,7 @@ private struct CustomDatePicker: View {
                 Spacer()
                 
                 Image(systemName: "calendar")
-                    .foregroundStyle(.accentBlue)
+                    .foregroundStyle(.accentPrimary)
             }
             .padding()
             .background(

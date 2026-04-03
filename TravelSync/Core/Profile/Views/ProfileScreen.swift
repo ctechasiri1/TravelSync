@@ -13,43 +13,52 @@ struct ProfileScreen: View {
     @State private var isShowingPersonalInfo: Bool = false
     
     var body: some View {
-        var profileViewModel = appState.profile
+        let profileViewModel = appState.profile
         
         NavigationStack {
             ScrollView {
-                VStack(spacing: 30) {
-                    ProfileImage()
-                    
-                    VStack {
-                        Group {
-                            if let name = profileViewModel.currentUser?.fullName {
-                                Text(name)
-                            } else {
-                                Text("N/A")
-                            }
-                        }
-                        .font(.system(.title3, weight: .bold))
+                VStack(alignment: .leading, spacing: 30) {
+                    HStack {
+                        ProfileImage()
+                            .frame(width: 60, height: 60)
+                            .padding()
                         
-                        Group {
-                            if let name = profileViewModel.currentUser?.username {
-                                Text(name)
-                                    .font(.system(.title3, weight: .bold))
-                            } else {
-                                Text("N/A")
+                        VStack(alignment: .leading) {
+                            Group {
+                                if let name = profileViewModel.currentUser?.firstName {
+                                    Text("Hi, \(name)!")
+                                } else {
+                                    Text("N/A")
+                                }
                             }
+                            .font(.system(.title, weight: .semibold))
+                            
+                            Group {
+                                if let name = profileViewModel.currentUser?.username {
+                                    Text("@\(name.lowercased())")
+                                        .font(.system(.subheadline))
+                                } else {
+                                    Text("N/A")
+                                }
+                            }
+                            .foregroundStyle(Color.textColor.secondaryText)
+                            .font(.system(.subheadline, weight: .regular))
                         }
-                        .foregroundStyle(Color.textColor.secondaryText)
-                        .font(.system(.subheadline, weight: .regular))
                     }
-                    
-                    ProfileInformation()
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     
                     Group {
                         TravelBadges()
                         
                         FuturePlansOptions()
                         
-                        LogOutButton { }
+                        AuthButton(
+                            text: "Log Out",
+                            foregroundColor: .accentPrimary,
+                            backgroundColor: .white) {
+                                
+                            }
                     }
                     .padding(.horizontal)
                     
@@ -61,12 +70,12 @@ struct ProfileScreen: View {
             }
             .setScrollViewBackground()
             .toolbar(content: {
-                CircleButton(imageName: "pencil", action: {
+                ToolbarButton(imageName: "pencil", foregroundColor: .accentPrimary, backgroundColor: .white) {
                     isShowingPersonalInfo = true
-                })
-                CircleButton(imageName: "gear", action: {
+                }
+                ToolbarButton(imageName: "gear", foregroundColor: .accentPrimary, backgroundColor: .white) {
                     isShowingSettings = true
-                } )
+                }
             })
             .navigationDestination(isPresented: $isShowingSettings, destination: {
                 SettingsScreen()
@@ -76,32 +85,6 @@ struct ProfileScreen: View {
             })
             .navigationTitle("Profile")
             .navigationBarTitleDisplayMode(.inline)
-            
-        }
-    }
-}
-
-private struct ProfileInformation: View {
-    var body: some View {
-        HStack(spacing: 40) {
-            VStack {
-                Text("24")
-                Text("Posts")
-            }
-            
-            Divider()
-            
-            VStack {
-                Text("24")
-                Text("Posts")
-            }
-            
-            Divider()
-            
-            VStack {
-                Text("24")
-                Text("Posts")
-            }
             
         }
     }
