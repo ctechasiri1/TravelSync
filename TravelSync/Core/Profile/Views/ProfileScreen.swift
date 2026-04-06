@@ -19,7 +19,7 @@ struct ProfileScreen: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 30) {
                     HStack {
-                        ProfileImage()
+                        ProfileImage(canEditPhoto: false)
                             .frame(width: 60, height: 60)
                             .padding()
                         

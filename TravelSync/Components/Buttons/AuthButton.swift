@@ -31,8 +31,11 @@ struct AuthButton: View {
                 } onPressingChanged: { pressing in
                     isPressed = pressing
                 }
+                .shadow(color: .gray.opacity(0.2), radius: 5, x: 1, y: 2)
         }
     }
 }
 
-
+#Preview {
+    AuthButton(text: "Login", foregroundColor: .accentPrimary, backgroundColor: .white, action: { })
+}

@@ -23,7 +23,13 @@ struct TripScreen: View {
                             TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
                         }
                 } placeholder: {
-                    ProgressView()
+                    ZStack {
+                        Color.gray.opacity(0.5)
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        
+                        ProgressView()
+                            .frame(width: 300, height: 200)
+                    }
                 }
                 .padding()
 
@@ -249,15 +255,17 @@ private struct TripBudgetCard: View {
     }
 }
 
-//#Preview {
-//    TripScreen(
-//        trip: Trip(
-//            tripName: "Summer in Thailand",
-//            location: "Bangkok, Thailand",
-//            budget: "1_000",
-//            startDate: Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now,
-//            endDate: Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now,
-//            coverImage: UIImage(named: "tempBackground")),
-//        upcomingTrip: true)
-//        .environment(AppState())
-//}
+#Preview {
+    TripScreen(
+        trip: Trip(
+            id: 1,
+            tripName: "Mango Sticky Rice Summer",
+            location: "Bangkok, Thailand",
+            budget: "5000",
+            startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
+            endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
+            imageURLString: nil
+        ),
+        upcomingTrip: true)
+        .environment(AppState())
+}

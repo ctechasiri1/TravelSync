@@ -68,7 +68,6 @@ struct NavigationOptionRow<Destination: View>: View {
     }
 }
 
-// This creates the option with a toggle button built-in
 struct ToggleOptionRow: View {
     let title: String
     let iconName: String

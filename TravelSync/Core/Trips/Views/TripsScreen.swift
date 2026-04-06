@@ -100,6 +100,7 @@ private struct UpcomingTrips: View {
         
         if let firstUpcomingTrip = upcomingTrips.first {
             TripCard(trip: firstUpcomingTrip, upcomingTrip: true)
+                .padding(.horizontal)
         }
         
         if upcomingTrips.count > 1 {
@@ -108,7 +109,7 @@ private struct UpcomingTrips: View {
                 .padding(.top)
         }
         
-        ForEach(upcomingTrips) { trip in
+        ForEach(upcomingTrips.dropFirst()) { trip in
             TripCard(trip: trip, upcomingTrip: true)
                 .padding(.bottom, 20)
                 .padding(.horizontal, 25)

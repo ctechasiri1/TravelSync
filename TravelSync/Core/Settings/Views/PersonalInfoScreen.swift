@@ -15,10 +15,11 @@ struct PersonalInfoScreen: View {
         
         NavigationStack {
             ScrollView {
-                ProfileImage()
+                ProfileImage(canEditPhoto: true)
+                    .frame(width: 100, height: 100)
                     .padding(.vertical, 10)
                 
-                VStack(spacing: 5) {
+                VStack(spacing: 25) {
                     InputTextField(
                         text: $settingsViewModel.userName,
                         fieldTitle: "USERNAME",

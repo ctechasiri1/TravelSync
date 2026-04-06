@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ProfileImage: View {
     @Environment(AppState.self) private var appState
-    let canEditPhoto: Bool = false
+    let canEditPhoto: Bool
     
     var body: some View {
         @Bindable var settingsViewModel = appState.settings
@@ -59,6 +59,6 @@ struct ProfileImage: View {
 
 
 #Preview {
-    ProfileImage()
+    ProfileImage(canEditPhoto: true)
         .environment(AppState())
 }
