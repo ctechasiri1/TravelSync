@@ -79,7 +79,7 @@ class LoginViewModel {
         do {
             try await Task.sleep(nanoseconds: 1_500_000_000)
             
-            if KeychainManager.shared.getToken() != nil {
+            if KeychainService.shared.getToken() != nil {
                 self.loginAppState = .home
             } else {
                 self.loginAppState = .login

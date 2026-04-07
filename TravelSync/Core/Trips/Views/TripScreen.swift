@@ -46,7 +46,7 @@ struct TripScreen: View {
                         title: trip.city,
                         value: "18 ℃",
                         iconName: "sun.max.trianglebadge.exclamationmark.fill",
-                        iconColor: .accentConfirmation,
+                        iconColor: .accentPrimary,
                         textColor: .black
                     )
                 }
@@ -62,7 +62,8 @@ struct TripScreen: View {
                         title: "Itinerary",
                         value: "\(trip.dateDiffernce ?? "0 Days") Left",
                         iconName: "map.fill",
-                        iconColor: .accentBlue
+                        iconColor: .accentBlue,
+                        arrowColor: .accentBlue
                     ) {
                         ItineraryScreen()
                     }
@@ -70,7 +71,9 @@ struct TripScreen: View {
                     TripQuickAccessCard(
                         title: "Documents",
                         value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                        iconName: "ticket.fill", iconColor: .accentConfirmation
+                        iconName: "ticket.fill",
+                        iconColor: .accentPrimary,
+                        arrowColor: .accentPrimary
                     ) {
                         ItineraryScreen()
                     }
@@ -78,11 +81,13 @@ struct TripScreen: View {
                 .padding(.horizontal)
                     
                 TripBudgetCard(
-                    title: "Documents",
+                    title: "Budget",
                     value: "\(trip.dateDiffernce ?? "0 Days") Left",
-                    iconName: "ticket.fill",
+                    iconName: "dollarsign",
                     iconColor: .accentConfirmation
-                )
+                ) {
+                    BudgetScreen(trip: trip)
+                }
                 .padding()
             }
         }
@@ -100,13 +105,13 @@ private struct TripImageOverlay: View {
             VStack(alignment: .leading) {
                 Spacer()
                 
-                Text(upcomingTrip ? "UPCOMING" : "FUTURE")
+                Text(upcomingTrip ? "UPCOMING" : "PAST")
                     .padding(6)
                     .font(.system(.caption, weight: .bold))
-                    .background(.blue)
+                    .background(.accentPrimary)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
                 
-                Text(trip.tripName)
+                Text(trip.location)
                     .font(.system(.title, weight: .bold))
                     
                 HStack {
@@ -151,8 +156,13 @@ private struct TripInformationCard: View {
                 
                 Spacer()
                 
-                CircleIcon(iconName: iconName, iconColor: iconColor, width: 35, height: 35)
-                    .padding(.trailing, 5)
+                CircleIcon(
+                    iconName: iconName,
+                    iconColor: iconColor,
+                    width: 35,
+                    height: 35
+                )
+                .padding(.trailing, 5)
             }
             .padding(12)
         }
@@ -164,6 +174,7 @@ private struct TripQuickAccessCard<T:View>: View {
     let value: String
     let iconName: String
     let iconColor: Color
+    let arrowColor: Color
     @ViewBuilder let content: T
     
     var body: some View {
@@ -179,11 +190,10 @@ private struct TripQuickAccessCard<T:View>: View {
                             width: 50,
                             height: 50
                         )
-                        .padding(.leading, 5)
+                        .padding(.leading, 10)
                         .padding([.top, .bottom], 10)
                         .imageScale(.large)
                         
-
                         VStack(alignment: .leading, spacing: 5) {
                             Text(title)
                                 .font(.system(size: 18, weight: .semibold))
@@ -199,7 +209,7 @@ private struct TripQuickAccessCard<T:View>: View {
                         HStack {
                             Spacer()
                             Image(systemName: "arrow.right")
-                                .foregroundStyle(.accentBlue)
+                                .foregroundStyle(arrowColor)
                         }
                     }
                     .padding(20)
@@ -209,16 +219,17 @@ private struct TripQuickAccessCard<T:View>: View {
     }
 }
 
-private struct TripBudgetCard: View {
+private struct TripBudgetCard<T: View>: View {
     let title: String
     let value: String
     let iconName: String
     let iconColor: Color
+    @ViewBuilder let content: T
     
     var body: some View {
         OptionsCard(title: "") {
             VStack {
-                HStack(spacing: 50) {
+                HStack(spacing: 100) {
                     HStack(spacing: 30) {
                         SquareIcon(
                             iconName: iconName,
@@ -237,7 +248,7 @@ private struct TripBudgetCard: View {
                     }
                     
                     Text(title)
-                        .font(.system(.subheadline, weight: .semibold))
+                        .font(.system(.subheadline, weight: .regular))
                         .padding(8)
                         .background(.gray.opacity(0.2))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
@@ -249,6 +260,19 @@ private struct TripBudgetCard: View {
                     .progressViewStyle(.linear)
                     .scaleEffect(y: 2.0)
                     .padding([.leading, .trailing, .bottom])
+                
+                NavigationLink {
+                    content
+                } label: {
+                    HStack {
+                        Spacer()
+                        
+                        Image(systemName: "arrow.right")
+                            .foregroundStyle(.accentConfirmation)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 2)
+                }
             }
             .padding()
         }
@@ -257,15 +281,7 @@ private struct TripBudgetCard: View {
 
 #Preview {
     TripScreen(
-        trip: Trip(
-            id: 1,
-            tripName: "Mango Sticky Rice Summer",
-            location: "Bangkok, Thailand",
-            budget: "5000",
-            startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
-            endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
-            imageURLString: nil
-        ),
+        trip: Trip.example,
         upcomingTrip: true)
         .environment(AppState())
 }

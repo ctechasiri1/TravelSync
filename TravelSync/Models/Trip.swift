@@ -17,6 +17,19 @@ struct Trip: Identifiable, Equatable {
     let startDate: Date
     let endDate: Date
     let imageURLString: URL?
+    
+    @MainActor
+    static var example: Trip {
+        return Trip(
+            id: 1,
+            tripName: "Mango Sticky Rice Summer",
+            location: "Bangkok, Thailand",
+            budget: "5000",
+            startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
+            endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
+            imageURLString: nil
+        )
+    }
 }
 
 extension Trip {
@@ -44,7 +57,13 @@ extension Trip {
     var city: String {
         let cityCountryPairArray = location.split(separator: ",")
 
-        return String(cityCountryPairArray[0]).uppercased()
+        return String(cityCountryPairArray[0]).trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
+    }
+    
+    var country: String {
+        let cityCountryPairArray = location.split(separator: ",")
+
+        return String(cityCountryPairArray[1]).trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
     }
 }
 

@@ -101,6 +101,7 @@ private struct UpcomingTrips: View {
         if let firstUpcomingTrip = upcomingTrips.first {
             TripCard(trip: firstUpcomingTrip, upcomingTrip: true)
                 .padding(.horizontal)
+                
         }
         
         if upcomingTrips.count > 1 {
@@ -143,54 +144,92 @@ private struct TripCard: View {
             AsyncImage(url: trip.imageURLString) { image in
                 image
                     .resizable()
-                    .scaledToFit()
+                    .frame(width: 350, height: 400)
+                    .scaledToFill()
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
-                ProgressView()
+                ZStack {
+                    Color.gray.opacity(0.5)
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                    
+                    ProgressView()
+                        .frame(width: 300, height: 400)
+                }
             }
-            
-            VStack {
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text(trip.location)
-                            .font(.system(.title, weight: .bold))
+            .overlay(alignment: .center) {
+                VStack(alignment: .leading) {
+                    HStack {
+                        Image(systemName: "clock.fill")
                         
-                        HStack {
-                            Image(systemName: "calendar")
-                                .foregroundStyle(.accentBlue)
-                            Text(trip.dateRangeString)
-                                .foregroundStyle(Color.secondaryText)
+                        Text("\(trip.dateDiffernce ?? "0")")
+                    }
+                    .font(.system(.subheadline, weight: .semibold))
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 20)
+                    .foregroundColor(.white)
+                    .background(.accentPrimary)
+                    .clipShape(Capsule())
+                    .padding(5)
+                    
+                    Spacer()
+                    
+                    HStack {
+                        VStack(alignment: .leading) {
+                            VStack(alignment: .leading) {
+                                Text("\(trip.city),")
+                                    .font(.system(.title, weight: .bold))
+                                
+                                Text("\(trip.country)")
+                                    .font(.system(.title, weight: .bold))
+                            }
+                            .foregroundStyle(.white)
+                            .padding(10)
+                            
+                            HStack {
+                                Group {
+                                    Image(systemName: "calendar")
+                                        .font(.system(.subheadline))
+                                    
+                                    Text(trip.dateRangeString)
+                                }
+                                .foregroundStyle(.gray.opacity(0.6))
+                                
+                                Spacer()
+                                
+                                DetailsButton {
+                                    TripScreen(trip: trip, upcomingTrip: upcomingTrip)
+                                }
+                            }
+                            .padding(.horizontal)
                         }
                     }
-                    
-                    Spacer()
-                    
-                    CircleIcon(iconName: "airplane.departure", iconColor: .accentBlue, width: 50, height: 50)
                 }
-                .padding()
-                
-                Divider()
-                
-                HStack {
-                    Image(systemName: "circle.fill")
-                    
-                    Spacer()
-                    
-                    NavigationLink {
-                        TripScreen(trip: trip, upcomingTrip: upcomingTrip)
-                    } label: {
-                        Text("View Itinerary")
-                    }
-
-                    Image(systemName: "arrow.forward")
-                }
-                .bold()
-                .foregroundStyle(.accentBlue)
                 .padding()
             }
-            .padding()
         }
-        .createCardBackgroud()
+    }
+}
+
+private struct DetailsButton<T: View>: View {
+    @ViewBuilder let content: T
+    
+    var body: some View {
+        NavigationLink {
+            content
+        } label: {
+            HStack {
+                Text("Detail")
+                
+                Image(systemName: "arrow.right")
+            }
+            .font(.system(.subheadline, weight: .semibold))
+            .padding(.vertical, 10)
+            .padding(.horizontal, 20)
+        }
+        .background(.white)
+        .clipShape(Capsule())
+        .foregroundColor(.primaryText)
+        
     }
 }
 

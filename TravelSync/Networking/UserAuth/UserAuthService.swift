@@ -24,7 +24,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         /// 3. this encodes the DTO (UserCreateRequest) into a JSON for FastAPI to take
         request.httpBody = try JSONEncoder().encode(requestBody)
 
-        return try await NetworkRequestManager.shared.sendRequest(
+        return try await NetworkRequestService.shared.sendRequest(
             request: request,
             responseType: UserPrivateResponse.self
         )
@@ -62,13 +62,13 @@ final class UserAuthService: UserAuthServiceProtocol {
         
         
         /// 6. sends the request to FastAPI
-        let tokenResponse = try await NetworkRequestManager.shared.sendRequest(
+        let tokenResponse = try await NetworkRequestService.shared.sendRequest(
             request: request,
             responseType: TokenResponse.self
         )
             
         /// 7. store the token in the keychain
-        KeychainManager.shared.saveToken(tokenResponse.accessToken)
+        KeychainService.shared.saveToken(tokenResponse.accessToken)
         
         return tokenResponse
     }

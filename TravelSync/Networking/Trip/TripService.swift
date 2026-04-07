@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TripService: TripServiceProtocol {
+struct TripService: TripServiceProtocol {
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
         guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
             throw APIError.invalidURL
@@ -23,7 +23,7 @@ final class TripService: TripServiceProtocol {
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         /// 3. check if the user is authorized to access the endpoint with the token
-        if let token = KeychainManager.shared.getToken() {
+        if let token = KeychainService.shared.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -65,7 +65,7 @@ final class TripService: TripServiceProtocol {
         
         request.httpBody = body
         
-        return try await NetworkRequestManager.shared.sendRequest(request: request, responseType: TripPrivateResponse.self)
+        return try await NetworkRequestService.shared.sendRequest(request: request, responseType: TripPrivateResponse.self)
     }
     
     func getTrip() async throws -> [TripPrivateResponse] {
@@ -76,11 +76,11 @@ final class TripService: TripServiceProtocol {
         var request = URLRequest(url: urlEndpoint)
         request.httpMethod = "GET"
         
-        if let token = KeychainManager.shared.getToken() {
+        if let token = KeychainService.shared.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        return try await NetworkRequestManager.shared.sendRequest(request: request, responseType: [TripPrivateResponse].self)
+        return try await NetworkRequestService.shared.sendRequest(request: request, responseType: [TripPrivateResponse].self)
         
     }
 }

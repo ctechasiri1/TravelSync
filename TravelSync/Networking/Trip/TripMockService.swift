@@ -1,5 +1,5 @@
 //
-//  TripTestService.swift
+//  TripMockService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/31/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class TripTestService: TripServiceProtocol {
+struct TripMockService: TripServiceProtocol {
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
         return TripPrivateResponse(
             id: 1,

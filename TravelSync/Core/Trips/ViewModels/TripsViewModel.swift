@@ -31,7 +31,7 @@ class TripsViewModel {
     
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol = TripService()) {
+    init(tripService: TripServiceProtocol = TripMockService()) {
         self.tripService = tripService
     }
     

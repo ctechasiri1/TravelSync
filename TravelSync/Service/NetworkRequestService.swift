@@ -1,5 +1,5 @@
 //
-//  NetworkRequestManager.swift
+//  NetworkRequestService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/25/26.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-final class NetworkRequestManager {
-    static let shared = NetworkRequestManager()
+final class NetworkRequestService {
+    static let shared = NetworkRequestService()
     
     private init() { }
     

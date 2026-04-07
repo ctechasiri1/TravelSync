@@ -1,5 +1,5 @@
 //
-//  UserTestService.swift
+//  UserMockService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/5/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserTestService: UserServiceProtocol {
+struct UserMockService: UserServiceProtocol {
     func getCurrentUser() async throws -> UserPrivateResponse {
         return UserPrivateResponse(
             id: 1,

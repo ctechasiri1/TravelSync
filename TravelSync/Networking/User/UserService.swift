@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class UserService: UserServiceProtocol {
+struct UserService: UserServiceProtocol {
     func getCurrentUser() async throws -> UserPrivateResponse {
         guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/me") else {
             throw APIError.invalidURL
@@ -16,10 +16,10 @@ final class UserService: UserServiceProtocol {
         var request = URLRequest(url: endpoint)
         request.httpMethod = "GET"
         
-        if let token = KeychainManager.shared.getToken() {
+        if let token = KeychainService.shared.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        return try await NetworkRequestManager.shared.sendRequest(request: request, responseType: UserPrivateResponse.self)
+        return try await NetworkRequestService.shared.sendRequest(request: request, responseType: UserPrivateResponse.self)
     }
 }
