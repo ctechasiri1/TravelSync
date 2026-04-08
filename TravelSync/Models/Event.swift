@@ -23,21 +23,14 @@ struct Event: Identifiable {
 
 extension Event {
     var startTimeToString: String {
-        return startTime.formatted(.dateTime.hour().minute())
+        return startTime.dateToStringHourAndMin
     }
     
     var dateToString: String {
-        return date.formatted(.dateTime.month().day())
+        return date.dateToStringMonthAndDay
     }
     
     var timeDuration: String {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .short
-        formatter.maximumUnitCount = 2
-        
-        let timeDifferenceString = formatter.string(from: startTime, to: endTime)
-        
-        return timeDifferenceString ?? "N/A"
+        return startTime.durationString(to: endTime)
     }
 }

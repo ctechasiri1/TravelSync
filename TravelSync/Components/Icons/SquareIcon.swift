@@ -20,7 +20,6 @@ struct SquareIcon: View {
             .background(
                 RoundedRectangle(cornerRadius: 12)
                     .fill(iconColor.opacity(0.1))
-                    .strokeBorder(Color.accentBlue.opacity(0.5), lineWidth: 0.2)
                     .frame(width: width, height: height)
             )
     }

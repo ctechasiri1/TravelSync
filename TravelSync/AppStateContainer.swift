@@ -14,4 +14,5 @@ class AppState {
     var profile = ProfileViewModel()
     var login = LoginViewModel()
     var currentTrip = TripViewModel()
+    var budget = BudgetViewModel()
 }

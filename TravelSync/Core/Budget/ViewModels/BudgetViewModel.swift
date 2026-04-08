@@ -11,4 +11,6 @@ import Foundation
 @Observable
 class BudgetViewModel {
     var currentSpending: Int = 0
+    var expenses: [Expense] = [Expense.example]
+    var showAddExpense: Bool = false
 }

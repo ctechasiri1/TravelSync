@@ -14,39 +14,42 @@ struct TripScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                AsyncImage(url: trip.imageURLString) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
-                        .overlay {
-                            TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
+                Group {
+                    AsyncImage(url: trip.imageURLString) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .clipShape(RoundedRectangle(cornerRadius: 15))
+
+                    } placeholder: {
+                        ZStack {
+                            Color.gray.opacity(0.5)
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                            
+                            ProgressView()
+                                .frame(width: 300, height: 200)
                         }
-                } placeholder: {
-                    ZStack {
-                        Color.gray.opacity(0.5)
-                            .clipShape(RoundedRectangle(cornerRadius: 20))
-                        
-                        ProgressView()
-                            .frame(width: 300, height: 200)
                     }
+                }
+                .overlay {
+                    TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
                 }
                 .padding()
 
                 HStack(spacing: 20){
                     TripInformationCard(
                         title: "STATUS",
-                        value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                        value: "\(trip.dateDiffernce) Left",
                         iconName: "gauge.with.needle.fill",
-                        iconColor: .accentBlue,
-                        textColor: .accentBlue
+                        iconColor: .accentPrimary,
+                        textColor: .accentPrimary
                     )
                         
                     TripInformationCard(
                         title: trip.city,
                         value: "18 ℃",
                         iconName: "sun.max.trianglebadge.exclamationmark.fill",
-                        iconColor: .accentPrimary,
+                        iconColor: .accentBlue,
                         textColor: .black
                     )
                 }
@@ -60,20 +63,20 @@ struct TripScreen: View {
                 HStack(spacing: 20) {
                     TripQuickAccessCard(
                         title: "Itinerary",
-                        value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                        value: "\(trip.dateDiffernce) Left",
                         iconName: "map.fill",
-                        iconColor: .accentBlue,
-                        arrowColor: .accentBlue
+                        iconColor: .accentPrimary,
+                        arrowColor: .accentPrimary
                     ) {
                         ItineraryScreen()
                     }
                         
                     TripQuickAccessCard(
                         title: "Documents",
-                        value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                        value: "\(trip.dateDiffernce) Left",
                         iconName: "ticket.fill",
-                        iconColor: .accentPrimary,
-                        arrowColor: .accentPrimary
+                        iconColor: .accentBlue,
+                        arrowColor: .accentBlue
                     ) {
                         ItineraryScreen()
                     }
@@ -82,7 +85,7 @@ struct TripScreen: View {
                     
                 TripBudgetCard(
                     title: "Budget",
-                    value: "\(trip.dateDiffernce ?? "0 Days") Left",
+                    budget: "Total Budget: \(trip.budget)",
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
@@ -122,7 +125,7 @@ private struct TripImageOverlay: View {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                     
-                    Text(trip.dateDiffernce ?? "0 days")
+                    Text(trip.dateDiffernce)
                 }
                 .font(.subheadline)
             }
@@ -221,7 +224,7 @@ private struct TripQuickAccessCard<T:View>: View {
 
 private struct TripBudgetCard<T: View>: View {
     let title: String
-    let value: String
+    let budget: String
     let iconName: String
     let iconColor: Color
     @ViewBuilder let content: T
@@ -229,37 +232,39 @@ private struct TripBudgetCard<T: View>: View {
     var body: some View {
         OptionsCard(title: "") {
             VStack {
-                HStack(spacing: 100) {
-                    HStack(spacing: 30) {
-                        SquareIcon(
-                            iconName: iconName,
-                            iconColor: iconColor,
-                            width: 50,
-                            height: 50
-                        )
+                HStack(spacing: 30) {
+                    SquareIcon(
+                        iconName: iconName,
+                        iconColor: iconColor,
+                        width: 50,
+                        height: 50
+                    )
+                    .padding(.leading)
                         
-                        VStack(alignment: .leading) {
-                            Text(title)
-                                .font(.system(.headline, weight: .semibold))
-                            Text(value)
-                                .font(.system(.subheadline))
-                                .foregroundStyle(.secondaryText)
-                        }
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text(title)
+                            .font(.system(.headline, weight: .semibold))
+                            
+                        Text(budget)
+                            .font(.system(size: 12))
+                            .foregroundStyle(.secondaryText)
                     }
+                        
+                    Spacer()
                     
-                    Text(title)
-                        .font(.system(.subheadline, weight: .regular))
+                    Text("Spent")
+                        .font(.system(.caption, weight: .bold))
                         .padding(8)
-                        .background(.gray.opacity(0.2))
+                        .background(.gray.opacity(0.08))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
                 .padding()
-                
-                ProgressView(value: 10, total: 100)
+
+                LinearProgressBar(value: 0.1, shape: RoundedRectangle(cornerRadius: 20))
                     .tint(.accentConfirmation)
-                    .progressViewStyle(.linear)
-                    .scaleEffect(y: 2.0)
-                    .padding([.leading, .trailing, .bottom])
+                    .frame(height: 12)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal)
                 
                 NavigationLink {
                     content

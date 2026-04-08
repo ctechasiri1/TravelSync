@@ -34,24 +34,11 @@ struct Trip: Identifiable, Equatable {
 
 extension Trip {
     var dateRangeString: String {
-        let formatter = DateIntervalFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        
-        return formatter.string(from: startDate, to: endDate)
+        startDate.dateToStringRange(to: endDate)
     }
     
-    var dateDiffernce: String? {
-        let differnceFormatter = DateComponentsFormatter()
-        differnceFormatter.allowedUnits = .day
-        differnceFormatter.unitsStyle = .full
-        
-        if let dateDiffernce = differnceFormatter.string(from: .now, to: startDate) {
-            return dateDiffernce.capitalized
-        } else {
-            print("There was an error getting date differnce")
-            return nil
-        }
+    var dateDiffernce: String {
+        return Date.now.dateToDifferenceString(to: endDate)
     }
     
     var city: String {
@@ -99,25 +86,11 @@ struct TripPrivateResponse: Codable {
 
 extension TripPrivateResponse {
     var startDate: Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        if let date = dateFormatter.date(from: startDateString) {
-            print("START DATE TRIGGERED")
-            return date
-        } else {
-            return Date()
-        }
+        return startDateString.stringToDate
     }
     
     var endDate: Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
-        if let date = dateFormatter.date(from: endDateString) {
-            print("END DATE TRIGGERED")
-            return date
-        } else {
-            return Date()
-        }
+        return endDateString.stringToDate
     }
     
     var imageURL: URL? {

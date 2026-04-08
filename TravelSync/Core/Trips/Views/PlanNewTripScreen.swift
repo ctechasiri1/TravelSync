@@ -14,7 +14,7 @@ struct PlanNewTripScreen: View {
         @Bindable var tripsViewModel = appState.trips
         
         ScrollView {
-            NavigationOption() {
+            SheetToolbar(title: "Add a Trip", enableSave: tripsViewModel.canCreateTrip) {
                 Task {
                     tripsViewModel.canCreateTrip
                 }
@@ -105,41 +105,6 @@ struct PlanNewTripScreen: View {
             .padding(.horizontal)
         }
         .toolbar(.hidden, for: .tabBar)
-    }
-}
-
-private struct NavigationOption: View {
-    @Environment(\.dismiss) private var dismiss
-    @Environment(AppState.self) private var appState
-    let saveAction: () -> Void
-    
-    var body: some View {
-        let tripsViewModel = appState.trips
-        
-        HStack {
-            Button {
-                dismiss()
-            } label: {
-                Text("Cancel")
-            }
-            .frame(maxWidth: .infinity)
-            
-            Text("Add a trip")
-                .foregroundStyle(Color.primaryText)
-                .font(.system(size: 20, weight: .semibold))
-                .padding(.leading, 5)
-                .frame(maxWidth: .infinity)
-            
-            Button {
-                saveAction()
-            } label: {
-                Text("Save")
-            }
-            .frame(maxWidth: .infinity)
-            .disabled(!tripsViewModel.canCreateTrip)
-            .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
-            .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
-        }
     }
 }
 
