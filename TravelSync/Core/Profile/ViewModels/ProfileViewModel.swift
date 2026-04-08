@@ -12,7 +12,7 @@ import Foundation
 class ProfileViewModel {
     var notificationIsOn: Bool = false
     var privacyIsOn: Bool = false
-    var currentUser: User? = nil
+    var currentUser: User = User.example
     
     private let userService: UserServiceProtocol
     

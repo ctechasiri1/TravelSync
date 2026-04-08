@@ -16,7 +16,7 @@ struct CustomSegmentButton: View {
         HStack(spacing: 0) {
             ForEach(options, id: \.self) { option in
                 Button {
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                    withAnimation(.easeInOut) {
                         selection = option
                     }
                 } label: {

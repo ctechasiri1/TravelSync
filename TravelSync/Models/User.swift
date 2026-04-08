@@ -13,6 +13,17 @@ struct User {
     let fullName: String
     let email: String
     let profileImage: String
+    
+    @MainActor
+    static var example: User {
+        return User(
+            id: 1,
+            username: "ctechasiri",
+            fullName: "Chiraphat Techasiri",
+            email: "ctechasiri@gmail.com",
+            profileImage: ""
+        )
+    }
 }
 
 extension User {

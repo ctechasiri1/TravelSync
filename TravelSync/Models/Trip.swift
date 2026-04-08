@@ -37,8 +37,8 @@ extension Trip {
         startDate.dateToStringRange(to: endDate)
     }
     
-    var dateDiffernce: String {
-        return Date.now.dateToDifferenceString(to: endDate)
+    var dateDifference: String {
+        return startDate.dateToDifferenceString()
     }
     
     var city: String {

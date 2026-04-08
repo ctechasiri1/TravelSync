@@ -59,45 +59,50 @@ private struct BudgetOverview: View {
     let budget: String
     
     var body: some View {
-        OptionsCard(title: "") {
-            HStack {
-                VStack(alignment: .leading) {
-                    HStack {
-                        Text("Total Spend")
-                            .foregroundStyle(.secondaryText)
-                        
-                        Spacer()
-                        
-                        Text("USD")
-                            .foregroundStyle(.secondaryText)
-                            .fontWeight(.semibold)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 15)
-                            .background(
-                                Capsule()
-                                    .strokeBorder(Color.gray.opacity(0.4), lineWidth: 0.3)
-                            )
-                    }
-                    
-                    Text("$1,450.00")
-                        .font(.system(.largeTitle, weight: .bold))
-                    
-                    Text("of $\(budget) budget")
+        HStack {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Total Spend")
                         .foregroundStyle(.secondaryText)
-                    
-                    LinearProgressBar(value: 0.1, shape: RoundedRectangle(cornerRadius: 20))
-                        .tint(.accentConfirmation)
-                        .frame(height: 15)
-                        .padding(.vertical)
-                    
-                    ExpenseSummary()
+                        
+                    Spacer()
+                        
+                    Text("USD")
+                        .foregroundStyle(.secondaryText)
+                        .fontWeight(.semibold)
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 15)
+                        .background(
+                            Capsule()
+                                .strokeBorder(
+                                    Color.gray.opacity(0.4),
+                                    lineWidth: 0.3
+                                )
+                        )
                 }
-                .padding()
-                
-                Spacer()
+                    
+                Text("$1,450.00")
+                    .font(.system(.largeTitle, weight: .bold))
+                    
+                Text("of $\(budget) budget")
+                    .foregroundStyle(.secondaryText)
+                    
+                LinearProgressBar(
+                    value: 0.1,
+                    shape: RoundedRectangle(cornerRadius: 20)
+                )
+                .tint(.accentConfirmation)
+                .frame(height: 15)
+                .padding(.vertical)
+                    
+                ExpenseSummary()
             }
             .padding()
+                
+            Spacer()
         }
+        .padding()
+        .createCardBackgroud()
         .padding()
     }
 }
@@ -160,46 +165,45 @@ private struct ExpenseBreakdownOption: View {
     let iconColor: Color
     
     var body: some View {
-        OptionsCard(title: "") {
-            HStack {
-                SquareIcon(
-                    iconName: iconName,
-                    iconColor: iconColor,
-                    width: 50,
-                    height: 50
-                )
-                .padding()
-                
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(title)
-                        .font(.system(.title3, weight: .semibold))
-                    
-                    HStack {
-                        Circle()
-                            .imageScale(.small)
-                            .frame(width: 10, height: 10)
-                            .foregroundStyle(iconColor)
-                        
-                        Text("Transactions")
-                            .foregroundStyle(.secondaryText)
-                    }
-                    .font(.system(.subheadline))
-                }
-                .padding(.horizontal, 8)
-                
-                Spacer()
-                
-                VStack(alignment: .trailing) {
-                    Text("$320.50")
-                        .font(.system(.title3, weight: .semibold))
-                    
-                    Text("22%")
-                        .foregroundStyle(.secondaryText)
-                        .font(.system(.subheadline))
-                }
-            }
+        HStack {
+            SquareIcon(
+                iconName: iconName,
+                iconColor: iconColor,
+                width: 50,
+                height: 50
+            )
             .padding()
+                
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title)
+                    .font(.system(.title3, weight: .semibold))
+                    
+                HStack {
+                    Circle()
+                        .imageScale(.small)
+                        .frame(width: 10, height: 10)
+                        .foregroundStyle(iconColor)
+                        
+                    Text("Transactions")
+                        .foregroundStyle(.secondaryText)
+                }
+                .font(.system(.subheadline))
+            }
+            .padding(.horizontal, 8)
+                
+            Spacer()
+                
+            VStack(alignment: .trailing) {
+                Text("$320.50")
+                    .font(.system(.title3, weight: .semibold))
+                    
+                Text("22%")
+                    .foregroundStyle(.secondaryText)
+                    .font(.system(.subheadline))
+            }
         }
+        .padding()
+        .createCardBackgroud()
         .padding(.horizontal)
         .padding(.vertical, 5)
     }
@@ -209,46 +213,45 @@ private struct RecentActivities: View {
     let expenses: [Expense]
     
     var body: some View {
-        OptionsCard(title: "") {
-            ForEach(expenses) { expense in
-                HStack {
-                    VStack(alignment: .center, spacing: 0) {
-                        Circle()
-                            .frame(width: 12, height: 12)
-                            .foregroundStyle(expense.type.color)
+        ForEach(expenses) { expense in
+            HStack {
+                VStack(alignment: .center, spacing: 0) {
+                    Circle()
+                        .frame(width: 12, height: 12)
+                        .foregroundStyle(expense.type.color)
                             
-                        Rectangle()
-                            .frame(width: 2)
-                            .foregroundColor(.gray.opacity(0.3))
-                    }
+                    Rectangle()
+                        .frame(width: 2)
+                        .foregroundColor(.gray.opacity(0.3))
+                }
                     
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text(expense.title)
-                            .fontWeight(.semibold)
-                        
-                        HStack {
-                            Text("\(expense.transactionDate.relativeTime)")
-                            
-                            Circle()
-                                .imageScale(.small)
-                                .frame(width: 5, height: 5)
-                            
-                            Text(expense.type.title)
-                        }
-                        .foregroundStyle(.secondaryText)
-                        .font(.system(.subheadline))
-                    }
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                    
-                    Text("-$\(expense.amount)")
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(expense.title)
                         .fontWeight(.semibold)
+                        
+                    HStack {
+                        Text(expense.transactionDate.dateToDifferenceString())
+                            
+                        Circle()
+                            .imageScale(.small)
+                            .frame(width: 5, height: 5)
+                            
+                        Text(expense.type.title)
+                    }
+                    .foregroundStyle(.secondaryText)
+                    .font(.system(.subheadline))
                 }
                 .padding(.horizontal)
+                    
+                Spacer()
+                    
+                Text("-$\(expense.amount)")
+                    .fontWeight(.semibold)
             }
-            .padding()
+            .padding(.horizontal)
         }
+        .padding()
+        .createCardBackgroud()
     }
 }
 

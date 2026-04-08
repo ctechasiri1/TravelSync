@@ -99,7 +99,7 @@ private struct UpcomingTrips: View {
         }
         
         if let firstUpcomingTrip = upcomingTrips.first {
-            TripCard(trip: firstUpcomingTrip, upcomingTrip: true)
+            TripCard(trip: firstUpcomingTrip, height: 400, upcomingTrip: true)
                 .padding(.horizontal)
                 
         }
@@ -111,7 +111,7 @@ private struct UpcomingTrips: View {
         }
         
         ForEach(upcomingTrips.dropFirst()) { trip in
-            TripCard(trip: trip, upcomingTrip: true)
+            TripCard(trip: trip, height: 250, upcomingTrip: true)
                 .padding(.bottom, 20)
                 .padding(.horizontal, 25)
         }
@@ -125,18 +125,40 @@ private struct PastTrips: View {
         if !pastTrips.isEmpty {
             Text(pastTrips.count == 1 ? "Recent Adventure" : "Recent Adventure")
                 .sectionTitleStyle()
-        }
-        
-        ForEach(pastTrips) { trip in
-            TripCard(trip: trip, upcomingTrip: false)
-                .padding(.bottom, 20)
-                .padding(.horizontal, 25)
+            
+            ForEach(pastTrips) { trip in
+                TripCard(trip: trip, height: 300, upcomingTrip: false)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 25)
+            }
+        } else {
+            VStack {
+                Image("past_image")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 150, height: 150)
+                    .clipped()
+                
+                VStack {
+                    Text("No past trips yet")
+                        .font(.system(.largeTitle, weight: .bold))
+                    
+                    Text("Your completed adventures and travel memories will appear here.")
+                        .foregroundStyle(.secondaryText)
+                        .font(.system(.subheadline, weight: .light))
+                        .multilineTextAlignment(.center)
+                        .frame(width: 200)
+                }
+                .padding()
+            }
+            .padding(.top, 80)
         }
     }
 }
 
 private struct TripCard: View {
     let trip: Trip
+    let height: CGFloat
     let upcomingTrip: Bool
     
     var body: some View {
@@ -144,7 +166,7 @@ private struct TripCard: View {
             AsyncImage(url: trip.imageURLString) { image in
                 image
                     .resizable()
-                    .frame(width: 350, height: 400)
+                    .frame(height: height)
                     .scaledToFill()
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
@@ -153,7 +175,7 @@ private struct TripCard: View {
                         .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     ProgressView()
-                        .frame(width: 300, height: 400)
+                        .frame(height: height)
                 }
             }
             .overlay(alignment: .center) {
@@ -161,7 +183,7 @@ private struct TripCard: View {
                     HStack {
                         Image(systemName: "clock.fill")
                         
-                        Text("\(trip.dateDiffernce ?? "0")")
+                        Text(trip.dateDifference)
                     }
                     .font(.system(.subheadline, weight: .semibold))
                     .padding(.vertical, 10)
@@ -192,7 +214,7 @@ private struct TripCard: View {
                                     
                                     Text(trip.dateRangeString)
                                 }
-                                .foregroundStyle(.gray.opacity(0.6))
+                                .foregroundStyle(.white)
                                 
                                 Spacer()
                                 

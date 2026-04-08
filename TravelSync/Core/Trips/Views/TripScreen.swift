@@ -39,10 +39,10 @@ struct TripScreen: View {
                 HStack(spacing: 20){
                     TripInformationCard(
                         title: "STATUS",
-                        value: "\(trip.dateDiffernce) Left",
+                        value: "\(trip.dateDifference)",
                         iconName: "gauge.with.needle.fill",
-                        iconColor: .accentPrimary,
-                        textColor: .accentPrimary
+                        iconColor: .orange,
+                        textColor: .orange
                     )
                         
                     TripInformationCard(
@@ -61,19 +61,19 @@ struct TripScreen: View {
                     .padding()
                     
                 HStack(spacing: 20) {
-                    TripQuickAccessCard(
+                    SquareCard(
                         title: "Itinerary",
-                        value: "\(trip.dateDiffernce) Left",
+                        value: "\(trip.dateDifference) Left",
                         iconName: "map.fill",
-                        iconColor: .accentPrimary,
-                        arrowColor: .accentPrimary
+                        iconColor: .orange,
+                        arrowColor: .orange
                     ) {
                         ItineraryScreen()
                     }
                         
-                    TripQuickAccessCard(
+                    SquareCard(
                         title: "Documents",
-                        value: "\(trip.dateDiffernce) Left",
+                        value: "\(trip.dateDifference) Left",
                         iconName: "ticket.fill",
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
@@ -125,7 +125,7 @@ private struct TripImageOverlay: View {
                     Image(systemName: "circle.fill")
                         .imageScale(.small)
                     
-                    Text(trip.dateDiffernce)
+                    Text(trip.dateDifference)
                 }
                 .font(.subheadline)
             }
@@ -172,55 +172,55 @@ private struct TripInformationCard: View {
     }
 }
 
-private struct TripQuickAccessCard<T:View>: View {
-    let title: String
-    let value: String
-    let iconName: String
-    let iconColor: Color
-    let arrowColor: Color
-    @ViewBuilder let content: T
-    
-    var body: some View {
-        NavigationLink {
-            content
-        } label: {
-            OptionsCard(title: "") {
-                HStack {
-                    VStack(alignment: .leading) {
-                        SquareIcon(
-                            iconName: iconName,
-                            iconColor: iconColor,
-                            width: 50,
-                            height: 50
-                        )
-                        .padding(.leading, 10)
-                        .padding([.top, .bottom], 10)
-                        .imageScale(.large)
-                        
-                        VStack(alignment: .leading, spacing: 5) {
-                            Text(title)
-                                .font(.system(size: 18, weight: .semibold))
-                                .foregroundStyle(.black)
-                                
-                            Text(value)
-                                .font(.system(size: 13))
-                                .foregroundStyle(.secondaryText)
-                                
-                        }
-                        .padding([.top, .bottom, .trailing], 15)
-                        
-                        HStack {
-                            Spacer()
-                            Image(systemName: "arrow.right")
-                                .foregroundStyle(arrowColor)
-                        }
-                    }
-                    .padding(20)
-                }
-            }
-        }
-    }
-}
+//private struct TripQuickAccessCard<T:View>: View {
+//    let title: String
+//    let value: String
+//    let iconName: String
+//    let iconColor: Color
+//    let arrowColor: Color
+//    @ViewBuilder let content: T
+//    
+//    var body: some View {
+//        NavigationLink {
+//            content
+//        } label: {
+//            OptionsCard(title: "") {
+//                HStack {
+//                    VStack(alignment: .leading) {
+//                        SquareIcon(
+//                            iconName: iconName,
+//                            iconColor: iconColor,
+//                            width: 50,
+//                            height: 50
+//                        )
+//                        .padding(.leading, 10)
+//                        .padding([.top, .bottom], 10)
+//                        .imageScale(.large)
+//                        
+//                        VStack(alignment: .leading, spacing: 5) {
+//                            Text(title)
+//                                .font(.system(size: 18, weight: .semibold))
+//                                .foregroundStyle(.black)
+//                                
+//                            Text(value)
+//                                .font(.system(size: 13))
+//                                .foregroundStyle(.secondaryText)
+//                                
+//                        }
+//                        .padding([.top, .bottom, .trailing], 15)
+//                        
+//                        HStack {
+//                            Spacer()
+//                            Image(systemName: "arrow.right")
+//                                .foregroundStyle(arrowColor)
+//                        }
+//                    }
+//                    .padding(20)
+//                }
+//            }
+//        }
+//    }
+//}
 
 private struct TripBudgetCard<T: View>: View {
     let title: String
@@ -246,7 +246,7 @@ private struct TripBudgetCard<T: View>: View {
                             .font(.system(.headline, weight: .semibold))
                             
                         Text(budget)
-                            .font(.system(size: 12))
+                            .font(.system(size: 14))
                             .foregroundStyle(.secondaryText)
                     }
                         
@@ -263,7 +263,7 @@ private struct TripBudgetCard<T: View>: View {
                 LinearProgressBar(value: 0.1, shape: RoundedRectangle(cornerRadius: 20))
                     .tint(.accentConfirmation)
                     .frame(height: 12)
-                    .padding(.vertical, 8)
+                    .padding(.vertical, 4)
                     .padding(.horizontal)
                 
                 NavigationLink {
@@ -275,8 +275,7 @@ private struct TripBudgetCard<T: View>: View {
                         Image(systemName: "arrow.right")
                             .foregroundStyle(.accentConfirmation)
                     }
-                    .padding(.horizontal)
-                    .padding(.vertical, 2)
+                    .padding(.vertical, 4)
                 }
             }
             .padding()

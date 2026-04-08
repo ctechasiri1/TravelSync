@@ -11,6 +11,8 @@ import Foundation
 @Observable
 class BudgetViewModel {
     var currentSpending: Int = 0
+    var expenseAmount: String = ""
+    var selectedExpense: ExpenseOption = .resturant
     var expenses: [Expense] = [Expense.example]
     var showAddExpense: Bool = false
 }

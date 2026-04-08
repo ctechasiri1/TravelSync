@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SettingsScreen: View {
     @Environment(AppState.self) private var appState
+    let user: User
     
     var body: some View {
         @Bindable var settingsViewModel = appState.settings
@@ -16,6 +17,8 @@ struct SettingsScreen: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
+                    ProfileInformation(user: user)
+                    
                     AccountOptions()
                     
                     PreferencesOptions(viewModel: settingsViewModel)
@@ -39,6 +42,45 @@ struct SettingsScreen: View {
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar(.hidden, for: .tabBar)
             }
+        }
+    }
+}
+
+private struct ProfileInformation: View {
+    let user: User
+    
+    var body: some View {
+        OptionsCard(title: "") {
+            HStack(spacing: 0) {
+                AsyncImage(url: URL(string: user.profileImage)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(Circle())
+                } placeholder: {
+                    ZStack {
+                        Color.gray.opacity(0.5)
+                            .clipShape(Circle())
+                        
+                        ProgressView()
+                            .padding()
+                    }
+                    .padding()
+                    .frame(width: 100)
+                }
+                
+                VStack(alignment: .leading) {
+                    Text(user.fullName)
+                        .font(.system(.headline, weight: .semibold))
+                    
+                    Text(user.email)
+                        .font(.system(.subheadline))
+                        .foregroundStyle(.secondaryText)
+                }
+                
+                Spacer()
+            }
+            .padding()
         }
     }
 }
@@ -70,14 +112,8 @@ private struct PreferencesOptions: View {
     
     var body: some View {
         OptionsCard(title: "PREFERNCES") {
-            ToggleOptionRow(title: "Push Notifications", iconName: "bell.fill", isOn: $viewModel.pushNotificationsIsOn)
+            ToggleOptionRow(title: "Notifications", iconName: "lock.fill", isOn: $viewModel.emailNotificationsIsOn)
                 .padding(.top, 20)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            ToggleOptionRow(title: "Email Notifications", iconName: "lock.fill", isOn: $viewModel.emailNotificationsIsOn)
-                .padding(.top, 10)
                 .padding(.bottom, 10)
             
             Divider()
@@ -119,6 +155,6 @@ private struct SupportOptions: View {
 
 
 #Preview {
-    SettingsScreen()
+    SettingsScreen(user: User.example)
         .environment(AppState())
 }

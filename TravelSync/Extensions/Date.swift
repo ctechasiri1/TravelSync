@@ -33,24 +33,13 @@ extension Date {
         return foramtter
     } ()
     
-    /// Converts a Date into a natural, relative time String
-    ///```
-    /// Convert exactly now to "Today"
-    /// Convert 1 day ago to "yesterday"
-    ///```
-    var relativeTime: String {
-        // 1. Check if the date falls anywhere within the current calendar day
-        if Calendar.current.isDateInToday(self) {
-            return "Today" // Or String(localized: "Today") if your app supports multiple languages
-        }
-        
-        // 2. If it's not today, let the formatter do its normal job
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
-        formatter.dateTimeStyle = .named
-        
-        return formatter.localizedString(for: self, relativeTo: Date.now)
-    }
+    private static let directionalTimeFormatter: RelativeDateTimeFormatter = {
+            let formatter = RelativeDateTimeFormatter()
+            formatter.unitsStyle = .full
+            formatter.dateTimeStyle = .named
+            
+            return formatter
+    }()
     
     /// Converts a Date into a localized time String displaying only the hour and minute
     ///```
@@ -85,12 +74,68 @@ extension Date {
         return Date.dateRangeFormatter.string(from: self, to: endDate)
     }
     
-    /// Converts the difference between two Dates into a formatted days String
+    /// Converts a Date into a highly accurate relative time String based on human calendar rules
     ///```
-    /// Convert a 3-day difference to "3 days"
+    /// Convert June 1 (from April 8) to "in 2 months"
+    /// Convert May 2 (from April 8) to "in 3 weeks"
+    /// Convert exactly today to "today"
     ///```
-    func dateToDifferenceString(to endDate: Date) -> String {
-        return Date.dateDifferenceFormatter.string(from: self, to: endDate) ?? "0 days"
+    func dateToDifferenceString(relativeTo referenceDate: Date = .now) -> String {
+        let calendar = Calendar.current
+            
+        // 1. Strip the time out so we are only comparing pure calendar days
+        let startOfRef = calendar.startOfDay(for: referenceDate)
+        let startOfTarget = calendar.startOfDay(for: self)
+            
+        // 2. Get exact days between dates
+        let days = calendar.dateComponents(
+            [.day],
+            from: startOfRef,
+            to: startOfTarget
+        ).day ?? 0
+            
+        // 3. Handle exact day names natively so we don't rely on the formatter for these
+        if days == 0 { return "today" }
+        if days == 1 { return "tomorrow" }
+        if days == -1 { return "yesterday" }
+            
+        let absDays = abs(days)
+        var componentsToFormat = DateComponents()
+            
+        // 4. Force the boundaries manually!
+        if absDays < 7 {
+            // Less than a week -> Use days (e.g. "in 5 days", "3 days ago")
+            componentsToFormat.day = days
+                
+        } else if absDays < 30 {
+            // 1 to 4 weeks -> Use weeks (e.g. "in 3 weeks")
+            // (Using .weekOfMonth fixes the blank text bug!)
+            componentsToFormat.weekOfMonth = days / 7
+                
+        } else if absDays < 365 {
+            // Months -> Calculate the EXACT calendar month difference (April to June = 2)
+            let refMonth = calendar.component(.month, from: startOfRef)
+            let refYear = calendar.component(.year, from: startOfRef)
+            let targetMonth = calendar.component(.month, from: startOfTarget)
+            let targetYear = calendar.component(.year, from: startOfTarget)
+                
+            let monthsDiff = (targetYear - refYear) * 12 + (
+                targetMonth - refMonth
+            )
+            componentsToFormat.month = monthsDiff
+                
+        } else {
+            // Years -> Calculate the EXACT calendar year difference
+            let yearsDiff = calendar.component(.year, from: startOfTarget) - calendar.component(
+                .year,
+                from: startOfRef
+            )
+            componentsToFormat.year = yearsDiff
+        }
+            
+        // 5. Feed the exact, calculated unit into the formatter
+        return Date.directionalTimeFormatter
+            .localizedString(from: componentsToFormat)
     }
 }
 
