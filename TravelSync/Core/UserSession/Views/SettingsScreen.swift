@@ -12,7 +12,7 @@ struct SettingsScreen: View {
     let user: User
     
     var body: some View {
-        @Bindable var settingsViewModel = appState.settings
+        @Bindable var userSessionViewModel = appState.userSession
         
         NavigationStack {
             ScrollView {
@@ -21,7 +21,7 @@ struct SettingsScreen: View {
                     
                     AccountOptions()
                     
-                    PreferencesOptions(viewModel: settingsViewModel)
+                    PreferencesOptions(viewModel: userSessionViewModel)
                     
                     SupportOptions()
                     
@@ -88,7 +88,7 @@ private struct ProfileInformation: View {
 private struct AccountOptions: View {
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen().environment(SettingsViewModel()), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen().environment(UserSessionViewModel()), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
@@ -101,30 +101,6 @@ private struct AccountOptions: View {
             Divider()
             
             NavigationOptionRow(title: "Payments & Payouts", iconName: "creditcard.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
-                .padding(.top, 10)
-                .padding(.bottom, 20)
-        }
-    }
-}
-
-private struct PreferencesOptions: View {
-    @Bindable var viewModel: SettingsViewModel
-    
-    var body: some View {
-        OptionsCard(title: "PREFERNCES") {
-            ToggleOptionRow(title: "Notifications", iconName: "lock.fill", isOn: $viewModel.emailNotificationsIsOn)
-                .padding(.top, 20)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            ToggleOptionRow(title: "Dark Mode", iconName: "moon.fill", isOn: $viewModel.darkModeIsOn)
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            NavigationOptionRow(title: "Language", iconName: "globe", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
                 .padding(.top, 10)
                 .padding(.bottom, 20)
         }

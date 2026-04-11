@@ -13,7 +13,8 @@ struct ImageWithPlaceHolder: View {
     
     var body: some View {
         AsyncImage(url: URL(string: urlString)) { image in
-            image.resizable()
+            image
+                .resizable()
         } placeholder: {
             Color.backgroundColor.tertiaryBackground
         }

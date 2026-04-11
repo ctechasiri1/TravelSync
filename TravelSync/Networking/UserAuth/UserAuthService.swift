@@ -60,7 +60,6 @@ final class UserAuthService: UserAuthServiceProtocol {
         /// 5. set the requset body with the raw bytes
         request.httpBody = bodyData
         
-        
         /// 6. sends the request to FastAPI
         let tokenResponse = try await NetworkRequestService.shared.sendRequest(
             request: request,

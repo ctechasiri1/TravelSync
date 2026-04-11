@@ -1,5 +1,5 @@
 //
-//  TripsScreen.swift
+//  TripsFeedScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/31/25.
@@ -7,21 +7,21 @@
 
 import SwiftUI
 
-struct TripsScreen: View {
+struct TripsFeedScreen: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var tripsViewModel = appState.trips
+        @Bindable var tripsFeedViewModel = appState.tripsFeed
         
         VStack {
             CustomSegmentButton(
-                selection: $tripsViewModel.selection,
+                selection: $tripsFeedViewModel.selection,
                 options: TripOption.allCases
             )
             .padding()
             
             ScrollView {
-                if tripsViewModel.trips.isEmpty {
+                if tripsFeedViewModel.trips.isEmpty {
                     VStack {
                         Image("home_image")
                             .resizable()
@@ -42,33 +42,31 @@ struct TripsScreen: View {
                         .padding()
                         
                         AddTripButton(
-                            showPlanNewTrip: $tripsViewModel.showPlanNewTrip
+                            showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip
                         )
                         .padding()
                     }
                     .padding(.top, 80)
                 } else {
                     Group {
-                        if tripsViewModel.isUpcomingTrip {
+                        if tripsFeedViewModel.isUpcomingTrip {
                             UpcomingTrips(
-                                upcomingTrips: tripsViewModel.upcomingTrips
+                                showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip,
+                                upcomingTrips: tripsFeedViewModel.upcomingTrips
                             )
                         } else {
-                            PastTrips(pastTrips: tripsViewModel.pastTrips)
+                            PastTrips(pastTrips: tripsFeedViewModel.pastTrips)
                         }
                     }
                 }
                 Spacer()
             }
         }
-        .refreshable {
-            await tripsViewModel.getTrip()
-        }
         .setScrollViewBackground()
         .task {
-            await tripsViewModel.getTrip()
+            await tripsFeedViewModel.getTrip()
         }
-        .fullScreenCover(isPresented: $tripsViewModel.showPlanNewTrip, content: {
+        .fullScreenCover(isPresented: $tripsFeedViewModel.showPlanNewTrip, content: {
             PlanNewTripScreen()
         })
         .toolbar {
@@ -81,7 +79,7 @@ struct TripsScreen: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
-                    tripsViewModel.showPlanNewTrip = true
+                    tripsFeedViewModel.showPlanNewTrip = true
                 }
             }
             .sharedBackgroundVisibility(.hidden)
@@ -90,30 +88,56 @@ struct TripsScreen: View {
 }
 
 private struct UpcomingTrips: View {
+    @Binding var showPlanNewTrip: Bool
     let upcomingTrips: [Trip]
     
     var body: some View {
         if !upcomingTrips.isEmpty {
             Text("Next Adventure")
                 .sectionTitleStyle()
-        }
-        
-        if let firstUpcomingTrip = upcomingTrips.first {
-            TripCard(trip: firstUpcomingTrip, height: 400, upcomingTrip: true)
-                .padding(.horizontal)
+            
+            if let firstUpcomingTrip = upcomingTrips.first {
+                TripCard(trip: firstUpcomingTrip, height: 400, upcomingTrip: true)
+                    .padding(.horizontal)
+            }
+            
+            if upcomingTrips.count > 1 {
+                Text("Future Plans")
+                    .sectionTitleStyle()
+                    .padding(.top)
+            }
+            
+            ForEach(upcomingTrips.dropFirst()) { trip in
+                TripCard(trip: trip, height: 250, upcomingTrip: true)
+                    .padding(.bottom, 20)
+                    .padding(.horizontal, 25)
+            }
+        } else {
+            VStack {
+                Image("home_image")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 250, height: 150)
+                    .clipped()
                 
-        }
-        
-        if upcomingTrips.count > 1 {
-            Text("Future Plans")
-                .sectionTitleStyle()
-                .padding(.top)
-        }
-        
-        ForEach(upcomingTrips.dropFirst()) { trip in
-            TripCard(trip: trip, height: 250, upcomingTrip: true)
-                .padding(.bottom, 20)
-                .padding(.horizontal, 25)
+                VStack {
+                    Text("Where to next?")
+                        .font(.system(.largeTitle, weight: .bold))
+                    
+                    Text("Your travel adventure starts here. Plan your first trip to see if listed.")
+                        .foregroundStyle(.secondaryText)
+                        .font(.system(.subheadline, weight: .light))
+                        .multilineTextAlignment(.center)
+                        .frame(width: 200)
+                }
+                .padding()
+                
+                AddTripButton(
+                    showPlanNewTrip: $showPlanNewTrip
+                )
+                .padding()
+            }
+            .padding(.top, 80)
         }
     }
 }
@@ -123,8 +147,9 @@ private struct PastTrips: View {
     
     var body: some View {
         if !pastTrips.isEmpty {
-            Text(pastTrips.count == 1 ? "Recent Adventure" : "Recent Adventure")
+            Text(pastTrips.count == 1 ? "Recent Adventure" : "Recent Adventures")
                 .sectionTitleStyle()
+                .padding(.leading, 20)
             
             ForEach(pastTrips) { trip in
                 TripCard(trip: trip, height: 300, upcomingTrip: false)
@@ -219,7 +244,7 @@ private struct TripCard: View {
                                 Spacer()
                                 
                                 DetailsButton {
-                                    TripScreen(trip: trip, upcomingTrip: upcomingTrip)
+                                    TripDetailScreen(trip: trip, upcomingTrip: upcomingTrip)
                                 }
                             }
                             .padding(.horizontal)
@@ -281,6 +306,6 @@ private struct AddTripButton: View {
 }
 
 #Preview {
-    TripsScreen()
+    TripsFeedScreen()
         .environment(AppState())
 }

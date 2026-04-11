@@ -17,7 +17,9 @@ struct OptionsCard<T: View>: View {
             if let title = title, !title.isEmpty {
                 Text(title)
                     .sectionTitleStyle()
+                    .padding(.leading, 5)
             }
+            
             VStack {
                 content
             }

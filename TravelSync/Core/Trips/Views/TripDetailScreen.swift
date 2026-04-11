@@ -1,5 +1,5 @@
 //
-//  TripScreen.swift
+//  TripDetailScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/7/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TripScreen: View {
+struct TripDetailScreen: View {
     let trip: Trip
     let upcomingTrip: Bool
     
@@ -172,56 +172,6 @@ private struct TripInformationCard: View {
     }
 }
 
-//private struct TripQuickAccessCard<T:View>: View {
-//    let title: String
-//    let value: String
-//    let iconName: String
-//    let iconColor: Color
-//    let arrowColor: Color
-//    @ViewBuilder let content: T
-//    
-//    var body: some View {
-//        NavigationLink {
-//            content
-//        } label: {
-//            OptionsCard(title: "") {
-//                HStack {
-//                    VStack(alignment: .leading) {
-//                        SquareIcon(
-//                            iconName: iconName,
-//                            iconColor: iconColor,
-//                            width: 50,
-//                            height: 50
-//                        )
-//                        .padding(.leading, 10)
-//                        .padding([.top, .bottom], 10)
-//                        .imageScale(.large)
-//                        
-//                        VStack(alignment: .leading, spacing: 5) {
-//                            Text(title)
-//                                .font(.system(size: 18, weight: .semibold))
-//                                .foregroundStyle(.black)
-//                                
-//                            Text(value)
-//                                .font(.system(size: 13))
-//                                .foregroundStyle(.secondaryText)
-//                                
-//                        }
-//                        .padding([.top, .bottom, .trailing], 15)
-//                        
-//                        HStack {
-//                            Spacer()
-//                            Image(systemName: "arrow.right")
-//                                .foregroundStyle(arrowColor)
-//                        }
-//                    }
-//                    .padding(20)
-//                }
-//            }
-//        }
-//    }
-//}
-
 private struct TripBudgetCard<T: View>: View {
     let title: String
     let budget: String
@@ -284,7 +234,7 @@ private struct TripBudgetCard<T: View>: View {
 }
 
 #Preview {
-    TripScreen(
+    TripDetailScreen(
         trip: Trip.example,
         upcomingTrip: true)
         .environment(AppState())

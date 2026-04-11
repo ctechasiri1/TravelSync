@@ -44,7 +44,7 @@ struct SquareCard<T:View>: View {
                             HStack {
                                 Spacer()
                                 
-                                Image(systemName: "arrow.right")
+                                Image(systemName: "chevron.right")
                                     .imageScale(.small)
                                     .foregroundStyle(arrowColor)
                             }

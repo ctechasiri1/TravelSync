@@ -66,22 +66,16 @@ struct LoginScreen: View {
                                 await loginViewModel.login()
                             }
                         }
-                            
-                    LoginDivider()
+                    
+                    AuthDivider(text: "Or continue with")
                         .padding()
                             
                     HStack(spacing: 20) {
-                        LoginOptionButton(
-                            iconImage: "googleIcon",
-                            text: "Google"
-                        ) {
+                        SocialLoginButton(iconImage: "google_icon",text: "Google") {
                                     
                         }
                             
-                        LoginOptionButton(
-                            iconImage: "appleIcon",
-                            text: "Apple"
-                        ) {
+                        SocialLoginButton(iconImage: "apple_icon", text: "Apple") {
                                     
                         }
                     }
@@ -106,7 +100,6 @@ struct LoginScreen: View {
             }
             .padding()
         }
-//        .showLoading(if: loginViewModel.isNetworkActive)
     }
 }
 
@@ -120,65 +113,6 @@ private struct LoginIcon: View {
                     .fill(.accentPrimary)
                     .frame(width: 50, height: 50)
             )
-    }
-}
-
-private struct LoginDivider: View {
-    var body: some View {
-        HStack {
-            Rectangle()
-                .frame(height: 0.5)
-
-            Text("Or continue with")
-                .font(.system(size: 15))
-                .frame(width: 120)
-                
-            Rectangle()
-                .frame(height: 0.5)
-                
-        }
-        .foregroundStyle(.secondaryText.opacity(0.6))
-    }
-}
-
-private struct TextNavigationButton: View {
-    let text: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(.accentPrimary)
-        }
-    }
-}
-
-private struct LoginOptionButton: View {
-    let iconImage: String
-    let text: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            OptionsCard(title: "") {
-                HStack {
-                    Image(iconImage)
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    
-                    Text(text)
-                        .font(.caption)
-                        .foregroundStyle(.black)
-                }
-                .padding(.vertical, 12)
-                .padding(.horizontal, 40)
-            }
-        }
     }
 }
 

@@ -13,7 +13,6 @@ struct SectionTitleStyle: ViewModifier {
             .font(.system(size: 15, weight: .bold))
             .foregroundStyle(Color.textColor.placeholderText)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 25)
     }
 }
 

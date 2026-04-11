@@ -5,6 +5,7 @@
 //  Created by Chiraphat Techasiri on 3/22/26.
 //
 
+import Combine
 import SwiftUI
 
 struct LoadingScreen: View {
@@ -21,7 +22,7 @@ struct LoadingScreen: View {
             Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
                     
             VStack {
-                Image("travelSyncIcon")
+                Image("travel_sync_icon")
                     .resizable()
                     .frame(width: 150, height: 150)
                     .scaledToFit()

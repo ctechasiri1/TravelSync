@@ -9,10 +9,9 @@ import Foundation
 
 @Observable
 class AppState {
-    var settings = SettingsViewModel()
-    var trips = TripsViewModel()
-    var profile = ProfileViewModel()
+    var userSession = UserSessionViewModel()
+    var tripsFeed = TripsFeedViewModel()
     var login = LoginViewModel()
-    var currentTrip = TripViewModel()
+    var tripDetail = TripDetailViewModel()
     var budget = BudgetViewModel()
 }

@@ -10,18 +10,27 @@ import SwiftUI
 
 struct ProfileImage: View {
     @Environment(AppState.self) private var appState
+    @Binding var profileUIImage: UIImage?
+    @State private var selectedImage: PhotosPickerItem?
+    
     let canEditPhoto: Bool
     
     var body: some View {
-        @Bindable var settingsViewModel = appState.settings
-        
         ZStack(alignment: .bottomTrailing) {
-            settingsViewModel.displayImage
-                .resizable()
-                .scaledToFill()
-                .clipShape(Circle())
+            Group {
+                if let profileImage = profileUIImage {
+                    Image(uiImage: profileImage)
+                        .resizable()
+                } else {
+                    Image("default_cover")
+                        .resizable()
+                }
+            }
+            .scaledToFill()
+            .clipShape(Circle())
+            
             if canEditPhoto {
-                PhotosPicker(selection: $settingsViewModel.selectedItem) {
+                PhotosPicker(selection: $selectedImage) {
                     Image(systemName: "camera.fill")
                         .foregroundStyle(Color.white)
                         .background(
@@ -37,28 +46,25 @@ struct ProfileImage: View {
                                 .foregroundStyle(Color.accentBlue)
                         )
                         .frame(width: 30, height: 30)
-                        .offset(x: -1, y: -1)
+                        .offset(x: -60, y: -1)
                 }
             }
         }
-        .onChange(of: settingsViewModel.selectedItem) { _, newItem in
-            handleImageChange(newItem, in: settingsViewModel)
-        }
-    }
-    
-    private func handleImageChange(_ item: PhotosPickerItem?, in viewModel: SettingsViewModel) {
-        Task {
-            if let data = try? await item?.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data) {
-                viewModel.profileUIImage = uiImage
+        .onChange(of: selectedImage) {
+            Task {
+                if let data = try? await selectedImage?.loadTransferable(type: Data.self) {
+                    if let image = UIImage(data: data) {
+                        profileUIImage = image
+                    }
+                }
             }
         }
     }
 }
 
-
-
 #Preview {
-    ProfileImage(canEditPhoto: true)
+    @Previewable @State var profileUIImage: UIImage? = nil
+    
+    ProfileImage(profileUIImage: $profileUIImage, canEditPhoto: true)
         .environment(AppState())
 }

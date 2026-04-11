@@ -73,17 +73,17 @@ struct SignUpScreen: View {
                         }
                         .padding(.top)
                         
-                    SignUpDivider()
+                    AuthDivider(text: "Or sign up with")
                         .padding()
                         
                     HStack(spacing: 20) {
-                        SignUpOptionButton(
-                            iconImage: "googleIcon",
+                        SocialLoginButton(
+                            iconImage: "google_icon",
                             text: "Google"
                         ) {
  
                         }
-                        SignUpOptionButton(iconImage: "appleIcon",text: "Apple") {
+                        SocialLoginButton(iconImage: "apple_icon",text: "Apple") {
  
                         }
                     }
@@ -110,65 +110,6 @@ struct SignUpScreen: View {
             .padding(.vertical, 20)
         }
         .navigationBarBackButtonHidden(true)
-    }
-}
-
-private struct SignUpDivider: View {
-    var body: some View {
-        HStack {
-            Rectangle()
-                .frame(height: 0.5)
-
-            Text("Or sign up with")
-                .font(.system(size: 15))
-                .frame(width: 120)
-                
-            Rectangle()
-                .frame(height: 0.5)
-                
-        }
-        .foregroundStyle(.secondaryText.opacity(0.6))
-    }
-}
-
-private struct TextNavigationButton: View {
-    let text: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(.accentPrimary)
-        }
-    }
-}
-
-private struct SignUpOptionButton: View {
-    let iconImage: String
-    let text: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            OptionsCard(title: "") {
-                HStack {
-                    Image(iconImage)
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                    
-                    Text(text)
-                        .font(.caption)
-                        .foregroundStyle(.black)
-                }
-                .padding(.vertical, 12)
-                .padding(.horizontal, 40)
-            }
-        }
     }
 }
 

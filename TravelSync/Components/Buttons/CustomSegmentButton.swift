@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct CustomSegmentButton: View {
-    @Binding var selection: TripOption
     @Namespace private var namespace
+    @Binding var selection: TripOption
     let options: [TripOption]
     
     var body: some View {
@@ -27,7 +27,7 @@ struct CustomSegmentButton: View {
                         .frame(maxWidth: .infinity)
                         .background {
                             if selection == option {
-                                RoundedRectangle(cornerRadius: 10)
+                                RoundedRectangle(cornerRadius: 20)
                                     .fill(Color.secondaryBackground)
                                     .shadow(color: .black.opacity(0.1), radius: 2, x: 0, y: 1)
                                     .matchedGeometryEffect(id: "selection", in: namespace)
@@ -38,7 +38,7 @@ struct CustomSegmentButton: View {
         }
         .padding(2)
         .background(Color.tertiaryBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
         .padding(5)
         .background(
             Capsule()
@@ -46,7 +46,7 @@ struct CustomSegmentButton: View {
                 .background(Color.tertiaryBackground)
                 .clipped()
         )
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 

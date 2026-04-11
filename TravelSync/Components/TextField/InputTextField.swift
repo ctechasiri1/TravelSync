@@ -53,7 +53,7 @@ struct InputTextField: View {
             }
             .padding()
             .overlay(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 30)
                     .stroke(
                         Color.secondaryText.opacity(0.2),
                         style: StrokeStyle(lineWidth: 1)
@@ -63,6 +63,8 @@ struct InputTextField: View {
     }
 }
 
-//#Preview {
-//    InputTextField(text: <#Binding<String>#>, fieldTitle: <#String#>, fieldImage: <#String#>, fieldContent: <#String#>)
-//}
+#Preview {
+    @Previewable @State var exampleText: String = ""
+    
+    InputTextField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary)
+}

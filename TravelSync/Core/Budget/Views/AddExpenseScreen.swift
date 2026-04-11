@@ -14,62 +14,82 @@ struct AddExpenseScreen: View {
     var body: some View {
         @Bindable var budgetViewModel = appState.budget
         
-        VStack {
-            SheetToolbar(title: "Add Expense", enableSave: true) {
-                
-            }
-            VStack(alignment: .center) {
-                Text("AMOUNT")
-                    .foregroundStyle(.gray.opacity(0.6))
-                    .font(.system(.subheadline, weight: .semibold))
-                
-                
-                TextField("$0.00", text: $budgetViewModel.expenseAmount)
-                    .font(.system(size: 50, weight: .semibold))
+        ScrollView {
+            VStack {
+                SheetToolbar(title: "Add Expense", enableSave: true) {
                     
-                    .frame(width: textWidth)
-                    .textFieldStyle(PlainTextFieldStyle())
-                    .background {
-                        Text(
-                            budgetViewModel.expenseAmount.isEmpty ? "$0.00" : budgetViewModel.expenseAmount
-                        )
-                        .fixedSize()
-                        .hidden()
-                        .padding(50)
-                        .onGeometryChange(for: CGFloat.self) { proxy in
-                            proxy.size.width
-                        } action: { newVal in
-                            textWidth = newVal
-                        }
-                    }
-            }
-            .padding()
-            
-            VStack(alignment: .leading) {
-                Text("Category")
-                    .font(.system(.title2, weight: .semibold))
-                    .padding(.horizontal)
-                
-                ScrollView(.horizontal) {
-                    HStack(spacing: 0) {
-                        ForEach(ExpenseOption.allCases) { expense in
-                            Button {
-                                withAnimation(.easeInOut(duration: 0.6)) {
-                                    budgetViewModel.selectedExpense = expense
-                                }
-                            } label: {
-                                ExpenseOptionButton(expense: expense, isSelected: budgetViewModel.selectedExpense == expense)
-                                    .padding(.vertical)
-                            }
-                            
-                        }
-                        .padding(.horizontal, 12)
-                    }
                 }
-                .scrollIndicators(.hidden)
+                VStack(alignment: .center) {
+                    Text("AMOUNT")
+                        .foregroundStyle(.gray.opacity(0.6))
+                        .font(.system(.subheadline, weight: .semibold))
+                    
+                    
+                    TextField("$0.00", text: $budgetViewModel.expenseAmount)
+                        .font(.system(size: 50, weight: .semibold))
+                    
+                        .frame(width: textWidth)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .background {
+                            Text(
+                                budgetViewModel.expenseAmount.isEmpty ? "$0.00" : budgetViewModel.expenseAmount
+                            )
+                            .fixedSize()
+                            .hidden()
+                            .padding(50)
+                            .onGeometryChange(for: CGFloat.self) { proxy in
+                                proxy.size.width
+                            } action: { newVal in
+                                textWidth = newVal
+                            }
+                        }
+                }
+                .padding()
+                
+                VStack(alignment: .leading) {
+                    Text("CATEGORY")
+                        .font(.system(.subheadline, weight: .semibold))
+                        .padding(.horizontal)
+                    
+                    ScrollView(.horizontal) {
+                        HStack(spacing: 0) {
+                            ForEach(ExpenseOption.allCases) { expense in
+                                Button {
+                                    withAnimation(.easeInOut(duration: 0.6)) {
+                                        budgetViewModel.selectedExpense = expense
+                                    }
+                                } label: {
+                                    ExpenseOptionButton(expense: expense, isSelected: budgetViewModel.selectedExpense == expense)
+                                        .padding(.vertical)
+                                }
+                                
+                            }
+                            .padding(.horizontal, 12)
+                        }
+                    }
+                    .scrollIndicators(.hidden)
+                }
+                
+                Group {
+                    CustomDatePicker(selectedDate: $budgetViewModel.transactionDate, pickerTitle: "TRANSACTION DATE")
+                    
+                    InputTextField(text: $budgetViewModel.notes, fieldTitle: "EXPENSE NOTSE", fieldImage: "pencil.and.list.clipboard", fieldContent: "Dinner at the Habor...", iconColor: .secondaryText)
+                    
+                    ReceiptUploadButton {
+                            
+                    }
+                    .padding(.vertical)
+                    
+                    AuthButton(text: "Confirm Transaction", foregroundColor: .white, backgroundColor: .accentPrimary) {
+                    }
+                    .padding(.vertical)
+                    
+                }
+                .padding(.horizontal)
+                
+                
+                Spacer()
             }
-            
-            Spacer()
         }
     }
 }
@@ -80,7 +100,7 @@ private struct ExpenseOptionButton: View {
     
     var body: some View {
         VStack {
-            CircleIcon(
+            SquareIcon(
                 iconName: expense.imageName,
                 iconColor: isSelected ? expense.color : .secondaryText
                     .opacity(0.5),
@@ -96,22 +116,39 @@ private struct ExpenseOptionButton: View {
                 .font(.system(size: 12, weight: .semibold))
                 .padding(.vertical, 5)
         }
-        .padding()
-        .createCardBackgroud()
-        .overlay {
-            RoundedRectangle(cornerRadius: 20)
-                .fill(.clear)
-                .strokeBorder(
-                    isSelected ? expense.color : .secondaryText.opacity(0.5),
-                    lineWidth: 0.6
-                )
-        }
+        .padding(5)
     }
 }
 
-private struct DatePicker: View {
+private struct ReceiptUploadButton: View {
+    let action: () -> Void
+    
     var body: some View {
-
+        VStack(alignment: .leading) {
+            Text("ATTACH RECEIPT")
+                .foregroundStyle(Color.primaryText)
+                .font(.system(size: 15, weight: .semibold))
+                .padding(.leading, 5)
+            
+            Button {
+                action()
+            } label: {
+                VStack {
+                    Image(systemName: "camera.fill")
+                        
+                    Text("Upload Image")
+                }
+                .frame(maxWidth: .infinity, minHeight: 150)
+                .foregroundStyle(.secondaryText.opacity(0.6))
+                .background(.gray.opacity(0.08))
+                .clipShape(RoundedRectangle(cornerRadius: 30))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 30)
+                        .stroke(style: StrokeStyle(lineWidth: 2, dash: [8]))
+                        .foregroundStyle(.secondaryText.opacity(0.2))
+                }
+            }
+        }
     }
 }
 

@@ -15,4 +15,6 @@ class BudgetViewModel {
     var selectedExpense: ExpenseOption = .resturant
     var expenses: [Expense] = [Expense.example]
     var showAddExpense: Bool = false
+    var transactionDate: Date? = nil
+    var notes: String = ""
 }

@@ -1,17 +1,16 @@
 //
-//  TripsViewModel.swift
+//  TripsFeedViewModel.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 1/26/26.
 //
 
 import Observation
-import PhotosUI
 import Foundation
-import SwiftUI
+import PhotosUI
 
 @Observable
-class TripsViewModel {
+class TripsFeedViewModel {
     var trips: [Trip] = []
     
     var selection: TripOption = .upcoming
@@ -26,21 +25,12 @@ class TripsViewModel {
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false
 
-    var selectedItem: PhotosPickerItem? = nil
     var coverUIImage: UIImage? = nil
     
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol = TripService()) {
+    init(tripService: TripServiceProtocol = TripMockService()) {
         self.tripService = tripService
-    }
-    
-    var displayImage: Image {
-        if let uiImage = coverUIImage {
-            return Image(uiImage: uiImage)
-        } else {
-            return Image("default_cover")
-        }
     }
 
     var upcomingTrips: [Trip] {

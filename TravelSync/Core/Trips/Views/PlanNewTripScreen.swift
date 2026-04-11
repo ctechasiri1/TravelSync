@@ -11,17 +11,17 @@ struct PlanNewTripScreen: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var tripsViewModel = appState.trips
+        @Bindable var tripsFeedViewModel = appState.tripsFeed
         
         ScrollView {
-            SheetToolbar(title: "Add a Trip", enableSave: tripsViewModel.canCreateTrip) {
+            SheetToolbar(title: "Add a Trip", enableSave: tripsFeedViewModel.canCreateTrip) {
                 Task {
-                    tripsViewModel.canCreateTrip
+                    tripsFeedViewModel.canCreateTrip
                 }
             }
             
-            CoverImage()
-                .padding()
+            CoverImage(coverUIImage: $tripsFeedViewModel.coverUIImage)
+                .padding(.horizontal, 6)
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
@@ -30,35 +30,38 @@ struct PlanNewTripScreen: View {
                     Text("Start planning your next adventure.")
                         .foregroundStyle(Color.secondaryText)
                 }
-                .padding()
+                .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $tripsViewModel.locationName,
+                    text: $tripsFeedViewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
                     iconColor: .secondaryText
                 )
+                .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $tripsViewModel.tripName,
+                    text: $tripsFeedViewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko",
                     iconColor: .secondaryText
                 )
+                .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $tripsViewModel.budget,
+                    text: $tripsFeedViewModel.budget,
                     fieldTitle: "BUDGET",
                     fieldImage: "banknote.fill",
                     fieldContent: "e.g. 10,000",
                     iconColor: .secondaryText
                 )
+                .padding(.vertical, 8)
                 
                 HStack {
                     CustomDatePicker(
-                        selectedDate: $tripsViewModel.startDate,
+                        selectedDate: $tripsFeedViewModel.startDate,
                         pickerTitle: "START DATE"
                     )
                     
@@ -67,7 +70,7 @@ struct PlanNewTripScreen: View {
                         .padding(.top, 25)
                     
                     CustomDatePicker(
-                        selectedDate: $tripsViewModel.endDate,
+                        selectedDate: $tripsFeedViewModel.endDate,
                         pickerTitle: "END DATE"
                     )
                 }
@@ -76,7 +79,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Auto Time Zone",
                         iconName: "clock.fill",
-                        isOn: $tripsViewModel.pushNotificationsIsOn
+                        isOn: $tripsFeedViewModel.pushNotificationsIsOn
                     )
                     .padding(.top, 15)
                     
@@ -86,7 +89,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Notifications",
                         iconName: "bell.fill",
-                        isOn: $tripsViewModel.pushNotificationsIsOn
+                        isOn: $tripsFeedViewModel.pushNotificationsIsOn
                     )
                     .padding(.bottom, 15)
                 }
@@ -94,62 +97,18 @@ struct PlanNewTripScreen: View {
                 
                 CreateTripButton() {
                     Task {
-                        try await tripsViewModel.addTrip()
+                        try await tripsFeedViewModel.addTrip()
                     }
                 }
                 .padding(.vertical)
-                .disabled(!tripsViewModel.canCreateTrip)
-                .opacity(!tripsViewModel.canCreateTrip ? 0.5 : 1.0)
-                .animation(.easeInOut, value: tripsViewModel.canCreateTrip)
+                .disabled(!tripsFeedViewModel.canCreateTrip)
+                .opacity(!tripsFeedViewModel.canCreateTrip ? 0.5 : 1.0)
+                .animation(.easeInOut, value: tripsFeedViewModel.canCreateTrip)
             }
             .padding(.horizontal)
         }
         .toolbar(.hidden, for: .tabBar)
-    }
-}
-
-private struct CustomDatePicker: View {
-    @Binding var selectedDate: Date?
-    let pickerTitle: String
-    
-    var body: some View {
-        VStack {
-            Text(pickerTitle)
-                .foregroundStyle(Color.primaryText)
-                .font(.system(size: 15, weight: .semibold))
-            
-            HStack {
-                Text(selectedDate?.formatted(date: .abbreviated, time: .omitted) ?? "Select Date")
-                    .foregroundStyle(selectedDate == nil ? .secondary : .primary)
-                    .animation(.default, value: selectedDate)
-                
-                Spacer()
-                
-                Image(systemName: "calendar")
-                    .foregroundStyle(.secondaryText)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(
-                        Color.secondaryText.opacity(0.2),
-                        style: StrokeStyle(lineWidth: 1)
-                    )
-            )
-            .overlay {
-                DatePicker(
-                    "",
-                    selection: Binding(
-                        get: { selectedDate ?? .now },
-                        set: { selectedDate = $0 }
-                    ),
-                    displayedComponents: .date
-                )
-                .labelsHidden()
-                .colorMultiply(.clear)
-            }
-        }
-        .padding(.vertical)
+        .scrollIndicators(.hidden)
     }
 }
 

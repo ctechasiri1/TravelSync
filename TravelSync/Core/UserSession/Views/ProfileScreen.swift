@@ -9,25 +9,26 @@ import SwiftUI
 
 struct ProfileScreen: View {
     @Environment(AppState.self) private var appState
+    @State var profileUIImage: UIImage? = nil
     @State private var isShowingSettings: Bool = false
     @State private var isShowingPersonalInfo: Bool = false
     
     var body: some View {
-        let profileViewModel = appState.profile
+        let userSessionViewModel = appState.userSession
         
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
                     VStack {
-                        ProfileImage(canEditPhoto: false)
+                        ProfileImage(profileUIImage: $profileUIImage, canEditPhoto: false)
                             .frame(width: 80, height: 80)
                             .padding()
                         
-                        Text("Hi, \(profileViewModel.currentUser.firstName)!")
+                        Text("Hi, \(userSessionViewModel.currentUser.firstName)!")
                             .font(.system(.title, weight: .semibold))
                             
                         Text(
-                            "@\(profileViewModel.currentUser.username.lowercased())"
+                            "@\(userSessionViewModel.currentUser.username.lowercased())"
                         )
                         .font(.system(.subheadline))
                         
@@ -45,6 +46,9 @@ struct ProfileScreen: View {
                 
                 Group {
                     FuturePlansOptions()
+                    
+                    PreferencesOptions(viewModel: userSessionViewModel)
+                        .padding(.vertical, 25)
                         
                     AuthButton(
                         text: "Log Out",
@@ -52,14 +56,16 @@ struct ProfileScreen: View {
                         backgroundColor: .white) {
                                 
                         }
+                        .padding(.vertical)
                 }
                 .padding(.horizontal)
+                
                     
                 Spacer()
             }
         }
         .task {
-            await profileViewModel.getUser()
+            await userSessionViewModel.getUser()
         }
         .setScrollViewBackground()
         .toolbar {
@@ -79,7 +85,7 @@ struct ProfileScreen: View {
             }
         }
         .navigationDestination(isPresented: $isShowingSettings, destination: {
-            SettingsScreen(user: profileViewModel.currentUser)
+            SettingsScreen(user: userSessionViewModel.currentUser)
         })
         .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
             PersonalInfoScreen()
@@ -95,14 +101,26 @@ private struct StatisticsSection: View {
         HStack {
             Group {
                 VStack {
+                    Text("42")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.primaryText)
+                    
                     Text("TRIPS")
                 }
                 
                 VStack {
+                    Text("18")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.primaryText)
+                    
                     Text("COUNTRIES")
                 }
                 
                 VStack {
+                    Text("1.2k")
+                        .font(.system(size: 18, weight: .semibold))
+                        .foregroundStyle(.primaryText)
+                    
                     Text("PHOTOS")
                 }
             }
@@ -118,29 +136,22 @@ private struct StatisticsSection: View {
 private struct TravelBadges: View {
     var body: some View {
         VStack {
-            HStack {
-                Image(systemName: "medal.fill")
-                    .foregroundStyle(.accentPrimary)
-                
-                Text("Travel Badges")
-                    .font(.system(.subheadline, weight: .bold))
-                    .foregroundStyle(.secondaryText)
-            }
-            .padding(.top, 25)
-            .padding(.horizontal)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
+            Text("TRAVEL BADGES")
+                .sectionTitleStyle()
+                .padding(.leading)
+                .padding(.top, 25)
+    
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 0) {
                     ForEach(0..<6) { _ in
                         VStack(spacing: 25) {
-                            CircleIcon(iconName: "airplane", iconColor: .accentBlue, width: 50, height: 50)
+                            SquareIcon(iconName: "airplane", iconColor: .accentBlue, width: 80, height: 60)
                             
                             Text("Frequent Flyer")
                                 .font(.system(size: 12))
                                 .multilineTextAlignment(.center)
                         }
-                        .frame(width: 100, height: 150)
+                        .frame(width: 100, height: 140)
                     }
                 }
                 .frame(maxWidth: .infinity)
@@ -171,13 +182,13 @@ private struct TravelBadges: View {
 
 private struct FuturePlansOptions: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 20) {
             NavigationLink {
                 
             } label: {
                 HStack {
                     SquareIcon(
-                        iconName: "heart",
+                        iconName: "heart.fill",
                         iconColor: .pink,
                         width: 40,
                         height: 40
@@ -200,18 +211,17 @@ private struct FuturePlansOptions: View {
                 .padding()
                 .createCardBackgroud()
             }
-
-        }
-        HStack {
-            SquareCard(title: "My Map", value: "Tracked journeys", iconName: "map", iconColor: .purple, arrowColor: .purple) {
-                
-            }
             
-            SquareCard(title: "Reviews", value: "28 Contributions", iconName: "star", iconColor: .red, arrowColor: .red) {
+            HStack(spacing: 25) {
+                SquareCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
+                    
+                }
                 
+                SquareCard(title: "Reviews", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
+                    
+                }
             }
         }
-
     }
 }
 

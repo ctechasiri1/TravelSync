@@ -11,7 +11,7 @@ struct HomeScreen: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TripsScreen()
+                TripsFeedScreen()
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")

@@ -12,7 +12,7 @@ struct ItineraryScreen: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var currentTripViewModel = appState.currentTrip
+        @Bindable var tripDetailViewModel = appState.tripDetail
         
         ScrollView {
             VStack(alignment: .leading) {
@@ -32,7 +32,7 @@ struct ItineraryScreen: View {
                     .font(.system(.subheadline, weight: .semibold))
                     .padding()
                 
-                DetailedItinerary(events: currentTripViewModel.events)
+                DetailedItinerary(events: tripDetailViewModel.events)
             }
         }
     }

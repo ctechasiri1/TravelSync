@@ -10,18 +10,25 @@ import SwiftUI
 
 struct CoverImage: View {
     @Environment(AppState.self) private var appState
+    @Binding var coverUIImage: UIImage?
+    @State private var selectedImage: PhotosPickerItem?
     
     var body: some View {
-        @Bindable var planNewTripViewModel = appState.trips
-        
         ZStack(alignment: .bottomTrailing) {
-            planNewTripViewModel.displayImage
-                .resizable()
-                .scaledToFill()
-                .frame(width: 375, height: 250)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+            Group {
+                if let coverImage = coverUIImage {
+                    Image(uiImage: coverImage)
+                        .resizable()
+                } else {
+                    Image("default_cover")
+                        .resizable()
+                }
+            }
+            .frame(maxWidth: .infinity, minHeight: 250, maxHeight: 250)
+            .scaledToFit()
+            .clipShape(RoundedRectangle(cornerRadius: 20))
             
-            PhotosPicker(selection: $planNewTripViewModel.selectedItem) {
+            PhotosPicker(selection: $selectedImage) {
                 HStack {
                     Image(systemName: "camera.fill")
                     
@@ -39,22 +46,21 @@ struct CoverImage: View {
             }
             .offset(x: -40, y: -25)
         }
-        .onChange(of: planNewTripViewModel.selectedItem) { _, newItem in
-            handleImageChange(newItem, in: planNewTripViewModel)
-        }
-    }
-    
-    private func handleImageChange(_ item: PhotosPickerItem?, in viewModel: TripsViewModel) {
-        Task {
-            if let data = try? await item?.loadTransferable(type: Data.self),
-               let uiImage = UIImage(data: data) {
-                viewModel.coverUIImage = uiImage
+        .onChange(of: selectedImage) {
+            Task {
+                if let data = try? await selectedImage?.loadTransferable(type: Data.self) {
+                    if let image = UIImage(data: data) {
+                        coverUIImage = image
+                    }
+                }
             }
         }
     }
 }
 
 #Preview {
-    CoverImage()
+    @Previewable @State var coverUIImage: UIImage? = nil
+    
+    CoverImage(coverUIImage: $coverUIImage)
         .environment(AppState())
 }

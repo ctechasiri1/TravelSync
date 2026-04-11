@@ -56,7 +56,6 @@ class LoginViewModel {
         }
         isNetworkActive = false
     }
-    
 
     func login() async {
         isNetworkActive = true
@@ -73,20 +72,5 @@ class LoginViewModel {
             print("Login Error: \(error.localizedDescription)")
         }
         isNetworkActive = false
-    }
-    
-    func checkUserAuthentication() async {
-        do {
-            try await Task.sleep(nanoseconds: 1_500_000_000)
-            
-            if KeychainService.shared.getToken() != nil {
-                self.loginAppState = .home
-            } else {
-                self.loginAppState = .login
-            }
-            
-        } catch {
-            print("There was an error running the timer.")
-        }
     }
 }

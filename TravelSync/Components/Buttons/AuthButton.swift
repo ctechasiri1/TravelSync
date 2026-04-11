@@ -24,7 +24,7 @@ struct AuthButton: View {
                 .foregroundStyle(foregroundColor)
                 .frame(maxWidth: .infinity)
                 .background(backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+                .clipShape(RoundedRectangle(cornerRadius: 30))
                 .scaleEffect(isPressed ? 0.90 : 1.0)
                 .onLongPressGesture {
                     isPressed.toggle()
