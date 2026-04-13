@@ -11,17 +11,21 @@ struct PlanNewTripScreen: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        @Bindable var tripsFeedViewModel = appState.tripsFeed
+        @Bindable var planNewTripViewModel = appState.planNewTrip
         
         ScrollView {
-            SheetToolbar(title: "Add a Trip", enableSave: tripsFeedViewModel.canCreateTrip) {
+            SheetToolbar(title: "Add a Trip", enableSave: planNewTripViewModel.canCreateTrip) {
                 Task {
-                    tripsFeedViewModel.canCreateTrip
+                    do {
+                        try await planNewTripViewModel.addTrip()
+                    } catch {
+                        
+                    }
                 }
             }
             
-            CoverImage(coverUIImage: $tripsFeedViewModel.coverUIImage)
-                .padding(.horizontal, 6)
+            CoverImage(coverUIImage: $planNewTripViewModel.coverUIImage)
+                .padding(.horizontal, 10)
             
             VStack(alignment: .leading) {
                 VStack(alignment: .leading) {
@@ -33,7 +37,7 @@ struct PlanNewTripScreen: View {
                 .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $tripsFeedViewModel.locationName,
+                    text: $planNewTripViewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
@@ -42,7 +46,7 @@ struct PlanNewTripScreen: View {
                 .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $tripsFeedViewModel.tripName,
+                    text: $planNewTripViewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko",
@@ -50,8 +54,8 @@ struct PlanNewTripScreen: View {
                 )
                 .padding(.vertical, 8)
                 
-                InputTextField(
-                    text: $tripsFeedViewModel.budget,
+                InputNumberField(
+                    currency: $planNewTripViewModel.budget,
                     fieldTitle: "BUDGET",
                     fieldImage: "banknote.fill",
                     fieldContent: "e.g. 10,000",
@@ -61,7 +65,7 @@ struct PlanNewTripScreen: View {
                 
                 HStack {
                     CustomDatePicker(
-                        selectedDate: $tripsFeedViewModel.startDate,
+                        selectedDate: $planNewTripViewModel.startDate,
                         pickerTitle: "START DATE"
                     )
                     
@@ -70,7 +74,7 @@ struct PlanNewTripScreen: View {
                         .padding(.top, 25)
                     
                     CustomDatePicker(
-                        selectedDate: $tripsFeedViewModel.endDate,
+                        selectedDate: $planNewTripViewModel.endDate,
                         pickerTitle: "END DATE"
                     )
                 }
@@ -79,7 +83,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Auto Time Zone",
                         iconName: "clock.fill",
-                        isOn: $tripsFeedViewModel.pushNotificationsIsOn
+                        isOn: $planNewTripViewModel.pushNotificationsIsOn
                     )
                     .padding(.top, 15)
                     
@@ -89,7 +93,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Notifications",
                         iconName: "bell.fill",
-                        isOn: $tripsFeedViewModel.pushNotificationsIsOn
+                        isOn: $planNewTripViewModel.pushNotificationsIsOn
                     )
                     .padding(.bottom, 15)
                 }
@@ -97,13 +101,13 @@ struct PlanNewTripScreen: View {
                 
                 CreateTripButton() {
                     Task {
-                        try await tripsFeedViewModel.addTrip()
+                        try await planNewTripViewModel.addTrip()
                     }
                 }
                 .padding(.vertical)
-                .disabled(!tripsFeedViewModel.canCreateTrip)
-                .opacity(!tripsFeedViewModel.canCreateTrip ? 0.5 : 1.0)
-                .animation(.easeInOut, value: tripsFeedViewModel.canCreateTrip)
+                .disabled(!planNewTripViewModel.canCreateTrip)
+                .opacity(!planNewTripViewModel.canCreateTrip ? 0.5 : 1.0)
+                .animation(.easeInOut, value: planNewTripViewModel.canCreateTrip)
             }
             .padding(.horizontal)
         }

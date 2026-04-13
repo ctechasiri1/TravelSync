@@ -56,7 +56,7 @@ struct BudgetScreen: View {
 }
 
 private struct BudgetOverview: View {
-    let budget: String
+    let budget: Int
     
     var body: some View {
         HStack {

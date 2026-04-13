@@ -13,7 +13,8 @@ struct TripMockService: TripServiceProtocol {
             id: 1,
             tripName: "Mango Sticky Rice Summer",
             location: "Bangkok, Thailand",
-            budget: "5000",
+            budget: 5000,
+            isFavorite: false,
             startDateString: "\(Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now)",
             endDateString: "\(Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now)",
             imageURLString: ""
@@ -24,9 +25,10 @@ struct TripMockService: TripServiceProtocol {
         return [
             TripPrivateResponse(
                 id: 1,
-                tripName: "Summer in Thailand",
+                tripName: "Mango Sticky Rice Summer",
                 location: "Bangkok, Thailand",
-                budget: "1_000",
+                budget: 1_000,
+                isFavorite: true,
                 startDateString: "\(Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now)",
                 endDateString: "\(Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now)",
                 imageURLString: ""
@@ -35,7 +37,8 @@ struct TripMockService: TripServiceProtocol {
                 id: 2,
                 tripName: "Eating Pho in Vietnam",
                 location: "Saigon, Vietnam",
-                budget: "2_000",
+                budget: 2_000,
+                isFavorite: false,
                 startDateString: "\(Calendar.current.date(byAdding: .day, value: -7, to: Date.now) ?? .now)",
                 endDateString: "\(Calendar.current.date(byAdding: .day, value: -5, to: Date.now) ?? .now)",
                 imageURLString: ""
@@ -44,7 +47,8 @@ struct TripMockService: TripServiceProtocol {
                 id: 3,
                 tripName: "Bubble Tea in Taiwan",
                 location: "Taipei, Taiwan",
-                budget: "3_000",
+                budget: 3_000,
+                isFavorite: true,
                 startDateString: "\(Calendar.current.date(byAdding: .day, value: 5, to: Date.now) ?? .now)",
                 endDateString: "\(Calendar.current.date(byAdding: .day, value: 7, to: Date.now) ?? .now)",
                 imageURLString: ""

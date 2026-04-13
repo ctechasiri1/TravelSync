@@ -46,10 +46,7 @@ struct TripService: TripServiceProtocol {
         appendTextField("location", trip.location)
         appendTextField("start_date", startDateString)
         appendTextField("end_date", endDateString)
-        
-        if !trip.budget.isEmpty {
-            appendTextField("budget", trip.budget)
-        }
+        appendTextField("budget", String(trip.budget))
         
         /// 7. pack the image bytes
         if let imageData = trip.coverImageData {

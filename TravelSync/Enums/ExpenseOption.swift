@@ -16,7 +16,7 @@ enum ExpenseOption: CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .resturant:
-            "Resturant"
+            "Restaurant"
         case .transport:
             "Transport"
         case .shopping:

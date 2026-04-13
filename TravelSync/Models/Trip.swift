@@ -13,7 +13,8 @@ struct Trip: Identifiable, Equatable {
     let id: Int
     let tripName: String
     let location: String
-    let budget: String
+    let budget: Int
+    let isFavorite: Bool
     let startDate: Date
     let endDate: Date
     let imageURLString: URL?
@@ -24,7 +25,8 @@ struct Trip: Identifiable, Equatable {
             id: 1,
             tripName: "Mango Sticky Rice Summer",
             location: "Bangkok, Thailand",
-            budget: "5000",
+            budget: 5000,
+            isFavorite: true,
             startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
             endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
             imageURLString: nil
@@ -58,7 +60,8 @@ extension Trip {
 struct TripCreateRequest {
     let tripName: String
     let location: String
-    let budget: String
+    let budget: Int
+    let isFavorite: Bool
     let startDate: Date
     let endDate: Date
     let coverImageData: Data?
@@ -68,7 +71,8 @@ struct TripPrivateResponse: Codable {
     let id: Int
     let tripName: String
     let location: String
-    let budget: String
+    let budget: Int
+    let isFavorite: Bool
     let startDateString: String
     let endDateString: String
     let imageURLString: String
@@ -78,6 +82,7 @@ struct TripPrivateResponse: Codable {
             case tripName = "title"
             case location
             case budget
+            case isFavorite = "is_favorite"
             case startDateString = "start_date"
             case endDateString = "end_date"
             case imageURLString = "cover_image_path"

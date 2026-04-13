@@ -15,6 +15,7 @@ struct Event: Identifiable {
     let startTime: Date
     let endTime: Date
     
+    @MainActor
     static let example = [
         Event(title: "Check-in at Hotel", description: "The Thousand Kyoto", date: .now, startTime: .now, endTime: .now + 2),
         Event(title: "Fushimi Inari Ward", description: "Fushimi Ward, Kyoto", date: .now, startTime: .now, endTime: .now + 2)

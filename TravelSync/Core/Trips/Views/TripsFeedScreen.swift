@@ -21,48 +21,57 @@ struct TripsFeedScreen: View {
             .padding()
             
             ScrollView {
-                if tripsFeedViewModel.trips.isEmpty {
-                    VStack {
-                        Image("home_image")
-                            .resizable()
-                            .scaledToFill()
-                            .frame(width: 250, height: 150)
-                            .clipped()
-                        
+                Group {
+                    if tripsFeedViewModel.trips.isEmpty {
                         VStack {
-                            Text("Where to next?")
-                                .font(.system(.largeTitle, weight: .bold))
+                            Image("home_image")
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: 250, height: 150)
+                                .clipped()
+                        
+                            VStack {
+                                Text("Where to next?")
+                                    .font(.system(.largeTitle, weight: .bold))
                             
-                            Text("Your travel adventure starts here. Plan your first trip to see if listed.")
+                                Text(
+                                    "Your travel adventure starts here. Plan your first trip to see it listed."
+                                )
                                 .foregroundStyle(.secondaryText)
                                 .font(.system(.subheadline, weight: .light))
                                 .multilineTextAlignment(.center)
                                 .frame(width: 200)
-                        }
-                        .padding()
+                            }
+                            .padding()
                         
-                        AddTripButton(
-                            showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip
-                        )
-                        .padding()
-                    }
-                    .padding(.top, 80)
-                } else {
-                    Group {
-                        if tripsFeedViewModel.isUpcomingTrip {
-                            UpcomingTrips(
-                                showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip,
-                                upcomingTrips: tripsFeedViewModel.upcomingTrips
+                            AddTripButton(
+                                showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip
                             )
-                        } else {
-                            PastTrips(pastTrips: tripsFeedViewModel.pastTrips)
+                            .padding()
+                        }
+                        .padding(.top, 80)
+                    } else {
+                        Group {
+                            if tripsFeedViewModel.isUpcomingTrip {
+                                UpcomingTrips(
+                                    showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip,
+                                    upcomingTrips: tripsFeedViewModel.upcomingTrips
+                                )
+                            } else {
+                                PastTrips(
+                                    pastTrips: tripsFeedViewModel.pastTrips
+                                )
+                            }
                         }
                     }
+                    Spacer()
                 }
-                Spacer()
             }
         }
         .setScrollViewBackground()
+        .refreshable {
+             await tripsFeedViewModel.getTrip()
+         }
         .task {
             await tripsFeedViewModel.getTrip()
         }
@@ -95,6 +104,7 @@ private struct UpcomingTrips: View {
         if !upcomingTrips.isEmpty {
             Text("Next Adventure")
                 .sectionTitleStyle()
+                .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
                 TripCard(trip: firstUpcomingTrip, height: 400, upcomingTrip: true)
@@ -185,6 +195,7 @@ private struct TripCard: View {
     let trip: Trip
     let height: CGFloat
     let upcomingTrip: Bool
+    let isFavorite: Bool = false
     
     var body: some View {
         VStack {
@@ -206,17 +217,29 @@ private struct TripCard: View {
             .overlay(alignment: .center) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Image(systemName: "clock.fill")
+                        HStack {
+                            Image(systemName: "clock.fill")
+                            
+                            Text(trip.dateDifference)
+                        }
+                        .font(.system(.subheadline, weight: .semibold))
+                        .padding(.vertical, 10)
+                        .padding(.horizontal, 20)
+                        .foregroundColor(.white)
+                        .background(.accentPrimary)
+                        .clipShape(Capsule())
+                        .padding(5)
                         
-                        Text(trip.dateDifference)
+                        Spacer()
+                        
+                        CircleIcon(
+                            iconName: isFavorite ? "heart.fill" : "heart",
+                            iconColor: .pink,
+                            width: 10,
+                            height: 10
+                        )
+                        .padding(.horizontal)
                     }
-                    .font(.system(.subheadline, weight: .semibold))
-                    .padding(.vertical, 10)
-                    .padding(.horizontal, 20)
-                    .foregroundColor(.white)
-                    .background(.accentPrimary)
-                    .clipShape(Capsule())
-                    .padding(5)
                     
                     Spacer()
                     
@@ -297,7 +320,7 @@ private struct AddTripButton: View {
             .frame(height: 60)
             .frame(maxWidth: .infinity)
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 30)
                     .fill(Color(Color.accentPrimary))
             )
             .padding(.horizontal, 25)

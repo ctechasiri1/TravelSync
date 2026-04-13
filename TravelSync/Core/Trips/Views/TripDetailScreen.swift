@@ -74,7 +74,7 @@ struct TripDetailScreen: View {
                     SquareCard(
                         title: "Documents",
                         value: "\(trip.dateDifference) Left",
-                        iconName: "ticket.fill",
+                        iconName: "backpack.fill",
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) {

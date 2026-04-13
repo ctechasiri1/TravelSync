@@ -15,6 +15,7 @@ struct ProfileScreen: View {
     
     var body: some View {
         let userSessionViewModel = appState.userSession
+        let tripsFeedViewModel = appState.tripsFeed
         
         NavigationStack {
             ScrollView {
@@ -32,7 +33,7 @@ struct ProfileScreen: View {
                         )
                         .font(.system(.subheadline))
                         
-                        StatisticsSection()
+                        StatisticsSection(trips: tripsFeedViewModel.trips.count)
                             .padding()
                     }
                     .foregroundStyle(.primaryText)
@@ -97,11 +98,13 @@ struct ProfileScreen: View {
 }
 
 private struct StatisticsSection: View {
+    let trips: Int
+    
     var body: some View {
         HStack {
             Group {
                 VStack {
-                    Text("42")
+                    Text("\(trips)")
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(.primaryText)
                     
