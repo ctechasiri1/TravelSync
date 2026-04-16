@@ -7,15 +7,10 @@
 
 import Foundation
 
-final class KeychainService {
-    static let shared = KeychainService()
-    
+final class KeychainService: Sendable {
     // THE ID: These two strings combine to make the unique identifier for the token
     private let service = "com.travelsync.token" /// 'folder'
     private let account = "authToken" /// 'file name'
-    
-    // Making the init private forces the app to use 'KeyChainManger.shared'
-    private init() { }
     
     // MARK: Save Token
     func saveToken(_ token: String) {

@@ -23,7 +23,7 @@ class UserSessionViewModel {
     
     private let userService: UserServiceProtocol
     
-    init(userService: UserServiceProtocol = UserService()) {
+    init(userService: UserServiceProtocol) {
         self.userService = userService
     }
     

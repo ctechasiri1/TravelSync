@@ -9,11 +9,16 @@ import SwiftUI
 
 struct BudgetScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: BudgetViewModel
+    
     let trip: Trip
     
+    init(trip: Trip, viewModel: BudgetViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+        self.trip = trip
+    }
+    
     var body: some View {
-        @Bindable var budgetViewModel = appState.budget
-        
         ScrollView {
             BudgetOverview(budget: trip.budget)
             
@@ -35,19 +40,19 @@ struct BudgetScreen: View {
                 .font(.system(.title2, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            RecentActivities(expenses: budgetViewModel.expenses)
+            RecentActivities(expenses: viewModel.expenses)
 
             .padding(.horizontal)
         }
-        .fullScreenCover(isPresented: $budgetViewModel.showAddExpense, content: {
-            AddExpenseScreen()
+        .fullScreenCover(isPresented: $viewModel.showAddExpense, content: {
+            AddExpenseScreen(viewModel: viewModel)
         })
         .navigationTitle("Budget Details")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
-                    budgetViewModel.showAddExpense = true
+                    viewModel.showAddExpense = true
                 }
             }
             .sharedBackgroundVisibility(.hidden)
@@ -256,6 +261,6 @@ private struct RecentActivities: View {
 }
 
 #Preview {
-    BudgetScreen(trip: Trip.example)
+    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel())
         .environment(AppState())
 }

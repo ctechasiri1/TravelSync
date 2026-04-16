@@ -8,6 +8,15 @@
 import Foundation
 
 final class UserAuthService: UserAuthServiceProtocol {
+    
+    private let networkService: NetworkRequestService
+    private let keychainService: KeychainService
+    
+    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+        self.networkService = networkService
+        self.keychainService = keychainService
+    }
+    
     // MARK: Encode the DTO to JSON and decodes the JSON
     func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
         /// 1. checks if the urlString is valid
@@ -24,7 +33,7 @@ final class UserAuthService: UserAuthServiceProtocol {
         /// 3. this encodes the DTO (UserCreateRequest) into a JSON for FastAPI to take
         request.httpBody = try JSONEncoder().encode(requestBody)
 
-        return try await NetworkRequestService.shared.sendRequest(
+        return try await networkService.sendRequest(
             request: request,
             responseType: UserPrivateResponse.self
         )
@@ -61,13 +70,13 @@ final class UserAuthService: UserAuthServiceProtocol {
         request.httpBody = bodyData
         
         /// 6. sends the request to FastAPI
-        let tokenResponse = try await NetworkRequestService.shared.sendRequest(
+        let tokenResponse = try await networkService.sendRequest(
             request: request,
             responseType: TokenResponse.self
         )
             
         /// 7. store the token in the keychain
-        KeychainService.shared.saveToken(tokenResponse.accessToken)
+        keychainService.saveToken(tokenResponse.accessToken)
         
         return tokenResponse
     }

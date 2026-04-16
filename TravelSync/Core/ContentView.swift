@@ -11,20 +11,19 @@ struct ContentView: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
-        let loginViewModel = appState.login
-        
         Group {
-            switch loginViewModel.loginAppState {
+            switch appState.currentAuthScreen {
             case .loading:
                 LoadingScreen()
             case .signUp:
-                SignUpScreen()
+                SignUpScreen(viewModel: appState.makeSignUpViewModel())
             case .login:
-                LoginScreen()
+                LoginScreen(viewModel: appState.makeLoginViewModel())
             case .home:
                 HomeScreen()
             }
         }
+        .animation(.easeInOut(duration: 0.3), value: appState.currentAuthScreen)
     }
 }
 

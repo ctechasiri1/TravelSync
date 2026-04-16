@@ -7,11 +7,7 @@
 
 import Foundation
 
-final class NetworkRequestService {
-    static let shared = NetworkRequestService()
-    
-    private init() { }
-    
+final class NetworkRequestService: Sendable {
     // MARK: Sends the request and returns the response from FastAPI
     func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
         do {

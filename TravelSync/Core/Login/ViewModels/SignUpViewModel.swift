@@ -1,23 +1,25 @@
 //
-//  LoginViewModel.swift
+//  SignUpViewModel.swift
 //  TravelSync
 //
-//  Created by Chiraphat Techasiri on 3/22/26.
+//  Created by Chiraphat Techasiri on 4/13/26.
 //
 
 import Observation
 import Foundation
 
 @Observable
-class LoginViewModel {
+class SignUpViewModel {
+    var fullName: String = ""
     var username: String = ""
+    var email: String = ""
     var password: String = ""
-
+    
     var isNetworkActive: Bool = false
     var showErrorAlert: Bool = false
     var errorMessage: String?
     
-    var didLoginSucceed: Bool = false
+    var didSignUpSucceed: Bool = false
     
     private let userAuthService: UserAuthServiceProtocol
         
@@ -25,19 +27,18 @@ class LoginViewModel {
         self.userAuthService = userAuthService
     }
     
-    func login() async {
+    func signup() async {
         isNetworkActive = true
         errorMessage = nil
         
         do {
-            let request = UserLoginRequest(username: username, password: password)
-            let _ = try await userAuthService.login(requestBody: request)
+            let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
+            let _ = try await userAuthService.signUp(requestBody: request)
             
-            didLoginSucceed = true
+            didSignUpSucceed = true
         } catch {
-            self.errorMessage = "Login failed. Please check your email and password"
-            self.showErrorAlert = true
-            print("Login Error: \(error.localizedDescription)")
+            errorMessage = "Failed to create account. That email or username might be taken."
+            showErrorAlert = true
         }
         isNetworkActive = false
     }

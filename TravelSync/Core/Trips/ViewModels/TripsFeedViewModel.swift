@@ -20,7 +20,7 @@ class TripsFeedViewModel {
     
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol = TripMockService()) {
+    init(tripService: TripServiceProtocol) {
         self.tripService = tripService
     }
     

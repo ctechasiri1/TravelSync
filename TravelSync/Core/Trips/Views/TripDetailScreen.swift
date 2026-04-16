@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct TripDetailScreen: View {
+    @Environment(AppState.self) private var appState
+    
     let trip: Trip
     let upcomingTrip: Bool
     
@@ -68,7 +70,7 @@ struct TripDetailScreen: View {
                         iconColor: .orange,
                         arrowColor: .orange
                     ) {
-                        ItineraryScreen()
+                        ItineraryScreen(events: Event.example)
                     }
                         
                     SquareCard(
@@ -78,7 +80,7 @@ struct TripDetailScreen: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) {
-                        ItineraryScreen()
+                        ItineraryScreen(events: Event.example)
                     }
                 }
                 .padding(.horizontal)
@@ -89,7 +91,7 @@ struct TripDetailScreen: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(trip: trip)
+                    BudgetScreen(trip: trip, viewModel: appState.makeBudgetViewModel())
                 }
                 .padding()
             }

@@ -9,10 +9,13 @@ import SwiftUI
 
 struct SignUpScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: SignUpViewModel
+    
+    init(viewModel: SignUpViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var loginViewModel = appState.login
-        
         ZStack {
             Color.secondaryBackground
 
@@ -29,7 +32,7 @@ struct SignUpScreen: View {
                     
                     VStack(spacing: 15) {
                         InputTextField(
-                            text: $loginViewModel.fullName,
+                            text: $viewModel.fullName,
                             fieldTitle: "Full Name",
                             fieldImage: "pencil",
                             fieldContent: "Enter your name",
@@ -37,7 +40,7 @@ struct SignUpScreen: View {
                         )
                         
                         InputTextField(
-                            text: $loginViewModel.username,
+                            text: $viewModel.username,
                             fieldTitle: "Username",
                             fieldImage: "person.fill",
                             fieldContent: "Enter your username",
@@ -45,7 +48,7 @@ struct SignUpScreen: View {
                         )
                         
                         InputTextField(
-                            text: $loginViewModel.email,
+                            text: $viewModel.email,
                             fieldTitle: "Email",
                             fieldImage: "envelope",
                             fieldContent: "hello@example.com",
@@ -53,7 +56,7 @@ struct SignUpScreen: View {
                         )
                         
                         InputTextField(
-                            text: $loginViewModel.password,
+                            text: $viewModel.password,
                             isSecureField: true,
                             toggleSecurityButton: true,
                             fieldTitle: "Password",
@@ -68,7 +71,7 @@ struct SignUpScreen: View {
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             Task {
-                                await loginViewModel.signup()
+                                await viewModel.signup()
                             }
                         }
                         .padding(.top)
@@ -96,7 +99,7 @@ struct SignUpScreen: View {
                             .foregroundStyle(.secondaryText.opacity(0.6))
                             
                         TextNavigationButton(text: "Sign In") {
-                            loginViewModel.loginAppState = .login
+                            appState.navigate(to: .login)
                         }
                     }
                     .padding()
@@ -110,10 +113,15 @@ struct SignUpScreen: View {
             .padding(.vertical, 20)
         }
         .navigationBarBackButtonHidden(true)
+        .onChange(of: viewModel.didSignUpSucceed) { _, succeeded in
+            if succeeded {
+                appState.navigate(to: .login)
+            }
+        }
     }
 }
 
 #Preview {
-    SignUpScreen()
+    SignUpScreen(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

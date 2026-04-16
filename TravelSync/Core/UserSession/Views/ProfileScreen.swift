@@ -13,10 +13,13 @@ struct ProfileScreen: View {
     @State private var isShowingSettings: Bool = false
     @State private var isShowingPersonalInfo: Bool = false
     
+    @State private var viewModel: UserSessionViewModel
+    
+    init(viewModel: UserSessionViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
+    
     var body: some View {
-        let userSessionViewModel = appState.userSession
-        let tripsFeedViewModel = appState.tripsFeed
-        
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
@@ -25,15 +28,15 @@ struct ProfileScreen: View {
                             .frame(width: 80, height: 80)
                             .padding()
                         
-                        Text("Hi, \(userSessionViewModel.currentUser.firstName)!")
+                        Text("Hi, \(viewModel.currentUser.firstName)!")
                             .font(.system(.title, weight: .semibold))
                             
                         Text(
-                            "@\(userSessionViewModel.currentUser.username.lowercased())"
+                            "@\(viewModel.currentUser.username.lowercased())"
                         )
                         .font(.system(.subheadline))
                         
-                        StatisticsSection(trips: tripsFeedViewModel.trips.count)
+                        StatisticsSection(trips: 10)
                             .padding()
                     }
                     .foregroundStyle(.primaryText)
@@ -48,7 +51,7 @@ struct ProfileScreen: View {
                 Group {
                     FuturePlansOptions()
                     
-                    PreferencesOptions(viewModel: userSessionViewModel)
+                    PreferencesOptions(viewModel: viewModel)
                         .padding(.vertical, 25)
                         
                     AuthButton(
@@ -66,7 +69,7 @@ struct ProfileScreen: View {
             }
         }
         .task {
-            await userSessionViewModel.getUser()
+            await viewModel.getUser()
         }
         .setScrollViewBackground()
         .toolbar {
@@ -86,10 +89,10 @@ struct ProfileScreen: View {
             }
         }
         .navigationDestination(isPresented: $isShowingSettings, destination: {
-            SettingsScreen(user: userSessionViewModel.currentUser)
+            SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
         })
         .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
-            PersonalInfoScreen()
+            PersonalInfoScreen(viewModel: viewModel)
         })
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)
@@ -231,6 +234,6 @@ private struct FuturePlansOptions: View {
 
 
 #Preview {
-    ProfileScreen()
+    ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

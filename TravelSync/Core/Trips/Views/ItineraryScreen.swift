@@ -10,10 +10,9 @@ import SwiftUI
 
 struct ItineraryScreen: View {
     @Environment(AppState.self) private var appState
+    let events: [Event]
     
     var body: some View {
-        @Bindable var tripDetailViewModel = appState.tripDetail
-        
         ScrollView {
             VStack(alignment: .leading) {
                 HStack {
@@ -32,7 +31,7 @@ struct ItineraryScreen: View {
                     .font(.system(.subheadline, weight: .semibold))
                     .padding()
                 
-                DetailedItinerary(events: tripDetailViewModel.events)
+                DetailedItinerary(events: events)
             }
         }
     }
@@ -120,6 +119,6 @@ private struct DetailedItinerary: View {
 }
 
 #Preview {
-    ItineraryScreen()
+    ItineraryScreen(events: Event.example)
         .environment(AppState())
 }

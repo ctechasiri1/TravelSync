@@ -7,7 +7,21 @@
 
 import Foundation
 
-struct TripService: TripServiceProtocol {
+actor TripService: TripServiceProtocol {
+    private let networkService: NetworkRequestService
+    private let keychainService: KeychainService
+    
+    private var cachedTrips: [TripPrivateResponse]?
+    private var lastFetch: Date?
+    private let cacheLifetime: TimeInterval = 60
+    
+    private var activeFetchTask: Task<[TripPrivateResponse], Error>?
+    
+    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+        self.networkService = networkService
+        self.keychainService = keychainService
+    }
+    
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
         guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
             throw APIError.invalidURL
@@ -23,7 +37,7 @@ struct TripService: TripServiceProtocol {
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         /// 3. check if the user is authorized to access the endpoint with the token
-        if let token = KeychainService.shared.getToken() {
+        if let token = await keychainService.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -62,22 +76,40 @@ struct TripService: TripServiceProtocol {
         
         request.httpBody = body
         
-        return try await NetworkRequestService.shared.sendRequest(request: request, responseType: TripPrivateResponse.self)
+        return try await networkService.sendRequest(request: request, responseType: TripPrivateResponse.self)
     }
     
     func getTrip() async throws -> [TripPrivateResponse] {
-        guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
-            throw APIError.invalidURL
+        if let cached = cachedTrips, let last = lastFetch, Date().timeIntervalSince(last) < cacheLifetime {
+            return cached
         }
         
-        var request = URLRequest(url: urlEndpoint)
-        request.httpMethod = "GET"
-        
-        if let token = KeychainService.shared.getToken() {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if let existing = activeFetchTask {
+            return try await existing.value
         }
         
-        return try await NetworkRequestService.shared.sendRequest(request: request, responseType: [TripPrivateResponse].self)
+        let task = Task<[TripPrivateResponse], Error> {
+            guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
+                throw APIError.invalidURL
+            }
+            
+            var request = URLRequest(url: urlEndpoint)
+            request.httpMethod = "GET"
+                
+            if let token = await keychainService.getToken() {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            return try await networkService.sendRequest(request: request, responseType: [TripPrivateResponse].self)
+        }
         
+        activeFetchTask = task
+        let trips = try await task.value
+        
+        cachedTrips = trips
+        lastFetch = Date()
+        activeFetchTask = nil
+        
+        return trips
     }
 }

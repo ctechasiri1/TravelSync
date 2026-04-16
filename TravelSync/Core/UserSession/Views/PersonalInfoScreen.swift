@@ -10,10 +10,13 @@ import SwiftUI
 struct PersonalInfoScreen: View {
     @Environment(AppState.self) private var appState
     @State var profileUIImage: UIImage? = nil
+    @State private var viewModel: UserSessionViewModel
+    
+    init(viewModel: UserSessionViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var userSessionViewModel = appState.userSession
-        
         ScrollView {
             VStack {
                 ProfileImage(profileUIImage: $profileUIImage, canEditPhoto: true)
@@ -27,7 +30,7 @@ struct PersonalInfoScreen: View {
             
             VStack(spacing: 25) {
                 InputTextField(
-                    text: $userSessionViewModel.username,
+                    text: $viewModel.username,
                     fieldTitle: "USERNAME",
                     fieldImage: "pencil",
                     fieldContent: "Edit Username",
@@ -35,7 +38,7 @@ struct PersonalInfoScreen: View {
                 )
                 
                 InputTextField(
-                    text: $userSessionViewModel.fullName,
+                    text: $viewModel.fullName,
                     fieldTitle: "FULL NAME",
                     fieldImage: "person.fill",
                     fieldContent: "Edit Name",
@@ -43,7 +46,7 @@ struct PersonalInfoScreen: View {
                 )
                 
                 InputTextField(
-                    text: $userSessionViewModel.email,
+                    text: $viewModel.email,
                     fieldTitle: "EMAIL",
                     fieldImage: "envelope.fill",
                     fieldContent: "Edit Email",
@@ -103,6 +106,6 @@ private struct EditCard: View {
 }
 
 #Preview {
-    PersonalInfoScreen()
+    PersonalInfoScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

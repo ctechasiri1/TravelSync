@@ -9,19 +9,26 @@ import SwiftUI
 
 struct SettingsScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: UserSessionViewModel
+    
     let user: User
     
+    init(user: User, viewModel: UserSessionViewModel) {
+        self.user = user
+        _viewModel = State(wrappedValue: viewModel)
+    }
+    
     var body: some View {
-        @Bindable var userSessionViewModel = appState.userSession
+        
         
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
                     ProfileInformation(user: user)
                     
-                    AccountOptions()
+                    AccountOptions(viewModel: viewModel)
                     
-                    PreferencesOptions(viewModel: userSessionViewModel)
+                    PreferencesOptions(viewModel: viewModel)
                     
                     SupportOptions()
                     
@@ -86,9 +93,10 @@ private struct ProfileInformation: View {
 }
 
 private struct AccountOptions: View {
+    let viewModel: UserSessionViewModel
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen().environment(UserSessionViewModel()), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(viewModel: viewModel), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
@@ -131,6 +139,6 @@ private struct SupportOptions: View {
 
 
 #Preview {
-    SettingsScreen(user: User.example)
+    SettingsScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

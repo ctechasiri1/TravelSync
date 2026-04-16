@@ -8,17 +8,19 @@
 import SwiftUI
 
 struct HomeScreen: View {
+    @Environment(AppState.self) private var appState
+    
     var body: some View {
         TabView {
             NavigationStack {
-                TripsFeedScreen()
+                TripsFeedScreen(viewModel: appState.makeTripFeedViewModel())
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")
             }
             
             NavigationStack {
-                ProfileScreen()
+                ProfileScreen(viewModel: appState.makeUserSessionViewModel())
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

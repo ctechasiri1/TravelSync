@@ -10,14 +10,9 @@ import SwiftUI
 
 struct LoadingScreen: View {
     @Environment(AppState.self) private var appState
-    let dotColor = Color.gray.opacity(0.2)
-    let dotSize: CGFloat = 3
-    let spacing: CGFloat = 20
-    let progressTotal: Float = 100
+    @State private var progress: Double = 0.0
     
     var body: some View {
-        @Bindable var loginViewModel = appState.login
-        
         ZStack {
             Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
                     
@@ -37,7 +32,7 @@ struct LoadingScreen: View {
                 }
                 .padding(.bottom, 40)
                         
-                LinearProgressBar(value: loginViewModel.loadingValue, shape: RoundedRectangle(cornerRadius: 20))
+                LinearProgressBar(value: progress, shape: RoundedRectangle(cornerRadius: 20))
                     .tint(.accentPrimary)
                     .frame(height: 10)
                     .padding(.horizontal, 110)
@@ -47,9 +42,17 @@ struct LoadingScreen: View {
                     .foregroundStyle(.secondaryText.opacity(0.6))
             }
         }
-        .onAppear {
-            loginViewModel.startLoading()
+        .task {
+            await runLoadingSequence()
         }
+    }
+    
+    private func runLoadingSequence() async {
+        while progress < 1.0 {
+            try? await Task.sleep(for: .milliseconds(500))
+            progress += 0.1
+        }
+        appState.navigate(to: .login)
     }
 }
 

@@ -9,22 +9,25 @@ import SwiftUI
 
 struct PlanNewTripScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: PlanNewTripViewModel
+    
+    init(viewModel: PlanNewTripViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var planNewTripViewModel = appState.planNewTrip
-        
         ScrollView {
-            SheetToolbar(title: "Add a Trip", enableSave: planNewTripViewModel.canCreateTrip) {
+            SheetToolbar(title: "Add a Trip", enableSave: viewModel.canCreateTrip) {
                 Task {
                     do {
-                        try await planNewTripViewModel.addTrip()
+                        try await viewModel.addTrip()
                     } catch {
                         
                     }
                 }
             }
             
-            CoverImage(coverUIImage: $planNewTripViewModel.coverUIImage)
+            CoverImage(coverUIImage: $viewModel.coverUIImage)
                 .padding(.horizontal, 10)
             
             VStack(alignment: .leading) {
@@ -37,7 +40,7 @@ struct PlanNewTripScreen: View {
                 .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $planNewTripViewModel.locationName,
+                    text: $viewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
@@ -46,7 +49,7 @@ struct PlanNewTripScreen: View {
                 .padding(.vertical, 8)
                 
                 InputTextField(
-                    text: $planNewTripViewModel.tripName,
+                    text: $viewModel.tripName,
                     fieldTitle: "TRIP NAME",
                     fieldImage: "pencil",
                     fieldContent: "e.g. Summer in Toyko",
@@ -55,7 +58,7 @@ struct PlanNewTripScreen: View {
                 .padding(.vertical, 8)
                 
                 InputNumberField(
-                    currency: $planNewTripViewModel.budget,
+                    currency: $viewModel.budget,
                     fieldTitle: "BUDGET",
                     fieldImage: "banknote.fill",
                     fieldContent: "e.g. 10,000",
@@ -65,7 +68,7 @@ struct PlanNewTripScreen: View {
                 
                 HStack {
                     CustomDatePicker(
-                        selectedDate: $planNewTripViewModel.startDate,
+                        selectedDate: $viewModel.startDate,
                         pickerTitle: "START DATE"
                     )
                     
@@ -74,7 +77,7 @@ struct PlanNewTripScreen: View {
                         .padding(.top, 25)
                     
                     CustomDatePicker(
-                        selectedDate: $planNewTripViewModel.endDate,
+                        selectedDate: $viewModel.endDate,
                         pickerTitle: "END DATE"
                     )
                 }
@@ -83,7 +86,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Auto Time Zone",
                         iconName: "clock.fill",
-                        isOn: $planNewTripViewModel.pushNotificationsIsOn
+                        isOn: $viewModel.pushNotificationsIsOn
                     )
                     .padding(.top, 15)
                     
@@ -93,7 +96,7 @@ struct PlanNewTripScreen: View {
                     ToggleOptionRow(
                         title: "Notifications",
                         iconName: "bell.fill",
-                        isOn: $planNewTripViewModel.pushNotificationsIsOn
+                        isOn: $viewModel.pushNotificationsIsOn
                     )
                     .padding(.bottom, 15)
                 }
@@ -101,13 +104,13 @@ struct PlanNewTripScreen: View {
                 
                 CreateTripButton() {
                     Task {
-                        try await planNewTripViewModel.addTrip()
+                        try await viewModel.addTrip()
                     }
                 }
                 .padding(.vertical)
-                .disabled(!planNewTripViewModel.canCreateTrip)
-                .opacity(!planNewTripViewModel.canCreateTrip ? 0.5 : 1.0)
-                .animation(.easeInOut, value: planNewTripViewModel.canCreateTrip)
+                .disabled(!viewModel.canCreateTrip)
+                .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
+                .animation(.easeInOut, value: viewModel.canCreateTrip)
             }
             .padding(.horizontal)
         }
@@ -145,6 +148,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTripScreen()
+    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

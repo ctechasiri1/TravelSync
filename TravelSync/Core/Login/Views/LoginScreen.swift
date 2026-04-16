@@ -9,10 +9,13 @@ import SwiftUI
 
 struct LoginScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var loginViewModel = appState.login
-        
         ZStack {
             Color.secondaryBackground
             OptionsCard(title: "") {
@@ -34,7 +37,7 @@ struct LoginScreen: View {
                     
                     VStack(spacing: 15) {
                         InputTextField(
-                            text: $loginViewModel.email,
+                            text: $viewModel.username,
                             fieldTitle: "Email",
                             fieldImage: "envelope",
                             fieldContent: "hello@example.com",
@@ -43,7 +46,7 @@ struct LoginScreen: View {
                         .padding(.top)
                         
                         InputTextField(
-                            text: $loginViewModel.password,
+                            text: $viewModel.password,
                             isSecureField: true,
                             toggleSecurityButton: true,
                             fieldTitle: "Password",
@@ -63,7 +66,7 @@ struct LoginScreen: View {
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             Task {
-                                await loginViewModel.login()
+                                await viewModel.login()
                             }
                         }
                     
@@ -88,7 +91,7 @@ struct LoginScreen: View {
                             .foregroundStyle(.secondaryText.opacity(0.6))
                                 
                         TextNavigationButton(text: "Sign Up") {
-                            loginViewModel.loginAppState = .signUp
+                            appState.navigate(to: .signUp)
                         }
                     }
                     .padding()
@@ -99,6 +102,11 @@ struct LoginScreen: View {
                 .padding()
             }
             .padding()
+        }
+        .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
+            if succeeded {
+                appState.navigate(to: .home)
+            }
         }
     }
 }
@@ -117,6 +125,10 @@ private struct LoginIcon: View {
 }
 
 #Preview {
-    LoginScreen()
+    LoginScreen(viewModel: LoginViewModel(userAuthService:
+                                            UserAuthService(
+                                                networkService: NetworkRequestService(),
+                                                keychainService: KeychainService()
+                                            )))
         .environment(AppState())
 }

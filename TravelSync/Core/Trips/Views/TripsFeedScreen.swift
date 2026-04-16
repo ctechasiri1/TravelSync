@@ -9,20 +9,23 @@ import SwiftUI
 
 struct TripsFeedScreen: View {
     @Environment(AppState.self) private var appState
+    @State private var viewModel: TripsFeedViewModel
+    
+    init(viewModel: TripsFeedViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var tripsFeedViewModel = appState.tripsFeed
-        
         VStack {
             CustomSegmentButton(
-                selection: $tripsFeedViewModel.selection,
+                selection: $viewModel.selection,
                 options: TripOption.allCases
             )
             .padding()
             
             ScrollView {
                 Group {
-                    if tripsFeedViewModel.trips.isEmpty {
+                    if viewModel.trips.isEmpty {
                         VStack {
                             Image("home_image")
                                 .resizable()
@@ -45,21 +48,21 @@ struct TripsFeedScreen: View {
                             .padding()
                         
                             AddTripButton(
-                                showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip
+                                showPlanNewTrip: $viewModel.showPlanNewTrip
                             )
                             .padding()
                         }
                         .padding(.top, 80)
                     } else {
                         Group {
-                            if tripsFeedViewModel.isUpcomingTrip {
+                            if viewModel.isUpcomingTrip {
                                 UpcomingTrips(
-                                    showPlanNewTrip: $tripsFeedViewModel.showPlanNewTrip,
-                                    upcomingTrips: tripsFeedViewModel.upcomingTrips
+                                    showPlanNewTrip: $viewModel.showPlanNewTrip,
+                                    upcomingTrips: viewModel.upcomingTrips
                                 )
                             } else {
                                 PastTrips(
-                                    pastTrips: tripsFeedViewModel.pastTrips
+                                    pastTrips: viewModel.pastTrips
                                 )
                             }
                         }
@@ -70,13 +73,13 @@ struct TripsFeedScreen: View {
         }
         .setScrollViewBackground()
         .refreshable {
-             await tripsFeedViewModel.getTrip()
+             await viewModel.getTrip()
          }
         .task {
-            await tripsFeedViewModel.getTrip()
+            await viewModel.getTrip()
         }
-        .fullScreenCover(isPresented: $tripsFeedViewModel.showPlanNewTrip, content: {
-            PlanNewTripScreen()
+        .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
+            PlanNewTripScreen(viewModel: appState.makePlanNewTripViewModel())
         })
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
@@ -88,7 +91,7 @@ struct TripsFeedScreen: View {
             
             ToolbarItem(placement: .topBarTrailing) {
                 ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
-                    tripsFeedViewModel.showPlanNewTrip = true
+                    viewModel.showPlanNewTrip = true
                 }
             }
             .sharedBackgroundVisibility(.hidden)
@@ -329,6 +332,6 @@ private struct AddTripButton: View {
 }
 
 #Preview {
-    TripsFeedScreen()
+    TripsFeedScreen(viewModel: TripsFeedViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

@@ -10,10 +10,13 @@ import SwiftUI
 struct AddExpenseScreen: View {
     @Environment(AppState.self) private var appState
     @State private var textWidth = CGFloat.zero
+    @State private var viewModel: BudgetViewModel
+    
+    init(viewModel: BudgetViewModel) {
+        _viewModel = State(wrappedValue: viewModel)
+    }
     
     var body: some View {
-        @Bindable var budgetViewModel = appState.budget
-        
         ScrollView {
             VStack {
                 SheetToolbar(title: "Add Expense", enableSave: true) {
@@ -25,14 +28,13 @@ struct AddExpenseScreen: View {
                         .font(.system(.subheadline, weight: .semibold))
                     
                     
-                    TextField("$0.00", text: $budgetViewModel.expenseAmount)
+                    TextField("$0.00", text: $viewModel.expenseAmount)
                         .font(.system(size: 50, weight: .semibold))
-                    
                         .frame(width: textWidth)
                         .textFieldStyle(PlainTextFieldStyle())
                         .background {
                             Text(
-                                budgetViewModel.expenseAmount.isEmpty ? "$0.00" : budgetViewModel.expenseAmount
+                                viewModel.expenseAmount.isEmpty ? "$0.00" : viewModel.expenseAmount
                             )
                             .fixedSize()
                             .hidden()
@@ -56,10 +58,10 @@ struct AddExpenseScreen: View {
                             ForEach(ExpenseOption.allCases) { expense in
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.6)) {
-                                        budgetViewModel.selectedExpense = expense
+                                        viewModel.selectedExpense = expense
                                     }
                                 } label: {
-                                    ExpenseOptionButton(expense: expense, isSelected: budgetViewModel.selectedExpense == expense)
+                                    ExpenseOptionButton(expense: expense, isSelected: viewModel.selectedExpense == expense)
                                         .padding(.vertical)
                                 }
                                 
@@ -71,9 +73,9 @@ struct AddExpenseScreen: View {
                 }
                 
                 Group {
-                    CustomDatePicker(selectedDate: $budgetViewModel.transactionDate, pickerTitle: "TRANSACTION DATE")
+                    CustomDatePicker(selectedDate: $viewModel.transactionDate, pickerTitle: "TRANSACTION DATE")
                     
-                    InputTextField(text: $budgetViewModel.notes, fieldTitle: "EXPENSE NOTSE", fieldImage: "pencil.and.list.clipboard", fieldContent: "Dinner at the Habor...", iconColor: .secondaryText)
+                    InputTextField(text: $viewModel.notes, fieldTitle: "EXPENSE NOTSE", fieldImage: "pencil.and.list.clipboard", fieldContent: "Dinner at the Habor...", iconColor: .secondaryText)
                     
                     ReceiptUploadButton {
                             
@@ -153,6 +155,6 @@ private struct ReceiptUploadButton: View {
 }
 
 #Preview {
-    AddExpenseScreen()
+    AddExpenseScreen(viewModel: BudgetViewModel())
         .environment(AppState())
 }
