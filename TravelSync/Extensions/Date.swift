@@ -41,6 +41,14 @@ extension Date {
             return formatter
     }()
     
+    private static func makeDateFormatter(format: String) -> DateFormatter {
+        let formatter = DateFormatter()
+        
+        formatter.dateFormat = format
+        
+        return formatter
+    }
+    
     /// Converts a Date into a localized time String displaying only the hour and minute
     ///```
     /// Convert 05:13:00 to "5:13 AM" (or "05:13" on 24-hour devices)
@@ -55,6 +63,14 @@ extension Date {
     ///```
     var dateToStringMonthAndDay: String {
         return self.formatted(.dateTime.month().day())
+    }
+    
+    /// Converts a Date into a localized String displaying only the month and day
+    ///```
+    /// Convert 2026-04-02 to "Apr 2, 2026"
+    ///```
+    var dateToStringMonthDayYear: String {
+        return self.formatted(date: .abbreviated, time: .omitted)
     }
     
     /// Converts the difference between two Dates into a formatted duration String
@@ -136,6 +152,16 @@ extension Date {
         // 5. Feed the exact, calculated unit into the formatter
         return Date.directionalTimeFormatter
             .localizedString(from: componentsToFormat)
+    }
+    
+    func extractDate(format: String) -> String {
+        return Date.makeDateFormatter(format: format).string(from: self)
+    }
+    
+    func isDateToday() -> Bool {
+        let calendar = Calendar.current
+        
+        return calendar.isDateInToday(self)
     }
 }
 

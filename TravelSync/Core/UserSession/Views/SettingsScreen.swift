@@ -14,19 +14,17 @@ struct SettingsScreen: View {
     let user: User
     
     init(user: User, viewModel: UserSessionViewModel) {
-        self.user = user
         _viewModel = State(wrappedValue: viewModel)
+        self.user = user
     }
     
     var body: some View {
-        
-        
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
-                    ProfileInformation(user: user)
-                    
-                    AccountOptions(viewModel: viewModel)
+                    ProfileInformation(user: viewModel.currentUser, selectedProfileImage: viewModel.selectedProfileImage)
+
+                    AccountOptions(user: user, viewModel: viewModel)
                     
                     PreferencesOptions(viewModel: viewModel)
                     
@@ -55,26 +53,19 @@ struct SettingsScreen: View {
 
 private struct ProfileInformation: View {
     let user: User
+    let selectedProfileImage: UIImage?
+
     
     var body: some View {
         OptionsCard(title: "") {
             HStack(spacing: 0) {
-                AsyncImage(url: URL(string: user.profileImage)) { image in
-                    image
-                        .resizable()
-                        .scaledToFit()
-                        .clipShape(Circle())
-                } placeholder: {
-                    ZStack {
-                        Color.gray.opacity(0.5)
-                            .clipShape(Circle())
-                        
-                        ProgressView()
-                            .padding()
-                    }
-                    .padding()
-                    .frame(width: 100)
-                }
+                ProfileImage(
+                    imageURL: user.profileImage,
+                    selectedImage: selectedProfileImage
+                )
+                .frame(width: 40, height: 40)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 10)
                 
                 VStack(alignment: .leading) {
                     Text(user.fullName)
@@ -84,7 +75,6 @@ private struct ProfileInformation: View {
                         .font(.system(.subheadline))
                         .foregroundStyle(.secondaryText)
                 }
-                
                 Spacer()
             }
             .padding()
@@ -93,10 +83,12 @@ private struct ProfileInformation: View {
 }
 
 private struct AccountOptions: View {
+    let user: User
+    
     let viewModel: UserSessionViewModel
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(viewModel: viewModel), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(user: user, viewModel: viewModel), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             

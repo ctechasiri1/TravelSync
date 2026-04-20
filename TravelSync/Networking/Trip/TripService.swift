@@ -22,6 +22,44 @@ actor TripService: TripServiceProtocol {
         self.keychainService = keychainService
     }
     
+    private func buildTripBody(trip: TripCreateRequest, boundary: String) -> Data {
+        /// 1. convert the Swift Data objects to ISO8601 strings so Python understands it
+        let isoFormatter = ISO8601DateFormatter()
+        
+        /// 2. generate the request body
+        var body = Data()
+        
+        let fields: [(String, String)] = [
+            ("title", trip.tripName),
+            ("location", trip.location),
+            ("start_date", isoFormatter.string(from: trip.startDate)),
+            ("end_date", isoFormatter.string(from: trip.endDate)),
+            ("budget", String(trip.budget)),
+            ("is_favorite", String(trip.isFavorite))
+        ]
+        
+        /// 3. helper to pack standard text fields
+        for (name, value) in fields {
+            body.append(Data("--\(boundary)\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".utf8))
+            body.append(Data("\(value)\r\n".utf8))
+        }
+        
+        /// 7. pack the image bytes
+        if let imageData = trip.coverImageData {
+            body.append(Data("--\(boundary)\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data; name=\"cover_image_file\"; filename=\"cover.jpg\"\r\n".utf8))
+            body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+            body.append(imageData)
+            body.append(Data("\r\n".utf8))
+        }
+        
+        
+        body.append(Data("--\(boundary)--\r\n".utf8))
+        
+        return body
+    }
+    
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
         guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
             throw APIError.invalidURL
@@ -41,42 +79,14 @@ actor TripService: TripServiceProtocol {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        /// 4. convert the Swift Data objects to ISO8601 strings so Python understands it
-        let isoFormatter = ISO8601DateFormatter()
-        let startDateString = isoFormatter.string(from: trip.startDate)
-        let endDateString = isoFormatter.string(from: trip.endDate)
+        request.httpBody = buildTripBody(trip: trip, boundary: boundary)
         
-        /// 5. generate the request body
-        var body = Data()
+        let response = try await networkService.sendRequest(
+            request: request,
+            responseType: TripPrivateResponse.self
+        )
         
-        /// 6. helper to pack standard text fields
-        let appendTextField = { (name: String, value: String) in
-            body.appendString("--\(boundary)\r\n")
-            body.appendString("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n")
-            body.appendString("\(value)\r\n")
-        }
-        
-        appendTextField("title", trip.tripName)
-        appendTextField("location", trip.location)
-        appendTextField("start_date", startDateString)
-        appendTextField("end_date", endDateString)
-        appendTextField("budget", String(trip.budget))
-        
-        /// 7. pack the image bytes
-        if let imageData = trip.coverImageData {
-            body.appendString("--\(boundary)\r\n")
-            body.appendString("Content-Disposition: form-data; name=\"cover_image_file\"; filename=\"cover.jpg\"\r\n")
-            body.appendString("Content-Type: image/jpeg\r\n\r\n")
-            body.append(imageData)
-            body.appendString("\r\n")
-        }
-        
-        
-        body.appendString("--\(boundary)--\r\n")
-        
-        request.httpBody = body
-        
-        return try await networkService.sendRequest(request: request, responseType: TripPrivateResponse.self)
+        return response
     }
     
     func getTrip() async throws -> [TripPrivateResponse] {

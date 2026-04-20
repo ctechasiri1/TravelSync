@@ -34,10 +34,12 @@ struct InputTextField: View {
                         SecureField(text: $text) {
                             Text(fieldContent)
                         }
+                        .textCase(.lowercase)
                     } else {
                         TextField(text: $text) {
                             Text(fieldContent)
                         }
+                        .textCase(.lowercase)
                     }
                 }
                 .foregroundStyle(.primary)

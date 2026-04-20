@@ -20,6 +20,13 @@ struct HomeScreen: View {
             }
             
             NavigationStack {
+                CalendarScreen(viewModel: appState.makeCalendarViewModel())
+            }
+            .tabItem {
+                Label("Calendar", systemImage: "calendar")
+            }
+            
+            NavigationStack {
                 ProfileScreen(viewModel: appState.makeUserSessionViewModel())
             }
             .tabItem {

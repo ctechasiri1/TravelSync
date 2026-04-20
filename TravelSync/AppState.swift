@@ -11,6 +11,8 @@ import Foundation
 @Observable
 class AppState {
     var currentAuthScreen: LoginState = .loading
+    var isNotificationEnabled: Bool = false
+    var isDarkModeEnabled: Bool = false
     
     let services: ServiceContainer
     
@@ -44,5 +46,9 @@ class AppState {
     
     func makeBudgetViewModel() -> BudgetViewModel {
         BudgetViewModel()
+    }
+    
+    func makeCalendarViewModel() -> CalendarViewModel {
+        CalendarViewModel()
     }
 }

@@ -9,24 +9,32 @@ import SwiftUI
 
 struct PersonalInfoScreen: View {
     @Environment(AppState.self) private var appState
-    @State var profileUIImage: UIImage? = nil
     @State private var viewModel: UserSessionViewModel
     
-    init(viewModel: UserSessionViewModel) {
+    let user: User
+    
+    init(user: User, viewModel: UserSessionViewModel) {
         _viewModel = State(wrappedValue: viewModel)
+        self.user = user
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                ProfileImage(profileUIImage: $profileUIImage, canEditPhoto: true)
-                    .frame(width: 140, height: 140)
-                    .padding(.vertical, 10)
+                ProfileImage(
+                    imageURL: viewModel.currentUser.profileImage,
+                    selectedImage: viewModel.selectedProfileImage,
+                    canEditPhoto: true
+                ) { pickedImage in
+
+                }
+                .frame(width: 100, height: 100)
                 
                 Text("PROFILE PHOTO")
                     .font(.system(size: 14, weight: .semibold))
                     .foregroundStyle(.secondaryText)
             }
+            .padding()
             
             VStack(spacing: 25) {
                 InputTextField(
@@ -64,8 +72,6 @@ struct PersonalInfoScreen: View {
             }
             .padding()
         }
-        
-        .setScrollViewBackground()
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle("Personal Information")
         .navigationBarTitleDisplayMode(.inline)
@@ -106,6 +112,6 @@ private struct EditCard: View {
 }
 
 #Preview {
-    PersonalInfoScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    PersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

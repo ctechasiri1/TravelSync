@@ -9,7 +9,7 @@ import Foundation
 
 final class NetworkRequestService: Sendable {
     // MARK: Sends the request and returns the response from FastAPI
-    func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
+    nonisolated func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
         do {
             /// 1. this sends the data to FastAPI then waits for a response
             let (data, response) = try await URLSession.shared.data(for: request)

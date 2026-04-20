@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ProfileScreen: View {
     @Environment(AppState.self) private var appState
-    @State var profileUIImage: UIImage? = nil
     @State private var isShowingSettings: Bool = false
     @State private var isShowingPersonalInfo: Bool = false
     
@@ -24,9 +23,11 @@ struct ProfileScreen: View {
             ScrollView {
                 VStack(spacing: 30) {
                     VStack {
-                        ProfileImage(profileUIImage: $profileUIImage, canEditPhoto: false)
+                        ProfileImage(
+                            imageURL: viewModel.currentUser.profileImage,
+                            selectedImage: viewModel.selectedProfileImage,
+                            )
                             .frame(width: 80, height: 80)
-                            .padding()
                         
                         Text("Hi, \(viewModel.currentUser.firstName)!")
                             .font(.system(.title, weight: .semibold))
@@ -92,7 +93,7 @@ struct ProfileScreen: View {
             SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
         })
         .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
-            PersonalInfoScreen(viewModel: viewModel)
+            PersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
         })
         .navigationTitle("Profile")
         .navigationBarTitleDisplayMode(.inline)

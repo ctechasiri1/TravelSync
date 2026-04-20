@@ -87,13 +87,9 @@ private struct PrivacyPolicyBulletPoint: View {
             Text("•")
             
             (
-            Text(bulletPointTitle)
+            Text(bulletPointTitle) +
             
-            +
-            
-            Text(" ")
-            
-            +
+            Text(" ") +
             
             Text(bulletPointContent)
                 .foregroundStyle(Color.secondaryText)

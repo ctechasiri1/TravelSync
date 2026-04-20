@@ -7,12 +7,14 @@
 
 import Observation
 import Foundation
+import SwiftUI
 
 @Observable
 class UserSessionViewModel {
     var username: String = ""
     var fullName: String = ""
     var email: String = ""
+    var selectedProfileImage: UIImage? = nil
     
     var pushNotificationsIsOn: Bool = false
     var emailNotificationsIsOn: Bool = false
@@ -38,7 +40,11 @@ class UserSessionViewModel {
                 profileImage: user.imagePath
             )
         } catch {
-            
+            print("There was an error retrieving user information")
         }
+    }
+    
+    func updateUserProfileImage() async -> Void {
+
     }
 }
