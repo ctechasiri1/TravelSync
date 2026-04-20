@@ -51,12 +51,13 @@ struct BudgetScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
+                AddButton {
                     viewModel.showAddExpense = true
                 }
             }
             .sharedBackgroundVisibility(.hidden)
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 

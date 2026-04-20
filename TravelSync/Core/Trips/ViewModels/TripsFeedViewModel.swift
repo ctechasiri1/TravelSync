@@ -39,7 +39,6 @@ class TripsFeedViewModel {
     func getTrip() async -> Void {
         do {
             let trips = try await tripService.getTrip()
-            print("The trips were recieved")
             await MainActor.run {
                 self.trips = trips.compactMap {
                     Trip(

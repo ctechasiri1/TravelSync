@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct Event: Identifiable {    
+struct Event: Identifiable, Hashable {    
     let id: UUID = UUID()
     let title: String
-    let description: String
+    let location: String
     let date: Date
     let startTime: Date
     let endTime: Date
     
     @MainActor
     static let example = [
-        Event(title: "Check-in at Hotel", description: "The Thousand Kyoto", date: .now, startTime: .now, endTime: .now + 2),
-        Event(title: "Fushimi Inari Ward", description: "Fushimi Ward, Kyoto", date: .now, startTime: .now, endTime: .now + 2)
+        Event(title: "Check-in at Hotel", location: "The Thousand Kyoto", date: .now, startTime: .now, endTime: .now + 2),
+        Event(title: "Fushimi Inari Ward", location: "Fushimi Ward, Kyoto", date: .now, startTime: .now, endTime: .now + 2)
         ]
 }
 

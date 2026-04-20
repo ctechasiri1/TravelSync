@@ -29,16 +29,17 @@ struct SquareCard<T:View>: View {
                             height: 50
                         )
                         .padding(.leading, 10)
-                        .padding([.top, .bottom], 10)
+                        .padding(.top, 10)
+                        .padding(.bottom, 5)
                         .imageScale(.large)
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text(title)
-                                .font(.system(size: 18, weight: .semibold))
+                                .font(.system(size: 17, weight: .semibold))
                                 .foregroundStyle(.black)
                                 
                             Text(value)
-                                .font(.system(size: 13))
+                                .font(.system(size: 12))
                                 .foregroundStyle(.secondaryText)
                             
                             HStack {

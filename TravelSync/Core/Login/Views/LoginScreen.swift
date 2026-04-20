@@ -104,8 +104,10 @@ struct LoginScreen: View {
             .padding()
         }
         .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
-            if succeeded {
-                appState.navigate(to: .home)
+            withAnimation {
+                if succeeded {
+                    appState.navigate(to: .home)
+                }
             }
         }
     }

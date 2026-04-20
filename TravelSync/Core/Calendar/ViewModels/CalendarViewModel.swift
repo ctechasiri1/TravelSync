@@ -10,11 +10,24 @@ import Foundation
 
 @Observable
 class CalendarViewModel {
-    var storedEvents: [Event] = []
+    var selectedDay: Date = Date()
     var currentWeek: [Date] = []
+    var events: [Event] = Event.example
     
     init() {
         fetchCurrentWeek()
+    }
+    
+    var eventForToday: [Event] {
+        let calendar = Calendar.current
+        
+        return events.filter({ calendar.isDate($0.date, inSameDayAs: selectedDay) })
+    }
+    
+    func isSelectDay(date: Date) -> Bool {
+        let calendar = Calendar.current
+        
+        return calendar.isDate(date, inSameDayAs: selectedDay)
     }
     
     func fetchCurrentWeek() -> Void {

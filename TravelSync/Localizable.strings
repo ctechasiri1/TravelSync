@@ -56,3 +56,9 @@
 "contact_us_title" = "5. Contact User";
 "contact_us_content" = "If you have any questions about this privacy policy or our privacy practices, please contact our data privacy manager.";
 
+//MARK: This is for the 'Trips Feed' screen
+
+"empty_trips_title" = "Where to next?";
+"empty_trips_description" = "Your travel adventure starts here. Plan your first trip to see it listed.";
+"empty_past_trips_title" = "No past trips yet";
+"empty_past_trips_description" = "Your completed adventures and travel memories will appear here.";

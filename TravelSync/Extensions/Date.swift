@@ -163,5 +163,18 @@ extension Date {
         
         return calendar.isDateInToday(self)
     }
+    
+//    func extractTimeFromDate(dateString: String) -> String {
+//        // Parse the backend string
+//        let parser = ISO8601DateFormatter()
+//        let date = parser.date(from: dateString)!
+//
+//        // Extract the time
+//        let display = DateFormatter()
+//        display.dateFormat = "h:mm a"
+//        let timeString = display.string(from: date)
+//        
+//        return timeString
+//    }
 }
 

@@ -17,11 +17,30 @@ struct TripsFeedScreen: View {
     
     var body: some View {
         VStack {
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("My Trips")
+                        .font(.system(.largeTitle, weight: .bold))
+                        
+                    Text("Your world, organized.")
+                        .font(.system(size: 16))
+                        .foregroundStyle(.secondaryText)
+                }
+                .padding()
+                        
+                Spacer()
+                    
+                AddButton {
+                    viewModel.showPlanNewTrip = true
+                }
+                .padding(.horizontal, 20)
+            }
+            
             CustomSegmentButton(
                 selection: $viewModel.selection,
                 options: TripOption.allCases
             )
-            .padding()
+            .padding(.horizontal)
             
             ScrollView {
                 Group {
@@ -34,22 +53,20 @@ struct TripsFeedScreen: View {
                                 .clipped()
                         
                             VStack {
-                                Text("Where to next?")
+                                Text("empty_trips_title")
                                     .font(.system(.largeTitle, weight: .bold))
                             
-                                Text(
-                                    "Your travel adventure starts here. Plan your first trip to see it listed."
-                                )
-                                .foregroundStyle(.secondaryText)
-                                .font(.system(.subheadline, weight: .light))
-                                .multilineTextAlignment(.center)
-                                .frame(width: 200)
+                                Text("empty_trips_description")
+                                    .foregroundStyle(.secondaryText)
+                                    .font(.system(.subheadline, weight: .light))
+                                    .multilineTextAlignment(.center)
+                                    .frame(width: 200)
                             }
                             .padding()
                         
-                            AddTripButton(
-                                showPlanNewTrip: $viewModel.showPlanNewTrip
-                            )
+                            AddTripButton {
+                                viewModel.showPlanNewTrip = true
+                            }
                             .padding()
                         }
                         .padding(.top, 80)
@@ -57,9 +74,10 @@ struct TripsFeedScreen: View {
                         Group {
                             if viewModel.isUpcomingTrip {
                                 UpcomingTrips(
-                                    showPlanNewTrip: $viewModel.showPlanNewTrip,
                                     upcomingTrips: viewModel.upcomingTrips
-                                )
+                                ) {
+                                    viewModel.showPlanNewTrip = true
+                                }
                             } else {
                                 PastTrips(
                                     pastTrips: viewModel.pastTrips
@@ -76,32 +94,19 @@ struct TripsFeedScreen: View {
              await viewModel.getTrip()
          }
         .task {
-            await viewModel.getTrip()
+            if viewModel.trips.isEmpty {
+                await viewModel.getTrip()
+            }
         }
         .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
             PlanNewTripScreen(viewModel: appState.makePlanNewTripViewModel())
         })
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Text("My Trips")
-                    .font(.system(.largeTitle, weight: .bold))
-                    .fixedSize(horizontal: true, vertical: false)
-            }
-            .sharedBackgroundVisibility(.hidden)
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                ToolbarButton(imageName: "plus", foregroundColor: .white, backgroundColor: .accentPrimary) {
-                    viewModel.showPlanNewTrip = true
-                }
-            }
-            .sharedBackgroundVisibility(.hidden)
-        }
     }
 }
 
 private struct UpcomingTrips: View {
-    @Binding var showPlanNewTrip: Bool
     let upcomingTrips: [Trip]
+    let action: () -> (Void)
     
     var body: some View {
         if !upcomingTrips.isEmpty {
@@ -134,10 +139,10 @@ private struct UpcomingTrips: View {
                     .clipped()
                 
                 VStack {
-                    Text("Where to next?")
+                    Text("empty_trips_title")
                         .font(.system(.largeTitle, weight: .bold))
                     
-                    Text("Your travel adventure starts here. Plan your first trip to see if listed.")
+                    Text("empty_trips_description")
                         .foregroundStyle(.secondaryText)
                         .font(.system(.subheadline, weight: .light))
                         .multilineTextAlignment(.center)
@@ -145,9 +150,9 @@ private struct UpcomingTrips: View {
                 }
                 .padding()
                 
-                AddTripButton(
-                    showPlanNewTrip: $showPlanNewTrip
-                )
+                AddTripButton {
+                    action()
+                }
                 .padding()
             }
             .padding(.top, 80)
@@ -178,10 +183,10 @@ private struct PastTrips: View {
                     .clipped()
                 
                 VStack {
-                    Text("No past trips yet")
+                    Text("empty_past_trips_title")
                         .font(.system(.largeTitle, weight: .bold))
                     
-                    Text("Your completed adventures and travel memories will appear here.")
+                    Text("empty_past_trips_description")
                         .foregroundStyle(.secondaryText)
                         .font(.system(.subheadline, weight: .light))
                         .multilineTextAlignment(.center)
@@ -307,11 +312,11 @@ private struct DetailsButton<T: View>: View {
 }
 
 private struct AddTripButton: View {
-    @Binding var showPlanNewTrip: Bool
+    let action: () -> (Void)
     
     var body: some View {
         Button {
-            showPlanNewTrip = true
+            action()
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")

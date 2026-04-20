@@ -31,9 +31,10 @@ struct ItineraryScreen: View {
                     .font(.system(.subheadline, weight: .semibold))
                     .padding()
                 
-                DetailedItinerary(events: events)
+//                DetailedItinerary(events: events)
             }
         }
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
@@ -58,65 +59,65 @@ private struct ManageButton: View {
     }
 }
 
-private struct DetailedItinerary: View {
-    let events: [Event]
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            ForEach(events) { event in
-                HStack {
-                    VStack(alignment: .center) {
-                        Circle()
-                            .frame(width: 10, height: 10)
-                            .foregroundColor(.blue)
-                        
-                        Rectangle()
-                            .frame(width: 2)
-                            .foregroundColor(.gray)
-                    }
-                    .frame(height: 140)
-                    .padding(.vertical, 5)
-
-                    VStack {
-                        Text(event.startTimeToString)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.bottom, 10)
-                        
-                        OptionsCard(title: "") {
-                            HStack {
-                                VStack(alignment: .leading) {
-                                    Text(event.title)
-                                        .font(.headline)
-                                    
-                                    Text(event.description)
-                                        .foregroundStyle(.secondaryText)
-                                        .font(.subheadline)
-                                    
-                                    HStack {
-                                        Image(systemName: "clock.fill")
-                                        
-                                        Text(event.timeDuration + " duration")
-                                    }
-                                    .padding(5)
-                                    .font(.system(size: 12, weight: .semibold))
-                                    .background(.gray.opacity(0.05))
-                                    .foregroundStyle(.secondaryText)
-                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-                                }
-                                .padding()
-                                
-                                Spacer()
-                            }
-                        }
-                    }
-                }
-                .padding(10)
-            }
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal)
-    }
-}
+//private struct DetailedItinerary: View {
+//    let events: [Event]
+//    
+//    var body: some View {
+//        VStack(alignment: .leading, spacing: 0) {
+//            ForEach(events) { event in
+//                HStack {
+//                    VStack(alignment: .center) {
+//                        Circle()
+//                            .frame(width: 10, height: 10)
+//                            .foregroundColor(.blue)
+//                        
+//                        Rectangle()
+//                            .frame(width: 2)
+//                            .foregroundColor(.gray)
+//                    }
+//                    .frame(height: 140)
+//                    .padding(.vertical, 5)
+//
+//                    VStack {
+//                        Text(event.startTimeToString)
+//                            .frame(maxWidth: .infinity, alignment: .leading)
+//                            .padding(.bottom, 10)
+//                        
+//                        OptionsCard(title: "") {
+//                            HStack {
+//                                VStack(alignment: .leading) {
+//                                    Text(event.title)
+//                                        .font(.headline)
+//                                    
+//                                    Text(event.description)
+//                                        .foregroundStyle(.secondaryText)
+//                                        .font(.subheadline)
+//                                    
+//                                    HStack {
+//                                        Image(systemName: "clock.fill")
+//                                        
+//                                        Text(event.timeDuration + " duration")
+//                                    }
+//                                    .padding(5)
+//                                    .font(.system(size: 12, weight: .semibold))
+//                                    .background(.gray.opacity(0.05))
+//                                    .foregroundStyle(.secondaryText)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+//                                }
+//                                .padding()
+//                                
+//                                Spacer()
+//                            }
+//                        }
+//                    }
+//                }
+//                .padding(10)
+//            }
+//        }
+//        .frame(maxWidth: .infinity, alignment: .leading)
+//        .padding(.horizontal)
+//    }
+//}
 
 #Preview {
     ItineraryScreen(events: Event.example)

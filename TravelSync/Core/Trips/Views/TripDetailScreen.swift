@@ -74,7 +74,7 @@ struct TripDetailScreen: View {
                     }
                         
                     SquareCard(
-                        title: "Documents",
+                        title: "Packing List",
                         value: "\(trip.dateDifference) Left",
                         iconName: "backpack.fill",
                         iconColor: .accentBlue,
@@ -87,7 +87,7 @@ struct TripDetailScreen: View {
                     
                 TripBudgetCard(
                     title: "Budget",
-                    budget: "Total Budget: \(trip.budget)",
+                    budget: "Current Spend: \(trip.budget)",
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
@@ -98,6 +98,7 @@ struct TripDetailScreen: View {
         }
         .navigationTitle("\(trip.tripName)")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
@@ -195,40 +196,35 @@ private struct TripBudgetCard<T: View>: View {
                         
                     VStack(alignment: .leading, spacing: 5) {
                         Text(title)
-                            .font(.system(.headline, weight: .semibold))
+                            .font(.system(size: 17, weight: .semibold))
                             
                         Text(budget)
-                            .font(.system(size: 14))
+                            .font(.system(size: 12))
                             .foregroundStyle(.secondaryText)
                     }
                         
                     Spacer()
-                    
-                    Text("Spent")
-                        .font(.system(.caption, weight: .bold))
-                        .padding(8)
-                        .background(.gray.opacity(0.08))
-                        .clipShape(RoundedRectangle(cornerRadius: 15))
+
+                    NavigationLink {
+                        content
+                    } label: {
+                        HStack {
+                            Image(systemName: "chevron.right")
+                                .foregroundStyle(.accentConfirmation)
+                        }
+                    }
                 }
                 .padding()
-
-                LinearProgressBar(value: 0.1, shape: RoundedRectangle(cornerRadius: 20))
-                    .tint(.accentConfirmation)
-                    .frame(height: 12)
-                    .padding(.vertical, 4)
-                    .padding(.horizontal)
-                
-                NavigationLink {
-                    content
-                } label: {
-                    HStack {
-                        Spacer()
-                        
-                        Image(systemName: "arrow.right")
-                            .foregroundStyle(.accentConfirmation)
-                    }
-                    .padding(.vertical, 4)
-                }
+                    
+                LinearProgressBar(
+                    value: 0.1,
+                    shape: RoundedRectangle(cornerRadius: 20)
+                )
+                .tint(.accentConfirmation)
+                .frame(height: 12)
+                .padding(.vertical, 4)
+                .padding(.horizontal)
+                    
             }
             .padding()
         }

@@ -27,24 +27,28 @@ struct AddExpenseScreen: View {
                         .foregroundStyle(.gray.opacity(0.6))
                         .font(.system(.subheadline, weight: .semibold))
                     
-                    
-                    TextField("$0.00", text: $viewModel.expenseAmount)
-                        .font(.system(size: 50, weight: .semibold))
-                        .frame(width: textWidth)
-                        .textFieldStyle(PlainTextFieldStyle())
-                        .background {
-                            Text(
-                                viewModel.expenseAmount.isEmpty ? "$0.00" : viewModel.expenseAmount
-                            )
-                            .fixedSize()
-                            .hidden()
-                            .padding(50)
-                            .onGeometryChange(for: CGFloat.self) { proxy in
-                                proxy.size.width
-                            } action: { newVal in
-                                textWidth = newVal
+                    HStack {
+                        Text("$")
+                            .font(.system(size: 50, weight: .semibold))
+                        
+                        TextField("0.00", text: $viewModel.expenseAmount)
+                            .font(.system(size: 50, weight: .semibold))
+                            .frame(width: textWidth)
+                            .textFieldStyle(PlainTextFieldStyle())
+                            .background {
+                                Text(
+                                    viewModel.expenseAmount.isEmpty ? "0.00" : viewModel.expenseAmount
+                                )
+                                .fixedSize()
+                                .hidden()
+                                .padding(55)
+                                .onGeometryChange(for: CGFloat.self) { proxy in
+                                    proxy.size.width
+                                } action: { newVal in
+                                    textWidth = newVal
+                                }
                             }
-                        }
+                    }
                 }
                 .padding()
                 
@@ -62,9 +66,8 @@ struct AddExpenseScreen: View {
                                     }
                                 } label: {
                                     ExpenseOptionButton(expense: expense, isSelected: viewModel.selectedExpense == expense)
-                                        .padding(.vertical)
+                                        .padding(.vertical, 5)
                                 }
-                                
                             }
                             .padding(.horizontal, 12)
                         }
@@ -74,8 +77,10 @@ struct AddExpenseScreen: View {
                 
                 Group {
                     CustomDatePicker(selectedDate: $viewModel.transactionDate, pickerTitle: "TRANSACTION DATE")
+                        .padding(.bottom)
                     
                     InputTextField(text: $viewModel.notes, fieldTitle: "EXPENSE NOTSE", fieldImage: "pencil.and.list.clipboard", fieldContent: "Dinner at the Habor...", iconColor: .secondaryText)
+                        .padding(.bottom)
                     
                     ReceiptUploadButton {
                             
@@ -85,10 +90,8 @@ struct AddExpenseScreen: View {
                     AuthButton(text: "Confirm Transaction", foregroundColor: .white, backgroundColor: .accentPrimary) {
                     }
                     .padding(.vertical)
-                    
                 }
                 .padding(.horizontal)
-                
                 
                 Spacer()
             }
@@ -140,7 +143,7 @@ private struct ReceiptUploadButton: View {
                         
                     Text("Upload Image")
                 }
-                .frame(maxWidth: .infinity, minHeight: 150)
+                .frame(maxWidth: .infinity, minHeight: 160)
                 .foregroundStyle(.secondaryText.opacity(0.6))
                 .background(.gray.opacity(0.08))
                 .clipShape(RoundedRectangle(cornerRadius: 30))

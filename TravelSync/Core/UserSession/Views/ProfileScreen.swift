@@ -20,84 +20,71 @@ struct ProfileScreen: View {
     
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack(spacing: 30) {
-                    VStack {
-                        ProfileImage(
-                            imageURL: viewModel.currentUser.profileImage,
-                            selectedImage: viewModel.selectedProfileImage,
+            VStack {
+                HStack {
+                    Text("Profile")
+                        .font(.system(.largeTitle, weight: .bold))
+                        .padding()
+                            
+                    Spacer()
+                }
+                
+                ScrollView {
+                    VStack(spacing: 30) {
+                        VStack {
+                            ProfileImage(
+                                imageURL: viewModel.currentUser.profileImage,
+                                selectedImage: viewModel.selectedProfileImage,
                             )
                             .frame(width: 80, height: 80)
-                        
-                        Text("Hi, \(viewModel.currentUser.firstName)!")
-                            .font(.system(.title, weight: .semibold))
                             
-                        Text(
-                            "@\(viewModel.currentUser.username.lowercased())"
-                        )
-                        .font(.system(.subheadline))
-                        
-                        StatisticsSection(trips: 10)
-                            .padding()
-                    }
-                    .foregroundStyle(.primaryText)
-                    .font(.system(.subheadline, weight: .regular))
-                        
-                }
-                .padding(.horizontal)
-                .frame(maxWidth: .infinity, alignment: .center)
-                    
-                TravelBadges()
-                
-                Group {
-                    FuturePlansOptions()
-                    
-                    PreferencesOptions(viewModel: viewModel)
-                        .padding(.vertical, 25)
-                        
-                    AuthButton(
-                        text: "Log Out",
-                        foregroundColor: .accentPrimary,
-                        backgroundColor: .white) {
-                                
+                            Text("Hi, \(viewModel.currentUser.firstName)!")
+                                .font(.system(.title, weight: .semibold))
+                            
+                            Text(
+                                "@\(viewModel.currentUser.username.lowercased())"
+                            )
+                            .font(.system(.subheadline))
+                            
+                            StatisticsSection(trips: 10)
+                                .padding()
                         }
-                        .padding(.vertical)
-                }
-                .padding(.horizontal)
-                
+                        .foregroundStyle(.primaryText)
+                        .font(.system(.subheadline, weight: .regular))
+                    }
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .center)
                     
-                Spacer()
-            }
-        }
-        .task {
-            await viewModel.getUser()
-        }
-        .setScrollViewBackground()
-        .toolbar {
-            ToolbarButton(
-                imageName: "pencil",
-                foregroundColor: .accentPrimary,
-                backgroundColor: .white) {
-                    isShowingPersonalInfo = true
+                    Group {
+                        FuturePlansOptions()
+                        
+                        PreferencesOptions(viewModel: viewModel)
+                            .padding(.vertical, 25)
+                        
+                        AuthButton(
+                            text: "Log Out",
+                            foregroundColor: .accentPrimary,
+                            backgroundColor: .white) {
+                                
+                            }
+                            .padding(.vertical)
+                    }
+                    .padding(.horizontal)
+                    
+                    Spacer()
                 }
-            
-            ToolbarButton(
-                imageName: "gear",
-                foregroundColor: .accentPrimary,
-                backgroundColor: .white
-            ) {
-                isShowingSettings = true
             }
+            .setScrollViewBackground()
+            .task {
+                await viewModel.getUser()
+            }
+            .navigationDestination(isPresented: $isShowingSettings, destination: {
+                SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
+            })
+            .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
+                PersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
+            })
         }
-        .navigationDestination(isPresented: $isShowingSettings, destination: {
-            SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
-        })
-        .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
-            PersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
-        })
-        .navigationTitle("Profile")
-        .navigationBarTitleDisplayMode(.inline)
-            
     }
 }
 
@@ -140,74 +127,29 @@ private struct StatisticsSection: View {
     }
 }
 
-private struct TravelBadges: View {
-    var body: some View {
-        VStack {
-            Text("TRAVEL BADGES")
-                .sectionTitleStyle()
-                .padding(.leading)
-                .padding(.top, 25)
-    
-            ScrollView(.horizontal, showsIndicators: false) {
-                LazyHStack(spacing: 0) {
-                    ForEach(0..<6) { _ in
-                        VStack(spacing: 25) {
-                            SquareIcon(iconName: "airplane", iconColor: .accentBlue, width: 80, height: 60)
-                            
-                            Text("Frequent Flyer")
-                                .font(.system(size: 12))
-                                .multilineTextAlignment(.center)
-                        }
-                        .frame(width: 100, height: 140)
-                    }
-                }
-                .frame(maxWidth: .infinity)
-            }
-            .mask {
-                HStack(spacing: 0) {
-                   LinearGradient(gradient:
-                      Gradient(
-                          colors: [Color.black.opacity(0), Color.black]),
-                          startPoint: .leading, endPoint: .trailing
-                      )
-                      .frame(width: 50)
-
-                   Rectangle().fill(Color.black)
-
-                   LinearGradient(gradient:
-                      Gradient(
-                          colors: [Color.black, Color.black.opacity(0)]),
-                          startPoint: .leading, endPoint: .trailing
-                      )
-                      .frame(width: 50)
-                   }
-            }
-            
-        }
-    }
-}
-
 private struct FuturePlansOptions: View {
     var body: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 15) {
             NavigationLink {
-                
+
             } label: {
                 HStack {
                     SquareIcon(
-                        iconName: "heart.fill",
-                        iconColor: .pink,
-                        width: 40,
-                        height: 40
+                        iconName: "gear",
+                        iconColor: .gray,
+                        width: 50,
+                        height: 50
                     )
                     .padding()
                 
-                    VStack(alignment: .leading) {
-                        Text("Favorite Places")
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Settings")
                             .font(.system(size: 17, weight: .semibold))
                         
-                        Text("12 saved locations")
+                        Text("Customize your account")
                             .font(.system(size: 12))
+                            .foregroundStyle(.secondaryText)
+                        
                     }
                     .foregroundColor(.primaryText)
                     
@@ -219,20 +161,18 @@ private struct FuturePlansOptions: View {
                 .createCardBackgroud()
             }
             
-            HStack(spacing: 25) {
+            HStack(spacing: 15) {
                 SquareCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
                     
                 }
                 
-                SquareCard(title: "Reviews", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
+                SquareCard(title: "Favorite Places", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
                     
                 }
             }
         }
     }
 }
-
-
 
 #Preview {
     ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
