@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum ExpenseOption: CaseIterable, Identifiable {
+enum ExpenseOption: Int, CaseIterable, Identifiable {
     case resturant, transport, shopping, hotel, activities
     
-    var id: Self { self }
+    var id: Int { self.rawValue }
     
     var title: String {
         switch self {
