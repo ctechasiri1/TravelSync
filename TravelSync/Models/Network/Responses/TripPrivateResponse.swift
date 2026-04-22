@@ -25,7 +25,7 @@ struct TripPrivateResponse: @preconcurrency Codable, Sendable {
             case isFavorite = "is_favorite"
             case startDateString = "start_date"
             case endDateString = "end_date"
-            case imageURLString = "cover_image_path"
+            case imageURLString = "cover_image_url"
         }
 }
 

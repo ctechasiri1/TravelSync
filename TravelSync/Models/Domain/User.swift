@@ -60,7 +60,7 @@ struct UserPrivateResponse: Decodable {
         case username
         case fullName = "full_name"
         case email
-        case imagePath = "profile_image_path"
+        case imagePath = "profile_image_url"
     }
 }
 

@@ -40,6 +40,7 @@ class UserSessionViewModel {
                 profileImage: user.imagePath
             )
         } catch {
+            print(error)
             print("There was an error retrieving user information")
         }
     }
