@@ -8,7 +8,7 @@
 import Foundation
 
 struct Expense: Identifiable {
-    let id: UUID = UUID()
+    let id: Int
     let title: String
     let amount: Int
     let transactionDate: Date
@@ -17,6 +17,7 @@ struct Expense: Identifiable {
     @MainActor
     static var example: Expense {
         return Expense(
+            id: 1,
             title: "Dinner in Gion",
             amount: 30,
             transactionDate: .now,

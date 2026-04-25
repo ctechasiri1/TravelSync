@@ -14,6 +14,7 @@ final class ServiceContainer {
     let authService: UserAuthServiceProtocol
     let userService: UserServiceProtocol
     let tripService: TripServiceProtocol
+    let expenseService: ExpenseServiceProtocol
     
     init(networkService: NetworkRequestService = NetworkRequestService(), keychainService: KeychainService = KeychainService()) {
         self.networkService = networkService
@@ -22,5 +23,6 @@ final class ServiceContainer {
         self.authService = UserAuthService(networkService: networkService, keychainService: keychainService)
         self.userService = UserService(networkService: networkService, keychainService: keychainService)
         self.tripService = TripService(networkService: networkService, keychainService: keychainService)
+        self.expenseService = ExpenseService(networkService: networkService, keychainService: keychainService)
     }
 }

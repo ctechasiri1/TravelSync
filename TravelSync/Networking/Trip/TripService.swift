@@ -54,7 +54,6 @@ actor TripService: TripServiceProtocol {
             body.append(Data("\r\n".utf8))
         }
         
-        
         body.append(Data("--\(boundary)--\r\n".utf8))
         
         return body

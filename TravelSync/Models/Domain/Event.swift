@@ -8,7 +8,7 @@
 import Foundation
 
 struct Event: Identifiable, Hashable {    
-    let id: UUID = UUID()
+    let id: Int
     let title: String
     let location: String
     let date: Date
@@ -17,8 +17,8 @@ struct Event: Identifiable, Hashable {
     
     @MainActor
     static let example = [
-        Event(title: "Check-in at Hotel", location: "The Thousand Kyoto", date: .now, startTime: .now, endTime: .now + 2),
-        Event(title: "Fushimi Inari Ward", location: "Fushimi Ward, Kyoto", date: .now, startTime: .now, endTime: .now + 2)
+        Event(id: 1, title: "Check-in at Hotel", location: "The Thousand Kyoto", date: .now, startTime: .now, endTime: .now + 2),
+        Event(id: 2, title: "Fushimi Inari Ward", location: "Fushimi Ward, Kyoto", date: .now, startTime: .now, endTime: .now + 2)
         ]
 }
 
