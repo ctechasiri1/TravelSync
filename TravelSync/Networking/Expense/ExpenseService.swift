@@ -8,16 +8,17 @@
 import Foundation
 import UIKit
 
-final class ExpenseService: ExpenseServiceProtocol {
+actor ExpenseService: ExpenseServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
+    private var activeTask: Task<[ExpensePrivateResponse], Error>?
     
     init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }
     
-    func getExpenses(tripId: Int, expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse {
+    func createExpense(tripId: Int, expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse {
         let boundary = "Boundary-\(UUID().uuidString)"
         let isoForamtter = ISO8601DateFormatter()
         
@@ -61,5 +62,32 @@ final class ExpenseService: ExpenseServiceProtocol {
         request.httpBody = body
         
         return try await networkService.sendRequest(request: request, responseType: ExpensePrivateResponse.self)
+    }
+    
+    func getExpenses(tripId: Int) async throws -> [ExpensePrivateResponse] {
+        if let existing = activeTask {
+            return try await existing.value
+        }
+        
+        let task = Task<[ExpensePrivateResponse], Error> {
+            guard let url = URL(string: "/api/trips/\(tripId)/expense") else {
+                throw APIError.invalidURL
+            }
+            
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            
+            if let token = keychainService.getToken() {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            return try await networkService.sendRequest(request: request, responseType: [ExpensePrivateResponse].self)
+        }
+        
+        activeTask = task
+        
+        defer { activeTask = nil }
+        
+        return try await task.value
     }
 }

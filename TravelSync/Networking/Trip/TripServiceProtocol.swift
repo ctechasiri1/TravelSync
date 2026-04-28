@@ -9,5 +9,5 @@ import Foundation
 //
 protocol TripServiceProtocol {
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse
-    func getTrip() async throws -> [TripPrivateResponse]
+    func getTrips() async throws -> [TripPrivateResponse]
 }

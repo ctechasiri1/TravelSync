@@ -10,12 +10,8 @@ import Foundation
 actor TripService: TripServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
-    
-    private var cachedTrips: [TripPrivateResponse]?
-    private var lastFetch: Date?
-    private let cacheLifetime: TimeInterval = 60
-    
-    private var activeFetchTask: Task<[TripPrivateResponse], Error>?
+    private var activeTask: Task<[TripPrivateResponse], Error>?
+
     
     init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
@@ -41,14 +37,16 @@ actor TripService: TripServiceProtocol {
         /// 3. helper to pack standard text fields
         for (name, value) in fields {
             body.append(Data("--\(boundary)\r\n".utf8))
-            body.append(Data("Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data;".utf8))
+            body.append(Data("name=\"\(name)\"\r\n\r\n".utf8))
             body.append(Data("\(value)\r\n".utf8))
         }
         
         /// 7. pack the image bytes
         if let imageData = trip.coverImageData {
             body.append(Data("--\(boundary)\r\n".utf8))
-            body.append(Data("Content-Disposition: form-data; name=\"cover_image_file\"; filename=\"cover.jpg\"\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data;".utf8))
+            body.append(Data(" name=\"cover_image_file\"; filename=\"cover.jpg\"\r\n".utf8))
             body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
             body.append(imageData)
             body.append(Data("\r\n".utf8))
@@ -74,7 +72,7 @@ actor TripService: TripServiceProtocol {
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         
         /// 3. check if the user is authorized to access the endpoint with the token
-        if let token = await keychainService.getToken() {
+        if let token = keychainService.getToken() {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
@@ -88,37 +86,30 @@ actor TripService: TripServiceProtocol {
         return response
     }
     
-    func getTrip() async throws -> [TripPrivateResponse] {
-        if let cached = cachedTrips, let last = lastFetch, Date().timeIntervalSince(last) < cacheLifetime {
-            return cached
-        }
-        
-        if let existing = activeFetchTask {
+    func getTrips() async throws -> [TripPrivateResponse] {
+        if let existing = activeTask {
             return try await existing.value
         }
         
         let task = Task<[TripPrivateResponse], Error> {
-            guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
+            guard let url = URL(string: "http://127.0.0.1:8000/api/trips") else {
                 throw APIError.invalidURL
             }
             
-            var request = URLRequest(url: urlEndpoint)
+            var request = URLRequest(url: url)
             request.httpMethod = "GET"
-                
-            if let token = await keychainService.getToken() {
+            
+            if let token = keychainService.getToken() {
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
             
             return try await networkService.sendRequest(request: request, responseType: [TripPrivateResponse].self)
         }
         
-        activeFetchTask = task
-        let trips = try await task.value
+        activeTask = task
         
-        cachedTrips = trips
-        lastFetch = Date()
-        activeFetchTask = nil
+        defer { activeTask = nil }
         
-        return trips
+        return try await task.value
     }
 }

@@ -13,7 +13,7 @@ final class KeychainService: Sendable {
     private let account = "authToken" /// 'file name'
     
     // MARK: Save Token
-    func saveToken(_ token: String) {
+    nonisolated func saveToken(_ token: String) {
         /// 1). conver the token string into UTF-8 bytes
         let tokenData = Data(token.utf8)
         
@@ -41,7 +41,7 @@ final class KeychainService: Sendable {
     }
     
     // MARK: Get Token
-    func getToken() -> String? {
+    nonisolated func getToken() -> String? {
         /// 1). the dictionary is 'Instruction Manual' for what we want to hand to the framework
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -68,7 +68,7 @@ final class KeychainService: Sendable {
         return nil
     }
     
-    func deleteToken() {
+    nonisolated func deleteToken() {
         /// 1). the dictionary is 'Instruction Manual' for what we want to hand to the framework
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

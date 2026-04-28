@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TripPrivateResponse: @preconcurrency Codable, Sendable {
+struct TripPrivateResponse: nonisolated Codable, Sendable {
     let id: Int
     let tripName: String
     let location: String

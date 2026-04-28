@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ExpensePrivateResponse: Codable {
+struct ExpensePrivateResponse: nonisolated Codable, Sendable {
     let title: String
     let amount: Int
     let transactionDate: Date

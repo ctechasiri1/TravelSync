@@ -21,7 +21,7 @@ struct TripMockService: TripServiceProtocol {
         )
     }
     
-    func getTrip() async throws -> [TripPrivateResponse] {
+    func getTrips() async throws -> [TripPrivateResponse] {
         return [
             TripPrivateResponse(
                 id: 1,

@@ -56,7 +56,7 @@ struct ProfileScreen: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     
                     Group {
-                        FuturePlansOptions()
+                        FuturePlansOptions(user: viewModel.currentUser, viewModel: viewModel)
                         
                         PreferencesOptions(viewModel: viewModel)
                             .padding(.vertical, 25)
@@ -128,10 +128,13 @@ private struct StatisticsSection: View {
 }
 
 private struct FuturePlansOptions: View {
+    let user: User
+    let viewModel: UserSessionViewModel
+    
     var body: some View {
         VStack(spacing: 15) {
             NavigationLink {
-
+                SettingsScreen(user: user, viewModel: viewModel)
             } label: {
                 HStack {
                     SquareIcon(
