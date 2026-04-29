@@ -8,6 +8,6 @@
 import Foundation
 
 protocol ExpenseServiceProtocol {
-    func createExpense(tripId: Int, expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse
+    func createExpense(expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse
     func getExpenses(tripId: Int) async throws -> [ExpensePrivateResponse]
 }

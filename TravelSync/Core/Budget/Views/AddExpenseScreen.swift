@@ -9,19 +9,23 @@ import SwiftUI
 
 struct AddExpenseScreen: View {
     @Environment(AppState.self) private var appState
-    @State private var textWidth = CGFloat.zero
+    @State private var textWidth = 10.0
     @State private var viewModel: AddExpenseViewModel
     
-    init(viewModel: AddExpenseViewModel) {
+    let trip: Trip
+    
+    init(trip: Trip, viewModel: AddExpenseViewModel) {
         _viewModel = State(wrappedValue: viewModel)
+        self.trip = trip
     }
     
     var body: some View {
         ScrollView {
             VStack {
-                SheetToolbar(title: "Add Expense", enableSave: true) {
-                    
+                SheetToolbar(title: "Add Expense", enableSave: viewModel.enableSave) {
+//                    viewModel.createExpense(tripId: trip.id)
                 }
+                
                 VStack(alignment: .center) {
                     Text("AMOUNT")
                         .foregroundStyle(.gray.opacity(0.6))
@@ -29,25 +33,13 @@ struct AddExpenseScreen: View {
                     
                     HStack {
                         Text("$")
-                            .font(.system(size: 50, weight: .semibold))
+                            .font(.system(size: 45, weight: .semibold))
                         
-                        TextField("0.00", text: $viewModel.expenseAmount)
+                        TextField("0.00", text: $viewModel.expenseAmount, axis: .horizontal)
                             .font(.system(size: 50, weight: .semibold))
-                            .frame(width: textWidth)
                             .textFieldStyle(PlainTextFieldStyle())
-                            .background {
-                                Text(
-                                    viewModel.expenseAmount.isEmpty ? "0.00" : viewModel.expenseAmount
-                                )
-                                .fixedSize()
-                                .hidden()
-                                .padding(55)
-                                .onGeometryChange(for: CGFloat.self) { proxy in
-                                    proxy.size.width
-                                } action: { newVal in
-                                    textWidth = newVal
-                                }
-                            }
+                            .fixedSize(horizontal: true, vertical: false)
+                            .keyboardType(.numberPad)
                     }
                 }
                 .padding()
@@ -158,6 +150,6 @@ private struct ReceiptUploadButton: View {
 }
 
 #Preview {
-    AddExpenseScreen(viewModel: AddExpenseViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    AddExpenseScreen(trip: Trip.example, viewModel: AddExpenseViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

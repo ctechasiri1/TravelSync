@@ -39,13 +39,10 @@ class UserSessionViewModel {
                 email: user.email,
                 profileImage: user.imagePath
             )
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
         } catch {
-            print(error)
-            print("There was an error retrieving user information")
+            print("There was an unexpected error.")
         }
-    }
-    
-    func updateUserProfileImage() async -> Void {
-
     }
 }

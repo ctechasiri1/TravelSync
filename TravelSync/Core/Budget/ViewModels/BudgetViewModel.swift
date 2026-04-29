@@ -26,18 +26,20 @@ class BudgetViewModel {
             let expenses = try await expenseService.getExpenses(tripId: tripId)
             await MainActor.run {
                 for expenseDTO in expenses {
-                    let expense = Expense(
+                    let expenseDomain = Expense(
                         id: expenseDTO.id,
                         title: expenseDTO.title,
                         amount: expenseDTO.amount,
                         transactionDate: expenseDTO.transactionDate,
                         type: ExpenseOption(fromRawValue: expenseDTO.id)
                     )
-                    self.expenses.append(expense)
+                    self.expenses.append(expenseDomain)
                 }
             }
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
         } catch {
-            print("There was an error grabbing the expesnes: \(error)")
+            print("There was an unexpected error.")
         }
     }
 }

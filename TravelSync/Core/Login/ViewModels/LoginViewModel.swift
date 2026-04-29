@@ -26,6 +26,8 @@ class LoginViewModel {
     }
     
     func login() async {
+        defer { isNetworkActive = false }
+        
         isNetworkActive = true
         errorMessage = nil
         
@@ -34,11 +36,12 @@ class LoginViewModel {
             let _ = try await userAuthService.login(requestBody: request)
             
             didLoginSucceed = true
+        } catch let error as APIError {
+//            self.showErrorAlert = true
+//            self.errorMessage = "Login failed. Please check your email and password"
+            print("There was a network error: \(error).")
         } catch {
-            self.errorMessage = "Login failed. Please check your email and password"
-            self.showErrorAlert = true
-            print("Login Error: \(error.localizedDescription)")
+            print("There was an unexpected error.")
         }
-        isNetworkActive = false
     }
 }

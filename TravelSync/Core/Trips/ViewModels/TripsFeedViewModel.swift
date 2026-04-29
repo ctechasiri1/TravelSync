@@ -39,6 +39,7 @@ class TripsFeedViewModel {
     func getTrip() async -> Void {
         do {
             let trips = try await tripService.getTrips()
+            
             await MainActor.run {
                 self.trips = trips.compactMap {
                     Trip(
@@ -54,8 +55,10 @@ class TripsFeedViewModel {
                     )
                 }
             }
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
         } catch {
-            print("There was an error get your trips: \(error.localizedDescription)")
+            print("There was an unexpected error.")
         }
     }
 }

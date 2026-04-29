@@ -22,6 +22,7 @@ struct SheetToolbar: View {
                 Text("Cancel")
             }
             .frame(maxWidth: .infinity)
+            .foregroundStyle(.accentPrimary)
             
             Text(title)
                 .foregroundStyle(Color.primaryText)
@@ -34,6 +35,7 @@ struct SheetToolbar: View {
             } label: {
                 Text("Save")
             }
+            .foregroundStyle(.accentPrimary)
             .frame(maxWidth: .infinity)
             .disabled(!enableSave)
             .opacity(!enableSave ? 0.5 : 1.0)

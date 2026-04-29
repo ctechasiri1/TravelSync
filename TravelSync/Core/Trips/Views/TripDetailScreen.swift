@@ -87,7 +87,8 @@ struct TripDetailScreen: View {
                     
                 TripBudgetCard(
                     title: "Budget",
-                    budget: "Current Spend: \(trip.budget)",
+                    totalSpend: trip.totalSpending,
+                    budget: trip.budget,
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
@@ -177,7 +178,8 @@ private struct TripInformationCard: View {
 
 private struct TripBudgetCard<T: View>: View {
     let title: String
-    let budget: String
+    let totalSpend: Int
+    let budget: Int
     let iconName: String
     let iconColor: Color
     @ViewBuilder let content: T
@@ -198,7 +200,7 @@ private struct TripBudgetCard<T: View>: View {
                         Text(title)
                             .font(.system(size: 17, weight: .semibold))
                             
-                        Text(budget)
+                        Text("Current Spend: $\(totalSpend)")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondaryText)
                     }
@@ -217,7 +219,7 @@ private struct TripBudgetCard<T: View>: View {
                 .padding()
                     
                 LinearProgressBar(
-                    value: 0.1,
+                    value: Double(totalSpend) / Double(budget),
                     shape: RoundedRectangle(cornerRadius: 20)
                 )
                 .tint(.accentConfirmation)

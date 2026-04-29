@@ -20,7 +20,7 @@ struct BudgetScreen: View {
     
     var body: some View {
         ScrollView {
-            BudgetOverview(budget: trip.budget, totalSpend: trip.)
+            BudgetOverview(budget: trip.budget, totalSpend: trip.totalSpending)
             
             Text("Expenses Breakdown")
                 .padding()
@@ -45,7 +45,7 @@ struct BudgetScreen: View {
             .padding(.horizontal)
         }
         .fullScreenCover(isPresented: $viewModel.showAddExpense, content: {
-            AddExpenseScreen(viewModel: appState.makeAddExpenseViewModel())
+            AddExpenseScreen(trip: trip, viewModel: appState.makeAddExpenseViewModel())
         })
         .navigationTitle("Budget Details")
         .navigationBarTitleDisplayMode(.inline)

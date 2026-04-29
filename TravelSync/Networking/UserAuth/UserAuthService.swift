@@ -12,7 +12,10 @@ final class UserAuthService: UserAuthServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
     
-    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+    init(
+        networkService: NetworkRequestService,
+        keychainService: KeychainService
+    ) {
         self.networkService = networkService
         self.keychainService = keychainService
     }
@@ -45,30 +48,34 @@ final class UserAuthService: UserAuthServiceProtocol {
         guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/token") else {
             throw APIError.invalidURL
         }
-        
+            
         /// 2. add metadata to the HTTP Request line and headers
         /// in this we are making a POST request, sending a form data to FastAPI
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
+        request
+            .setValue(
+                "application/x-www-form-urlencoded",
+                forHTTPHeaderField: "Content-Type"
+            )
+            
         /// 3. encodes the DTO (UserLoginRequest) components to form data
         var components = URLComponents()
         components.queryItems = [
             URLQueryItem(name: "username", value: requestBody.username),
             URLQueryItem(name: "password", value: requestBody.password)
         ]
-        
+            
         /// 4. converts the string to raw bytes
         /// from the form data it to a formatted string (e.g., "username=hello%40test.com&password=abc")
         /// from the string it converts it to raw bytes
         guard let formDataString = components.query, let bodyData = formDataString.data(using: .utf8) else {
-            throw APIError.invalidURL // Or create a specific .encoding error
+            throw APIError.invalidPayload
         }
-        
+            
         /// 5. set the requset body with the raw bytes
         request.httpBody = bodyData
-        
+            
         /// 6. sends the request to FastAPI
         let tokenResponse = try await networkService.sendRequest(
             request: request,
@@ -77,7 +84,7 @@ final class UserAuthService: UserAuthServiceProtocol {
             
         /// 7. store the token in the keychain
         keychainService.saveToken(tokenResponse.accessToken)
-        
+            
         return tokenResponse
     }
 }

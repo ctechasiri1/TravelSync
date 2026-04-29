@@ -18,11 +18,11 @@ actor ExpenseService: ExpenseServiceProtocol {
         self.keychainService = keychainService
     }
     
-    func createExpense(tripId: Int, expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse {
+    func createExpense(expense: ExpenseCreateRequest) async throws -> ExpensePrivateResponse {
         let boundary = "Boundary-\(UUID().uuidString)"
         let isoForamtter = ISO8601DateFormatter()
         
-        guard let url = URL(string: "/api/trips/\(tripId)/expense") else {
+        guard let url = URL(string: "/api/trips/\(expense.tripId)/expense") else {
             throw APIError.invalidURL
         }
         

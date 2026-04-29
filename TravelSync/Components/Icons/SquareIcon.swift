@@ -15,6 +15,7 @@ struct SquareIcon: View {
     
     var body: some View {
         Image(systemName: iconName)
+            .imageScale(.medium)
             .bold()
             .foregroundStyle(iconColor)
             .background(

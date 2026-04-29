@@ -26,5 +26,9 @@ struct LinearProgressBar<Shape: SwiftUI.Shape>: View {
 
 
 #Preview {
-    LinearProgressBar(value: 0.2, shape: RoundedRectangle(cornerRadius: 20))
+    LinearProgressBar(value: 0.009, shape: RoundedRectangle(cornerRadius: 20))
+        .tint(.accentConfirmation)
+        .frame(height: 15)
+        .padding(.vertical)
+        .padding()
 }

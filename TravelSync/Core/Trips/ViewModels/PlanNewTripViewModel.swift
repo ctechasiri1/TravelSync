@@ -41,31 +41,38 @@ class PlanNewTripViewModel {
         return false
     }
 
-    func addTrip() async throws {
-        guard let start = startDate, let end = endDate else {
-            throw TripError.missingDates
-        }
-        
-        let trimmedLocation = locationName.trimmingCharacters(in: .whitespaces)
-        guard !trimmedLocation.isEmpty else {
-            throw TripError.emptyLocation
-        }
-        
-        let newTrip = TripCreateRequest(
-            tripName: tripName,
-            location: locationName,
-            budget: budget ?? 0,
-            isFavorite: false,
-            startDate: start,
-            endDate: end,
-            coverImageData: convertImageToData
-        )
-        
+    func addTrip() async {
         do {
+            guard let start = startDate, let end = endDate else {
+                throw TripError.missingDates
+            }
+            
+            let trimmedLocation = locationName.trimmingCharacters(in: .whitespaces)
+            guard !trimmedLocation.isEmpty else {
+                throw TripError.emptyLocation
+            }
+            
+            let newTrip = TripCreateRequest(
+                tripName: tripName,
+                location: locationName,
+                budget: budget ?? 0,
+                isFavorite: false,
+                startDate: start,
+                endDate: end,
+                coverImageData: convertImageToData
+            )
+            
             let _ = try await tripService.createTrip(trip: newTrip)
+            
             resetForm()
+        } catch TripError.missingDates {
+            print(TripError.missingDates.errorDescription)
+        } catch TripError.emptyLocation {
+            print(TripError.emptyLocation.errorDescription)
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
         } catch {
-            print(error.localizedDescription)
+            print("There was an unexpected error.")
         }
     }
     

@@ -11,10 +11,10 @@ enum TripError: Error, LocalizedError {
     case missingDates
     case emptyLocation
     
-    var errorDescription: String? {
+    var errorDescription: String {
         switch self {
         case .missingDates:
-            return "Please select both start and end dates"
+            return "Please select the dates you are planning for your trip."
         case .emptyLocation:
             return "Where are you going? Location cannot be empty."
         }

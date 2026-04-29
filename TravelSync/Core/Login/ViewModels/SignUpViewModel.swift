@@ -28,6 +28,8 @@ class SignUpViewModel {
     }
     
     func signup() async {
+        defer { isNetworkActive = false }
+        
         isNetworkActive = true
         errorMessage = nil
         
@@ -36,10 +38,13 @@ class SignUpViewModel {
             let _ = try await userAuthService.signUp(requestBody: request)
             
             didSignUpSucceed = true
+        } catch let error as APIError {
+//            errorMessage = "Failed to create account. That email or username might be taken."
+//            showErrorAlert = true
+            print("There was a network error: \(error).")
         } catch {
-            errorMessage = "Failed to create account. That email or username might be taken."
-            showErrorAlert = true
+            print("There was an unexpected error.")
         }
-        isNetworkActive = false
+//        isNetworkActive = false
     }
 }

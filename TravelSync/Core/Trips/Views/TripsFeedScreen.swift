@@ -18,15 +18,9 @@ struct TripsFeedScreen: View {
     var body: some View {
         VStack {
             HStack {
-                VStack(alignment: .leading) {
-                    Text("My Trips")
-                        .font(.system(.largeTitle, weight: .bold))
-                        
-                    Text("Your world, organized.")
-                        .font(.system(size: 16))
-                        .foregroundStyle(.secondaryText)
-                }
-                .padding()
+                Text("My Trips")
+                    .font(.system(.largeTitle, weight: .bold))
+                    .padding()
                         
                 Spacer()
                     
