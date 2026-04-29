@@ -20,7 +20,7 @@ struct BudgetScreen: View {
     
     var body: some View {
         ScrollView {
-            BudgetOverview(budget: trip.budget)
+            BudgetOverview(budget: trip.budget, totalSpend: trip.)
             
             Text("Expenses Breakdown")
                 .padding()
@@ -45,7 +45,7 @@ struct BudgetScreen: View {
             .padding(.horizontal)
         }
         .fullScreenCover(isPresented: $viewModel.showAddExpense, content: {
-            AddExpenseScreen(viewModel: viewModel)
+            AddExpenseScreen(viewModel: appState.makeAddExpenseViewModel())
         })
         .navigationTitle("Budget Details")
         .navigationBarTitleDisplayMode(.inline)
@@ -63,6 +63,7 @@ struct BudgetScreen: View {
 
 private struct BudgetOverview: View {
     let budget: Int
+    let totalSpend: Int
     
     var body: some View {
         HStack {
@@ -87,21 +88,21 @@ private struct BudgetOverview: View {
                         )
                 }
                     
-                Text("$1,450.00")
+                Text("$\(totalSpend)")
                     .font(.system(.largeTitle, weight: .bold))
                     
                 Text("of $\(budget) budget")
                     .foregroundStyle(.secondaryText)
                     
                 LinearProgressBar(
-                    value: 0.1,
+                    value: Double(totalSpend) / Double(budget),
                     shape: RoundedRectangle(cornerRadius: 20)
                 )
                 .tint(.accentConfirmation)
                 .frame(height: 15)
                 .padding(.vertical)
                     
-                ExpenseSummary()
+                ExpenseSummary(budget: budget, totalSpend: totalSpend)
             }
             .padding()
                 
@@ -114,6 +115,9 @@ private struct BudgetOverview: View {
 }
 
 private struct ExpenseSummary: View {
+    let budget: Int
+    let totalSpend: Int
+    
     var body: some View {
         HStack(spacing: 20) {
             HStack {
@@ -150,7 +154,7 @@ private struct ExpenseSummary: View {
                         .font(.system(size: 16))
                         .foregroundStyle(.secondaryText)
                     
-                    Text("$185")
+                    Text("\(budget - totalSpend)")
                         .fontWeight(.semibold)
                 }
                 
@@ -262,6 +266,6 @@ private struct RecentActivities: View {
 }
 
 #Preview {
-    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel())
+    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

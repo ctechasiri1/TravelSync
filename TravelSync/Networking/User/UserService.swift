@@ -7,15 +7,10 @@
 
 import Foundation
 
-struct UserService: UserServiceProtocol {
+actor UserService: UserServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
-    
-    private var cachedTrips: [TripPrivateResponse]?
-    private var lastFetch: Date?
-    private let cacheLifetime: TimeInterval = 60
-    
-    private var activeFetchTask: Task<[TripPrivateResponse], Error>?
+    private var activeTask: Task<UserPrivateResponse, Error>?
     
     init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
@@ -23,17 +18,29 @@ struct UserService: UserServiceProtocol {
     }
     
     func getCurrentUser() async throws -> UserPrivateResponse {
-        guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/me") else {
-            throw APIError.invalidURL
+        if let existing = activeTask {
+            return try await existing.value
         }
         
-        var request = URLRequest(url: endpoint)
-        request.httpMethod = "GET"
-        
-        if let token = keychainService.getToken() {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        let task = Task<UserPrivateResponse, Error> {
+            guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/me") else {
+                throw APIError.invalidURL
+            }
+            
+            var request = URLRequest(url: endpoint)
+            request.httpMethod = "GET"
+            
+            if let token = keychainService.getToken() {
+                request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            }
+            
+            return try await networkService.sendRequest(request: request, responseType: UserPrivateResponse.self)
         }
         
-        return try await networkService.sendRequest(request: request, responseType: UserPrivateResponse.self)
+        activeTask = task
+        
+        defer { activeTask = nil }
+        
+        return try await task.value
     }
 }

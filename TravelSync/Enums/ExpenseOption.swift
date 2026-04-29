@@ -11,6 +11,10 @@ import SwiftUI
 enum ExpenseOption: Int, CaseIterable, Identifiable {
     case resturant, transport, shopping, hotel, activities
     
+    init(fromRawValue: Int) {
+        self = ExpenseOption(rawValue: fromRawValue) ?? .resturant
+    }
+    
     var id: Int { self.rawValue }
     
     var title: String {

@@ -14,6 +14,7 @@ struct Trip: Identifiable, Equatable {
     let tripName: String
     let location: String
     let budget: Int
+    let totalSpending: Int
     let isFavorite: Bool
     let startDate: Date
     let endDate: Date
@@ -26,6 +27,7 @@ struct Trip: Identifiable, Equatable {
             tripName: "Mango Sticky Rice Summer",
             location: "Bangkok, Thailand",
             budget: 5000,
+            totalSpending: 30,
             isFavorite: true,
             startDate: Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now,
             endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,

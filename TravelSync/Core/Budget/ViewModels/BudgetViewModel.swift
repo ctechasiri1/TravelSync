@@ -10,11 +10,34 @@ import Foundation
 
 @Observable
 class BudgetViewModel {
-    var currentSpending: Int = 0
-    var expenseAmount: String = ""
-    var selectedExpense: ExpenseOption = .resturant
     var expenses: [Expense] = [Expense.example]
     var showAddExpense: Bool = false
-    var transactionDate: Date? = nil
-    var notes: String = ""
+    
+    private let expenseService: ExpenseServiceProtocol
+    private let tripId: Int
+    
+    init(tripId: Int, expenseService: ExpenseServiceProtocol) {
+        self.tripId = tripId
+        self.expenseService = expenseService
+    }
+
+    func getExpenses() async -> Void {
+        do {
+            let expenses = try await expenseService.getExpenses(tripId: tripId)
+            await MainActor.run {
+                for expenseDTO in expenses {
+                    let expense = Expense(
+                        id: expenseDTO.id,
+                        title: expenseDTO.title,
+                        amount: expenseDTO.amount,
+                        transactionDate: expenseDTO.transactionDate,
+                        type: ExpenseOption(fromRawValue: expenseDTO.id)
+                    )
+                    self.expenses.append(expense)
+                }
+            }
+        } catch {
+            print("There was an error grabbing the expesnes: \(error)")
+        }
+    }
 }

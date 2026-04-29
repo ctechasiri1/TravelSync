@@ -48,7 +48,7 @@ struct UserCreateRequest: Encodable {
     }
 }
 
-struct UserPrivateResponse: Decodable {
+struct UserPrivateResponse: nonisolated Decodable, Sendable {
     let id: Int
     let username: String
     let fullName: String

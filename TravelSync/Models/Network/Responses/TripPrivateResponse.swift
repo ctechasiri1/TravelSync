@@ -11,6 +11,7 @@ struct TripPrivateResponse: nonisolated Codable, Sendable {
     let id: Int
     let tripName: String
     let location: String
+    let totalSpending: Int
     let budget: Int
     let isFavorite: Bool
     let startDateString: String
@@ -21,6 +22,7 @@ struct TripPrivateResponse: nonisolated Codable, Sendable {
             case id
             case tripName = "title"
             case location
+            case totalSpending = "total_spending"
             case budget
             case isFavorite = "is_favorite"
             case startDateString = "start_date"

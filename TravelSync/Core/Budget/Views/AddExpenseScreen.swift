@@ -10,9 +10,9 @@ import SwiftUI
 struct AddExpenseScreen: View {
     @Environment(AppState.self) private var appState
     @State private var textWidth = CGFloat.zero
-    @State private var viewModel: BudgetViewModel
+    @State private var viewModel: AddExpenseViewModel
     
-    init(viewModel: BudgetViewModel) {
+    init(viewModel: AddExpenseViewModel) {
         _viewModel = State(wrappedValue: viewModel)
     }
     
@@ -158,6 +158,6 @@ private struct ReceiptUploadButton: View {
 }
 
 #Preview {
-    AddExpenseScreen(viewModel: BudgetViewModel())
+    AddExpenseScreen(viewModel: AddExpenseViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

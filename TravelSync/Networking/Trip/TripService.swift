@@ -11,16 +11,31 @@ actor TripService: TripServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
     private var activeTask: Task<[TripPrivateResponse], Error>?
-
     
     init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }
     
-    private func buildTripBody(trip: TripCreateRequest, boundary: String) -> Data {
-        /// 1. convert the Swift Data objects to ISO8601 strings so Python understands it
+    func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
+        guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
+            throw APIError.invalidURL
+        }
+        
+        var request = URLRequest(url: urlEndpoint)
+        request.httpMethod = "POST"
+        
+        /// 1. creates a umique seperator for the data being passed so the backend can split it up
+        let boundary = "Boundary-\(UUID().uuidString)"
         let isoFormatter = ISO8601DateFormatter()
+        
+        /// 2. tells FastAPI this is a multipart form, and give it a boundary key
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        /// 3. check if the user is authorized to access the endpoint with the token
+        if let token = keychainService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         /// 2. generate the request body
         var body = Data()
@@ -34,7 +49,6 @@ actor TripService: TripServiceProtocol {
             ("is_favorite", String(trip.isFavorite))
         ]
         
-        /// 3. helper to pack standard text fields
         for (name, value) in fields {
             body.append(Data("--\(boundary)\r\n".utf8))
             body.append(Data("Content-Disposition: form-data;".utf8))
@@ -42,7 +56,6 @@ actor TripService: TripServiceProtocol {
             body.append(Data("\(value)\r\n".utf8))
         }
         
-        /// 7. pack the image bytes
         if let imageData = trip.coverImageData {
             body.append(Data("--\(boundary)\r\n".utf8))
             body.append(Data("Content-Disposition: form-data;".utf8))
@@ -53,30 +66,6 @@ actor TripService: TripServiceProtocol {
         }
         
         body.append(Data("--\(boundary)--\r\n".utf8))
-        
-        return body
-    }
-    
-    func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
-        guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
-            throw APIError.invalidURL
-        }
-        
-        var request = URLRequest(url: urlEndpoint)
-        request.httpMethod = "POST"
-        
-        /// 1. creates a umique seperator for the data being passed so the backend can split it up
-        let boundary = "Boundary-\(UUID().uuidString)"
-        
-        /// 2. tells FastAPI this is a multipart form, and give it a boundary key
-        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        
-        /// 3. check if the user is authorized to access the endpoint with the token
-        if let token = keychainService.getToken() {
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        }
-        
-        request.httpBody = buildTripBody(trip: trip, boundary: boundary)
         
         let response = try await networkService.sendRequest(
             request: request,

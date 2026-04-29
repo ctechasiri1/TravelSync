@@ -38,7 +38,7 @@ class TripsFeedViewModel {
     
     func getTrip() async -> Void {
         do {
-            let trips = try await tripService.getTrip()
+            let trips = try await tripService.getTrips()
             await MainActor.run {
                 self.trips = trips.compactMap {
                     Trip(
@@ -46,6 +46,7 @@ class TripsFeedViewModel {
                         tripName: $0.tripName,
                         location: $0.location,
                         budget: $0.budget,
+                        totalSpending: $0.totalSpending,
                         isFavorite: $0.isFavorite,
                         startDate: $0.startDate,
                         endDate: $0.endDate,

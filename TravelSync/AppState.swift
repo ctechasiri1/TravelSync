@@ -44,8 +44,12 @@ class AppState {
         UserSessionViewModel(userService: services.userService)
     }
     
-    func makeBudgetViewModel() -> BudgetViewModel {
-        BudgetViewModel()
+    func makeBudgetViewModel(tripId: Int) -> BudgetViewModel {
+        BudgetViewModel(tripId: tripId, expenseService: services.expenseService)
+    }
+    
+    func makeAddExpenseViewModel() -> AddExpenseViewModel {
+        AddExpenseViewModel(expenseService: services.expenseService)
     }
     
     func makeCalendarViewModel() -> CalendarViewModel {
