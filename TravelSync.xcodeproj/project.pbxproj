@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		519D64F62FA7D05B00772C70 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 519D64F52FA7D05B00772C70 /* Lottie */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		510725772F0374CC003E21C0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				519D64F62FA7D05B00772C70 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +142,7 @@
 			);
 			name = TravelSync;
 			packageProductDependencies = (
+				519D64F52FA7D05B00772C70 /* Lottie */,
 			);
 			productName = TravelSync;
 			productReference = 510725692F0374CB003E21C0 /* TravelSync.app */;
@@ -220,6 +226,9 @@
 			);
 			mainGroup = 510725602F0374CB003E21C0;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5107256A2F0374CB003E21C0 /* Products */;
 			projectDirPath = "";
@@ -597,6 +606,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		519D64F52FA7D05B00772C70 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 510725612F0374CB003E21C0 /* Project object */;
 }

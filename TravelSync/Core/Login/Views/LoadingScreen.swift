@@ -27,7 +27,7 @@ struct LoadingScreen: View {
                         .font(.system(.largeTitle, weight: .bold))
                             
                     Text("Plan. Track. Explore.")
-                        .font(.system(.headline, weight: .semibold))
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(.secondaryText.opacity(0.6))
                 }
                 .padding(.bottom, 40)
@@ -38,7 +38,7 @@ struct LoadingScreen: View {
                     .padding(.horizontal, 110)
                 
                 Text("LOADING YOUR JOURNEY...")
-                    .font(.system(.caption2))
+                    .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(.secondaryText.opacity(0.6))
             }
         }

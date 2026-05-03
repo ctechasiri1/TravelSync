@@ -23,7 +23,7 @@ struct AddExpenseScreen: View {
         ScrollView {
             VStack {
                 SheetToolbar(title: "Add Expense", enableSave: viewModel.enableSave) {
-//                    viewModel.createExpense(tripId: trip.id)
+
                 }
                 
                 VStack(alignment: .center) {
@@ -79,7 +79,7 @@ struct AddExpenseScreen: View {
                     }
                     .padding(.vertical)
                     
-                    AuthButton(text: "Confirm Transaction", foregroundColor: .white, backgroundColor: .accentPrimary) {
+                    MultipurposeButton(text: "Confirm Transaction", foregroundColor: .white, backgroundColor: .accentPrimary) {
                     }
                     .padding(.vertical)
                 }

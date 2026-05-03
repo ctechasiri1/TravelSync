@@ -61,7 +61,7 @@ struct ProfileScreen: View {
                         PreferencesOptions(viewModel: viewModel)
                             .padding(.vertical, 25)
                         
-                        AuthButton(
+                        MultipurposeButton(
                             text: "Log Out",
                             foregroundColor: .accentPrimary,
                             backgroundColor: .white) {

@@ -10,4 +10,5 @@ import Foundation
 protocol TripServiceProtocol {
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse
     func getTrips() async throws -> [TripPrivateResponse]
+    func deleteTrip(tripId: Int) async throws -> EmptyResponse
 }

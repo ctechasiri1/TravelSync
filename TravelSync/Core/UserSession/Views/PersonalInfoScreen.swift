@@ -63,7 +63,7 @@ struct PersonalInfoScreen: View {
             }
             .padding()
             
-            AuthButton(
+            MultipurposeButton(
                 text: "Save Changes",
                 foregroundColor: .white,
                 backgroundColor: .accentPrimary

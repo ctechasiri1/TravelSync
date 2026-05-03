@@ -88,9 +88,7 @@ struct TripsFeedScreen: View {
              await viewModel.getTrip()
          }
         .task {
-            if viewModel.trips.isEmpty {
-                await viewModel.getTrip()
-            }
+            await viewModel.getTrip()
         }
         .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
             PlanNewTripScreen(viewModel: appState.makePlanNewTripViewModel())
@@ -117,6 +115,7 @@ private struct UpcomingTrips: View {
                 Text("Future Plans")
                     .sectionTitleStyle()
                     .padding(.top)
+                    .padding(.leading, 20)
             }
             
             ForEach(upcomingTrips.dropFirst()) { trip in
@@ -194,6 +193,7 @@ private struct PastTrips: View {
 }
 
 private struct TripCard: View {
+    @Environment(AppState.self) private var appState
     let trip: Trip
     let height: CGFloat
     let upcomingTrip: Bool
@@ -205,7 +205,7 @@ private struct TripCard: View {
                 image
                     .resizable()
                     .frame(height: height)
-                    .scaledToFill()
+                    .scaledToFit()
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
                 ZStack {
@@ -269,7 +269,7 @@ private struct TripCard: View {
                                 Spacer()
                                 
                                 DetailsButton {
-                                    TripDetailScreen(trip: trip, upcomingTrip: upcomingTrip)
+                                    TripDetailScreen(viewModel: appState.makeTripDetailViewModel(), trip: trip, upcomingTrip: upcomingTrip)
                                 }
                             }
                             .padding(.horizontal)

@@ -1,5 +1,5 @@
 //
-//  LogOutButton.swift
+//  MultipurposeButton.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 1/26/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AuthButton: View {
+struct MultipurposeButton: View {
     @State private var isPressed: Bool = false
     let text: String
     let foregroundColor: Color
@@ -37,5 +37,5 @@ struct AuthButton: View {
 }
 
 #Preview {
-    AuthButton(text: "Login", foregroundColor: .accentPrimary, backgroundColor: .white, action: { })
+    MultipurposeButton(text: "Login", foregroundColor: .accentPrimary, backgroundColor: .white, action: { })
 }

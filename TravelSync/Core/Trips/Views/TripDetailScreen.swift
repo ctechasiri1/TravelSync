@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct TripDetailScreen: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
+    @State private var viewModel: TripDetailViewModel
     
     let trip: Trip
     let upcomingTrip: Bool
+    
+    init(viewModel: TripDetailViewModel, trip: Trip, upcomingTrip: Bool) {
+        _viewModel = State(wrappedValue: viewModel)
+        self.trip = trip
+        self.upcomingTrip = upcomingTrip
+    }
     
     var body: some View {
         ScrollView {
@@ -43,15 +51,15 @@ struct TripDetailScreen: View {
                         title: "STATUS",
                         value: "\(trip.dateDifference)",
                         iconName: "gauge.with.needle.fill",
-                        iconColor: .orange,
-                        textColor: .orange
+                        iconColor: .accentPrimary,
+                        textColor: .black
                     )
                         
                     TripInformationCard(
                         title: trip.city,
                         value: "18 ℃",
                         iconName: "sun.max.trianglebadge.exclamationmark.fill",
-                        iconColor: .accentBlue,
+                        iconColor: .accentPrimary,
                         textColor: .black
                     )
                 }
@@ -99,7 +107,25 @@ struct TripDetailScreen: View {
         }
         .navigationTitle("\(trip.tripName)")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar{
+            ToolbarItem(placement: .topBarTrailing) {
+                CustomDeleteButton {
+                    viewModel.enableDeleteAlert = true
+                }
+                .imageScale(.medium)
+            }
+            .sharedBackgroundVisibility(.hidden)
+        }
         .toolbar(.hidden, for: .tabBar)
+        .confirmDelete(showDeleteConfirmation:$viewModel.enableDeleteAlert) {
+            Task {
+                await viewModel.deleteTrip(tripId: trip.id)
+                await MainActor.run {
+                    dismiss()
+                }
+            }
+        }
+        .loadingModifier(isLoading: viewModel.isNetworkActive)
     }
 }
 
@@ -200,7 +226,7 @@ private struct TripBudgetCard<T: View>: View {
                         Text(title)
                             .font(.system(size: 17, weight: .semibold))
                             
-                        Text("Current Spend: $\(totalSpend)")
+                        Text("Current Spent: $\(totalSpend)")
                             .font(.system(size: 12))
                             .foregroundStyle(.secondaryText)
                     }
@@ -234,6 +260,7 @@ private struct TripBudgetCard<T: View>: View {
 
 #Preview {
     TripDetailScreen(
+        viewModel: AppState().makeTripDetailViewModel(),
         trip: Trip.example,
         upcomingTrip: true)
         .environment(AppState())

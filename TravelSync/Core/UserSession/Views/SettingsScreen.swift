@@ -30,7 +30,7 @@ struct SettingsScreen: View {
                     
                     SupportOptions()
                     
-                    AuthButton(
+                    MultipurposeButton(
                         text: "Log Out",
                         foregroundColor: .accentPrimary,
                         backgroundColor: .white) {

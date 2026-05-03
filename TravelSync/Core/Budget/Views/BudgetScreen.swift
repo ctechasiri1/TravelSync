@@ -54,6 +54,7 @@ struct BudgetScreen: View {
                 AddButton {
                     viewModel.showAddExpense = true
                 }
+                .imageScale(.medium)
             }
             .sharedBackgroundVisibility(.hidden)
         }

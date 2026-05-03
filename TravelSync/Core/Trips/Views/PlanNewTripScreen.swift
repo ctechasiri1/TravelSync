@@ -19,11 +19,7 @@ struct PlanNewTripScreen: View {
         ScrollView {
             SheetToolbar(title: "Add a Trip", enableSave: viewModel.canCreateTrip) {
                 Task {
-                    do {
-                        try await viewModel.addTrip()
-                    } catch {
-                        
-                    }
+                    await viewModel.addTrip()
                 }
             }
             
@@ -104,7 +100,7 @@ struct PlanNewTripScreen: View {
                 
                 CreateTripButton() {
                     Task {
-                        try await viewModel.addTrip()
+                        await viewModel.addTrip()
                     }
                 }
                 .padding(.vertical)
@@ -135,12 +131,7 @@ private struct CreateTripButton: View {
             .padding()
             .foregroundStyle(Color.white)
             .frame(maxWidth: .infinity)
-            .background(
-                LinearGradient(
-                    colors: [Color.orange, Color.accentPrimary],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing)
-            )
+            .background(.accentPrimary)
             .clipShape(RoundedRectangle(cornerRadius: 20))
         }
         .frame(maxWidth: .infinity)

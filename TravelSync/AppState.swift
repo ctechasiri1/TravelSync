@@ -36,6 +36,10 @@ class AppState {
         TripsFeedViewModel(tripService: services.tripService)
     }
     
+    func makeTripDetailViewModel() -> TripDetailViewModel {
+        TripDetailViewModel(tripService: services.tripService)
+    }
+    
     func makePlanNewTripViewModel() -> PlanNewTripViewModel {
         PlanNewTripViewModel(tripService: services.tripService)
     }

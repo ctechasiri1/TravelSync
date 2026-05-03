@@ -5,6 +5,7 @@
 //  Created by Chiraphat Techasiri on 3/25/26.
 //
 
+import Lottie
 import SwiftUI
 
 struct LoadingModifier: ViewModifier {
@@ -18,17 +19,14 @@ struct LoadingModifier: ViewModifier {
             
             if isLoading {
                 ZStack {
-                    Color.black.opacity(0.4)
+                    Color.gray.opacity(0.1)
                         .ignoresSafeArea()
                     
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                        .scaleEffect(2.0)
-                        .padding(40)
-                        .background(Color.secondary.colorInvert())
-                        .foregroundStyle(Color.primary)
-                        .cornerRadius(16)
-                        .shadow(radius: 10)
+                    LottieView(animation: .named("travelsync-loading"))
+                        .playing(loopMode: .loop)
+                        .resizable()
+                        .foregroundStyle(.accentPrimary)
+                        .frame(width: 150, height: 150)
                 }
                 .transition(.opacity)
             }
@@ -37,6 +35,8 @@ struct LoadingModifier: ViewModifier {
     }
 }
 
-//#Preview {
-//    LoadingModifier(isLoading: true)
-//}
+extension View {
+    func loadingModifier(isLoading: Bool) -> some View {
+        modifier(LoadingModifier(isLoading: isLoading))
+    }
+}

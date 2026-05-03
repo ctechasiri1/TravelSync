@@ -61,7 +61,7 @@ struct LoginScreen: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     
-                    AuthButton(
+                    MultipurposeButton(
                         text: "Login",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {

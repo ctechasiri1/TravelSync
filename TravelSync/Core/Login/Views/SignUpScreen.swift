@@ -66,7 +66,7 @@ struct SignUpScreen: View {
                         )
                     }
                         
-                    AuthButton(
+                    MultipurposeButton(
                         text: "Sign Up",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
@@ -118,6 +118,7 @@ struct SignUpScreen: View {
                 appState.navigate(to: .login)
             }
         }
+        .loadingModifier(isLoading: viewModel.isNetworkActive)
     }
 }
 

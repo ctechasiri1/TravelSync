@@ -76,6 +76,8 @@ actor TripService: TripServiceProtocol {
     }
     
     func getTrips() async throws -> [TripPrivateResponse] {
+        defer { activeTask = nil }
+        
         if let existing = activeTask {
             return try await existing.value
         }
@@ -97,8 +99,25 @@ actor TripService: TripServiceProtocol {
         
         activeTask = task
         
-        defer { activeTask = nil }
-        
         return try await task.value
+    }
+    
+    func deleteTrip(tripId: Int) async throws -> EmptyResponse {
+        guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)") else {
+            throw APIError.invalidURL
+        }
+            
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+            
+        if let token = keychainService.getToken() {
+            request
+                .setValue(
+                    "Bearer \(token)",
+                    forHTTPHeaderField: "Authorization"
+                )
+        }
+            
+        return try await networkService.sendRequest(request: request, responseType: EmptyResponse.self)
     }
 }

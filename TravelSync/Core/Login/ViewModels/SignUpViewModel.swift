@@ -35,16 +35,13 @@ class SignUpViewModel {
         
         do {
             let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
-            let _ = try await userAuthService.signUp(requestBody: request)
+            let _ = try await (Task.sleep(nanoseconds: 500_000_000), userAuthService.signUp(requestBody: request))
             
             didSignUpSucceed = true
         } catch let error as APIError {
-//            errorMessage = "Failed to create account. That email or username might be taken."
-//            showErrorAlert = true
             print("There was a network error: \(error).")
         } catch {
             print("There was an unexpected error.")
         }
-//        isNetworkActive = false
     }
 }
