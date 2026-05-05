@@ -44,7 +44,7 @@ struct PrivacyPolicyScreen: View {
                     
                     HStack {
                         Image(systemName: "envelope.fill")
-                            .foregroundStyle(Color.accentBlue)
+                            .foregroundStyle(Color.accentPrimary)
                         
                         Text("privacy@travelsync.com")
                     }

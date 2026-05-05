@@ -8,11 +8,7 @@
 import Foundation
 
 struct TripUpdateRequest {
-    let tripName: String?
-    let location: String?
-    let budget: Int?
+    let id: Int
     let isFavorite: Bool?
-    let startDate: Date?
-    let endDate: Date?
     let coverImageData: Data?
 }

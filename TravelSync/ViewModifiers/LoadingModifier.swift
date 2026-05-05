@@ -36,7 +36,7 @@ struct LoadingModifier: ViewModifier {
 }
 
 extension View {
-    func loadingModifier(isLoading: Bool) -> some View {
+    func showLoading(isLoading: Bool) -> some View {
         modifier(LoadingModifier(isLoading: isLoading))
     }
 }

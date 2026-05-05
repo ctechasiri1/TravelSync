@@ -20,6 +20,7 @@ class PlanNewTripViewModel {
     var coverUIImage: UIImage? = nil
     
     var pushNotificationsIsOn: Bool = true
+    var isNetworkActive: Bool = false
     
     private let tripService: TripServiceProtocol
     
@@ -27,10 +28,6 @@ class PlanNewTripViewModel {
         self.tripService = tripService
     }
     
-    var convertImageToData: Data? {
-        return coverUIImage?.jpegData(compressionQuality: 0.8)
-    }
-
     var canCreateTrip: Bool {
         let hasLocation = !locationName.trimmingCharacters(in: .whitespaces).isEmpty
         let hasDates = startDate != nil && endDate != nil
@@ -42,6 +39,10 @@ class PlanNewTripViewModel {
     }
 
     func addTrip() async {
+        defer { isNetworkActive = false }
+        
+        isNetworkActive = true
+        
         do {
             guard let start = startDate, let end = endDate else {
                 throw TripError.missingDates
@@ -59,10 +60,10 @@ class PlanNewTripViewModel {
                 isFavorite: false,
                 startDate: start,
                 endDate: end,
-                coverImageData: convertImageToData
+                coverImageData: coverUIImage?.convertImageToData
             )
             
-            let _ = try await tripService.createTrip(trip: newTrip)
+            let _ = try await (Task.sleep(nanoseconds: 500_000_000), tripService.createTrip(trip: newTrip))
             
             resetForm()
         } catch TripError.missingDates {

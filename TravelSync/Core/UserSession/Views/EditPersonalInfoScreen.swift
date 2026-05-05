@@ -1,5 +1,5 @@
 //
-//  PersonalInfoScreen.swift
+//  EditPersonalInfoScreen.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 2/24/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PersonalInfoScreen: View {
+struct EditPersonalInfoScreen: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: UserSessionViewModel
     
@@ -25,9 +25,7 @@ struct PersonalInfoScreen: View {
                     imageURL: viewModel.currentUser.profileImage,
                     selectedImage: viewModel.selectedProfileImage,
                     canEditPhoto: true
-                ) { pickedImage in
-
-                }
+                )
                 .frame(width: 100, height: 100)
                 
                 Text("PROFILE PHOTO")
@@ -112,6 +110,6 @@ private struct EditCard: View {
 }
 
 #Preview {
-    PersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

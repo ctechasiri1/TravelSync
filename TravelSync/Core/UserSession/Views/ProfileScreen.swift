@@ -82,7 +82,7 @@ struct ProfileScreen: View {
                 SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
             })
             .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
-                PersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
+                EditPersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
             })
         }
     }

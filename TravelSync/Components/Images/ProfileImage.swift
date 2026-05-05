@@ -62,12 +62,7 @@ struct ProfileImage: View {
                             .frame(width: 30, height: 30)
                             .background(
                                 Circle()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [Color.orange, Color.accentPrimary],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        ))
+                                    .fill(.accentPrimary)
                                     .strokeBorder(.white, lineWidth: 2)
                             )
                     }

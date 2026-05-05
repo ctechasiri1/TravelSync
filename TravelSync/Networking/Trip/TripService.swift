@@ -52,7 +52,7 @@ actor TripService: TripServiceProtocol {
         for (name, value) in fields {
             body.append(Data("--\(boundary)\r\n".utf8))
             body.append(Data("Content-Disposition: form-data;".utf8))
-            body.append(Data("name=\"\(name)\"\r\n\r\n".utf8))
+            body.append(Data(" name=\"\(name)\"\r\n\r\n".utf8))
             body.append(Data("\(value)\r\n".utf8))
         }
         
@@ -66,6 +66,8 @@ actor TripService: TripServiceProtocol {
         }
         
         body.append(Data("--\(boundary)--\r\n".utf8))
+        
+        request.httpBody = body
         
         let response = try await networkService.sendRequest(
             request: request,
@@ -102,6 +104,45 @@ actor TripService: TripServiceProtocol {
         return try await task.value
     }
     
+    func updateTrip(trip: TripUpdateRequest) async throws -> EmptyResponse {
+        guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(trip.id)") else {
+            throw APIError.invalidURL
+        }
+        
+        let boundary = "Boundary-\(UUID().uuidString)"
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "PATCH"
+        
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        if let token = keychainService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        var body = Data()
+        
+        if let updateIsFavorite = trip.isFavorite {
+            body.append(Data("--\(boundary)\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data; name=\"is_favorite\"\r\n\r\n".utf8))
+            body.append(Data("\(updateIsFavorite)\r\n".utf8))
+        }
+        
+        if let updateCoverImage = trip.coverImageData {
+            body.append(Data("--\(boundary)\r\n".utf8))
+            body.append(Data("Content-Disposition: form-data; name=\"cover_image_file\"; filename=\"cover.jpg\"\r\n".utf8))
+            body.append(Data("Content-Type: image/jpeg\r\n\r\n".utf8))
+            body.append(updateCoverImage)
+            body.append(Data("\r\n".utf8))
+        }
+        
+        body.append(Data("--\(boundary)--\r\n".utf8))
+        
+        request.httpBody = body
+                
+        return try await networkService.sendRequest(request: request, responseType: EmptyResponse.self)
+    }
+    
     func deleteTrip(tripId: Int) async throws -> EmptyResponse {
         guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)") else {
             throw APIError.invalidURL
@@ -111,11 +152,7 @@ actor TripService: TripServiceProtocol {
         request.httpMethod = "DELETE"
             
         if let token = keychainService.getToken() {
-            request
-                .setValue(
-                    "Bearer \(token)",
-                    forHTTPHeaderField: "Authorization"
-                )
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
             
         return try await networkService.sendRequest(request: request, responseType: EmptyResponse.self)

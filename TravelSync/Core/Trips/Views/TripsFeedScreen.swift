@@ -67,15 +67,11 @@ struct TripsFeedScreen: View {
                     } else {
                         Group {
                             if viewModel.isUpcomingTrip {
-                                UpcomingTrips(
-                                    upcomingTrips: viewModel.upcomingTrips
-                                ) {
+                                UpcomingTrips(upcomingTrips: viewModel.upcomingTrips, viewModel: viewModel) {
                                     viewModel.showPlanNewTrip = true
                                 }
                             } else {
-                                PastTrips(
-                                    pastTrips: viewModel.pastTrips
-                                )
+                                PastTrips(pastTrips: viewModel.pastTrips, viewModel: viewModel)
                             }
                         }
                     }
@@ -90,6 +86,11 @@ struct TripsFeedScreen: View {
         .task {
             await viewModel.getTrip()
         }
+        .onChange(of: viewModel.showPlanNewTrip, { oldValue, newValue in
+            Task {
+                await viewModel.getTrip()
+            }
+        })
         .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
             PlanNewTripScreen(viewModel: appState.makePlanNewTripViewModel())
         })
@@ -98,7 +99,8 @@ struct TripsFeedScreen: View {
 
 private struct UpcomingTrips: View {
     let upcomingTrips: [Trip]
-    let action: () -> (Void)
+    let viewModel: TripsFeedViewModel
+    let addAction: () -> Void
     
     var body: some View {
         if !upcomingTrips.isEmpty {
@@ -107,7 +109,7 @@ private struct UpcomingTrips: View {
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
-                TripCard(trip: firstUpcomingTrip, height: 400, upcomingTrip: true)
+                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 380, upcomingTrip: true, firstUpcomingTrip: true)
                     .padding(.horizontal)
             }
             
@@ -119,7 +121,7 @@ private struct UpcomingTrips: View {
             }
             
             ForEach(upcomingTrips.dropFirst()) { trip in
-                TripCard(trip: trip, height: 250, upcomingTrip: true)
+                TripCard(viewModel: viewModel, trip: trip, height: 250, upcomingTrip: true)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 25)
             }
@@ -144,7 +146,7 @@ private struct UpcomingTrips: View {
                 .padding()
                 
                 AddTripButton {
-                    action()
+                    addAction()
                 }
                 .padding()
             }
@@ -155,6 +157,7 @@ private struct UpcomingTrips: View {
 
 private struct PastTrips: View {
     let pastTrips: [Trip]
+    let viewModel: TripsFeedViewModel
     
     var body: some View {
         if !pastTrips.isEmpty {
@@ -163,7 +166,7 @@ private struct PastTrips: View {
                 .padding(.leading, 20)
             
             ForEach(pastTrips) { trip in
-                TripCard(trip: trip, height: 300, upcomingTrip: false)
+                TripCard(viewModel: viewModel, trip: trip, height: 300, upcomingTrip: false)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 25)
             }
@@ -194,18 +197,20 @@ private struct PastTrips: View {
 
 private struct TripCard: View {
     @Environment(AppState.self) private var appState
+    @State private var isFavorite: Bool = false
+    let viewModel: TripsFeedViewModel
     let trip: Trip
     let height: CGFloat
     let upcomingTrip: Bool
-    let isFavorite: Bool = false
-    
+    var firstUpcomingTrip: Bool = false
+
     var body: some View {
         VStack {
             AsyncImage(url: trip.imageURLString) { image in
                 image
                     .resizable()
                     .frame(height: height)
-                    .scaledToFit()
+                    .scaledToFill()
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
                 ZStack {
@@ -234,12 +239,23 @@ private struct TripCard: View {
                         
                         Spacer()
                         
-                        CircleIcon(
-                            iconName: isFavorite ? "heart.fill" : "heart",
-                            iconColor: .pink,
-                            width: 10,
-                            height: 10
-                        )
+                        Button {
+                            isFavorite.toggle()
+                            Task {
+                                await viewModel.updateTrip(
+                                    tripId: trip.id,
+                                    isFavorite: isFavorite,
+                                    coverImage: nil
+                                )
+                            }
+                        } label: {
+                            CircleIcon(
+                                iconName: isFavorite ? "heart.fill" : "heart",
+                                iconColor: .pink,
+                                width: 10,
+                                height: 10
+                            )
+                        }
                         .padding(.horizontal)
                     }
                     
@@ -249,10 +265,10 @@ private struct TripCard: View {
                         VStack(alignment: .leading) {
                             VStack(alignment: .leading) {
                                 Text("\(trip.city),")
-                                    .font(.system(.title, weight: .bold))
+                                    .font(.system(size: firstUpcomingTrip ? 28 : 26, weight: .bold))
                                 
                                 Text("\(trip.country)")
-                                    .font(.system(.title, weight: .bold))
+                                    .font(.system(size: firstUpcomingTrip ? 28 : 26, weight: .bold))
                             }
                             .foregroundStyle(.white)
                             .padding(10)
@@ -260,10 +276,10 @@ private struct TripCard: View {
                             HStack {
                                 Group {
                                     Image(systemName: "calendar")
-                                        .font(.system(.subheadline))
                                     
                                     Text(trip.dateRangeString)
                                 }
+                                .font(.system(size: firstUpcomingTrip ? 15 : 13, weight: .semibold))
                                 .foregroundStyle(.white)
                                 
                                 Spacer()
@@ -278,6 +294,12 @@ private struct TripCard: View {
                 }
                 .padding()
             }
+        }
+        .onAppear {
+            isFavorite = trip.isFavorite
+        }
+        .onChange(of: trip.isFavorite) { oldValue, newValue in
+            isFavorite = newValue
         }
     }
 }
@@ -301,7 +323,6 @@ private struct DetailsButton<T: View>: View {
         .background(.white)
         .clipShape(Capsule())
         .foregroundColor(.primaryText)
-        
     }
 }
 

@@ -118,7 +118,7 @@ struct SignUpScreen: View {
                 appState.navigate(to: .login)
             }
         }
-        .loadingModifier(isLoading: viewModel.isNetworkActive)
+        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

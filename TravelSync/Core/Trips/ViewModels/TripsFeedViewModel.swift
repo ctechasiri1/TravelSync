@@ -17,6 +17,7 @@ class TripsFeedViewModel {
     
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false
+    var isFavorite: Bool = false
     
     private let tripService: TripServiceProtocol
     
@@ -25,7 +26,8 @@ class TripsFeedViewModel {
     }
     
     var upcomingTrips: [Trip] {
-        return trips.filter { $0.endDate > Date.now }
+        let sortedTrip = trips.sorted { $0.startDate < $1.startDate }
+        return sortedTrip.filter { $0.endDate > Date.now }
     }
     
     var pastTrips: [Trip] {
@@ -55,6 +57,22 @@ class TripsFeedViewModel {
                     )
                 }
             }
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
+        } catch {
+            print("There was an unexpected error.")
+        }
+    }
+    
+    func updateTrip(tripId: Int, isFavorite: Bool?, coverImage: UIImage?) async {
+        do {
+            let updatedTrip = TripUpdateRequest(
+                id: tripId,
+                isFavorite: isFavorite,
+                coverImageData: coverImage?.convertImageToData
+            )
+            
+            let _ = try await tripService.updateTrip(trip: updatedTrip)
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

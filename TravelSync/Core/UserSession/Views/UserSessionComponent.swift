@@ -20,12 +20,6 @@ struct PreferencesOptions: View {
             
             ToggleOptionRow(title: "Dark Mode", iconName: "moon.fill", isOn: $viewModel.darkModeIsOn)
                 .padding(.top, 10)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            NavigationOptionRow(title: "Language", iconName: "globe", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
-                .padding(.top, 10)
                 .padding(.bottom, 20)
         }
     }

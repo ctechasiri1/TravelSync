@@ -15,6 +15,7 @@ struct CustomDeleteButton: View {
         } label: {
             Image(systemName: "trash.fill")
                 .foregroundStyle(.accentPrimary)
+                .imageScale(.large)
         }
     }
 }

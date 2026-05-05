@@ -125,7 +125,7 @@ struct TripDetailScreen: View {
                 }
             }
         }
-        .loadingModifier(isLoading: viewModel.isNetworkActive)
+        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

@@ -88,19 +88,13 @@ private struct AccountOptions: View {
     let viewModel: UserSessionViewModel
     var body: some View {
         OptionsCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: PersonalInfoScreen(user: user, viewModel: viewModel), useCircleIcon: false)
+            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: EditPersonalInfoScreen(user: user, viewModel: viewModel), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
             Divider()
             
             NavigationOptionRow(title: "Security & Password", iconName: "lock.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            NavigationOptionRow(title: "Payments & Payouts", iconName: "creditcard.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
                 .padding(.top, 10)
                 .padding(.bottom, 20)
         }

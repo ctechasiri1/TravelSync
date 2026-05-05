@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct PlanNewTripScreen: View {
+    @Environment(\.dismiss) var dismiss
     @Environment(AppState.self) private var appState
     @State private var viewModel: PlanNewTripViewModel
     
@@ -101,6 +102,9 @@ struct PlanNewTripScreen: View {
                 CreateTripButton() {
                     Task {
                         await viewModel.addTrip()
+                        await MainActor.run {
+                            dismiss()
+                        }
                     }
                 }
                 .padding(.vertical)
@@ -112,17 +116,16 @@ struct PlanNewTripScreen: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .scrollIndicators(.hidden)
+        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 
 private struct CreateTripButton: View {
-    @Environment(\.dismiss) var dismiss
     let action: () -> Void
     
     var body: some View {
         Button {
             action()
-            dismiss()
         } label: {
             HStack {
                 Image(systemName: "plus.circle.fill")

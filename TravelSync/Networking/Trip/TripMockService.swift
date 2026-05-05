@@ -60,6 +60,10 @@ struct TripMockService: TripServiceProtocol {
         ]
     }
     
+    func updateTrip(trip: TripUpdateRequest) async throws -> EmptyResponse {
+        return EmptyResponse()
+    }
+    
     func deleteTrip(tripId: Int) async throws -> EmptyResponse {
         return EmptyResponse()
     }
