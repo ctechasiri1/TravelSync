@@ -7,4 +7,4 @@
 
 import Foundation
 
-struct EmptyResponse: nonisolated Codable { }
+struct EmptyResponse: nonisolated Codable, Sendable { }

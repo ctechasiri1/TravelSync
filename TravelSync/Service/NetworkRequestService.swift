@@ -23,7 +23,7 @@ final class NetworkRequestService: Sendable {
             
             /// 3. decode it to the DTO (UserPrivateResponse)
             if httpResponse.statusCode == 204 {
-                if let empty = EmptyResponse() as? Output {
+                if let empty = await EmptyResponse() as? Output {
                     return empty
                 }
             }
