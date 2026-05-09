@@ -109,8 +109,8 @@ private struct UpcomingTrips: View {
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
-                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 380, upcomingTrip: true, firstUpcomingTrip: true)
-                    .padding(.horizontal)
+                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 400, upcomingTrip: true, firstUpcomingTrip: true)
+                    .padding(.horizontal, 25)
             }
             
             if upcomingTrips.count > 1 {
@@ -210,7 +210,8 @@ private struct TripCard: View {
                 image
                     .resizable()
                     .frame(height: height)
-                    .scaledToFill()
+                    .scaledToFit()
+                    .aspectRatio(contentMode: .fit)
                     .clipShape(RoundedRectangle(cornerRadius: 15))
             } placeholder: {
                 ZStack {

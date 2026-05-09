@@ -35,6 +35,7 @@ struct CustomDatePicker: View {
                         Color.secondaryText.opacity(0.2),
                         style: StrokeStyle(lineWidth: 1)
                     )
+
             )
             .overlay {
                 DatePicker(
@@ -47,11 +48,14 @@ struct CustomDatePicker: View {
                 )
                 .labelsHidden()
                 .colorMultiply(.clear)
+                .compositingGroup()
+                .scaleEffect(x: 10, y: 1.5)
             }
         }
         .padding(.vertical)
     }
 }
+
 #Preview {
     @Previewable @State var date: Date? = .now
     

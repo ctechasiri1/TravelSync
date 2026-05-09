@@ -112,7 +112,7 @@ struct TripDetailScreen: View {
                 CustomDeleteButton {
                     viewModel.enableDeleteAlert = true
                 }
-                .imageScale(.medium)
+                .imageScale(.small)
             }
             .sharedBackgroundVisibility(.hidden)
         }

@@ -44,6 +44,7 @@ struct LoginScreen: View {
                             iconColor: .gray
                         )
                         .padding(.top)
+                        .textInputAutocapitalization(.never)
                         
                         InputTextField(
                             text: $viewModel.password,
@@ -54,6 +55,7 @@ struct LoginScreen: View {
                             fieldContent: "••••••••••",
                             iconColor: .gray
                         )
+                        .textInputAutocapitalization(.never)
                     }
                             
                     TextNavigationButton(text: "Forgot Password?") {

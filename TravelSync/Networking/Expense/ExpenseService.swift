@@ -22,13 +22,17 @@ actor ExpenseService: ExpenseServiceProtocol {
         let boundary = "Boundary-\(UUID().uuidString)"
         let isoForamtter = ISO8601DateFormatter()
         
-        guard let url = URL(string: "/api/trips/\(expense.tripId)/expense") else {
+        guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(expense.tripId)/expense") else {
             throw APIError.invalidURL
         }
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        
+        if let token = keychainService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
         
         var body = Data()
         
@@ -70,7 +74,7 @@ actor ExpenseService: ExpenseServiceProtocol {
         }
         
         let task = Task<[ExpensePrivateResponse], Error> {
-            guard let url = URL(string: "/api/trips/\(tripId)/expense") else {
+            guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)/expenses") else {
                 throw APIError.invalidURL
             }
             

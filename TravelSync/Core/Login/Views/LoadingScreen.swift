@@ -6,6 +6,7 @@
 //
 
 import Combine
+import Lottie
 import SwiftUI
 
 struct LoadingScreen: View {

@@ -10,19 +10,26 @@ import Foundation
 struct ExpensePrivateResponse: nonisolated Codable, Sendable {
     let title: String
     let amount: Int
-    let transactionDate: Date
+    let transactionDateString: String
     let categoryId: Int
     let id: Int
     let tripId: Int
-    let receiptImageUrl: String
+    let receiptImageUrl: String?
     
     enum CodingKeys: String, CodingKey {
         case title
         case amount
-        case transactionDate = "transaction_date"
+        case transactionDateString = "transaction_date"
         case categoryId = "category_id"
         case id
         case tripId = "trip_id"
         case receiptImageUrl = "receipt_image_url"
     }
 }
+
+extension ExpensePrivateResponse {
+    var transactionDate: Date {
+        return transactionDateString.stringToDate
+    }
+}
+

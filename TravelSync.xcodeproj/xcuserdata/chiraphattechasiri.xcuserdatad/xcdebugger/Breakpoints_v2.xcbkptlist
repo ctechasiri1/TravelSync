@@ -23,64 +23,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "419F0CDC-B878-423F-9FD0-9AA39C716CF5"
-            shouldBeEnabled = "No"
+            uuid = "1B565E4F-821F-49F3-B4BB-00528F4799DE"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TravelSync/Components/Buttons/CustomSegmentButton.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "11"
-            endingLineNumber = "11"
-            landmarkName = "CustomSegmentButton"
-            landmarkType = "14">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "BB8AEFAA-E552-4319-A752-114EFE4FE207"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TravelSync/Core/Login/Views/SignUpScreen.swift"
+            filePath = "TravelSync/Core/Budget/ViewModels/BudgetViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
             endingLineNumber = "51"
-            landmarkName = "body"
-            landmarkType = "24">
+            landmarkName = "getExpenses()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "D8B3B23D-1A34-4164-BB3E-600170C3B255"
+            uuid = "7D353EC6-5B6E-43A6-B454-7314DBF1E29B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TravelSync/Core/Trips/Views/TripsFeedScreen.swift"
+            filePath = "TravelSync/Core/Budget/ViewModels/BudgetViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "245"
-            endingLineNumber = "245"
-            landmarkName = "body"
-            landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "A376F036-9068-41CC-A7D6-977F67E28B71"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TravelSync/Core/Trips/Views/TripsFeedScreen.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "243"
-            endingLineNumber = "243"
-            landmarkName = "body"
+            startingLineNumber = "27"
+            endingLineNumber = "27"
+            landmarkName = "categorySums"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>

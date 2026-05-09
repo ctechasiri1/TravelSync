@@ -10,7 +10,7 @@ import Foundation
 
 @Observable
 class BudgetViewModel {
-    var expenses: [Expense] = [Expense.example]
+    var expenses: [Expense] = []
     var showAddExpense: Bool = false
     
     private let expenseService: ExpenseServiceProtocol
@@ -19,6 +19,21 @@ class BudgetViewModel {
     init(tripId: Int, expenseService: ExpenseServiceProtocol) {
         self.tripId = tripId
         self.expenseService = expenseService
+    }
+    
+    var categorySums: [String: Int] {
+        var expenseDict: [String: Int] = [:]
+        for expense in expenses {
+            expenseDict[expense.type.title, default: 0] += expense.amount
+        }
+        return expenseDict
+    }
+    
+    func getCategorySum(categoryType: String) -> Int {
+        guard let categorySum = categorySums[categoryType] else {
+            return 0
+        }
+        return categorySum
     }
 
     func getExpenses() async -> Void {
@@ -31,7 +46,7 @@ class BudgetViewModel {
                         title: expenseDTO.title,
                         amount: expenseDTO.amount,
                         transactionDate: expenseDTO.transactionDate,
-                        type: ExpenseOption(fromRawValue: expenseDTO.id)
+                        type: ExpenseOption(fromRawValue: expenseDTO.categoryId)
                     )
                     self.expenses.append(expenseDomain)
                 }

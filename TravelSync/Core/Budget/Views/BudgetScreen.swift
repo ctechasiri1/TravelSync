@@ -31,7 +31,9 @@ struct BudgetScreen: View {
                 ExpenseBreakdownOption(
                     title: expenseType.title,
                     iconName: expenseType.imageName,
-                    iconColor: expenseType.color
+                    iconColor: expenseType.color,
+                    amount: viewModel.getCategorySum(categoryType: expenseType.title),
+                    totalSpend: trip.totalSpending
                 )
             }
             
@@ -49,6 +51,9 @@ struct BudgetScreen: View {
         })
         .navigationTitle("Budget Details")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await viewModel.getExpenses()
+        }
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 AddButton {
@@ -174,20 +179,22 @@ private struct ExpenseBreakdownOption: View {
     let title: String
     let iconName: String
     let iconColor: Color
+    let amount: Int
+    let totalSpend: Int
     
     var body: some View {
         HStack {
             SquareIcon(
                 iconName: iconName,
                 iconColor: iconColor,
-                width: 50,
-                height: 50
+                width: 45,
+                height: 45
             )
             .padding()
                 
             VStack(alignment: .leading, spacing: 5) {
                 Text(title)
-                    .font(.system(.title3, weight: .semibold))
+                    .font(.system(size: 18, weight: .semibold))
                     
                 HStack {
                     Circle()
@@ -198,25 +205,25 @@ private struct ExpenseBreakdownOption: View {
                     Text("Transactions")
                         .foregroundStyle(.secondaryText)
                 }
-                .font(.system(.subheadline))
+                .font(.system(size: 14))
             }
             .padding(.horizontal, 8)
                 
             Spacer()
                 
             VStack(alignment: .trailing) {
-                Text("$320.50")
-                    .font(.system(.title3, weight: .semibold))
+                Text("$\(amount)")
+                    .font(.system(size: 18, weight: .semibold))
                     
-                Text("22%")
+                Text("\(amount / totalSpend)%")
                     .foregroundStyle(.secondaryText)
                     .font(.system(.subheadline))
             }
         }
-        .padding()
+        .padding(15)
         .createCardBackgroud()
         .padding(.horizontal)
-        .padding(.vertical, 5)
+        .padding(.vertical, 2)
     }
 }
 
@@ -225,16 +232,10 @@ private struct RecentActivities: View {
     
     var body: some View {
         ForEach(expenses) { expense in
-            HStack {
-                VStack(alignment: .center, spacing: 0) {
-                    Circle()
-                        .frame(width: 12, height: 12)
-                        .foregroundStyle(expense.type.color)
-                            
-                    Rectangle()
-                        .frame(width: 2)
-                        .foregroundColor(.gray.opacity(0.3))
-                }
+            HStack(spacing: 15) {
+                RoundedRectangle(cornerRadius: 20)
+                    .frame(width: 6, height: 30)
+                    .foregroundStyle(expense.type.color)
                     
                 VStack(alignment: .leading, spacing: 5) {
                     Text(expense.title)
@@ -252,14 +253,12 @@ private struct RecentActivities: View {
                     .foregroundStyle(.secondaryText)
                     .font(.system(.subheadline))
                 }
-                .padding(.horizontal)
                     
                 Spacer()
                     
                 Text("-$\(expense.amount)")
                     .fontWeight(.semibold)
             }
-            .padding(.horizontal)
         }
         .padding()
         .createCardBackgroud()

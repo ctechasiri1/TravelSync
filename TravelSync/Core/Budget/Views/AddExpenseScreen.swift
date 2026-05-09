@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddExpenseScreen: View {
+    @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
     @State private var textWidth = 10.0
     @State private var viewModel: AddExpenseViewModel
@@ -22,8 +23,13 @@ struct AddExpenseScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                SheetToolbar(title: "Add Expense", enableSave: viewModel.enableSave) {
-
+                SheetToolbar(
+                    title: "Add Expense",
+                    enableSave: viewModel.enableSave
+                ) {
+                    Task {
+                        await viewModel.createExpense(tripId: trip.id)
+                    }
                 }
                 
                 VStack(alignment: .center) {
@@ -31,15 +37,19 @@ struct AddExpenseScreen: View {
                         .foregroundStyle(.gray.opacity(0.6))
                         .font(.system(.subheadline, weight: .semibold))
                     
-                    HStack {
+                    HStack(alignment: .center) {
                         Text("$")
-                            .font(.system(size: 45, weight: .semibold))
+                            .font(.system(size: 25, weight: .semibold))
                         
-                        TextField("0.00", text: $viewModel.expenseAmount, axis: .horizontal)
-                            .font(.system(size: 50, weight: .semibold))
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .fixedSize(horizontal: true, vertical: false)
-                            .keyboardType(.numberPad)
+                        TextField(
+                            "0",
+                            text: $viewModel.expenseAmount,
+                            axis: .horizontal
+                        )
+                        .font(.system(size: 50, weight: .semibold))
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .fixedSize(horizontal: true, vertical: false)
+                        .keyboardType(.numberPad)
                     }
                 }
                 .padding()
@@ -57,8 +67,11 @@ struct AddExpenseScreen: View {
                                         viewModel.selectedExpense = expense
                                     }
                                 } label: {
-                                    ExpenseOptionButton(expense: expense, isSelected: viewModel.selectedExpense == expense)
-                                        .padding(.vertical, 5)
+                                    ExpenseOptionButton(
+                                        expense: expense,
+                                        isSelected: viewModel.selectedExpense == expense
+                                    )
+                                    .padding(.vertical, 5)
                                 }
                             }
                             .padding(.horizontal, 12)
@@ -66,20 +79,36 @@ struct AddExpenseScreen: View {
                     }
                     .scrollIndicators(.hidden)
                 }
-                
+            
                 Group {
-                    CustomDatePicker(selectedDate: $viewModel.transactionDate, pickerTitle: "TRANSACTION DATE")
-                        .padding(.bottom)
+                    CustomDatePicker(
+                        selectedDate: $viewModel.transactionDate,
+                        pickerTitle: "TRANSACTION DATE")
+                    .padding(.bottom)
                     
-                    InputTextField(text: $viewModel.notes, fieldTitle: "EXPENSE NOTSE", fieldImage: "pencil.and.list.clipboard", fieldContent: "Dinner at the Habor...", iconColor: .secondaryText)
-                        .padding(.bottom)
+                    InputTextField(
+                        text: $viewModel.notes,
+                        fieldTitle: "EXPENSE NOTE",
+                        fieldImage: "pencil.and.list.clipboard",
+                        fieldContent: "Dinner at the Habor...",
+                        iconColor: .secondaryText
+                    )
+                    .padding(.bottom)
                     
                     ReceiptUploadButton {
                             
                     }
                     .padding(.vertical)
                     
-                    MultipurposeButton(text: "Confirm Transaction", foregroundColor: .white, backgroundColor: .accentPrimary) {
+                    MultipurposeButton(
+                        text: "Confirm Transaction",
+                        foregroundColor: .white,
+                        backgroundColor: .accentPrimary
+                    ) {
+                        Task {
+                            await viewModel.createExpense(tripId: trip.id)
+                        }
+                        dismiss()
                     }
                     .padding(.vertical)
                 }
@@ -96,24 +125,28 @@ private struct ExpenseOptionButton: View {
     let isSelected: Bool
     
     var body: some View {
-        VStack {
+        VStack(alignment: .center) {
             SquareIcon(
                 iconName: expense.imageName,
-                iconColor: isSelected ? expense.color : .secondaryText
+                iconColor: isSelected ? .accentPrimary : .secondaryText
                     .opacity(0.5),
                 width: 50,
                 height: 50
             )
-            .padding()
+            .padding([.top, .leading, .trailing])
                 
             Text(expense.title)
                 .foregroundStyle(
-                    isSelected ? expense.color : .secondaryText.opacity(0.5)
+                    isSelected ? .accentPrimary : .secondaryText.opacity(0.5)
                 )
                 .font(.system(size: 12, weight: .semibold))
-                .padding(.vertical, 5)
+                .padding(.top)
         }
-        .padding(5)
+        .padding()
+        .overlay {
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(isSelected ? .accentPrimary.opacity(0.5) : .clear, lineWidth: 1)
+        }
     }
 }
 
@@ -150,6 +183,14 @@ private struct ReceiptUploadButton: View {
 }
 
 #Preview {
-    AddExpenseScreen(trip: Trip.example, viewModel: AddExpenseViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-        .environment(AppState())
+    AddExpenseScreen(
+        trip: Trip.example,
+        viewModel: AddExpenseViewModel(
+            expenseService: ExpenseService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            )
+        )
+    )
+    .environment(AppState())
 }
