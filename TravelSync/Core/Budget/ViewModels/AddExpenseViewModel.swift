@@ -15,6 +15,7 @@ class AddExpenseViewModel {
     var transactionDate: Date? = nil
     var notes: String = ""
     
+    var isNetworkActive: Bool = false
     var isExpenseInputValid: Bool = true
     
     private let expenseService: ExpenseServiceProtocol
@@ -28,6 +29,8 @@ class AddExpenseViewModel {
     }
     
     func createExpense(tripId: Int) async -> Void {
+        defer { isNetworkActive = false }
+        isNetworkActive = true
         do {
             guard let expenseAmount = Int(expenseAmount) else {
                 throw ExpenseError.invalidExpense
@@ -37,7 +40,7 @@ class AddExpenseViewModel {
                 throw ExpenseError.invalidDate
             }
             
-            let _ = try await expenseService.createExpense(
+            let _ = try await (Task.sleep(nanoseconds: 500_000_000), expenseService.createExpense(
                 expense: ExpenseCreateRequest(
                     title: notes,
                     amount: expenseAmount,
@@ -47,7 +50,7 @@ class AddExpenseViewModel {
                     receiptImageData: nil
                 )
             )
-            
+            )
         } catch ExpenseError.invalidExpense {
             isExpenseInputValid = false
             print(ExpenseError.invalidExpense.errorDescription)

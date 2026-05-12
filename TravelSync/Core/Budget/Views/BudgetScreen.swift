@@ -37,23 +37,44 @@ struct BudgetScreen: View {
                 )
             }
             
-            Text("Recent Activity")
-                .padding()
-                .font(.system(.title2, weight: .semibold))
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Text("Recent Activity")
+                    .padding()
+                    .font(.system(.title2, weight: .semibold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Button {
+                    viewModel.showAllExpense = true
+                } label: {
+                    Text("View All")
+                }
+                .padding(.horizontal)
+            }
             
-            RecentActivities(expenses: viewModel.expenses)
+            RecentActivities(expenses: Array(viewModel.sortedExpenses.prefix(5)))
 
             .padding(.horizontal)
         }
-        .fullScreenCover(isPresented: $viewModel.showAddExpense, content: {
-            AddExpenseScreen(trip: trip, viewModel: appState.makeAddExpenseViewModel())
-        })
         .navigationTitle("Budget Details")
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.getExpenses()
         }
+        .refreshable {
+            Task {
+                await viewModel.getExpenses()
+            }
+        }
+        .fullScreenCover(isPresented: $viewModel.showAllExpense, content: {
+            AllExpenseScreen(viewModel: appState.makeBudgetViewModel(tripId: trip.id))
+        })
+        .fullScreenCover(isPresented: $viewModel.showAddExpense, onDismiss: {
+            Task {
+                await viewModel.getExpenses()
+            }
+        }, content: {
+            AddExpenseScreen(trip: trip, viewModel: appState.makeAddExpenseViewModel())
+        })
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 AddButton {

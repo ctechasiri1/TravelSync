@@ -29,6 +29,9 @@ struct AddExpenseScreen: View {
                 ) {
                     Task {
                         await viewModel.createExpense(tripId: trip.id)
+                        await MainActor.run {
+                            dismiss()
+                        }
                     }
                 }
                 
@@ -107,8 +110,10 @@ struct AddExpenseScreen: View {
                     ) {
                         Task {
                             await viewModel.createExpense(tripId: trip.id)
+                            await MainActor.run {
+                                dismiss()
+                            }
                         }
-                        dismiss()
                     }
                     .padding(.vertical)
                 }
@@ -117,6 +122,7 @@ struct AddExpenseScreen: View {
                 Spacer()
             }
         }
+        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

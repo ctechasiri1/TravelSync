@@ -10,8 +10,14 @@ import Foundation
 
 @Observable
 class BudgetViewModel {
-    var expenses: [Expense] = []
+    var expenses: [Expense] = [] {
+        didSet {
+            sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
+        }
+    }
+    var sortedExpenses: [Expense] = []
     var showAddExpense: Bool = false
+    var showAllExpense: Bool = false
     
     private let expenseService: ExpenseServiceProtocol
     private let tripId: Int
@@ -38,9 +44,10 @@ class BudgetViewModel {
 
     func getExpenses() async -> Void {
         do {
-            let expenses = try await expenseService.getExpenses(tripId: tripId)
+            var fetchedExpenses: [Expense] = []
+            let expensePayload = try await expenseService.getExpenses(tripId: tripId)
             await MainActor.run {
-                for expenseDTO in expenses {
+                for expenseDTO in expensePayload {
                     let expenseDomain = Expense(
                         id: expenseDTO.id,
                         title: expenseDTO.title,
@@ -48,7 +55,9 @@ class BudgetViewModel {
                         transactionDate: expenseDTO.transactionDate,
                         type: ExpenseOption(fromRawValue: expenseDTO.categoryId)
                     )
-                    self.expenses.append(expenseDomain)
+                    fetchedExpenses.append(expenseDomain)
+                    
+                    self.expenses = fetchedExpenses
                 }
             }
         } catch let error as APIError {
