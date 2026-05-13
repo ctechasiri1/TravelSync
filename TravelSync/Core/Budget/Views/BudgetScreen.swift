@@ -33,7 +33,7 @@ struct BudgetScreen: View {
                     iconName: expenseType.imageName,
                     iconColor: expenseType.color,
                     amount: viewModel.getCategorySum(categoryType: expenseType.title),
-                    totalSpend: trip.totalSpending
+                    totalSpend: trip.budget
                 )
             }
             
@@ -46,7 +46,17 @@ struct BudgetScreen: View {
                 Button {
                     viewModel.showAllExpense = true
                 } label: {
-                    Text("View All")
+                    HStack {
+                        Text("View All")
+                        
+                        Image(systemName: "arrow.up.forward.app")
+                    }
+                    .padding(.vertical, 10)
+                    .padding(.horizontal, 15)
+                    .foregroundStyle(.secondaryText)
+                    .font(.system(size: 14, weight: .semibold))
+                    .background(.gray.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                 }
                 .padding(.horizontal)
             }
@@ -65,8 +75,8 @@ struct BudgetScreen: View {
                 await viewModel.getExpenses()
             }
         }
-        .fullScreenCover(isPresented: $viewModel.showAllExpense, content: {
-            AllExpenseScreen(viewModel: appState.makeBudgetViewModel(tripId: trip.id))
+        .navigationDestination(isPresented: $viewModel.showAllExpense, destination: {
+            AllExpenseScreen(viewModel: viewModel)
         })
         .fullScreenCover(isPresented: $viewModel.showAddExpense, onDismiss: {
             Task {
@@ -236,7 +246,7 @@ private struct ExpenseBreakdownOption: View {
                 Text("$\(amount)")
                     .font(.system(size: 18, weight: .semibold))
                     
-                Text("\(amount / totalSpend)%")
+                Text(String(format: "%.2f", Double(amount) / Double(totalSpend)) + "%")
                     .foregroundStyle(.secondaryText)
                     .font(.system(.subheadline))
             }
@@ -263,7 +273,7 @@ private struct RecentActivities: View {
                         .fontWeight(.semibold)
                         
                     HStack {
-                        Text(expense.transactionDate.dateToDifferenceString())
+                        Text(expense.transactionDate.relativeCalendarDescription())
                             
                         Circle()
                             .imageScale(.small)

@@ -12,10 +12,12 @@ import Foundation
 class BudgetViewModel {
     var expenses: [Expense] = [] {
         didSet {
-            sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
+            updateSortedExpenses()
+            
         }
     }
     var sortedExpenses: [Expense] = []
+//    var dateExpenses: [Date: Expense] = [:]
     var showAddExpense: Bool = false
     var showAllExpense: Bool = false
     
@@ -33,6 +35,22 @@ class BudgetViewModel {
             expenseDict[expense.type.title, default: 0] += expense.amount
         }
         return expenseDict
+    }
+    
+//    var dateExpenses: [Date: [Expense]] {
+//        var dateDict: [Date: [Expense]] = [:]
+//        for expense in expenses {
+//            if let dateExists = dateDict[expense.transactionDate] {
+//                dateExists.append(expense)
+//            }
+//            dateDict[expense.transactionDate]?.append(<#T##newElement: Expense##Expense#>)
+//        }
+//    }
+//    
+    
+    
+    func updateSortedExpenses() -> Void {
+        sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
     }
     
     func getCategorySum(categoryType: String) -> Int {

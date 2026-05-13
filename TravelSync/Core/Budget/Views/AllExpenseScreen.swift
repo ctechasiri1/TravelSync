@@ -15,15 +15,77 @@ struct AllExpenseScreen: View {
         _viewModel = State(wrappedValue: viewModel)
     }
     var body: some View {
-        SheetToolbar(
-            title: "Add Expense",
-            enableSave: viewModel.showAllExpense
-        ) {
-
+        List {
+            ForEach(viewModel.sortedExpenses) { expense in
+                ExpenseItem(
+                    title: expense.title,
+                    amount: expense.amount,
+                    transactionDate: expense.transactionDate,
+                    type: expense.type
+                )
+                .listRowSeparator(.hidden)
+                .listRowInsets(EdgeInsets())
+                .listRowBackground(Color.clear)
+                .swipeActions(edge: .trailing) {
+                    CustomDeleteButton {
+                        
+                    }
+                }
+            }
         }
+        .listStyle(.plain)
+        .scrollContentBackground(.hidden)
+        .navigationTitle("All Expenses")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+private struct ExpenseItem: View {
+    let title: String
+    let amount: Int
+    let transactionDate: Date
+    let type: ExpenseOption
+    
+    var body: some View {
+        HStack {
+            CircleIcon(
+                iconName: type.imageName,
+                iconColor: type.color,
+                width: 40,
+                height: 40
+            )
+            .padding(.horizontal)
+            
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title)
+                    .font(.system(size: 18, weight: .semibold))
+                
+                HStack {
+                    Text(transactionDate.formatDate)
+                    
+                    Circle()
+                        .frame(width: 5, height: 5)
+                        .imageScale(.small)
+                    
+                    Text(type.title)
+                }
+                .foregroundStyle(.secondaryText)
+                .font(.system(size: 14))
+            }
+            
+            Spacer()
+            
+            Text("-$\(amount)")
+                .font(.system(size: 18, weight: .semibold))
+        }
+        .padding()
+        .createCardBackgroud()
+        .padding(.vertical, 5)
+        .padding(.horizontal)
     }
 }
 
 #Preview {
     AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+        .environment(AppState())
 }

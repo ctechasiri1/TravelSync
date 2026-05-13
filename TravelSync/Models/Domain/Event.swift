@@ -24,14 +24,14 @@ struct Event: Identifiable, Hashable {
 
 extension Event {
     var startTimeToString: String {
-        return startTime.dateToStringHourAndMin
+        return startTime.formattedTime
     }
     
     var dateToString: String {
-        return date.dateToStringMonthAndDay
+        return date.formattedMonthDay
     }
     
     var timeDuration: String {
-        return startTime.durationString(to: endTime)
+        return startTime.formattedDuration(to: endTime)
     }
 }

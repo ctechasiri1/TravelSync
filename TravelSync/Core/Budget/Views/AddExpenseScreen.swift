@@ -94,7 +94,8 @@ struct AddExpenseScreen: View {
                         fieldTitle: "EXPENSE NOTE",
                         fieldImage: "pencil.and.list.clipboard",
                         fieldContent: "Dinner at the Habor...",
-                        iconColor: .secondaryText
+                        iconColor: .secondaryText,
+                        characterLimit: 22
                     )
                     .padding(.bottom)
                     

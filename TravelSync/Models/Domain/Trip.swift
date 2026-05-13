@@ -38,11 +38,11 @@ struct Trip: Identifiable, Equatable {
 
 extension Trip {
     var dateRangeString: String {
-        startDate.dateToStringRange(to: endDate)
+        startDate.formattedDateRange(to: endDate)
     }
     
     var dateDifference: String {
-        return startDate.dateToDifferenceString()
+        return startDate.relativeCalendarDescription()
     }
     
     var city: String {

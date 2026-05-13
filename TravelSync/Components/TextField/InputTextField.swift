@@ -15,6 +15,7 @@ struct InputTextField: View {
     let fieldImage: String
     let fieldContent: String
     let iconColor: Color
+    var characterLimit: Int? = nil
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -61,6 +62,13 @@ struct InputTextField: View {
                         style: StrokeStyle(lineWidth: 1)
                     )
             )
+            .onChange(of: text) { oldValue, newValue in
+                if let limit = characterLimit {
+                    if newValue.count < limit {
+                        text = newValue
+                    }
+                }
+            }
         }
     }
 }
