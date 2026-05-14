@@ -100,7 +100,7 @@ struct TripDetailScreen: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(trip: trip, viewModel: appState.makeBudgetViewModel(tripId: trip.id))
+                    BudgetScreen(trip: trip, budgetViewModel: appState.makeBudgetViewModel(tripId: trip.id), tripDetailViewModel: viewModel)
                 }
                 .padding()
             }
@@ -112,7 +112,7 @@ struct TripDetailScreen: View {
                 CustomDeleteButton {
                     viewModel.enableDeleteAlert = true
                 }
-                .imageScale(.small)
+                .frame(width: 10, height: 10)
             }
             .sharedBackgroundVisibility(.hidden)
         }

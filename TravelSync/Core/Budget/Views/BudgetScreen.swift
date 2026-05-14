@@ -76,7 +76,7 @@ struct BudgetScreen: View {
             }
         }
         .navigationDestination(isPresented: $viewModel.showAllExpense, destination: {
-            AllExpenseScreen(viewModel: viewModel)
+            AllExpenseScreen(viewModel: viewModel, trip: trip)
         })
         .fullScreenCover(isPresented: $viewModel.showAddExpense, onDismiss: {
             Task {
@@ -243,10 +243,10 @@ private struct ExpenseBreakdownOption: View {
             Spacer()
                 
             VStack(alignment: .trailing) {
-                Text("$\(amount)")
+                Text("-$" + Double(amount).toString)
                     .font(.system(size: 18, weight: .semibold))
                     
-                Text(String(format: "%.2f", Double(amount) / Double(totalSpend)) + "%")
+                Text((Double(amount) / Double(totalSpend)).toPercentage + "%")
                     .foregroundStyle(.secondaryText)
                     .font(.system(.subheadline))
             }
@@ -263,17 +263,21 @@ private struct RecentActivities: View {
     
     var body: some View {
         ForEach(expenses) { expense in
-            HStack(spacing: 15) {
-                RoundedRectangle(cornerRadius: 20)
-                    .frame(width: 6, height: 30)
-                    .foregroundStyle(expense.type.color)
+            HStack {
+                CircleIcon(
+                    iconName: expense.type.imageName,
+                    iconColor: expense.type.color,
+                    width: 40,
+                    height: 40
+                )
+                .padding(.horizontal)
                     
                 VStack(alignment: .leading, spacing: 5) {
                     Text(expense.title)
-                        .fontWeight(.semibold)
+                        .font(.system(size: 16, weight: .semibold))
                         
                     HStack {
-                        Text(expense.transactionDate.relativeCalendarDescription())
+                        Text(expense.transactionDate.formatDate)
                             
                         Circle()
                             .imageScale(.small)
@@ -282,13 +286,13 @@ private struct RecentActivities: View {
                         Text(expense.type.title)
                     }
                     .foregroundStyle(.secondaryText)
-                    .font(.system(.subheadline))
+                    .font(.system(size: 12))
                 }
                     
                 Spacer()
                     
-                Text("-$\(expense.amount)")
-                    .fontWeight(.semibold)
+                Text("$" + Double(expense.amount).toString)
+                    .font(.system(size: 16, weight: .semibold))
             }
         }
         .padding()

@@ -20,6 +20,7 @@ class BudgetViewModel {
 //    var dateExpenses: [Date: Expense] = [:]
     var showAddExpense: Bool = false
     var showAllExpense: Bool = false
+    var isNetworkActive: Bool = false
     
     private let expenseService: ExpenseServiceProtocol
     private let tripId: Int
@@ -46,9 +47,7 @@ class BudgetViewModel {
 //            dateDict[expense.transactionDate]?.append(<#T##newElement: Expense##Expense#>)
 //        }
 //    }
-//    
-    
-    
+
     func updateSortedExpenses() -> Void {
         sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
     }
@@ -78,6 +77,21 @@ class BudgetViewModel {
                     self.expenses = fetchedExpenses
                 }
             }
+        } catch let error as APIError {
+            print("There was a network error: \(error).")
+        } catch {
+            print("There was an unexpected error.")
+        }
+    }
+    
+    func deleteExpense(tripId: Int, expenseId: Int) async {
+        defer { isNetworkActive = false }
+        
+        isNetworkActive = true
+        
+        do {
+            let _ = try await (Task.sleep(nanoseconds: 500_000_000), expenseService.deleteExpense(tripId: tripId, expenseId: expenseId))
+            await getExpenses()
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

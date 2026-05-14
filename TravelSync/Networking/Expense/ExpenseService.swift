@@ -94,4 +94,19 @@ actor ExpenseService: ExpenseServiceProtocol {
         
         return try await task.value
     }
+    
+    func deleteExpense(tripId: Int, expenseId: Int) async throws -> EmptyResponse {
+        guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)/expense/\(expenseId)") else {
+            throw APIError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "DELETE"
+        
+        if let token = keychainService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        return try await networkService.sendRequest(request: request, responseType: EmptyResponse.self)
+    }
 }

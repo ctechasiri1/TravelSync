@@ -52,7 +52,7 @@ struct AddExpenseScreen: View {
                         .font(.system(size: 50, weight: .semibold))
                         .textFieldStyle(PlainTextFieldStyle())
                         .fixedSize(horizontal: true, vertical: false)
-                        .keyboardType(.numberPad)
+                        .keyboardType(.decimalPad)
                     }
                 }
                 .padding()

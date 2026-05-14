@@ -64,8 +64,8 @@ struct InputTextField: View {
             )
             .onChange(of: text) { oldValue, newValue in
                 if let limit = characterLimit {
-                    if newValue.count < limit {
-                        text = newValue
+                    if newValue.count > limit {
+                        text = String(newValue.prefix(22))
                     }
                 }
             }

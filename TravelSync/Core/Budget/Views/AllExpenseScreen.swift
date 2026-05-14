@@ -10,9 +10,11 @@ import SwiftUI
 struct AllExpenseScreen: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: BudgetViewModel
+    let trip: Trip
     
-    init(viewModel: BudgetViewModel) {
+    init(viewModel: BudgetViewModel, trip: Trip) {
         _viewModel = State(wrappedValue: viewModel)
+        self.trip = trip
     }
     var body: some View {
         List {
@@ -28,7 +30,9 @@ struct AllExpenseScreen: View {
                 .listRowBackground(Color.clear)
                 .swipeActions(edge: .trailing) {
                     CustomDeleteButton {
-                        
+                        Task {
+                            await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
+                        }
                     }
                 }
             }
@@ -37,6 +41,7 @@ struct AllExpenseScreen: View {
         .scrollContentBackground(.hidden)
         .navigationTitle("All Expenses")
         .navigationBarTitleDisplayMode(.inline)
+        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 
@@ -58,7 +63,7 @@ private struct ExpenseItem: View {
             
             VStack(alignment: .leading, spacing: 5) {
                 Text(title)
-                    .font(.system(size: 18, weight: .semibold))
+                    .font(.system(size: 16, weight: .semibold))
                 
                 HStack {
                     Text(transactionDate.formatDate)
@@ -70,13 +75,13 @@ private struct ExpenseItem: View {
                     Text(type.title)
                 }
                 .foregroundStyle(.secondaryText)
-                .font(.system(size: 14))
+                .font(.system(size: 12))
             }
             
             Spacer()
             
-            Text("-$\(amount)")
-                .font(.system(size: 18, weight: .semibold))
+            Text("$" + Double(amount).toString)
+                .font(.system(size: 16, weight: .semibold))
         }
         .padding()
         .createCardBackgroud()
@@ -86,6 +91,6 @@ private struct ExpenseItem: View {
 }
 
 #Preview {
-    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: Trip.example)
         .environment(AppState())
 }
