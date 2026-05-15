@@ -13,11 +13,13 @@ class BudgetViewModel {
     var expenses: [Expense] = [] {
         didSet {
             updateSortedExpenses()
-            
+            getCategorySum()
+            getExpenseGroupByDate()
         }
     }
     var sortedExpenses: [Expense] = []
-//    var dateExpenses: [Date: Expense] = [:]
+    var categorySums: [String: Int] = [:]
+    var expenseGroupByDate: [Date: [Expense]] = [:]
     var showAddExpense: Bool = false
     var showAllExpense: Bool = false
     var isNetworkActive: Bool = false
@@ -30,26 +32,24 @@ class BudgetViewModel {
         self.expenseService = expenseService
     }
     
-    var categorySums: [String: Int] {
-        var expenseDict: [String: Int] = [:]
-        for expense in expenses {
-            expenseDict[expense.type.title, default: 0] += expense.amount
-        }
-        return expenseDict
-    }
-    
-//    var dateExpenses: [Date: [Expense]] {
-//        var dateDict: [Date: [Expense]] = [:]
-//        for expense in expenses {
-//            if let dateExists = dateDict[expense.transactionDate] {
-//                dateExists.append(expense)
-//            }
-//            dateDict[expense.transactionDate]?.append(<#T##newElement: Expense##Expense#>)
-//        }
-//    }
-
     func updateSortedExpenses() -> Void {
         sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
+    }
+    
+    func getCategorySum() -> Void {
+        var categoryDict: [String: Int] = [:]
+        
+        for expense in expenses {
+            categoryDict[expense.type.title, default: 0] += expense.amount
+        }
+        
+        categorySums = categoryDict
+    }
+    
+    func getExpenseGroupByDate() -> Void {
+        var dateDict: [Date: [Expense]] = Dictionary(grouping: expenses) { Calendar.current.startOfDay(for: $0.transactionDate) }
+        
+        expenseGroupByDate = dateDict
     }
     
     func getCategorySum(categoryType: String) -> Int {

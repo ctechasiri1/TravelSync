@@ -59,7 +59,7 @@ extension Date {
     
     /// Converts a Date into a localized String displaying only the month and day
     ///```
-    /// Convert 2026-04-02 to "Apr 2"
+    /// Convert 2026-05-12T16:00:00Z to "Apr 2"
     ///```
     var formattedMonthDay: String {
         return self.formatted(.dateTime.month().day())
@@ -67,10 +67,20 @@ extension Date {
     
     /// Converts a Date into a localized String displaying only the month and day
     ///```
-    /// Convert 2026-04-02 to "Apr 2, 2026"
+    /// Convert "2026-05-12T16:00:00Z" to "Apr 2, 2026"
     ///```
     var formattedAbbreviatedDate: String {
         return self.formatted(date: .abbreviated, time: .omitted)
+    }
+    
+    /// Converts an ISO 8601 date string into a formatted date and time String
+    ///```
+    /// Convert "2026-05-12T16:00:00Z" to "05/12/26"
+    ///```
+    /// - Parameter isoString: A date string in ISO 8601 format e.g. "2026-05-12T16:00:00Z"
+    /// - Returns: A formatted date String, or nil if the input string is not a valid ISO 8601 date
+    var formattedNumericDate: String {
+        return self.formatted(date: .numeric, time: .omitted)
     }
     
     /// Converts an ISO 8601 date string into a formatted date and time String

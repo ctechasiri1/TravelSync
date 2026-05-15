@@ -100,7 +100,7 @@ struct TripDetailScreen: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(trip: trip, budgetViewModel: appState.makeBudgetViewModel(tripId: trip.id), tripDetailViewModel: viewModel)
+                    BudgetScreen(trip: trip, viewModel: appState.makeBudgetViewModel(tripId: trip.id))
                 }
                 .padding()
             }

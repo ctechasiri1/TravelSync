@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Expense: Identifiable {
+struct Expense: Identifiable, Hashable {
     let id: Int
     let title: String
     let amount: Int

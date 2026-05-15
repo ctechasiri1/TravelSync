@@ -18,24 +18,32 @@ struct AllExpenseScreen: View {
     }
     var body: some View {
         List {
-            ForEach(viewModel.sortedExpenses) { expense in
-                ExpenseItem(
-                    title: expense.title,
-                    amount: expense.amount,
-                    transactionDate: expense.transactionDate,
-                    type: expense.type
-                )
-                .listRowSeparator(.hidden)
-                .listRowInsets(EdgeInsets())
-                .listRowBackground(Color.clear)
-                .swipeActions(edge: .trailing) {
-                    CustomDeleteButton {
-                        Task {
-                            await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
+            ForEach(viewModel.expenseGroupByDate.keys.sorted(by: >), id: \.self) { date in
+                Text(date.formattedNumericDate)
+                    .padding(.horizontal, 20)
+                    .sectionTitleStyle()
+                
+                if let expenseList = viewModel.expenseGroupByDate[date] {
+                    ForEach(Array(expenseList), id: \.self) { expense in
+                        ExpenseItem(
+                            title: expense.title,
+                            amount: expense.amount,
+                            transactionDate: expense.transactionDate,
+                            type: expense.type
+                        )
+                        .swipeActions(edge: .trailing) {
+                            CustomDeleteButton {
+                                Task {
+                                    await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
+                                }
+                            }
                         }
                     }
                 }
             }
+            .listRowSeparator(.hidden)
+            .listRowInsets(EdgeInsets())
+            .listRowBackground(Color.clear)
         }
         .listStyle(.plain)
         .scrollContentBackground(.hidden)
@@ -80,7 +88,7 @@ private struct ExpenseItem: View {
             
             Spacer()
             
-            Text("$" + Double(amount).toString)
+            Text("-$" + Double(amount).toString)
                 .font(.system(size: 16, weight: .semibold))
         }
         .padding()

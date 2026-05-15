@@ -243,7 +243,7 @@ private struct ExpenseBreakdownOption: View {
             Spacer()
                 
             VStack(alignment: .trailing) {
-                Text("-$" + Double(amount).toString)
+                Text("$" + Double(amount).toString)
                     .font(.system(size: 18, weight: .semibold))
                     
                 Text((Double(amount) / Double(totalSpend)).toPercentage + "%")
@@ -291,7 +291,7 @@ private struct RecentActivities: View {
                     
                 Spacer()
                     
-                Text("$" + Double(expense.amount).toString)
+                Text("-$" + Double(expense.amount).toString)
                     .font(.system(size: 16, weight: .semibold))
             }
         }
