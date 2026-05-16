@@ -8,6 +8,21 @@
 import Foundation
 
 struct TripMockService: TripServiceProtocol {
+    func getTrip(tripId: Int) async throws -> TripPrivateResponse {
+        return
+            TripPrivateResponse(
+                id: 1,
+                tripName: "Mango Sticky Rice Summer",
+                location: "Bangkok, Thailand",
+                totalSpending: 10,
+                budget: 1_000,
+                isFavorite: true,
+                startDateString: "\(Calendar.current.date(byAdding: .day, value: 2, to: Date.now) ?? .now)",
+                endDateString: "\(Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now)",
+                imageURLString: ""
+            )
+    }
+    
     func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
         return TripPrivateResponse(
             id: 1,

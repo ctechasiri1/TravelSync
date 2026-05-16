@@ -104,6 +104,21 @@ actor TripService: TripServiceProtocol {
         return try await task.value
     }
     
+    func getTrip(tripId: Int) async throws -> TripPrivateResponse {
+        guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)") else {
+            throw APIError.invalidURL
+        }
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        if let token = keychainService.getToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
+        
+        return try await networkService.sendRequest(request: request, responseType: TripPrivateResponse.self)
+    }
+    
     func updateTrip(trip: TripUpdateRequest) async throws -> EmptyResponse {
         guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(trip.id)") else {
             throw APIError.invalidURL

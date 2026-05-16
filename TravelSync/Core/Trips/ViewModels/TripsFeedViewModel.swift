@@ -26,12 +26,12 @@ class TripsFeedViewModel {
     }
     
     var upcomingTrips: [Trip] {
-        let sortedTrip = trips.sorted { $0.startDate < $1.startDate }
-        return sortedTrip.filter { $0.endDate > Date.now }
+        let filteredTrip = trips.filter { $0.startDate > Date.now }
+        return filteredTrip.sorted { $0.startDate < $1.startDate }
     }
     
     var pastTrips: [Trip] {
-        return trips.filter { $0.endDate < Date.now }
+        return trips.filter { $0.startDate < Date.now }
     }
     
     var isUpcomingTrip: Bool {

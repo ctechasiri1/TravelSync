@@ -49,7 +49,7 @@ class AppState {
     }
     
     func makeBudgetViewModel(tripId: Int) -> BudgetViewModel {
-        BudgetViewModel(tripId: tripId, expenseService: services.expenseService)
+        BudgetViewModel(tripId: tripId, expenseService: services.expenseService, tripService: services.tripService)
     }
     
     func makeAddExpenseViewModel() -> AddExpenseViewModel {

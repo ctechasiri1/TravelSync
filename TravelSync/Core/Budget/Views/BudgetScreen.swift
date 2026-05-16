@@ -11,7 +11,7 @@ struct BudgetScreen: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: BudgetViewModel
     
-    let trip: Trip
+    @State var trip: Trip
     
     init(trip: Trip, viewModel: BudgetViewModel) {
         _viewModel = State(wrappedValue: viewModel)
@@ -61,7 +61,7 @@ struct BudgetScreen: View {
                 .padding(.horizontal)
             }
             
-            RecentActivities(expenses: Array(viewModel.sortedExpenses.prefix(5)))
+            RecentActivities(expenses: Array(viewModel.sortedExpenses.prefix(3)))
 
             .padding(.horizontal)
         }
@@ -69,12 +69,11 @@ struct BudgetScreen: View {
         .navigationBarTitleDisplayMode(.inline)
         .task {
             await viewModel.getExpenses()
+            await viewModel.getTrip(tripId: trip.id)
         }
-        .refreshable {
-            Task {
-                await viewModel.getExpenses()
-            }
-        }
+        .onChange(of: viewModel.updatedTrip ?? trip, { oldValue, newValue in
+            trip = newValue
+        })
         .navigationDestination(isPresented: $viewModel.showAllExpense, destination: {
             AllExpenseScreen(viewModel: viewModel, trip: trip)
         })
@@ -301,6 +300,6 @@ private struct RecentActivities: View {
 }
 
 #Preview {
-    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

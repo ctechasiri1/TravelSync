@@ -20,16 +20,20 @@ class BudgetViewModel {
     var sortedExpenses: [Expense] = []
     var categorySums: [String: Int] = [:]
     var expenseGroupByDate: [Date: [Expense]] = [:]
+    var updatedTrip: Trip? = nil
+    
     var showAddExpense: Bool = false
     var showAllExpense: Bool = false
     var isNetworkActive: Bool = false
     
     private let expenseService: ExpenseServiceProtocol
+    private let tripsService: TripServiceProtocol
     private let tripId: Int
     
-    init(tripId: Int, expenseService: ExpenseServiceProtocol) {
+    init(tripId: Int, expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol) {
         self.tripId = tripId
         self.expenseService = expenseService
+        self.tripsService = tripService
     }
     
     func updateSortedExpenses() -> Void {
@@ -47,7 +51,7 @@ class BudgetViewModel {
     }
     
     func getExpenseGroupByDate() -> Void {
-        var dateDict: [Date: [Expense]] = Dictionary(grouping: expenses) { Calendar.current.startOfDay(for: $0.transactionDate) }
+        let dateDict: [Date: [Expense]] = Dictionary(grouping: expenses) { Calendar.current.startOfDay(for: $0.transactionDate) }
         
         expenseGroupByDate = dateDict
     }
@@ -57,6 +61,29 @@ class BudgetViewModel {
             return 0
         }
         return categorySum
+    }
+    
+    func getTrip(tripId: Int) async -> Void {
+        do {
+            let tripPayload = try await tripsService.getTrip(tripId: tripId)
+            await MainActor.run {
+                updatedTrip = Trip(
+                    id: tripPayload.id,
+                    tripName: tripPayload.tripName,
+                    location: tripPayload.location,
+                    budget: tripPayload.budget,
+                    totalSpending: tripPayload.totalSpending,
+                    isFavorite: tripPayload.isFavorite,
+                    startDate: tripPayload.startDate,
+                    endDate: tripPayload.endDate,
+                    imageURLString: tripPayload.imageURL
+                )
+            }
+        }  catch let error as APIError {
+            print("There was a network error: \(error).")
+        } catch {
+            print("There was an unexpected error.")
+        }
     }
 
     func getExpenses() async -> Void {

@@ -44,6 +44,7 @@ struct CustomDatePicker: View {
                         get: { selectedDate ?? .now },
                         set: { selectedDate = $0 }
                     ),
+                    in: Date.now..., 
                     displayedComponents: .date
                 )
                 .labelsHidden()

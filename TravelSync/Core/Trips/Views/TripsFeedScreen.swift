@@ -109,7 +109,7 @@ private struct UpcomingTrips: View {
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
-                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 400, upcomingTrip: true, firstUpcomingTrip: true)
+                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 350, upcomingTrip: true, firstUpcomingTrip: true)
                     .padding(.horizontal, 25)
             }
             
@@ -280,7 +280,7 @@ private struct TripCard: View {
                                     
                                     Text(trip.dateRangeString)
                                 }
-                                .font(.system(size: firstUpcomingTrip ? 15 : 13, weight: .semibold))
+                                .font(.system(size: firstUpcomingTrip ? 14 : 13, weight: .semibold))
                                 .foregroundStyle(.white)
                                 
                                 Spacer()
