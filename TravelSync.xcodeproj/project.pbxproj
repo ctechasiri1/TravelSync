@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		517DA21E2FBC37C20015C45A /* GooglePlaces in Frameworks */ = {isa = PBXBuildFile; productRef = 517DA21D2FBC37C20015C45A /* GooglePlaces */; };
+		517DA2202FBC37C20015C45A /* GooglePlacesSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 517DA21F2FBC37C20015C45A /* GooglePlacesSwift */; };
 		519D64F62FA7D05B00772C70 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 519D64F52FA7D05B00772C70 /* Lottie */; };
 /* End PBXBuildFile section */
 
@@ -82,6 +84,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				519D64F62FA7D05B00772C70 /* Lottie in Frameworks */,
+				517DA21E2FBC37C20015C45A /* GooglePlaces in Frameworks */,
+				517DA2202FBC37C20015C45A /* GooglePlacesSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,6 +147,8 @@
 			name = TravelSync;
 			packageProductDependencies = (
 				519D64F52FA7D05B00772C70 /* Lottie */,
+				517DA21D2FBC37C20015C45A /* GooglePlaces */,
+				517DA21F2FBC37C20015C45A /* GooglePlacesSwift */,
 			);
 			productName = TravelSync;
 			productReference = 510725692F0374CB003E21C0 /* TravelSync.app */;
@@ -228,6 +234,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				517DA21C2FBC37C20015C45A /* XCRemoteSwiftPackageReference "ios-places-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 5107256A2F0374CB003E21C0 /* Products */;
@@ -608,6 +615,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		517DA21C2FBC37C20015C45A /* XCRemoteSwiftPackageReference "ios-places-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googlemaps/ios-places-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 10.13.0;
+			};
+		};
 		519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-ios";
@@ -619,6 +634,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		517DA21D2FBC37C20015C45A /* GooglePlaces */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 517DA21C2FBC37C20015C45A /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlaces;
+		};
+		517DA21F2FBC37C20015C45A /* GooglePlacesSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 517DA21C2FBC37C20015C45A /* XCRemoteSwiftPackageReference "ios-places-sdk" */;
+			productName = GooglePlacesSwift;
+		};
 		519D64F52FA7D05B00772C70 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 519D64F22FA7CFC100772C70 /* XCRemoteSwiftPackageReference "lottie-ios" */;
