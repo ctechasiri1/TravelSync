@@ -353,6 +353,6 @@ private struct AddTripButton: View {
 }
 
 #Preview {
-    TripsFeedScreen(viewModel: TripsFeedViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    TripsFeedScreen(viewModel: TripsFeedViewModel(tripService: TripService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }

@@ -123,6 +123,6 @@ struct SignUpScreen: View {
 }
 
 #Preview {
-    SignUpScreen(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    SignUpScreen(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }

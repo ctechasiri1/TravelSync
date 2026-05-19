@@ -8,21 +8,21 @@
 import Foundation
 
 final class ServiceContainer {
-    let networkService: NetworkRequestService
-    let keychainService: KeychainService
+    let networkManager: NetworkRequestManager
+    let keychainManager: KeychainManager
     
     let authService: UserAuthServiceProtocol
     let userService: UserServiceProtocol
     let tripService: TripServiceProtocol
     let expenseService: ExpenseServiceProtocol
     
-    init(networkService: NetworkRequestService = NetworkRequestService(), keychainService: KeychainService = KeychainService()) {
-        self.networkService = networkService
-        self.keychainService = keychainService
+    init(networkManager: NetworkRequestManager = NetworkRequestManager(), keychainManager: KeychainManager = KeychainManager()) {
+        self.networkManager = networkManager
+        self.keychainManager = keychainManager
         
-        self.authService = UserAuthService(networkService: networkService, keychainService: keychainService)
-        self.userService = UserService(networkService: networkService, keychainService: keychainService)
-        self.tripService = TripService(networkService: networkService, keychainService: keychainService)
-        self.expenseService = ExpenseService(networkService: networkService, keychainService: keychainService)
+        self.authService = UserAuthService(networkService: networkManager, keychainService: keychainManager)
+        self.userService = UserService(networkService: networkManager, keychainService: keychainManager)
+        self.tripService = TripService(networkService: networkManager, keychainService: keychainManager)
+        self.expenseService = ExpenseService(networkService: networkManager, keychainService: keychainManager)
     }
 }

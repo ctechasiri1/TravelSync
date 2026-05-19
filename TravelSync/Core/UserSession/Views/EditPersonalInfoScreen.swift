@@ -110,6 +110,6 @@ private struct EditCard: View {
 }
 
 #Preview {
-    EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }

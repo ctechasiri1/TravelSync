@@ -125,6 +125,6 @@ private struct SupportOptions: View {
 
 
 #Preview {
-    SettingsScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    SettingsScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }

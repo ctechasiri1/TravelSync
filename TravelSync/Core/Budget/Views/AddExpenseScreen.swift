@@ -194,8 +194,8 @@ private struct ReceiptUploadButton: View {
         trip: Trip.example,
         viewModel: AddExpenseViewModel(
             expenseService: ExpenseService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
+                networkService: NetworkRequestManager(),
+                keychainService: KeychainManager()
             )
         )
     )

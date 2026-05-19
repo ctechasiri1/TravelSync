@@ -99,6 +99,6 @@ private struct ExpenseItem: View {
 }
 
 #Preview {
-    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: Trip.example)
+    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestManager(), keychainService: KeychainManager()), tripService: TripService(networkService: NetworkRequestManager(), keychainService: KeychainManager())), trip: Trip.example)
         .environment(AppState())
 }

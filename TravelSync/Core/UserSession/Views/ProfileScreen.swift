@@ -178,6 +178,6 @@ private struct FuturePlansOptions: View {
 }
 
 #Preview {
-    ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }

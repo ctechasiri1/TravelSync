@@ -36,7 +36,14 @@ struct PlanNewTripScreen: View {
                 }
                 .padding(.vertical, 8)
                 
-                InputTextField(
+//                InputTextField(
+//                    text: $viewModel.locationName,
+//                    fieldTitle: "LOCATION",
+//                    fieldImage: "location.fill",
+//                    fieldContent: "City, airport, or hotel",
+//                    iconColor: .secondaryText
+//                )
+                LocationSearchField(
                     text: $viewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
@@ -142,6 +149,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
         .environment(AppState())
 }
