@@ -300,6 +300,6 @@ private struct RecentActivities: View {
 }
 
 #Preview {
-    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestManager(), keychainService: KeychainManager()), tripService: TripService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
+    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

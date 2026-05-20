@@ -1,5 +1,5 @@
 //
-//  KeychainManager.swift
+//  KeychainService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/23/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class KeychainManager: Sendable {
+final class KeychainService: Sendable {
     // THE ID: These two strings combine to make the unique identifier for the token
     private let service = "com.travelsync.token" /// 'folder'
     private let account = "authToken" /// 'file name'

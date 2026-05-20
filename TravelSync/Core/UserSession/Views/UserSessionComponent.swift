@@ -26,6 +26,6 @@ struct PreferencesOptions: View {
 }
 
 #Preview {
-    PreferencesOptions(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
+    PreferencesOptions(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

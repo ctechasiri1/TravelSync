@@ -5,7 +5,6 @@
 //  Created by Chiraphat Techasiri on 3/21/26.
 //
 
-import MapKit
 import SwiftUI
 
 struct ItineraryScreen: View {

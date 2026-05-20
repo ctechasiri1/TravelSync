@@ -9,11 +9,11 @@ import Foundation
 import UIKit
 
 actor ExpenseService: ExpenseServiceProtocol {
-    private let networkService: NetworkRequestManager
-    private let keychainService: KeychainManager
+    private let networkService: NetworkRequestService
+    private let keychainService: KeychainService
     private var activeTask: Task<[ExpensePrivateResponse], Error>?
     
-    init(networkService: NetworkRequestManager, keychainService: KeychainManager) {
+    init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }

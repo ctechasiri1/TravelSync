@@ -50,6 +50,7 @@ struct PlanNewTripScreen: View {
                     fieldContent: "City, airport, or hotel",
                     iconColor: .secondaryText
                 )
+                .zIndex(1)
                 .padding(.vertical, 8)
                 
                 InputTextField(
@@ -149,6 +150,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestManager(), keychainService: KeychainManager())))
+    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

@@ -131,8 +131,8 @@ private struct LoginIcon: View {
 #Preview {
     LoginScreen(viewModel: LoginViewModel(userAuthService:
                                             UserAuthService(
-                                                networkService: NetworkRequestManager(),
-                                                keychainService: KeychainManager()
+                                                networkService: NetworkRequestService(),
+                                                keychainService: KeychainService()
                                             )))
         .environment(AppState())
 }

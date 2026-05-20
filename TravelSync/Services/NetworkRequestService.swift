@@ -1,5 +1,5 @@
 //
-//  NetworkRequestManager.swift
+//  NetworkRequestService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/25/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkRequestManager: Sendable {
+final class NetworkRequestService: Sendable {
     // MARK: Sends the request and returns the response from FastAPI
     nonisolated func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
         do {
