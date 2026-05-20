@@ -60,16 +60,11 @@ struct CalendarScreen: View {
             .padding(.vertical)
             
             HStack {
-                Text(viewModel.selectedDay.formatted(format: "MMMM  EE dd"))
+                Text(viewModel.selectedDay.formatted(format: "MMMM, EE dd"))
                     .padding(.horizontal)
                     .font(.system(size: 18, weight: .semibold))
                 
                 Spacer()
-                
-                AddButton {
-                    
-                }
-                .padding(.horizontal)
             }
                 
             ScrollView {

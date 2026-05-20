@@ -27,7 +27,7 @@ final class LocationSearchService: NSObject, MKLocalSearchCompleterDelegate {
     }
     
     func update(queryFragement: String) {
-        completer.resultTypes = .pointOfInterest
+        completer.resultTypes = [.address]
         completer.queryFragment = queryFragement
     }
     

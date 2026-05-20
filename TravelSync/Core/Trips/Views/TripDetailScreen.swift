@@ -74,7 +74,7 @@ struct TripDetailScreen: View {
                     SquareCard(
                         title: "Itinerary",
                         value: "\(trip.dateDifference) Left",
-                        iconName: "map.fill",
+                        iconName: "backpack.fill",
                         iconColor: .orange,
                         arrowColor: .orange
                     ) {
@@ -82,9 +82,9 @@ struct TripDetailScreen: View {
                     }
                         
                     SquareCard(
-                        title: "Packing List",
+                        title: "Map",
                         value: "\(trip.dateDifference) Left",
-                        iconName: "backpack.fill",
+                        iconName: "map.fill",
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) {
@@ -112,7 +112,6 @@ struct TripDetailScreen: View {
                 CustomDeleteButton {
                     viewModel.enableDeleteAlert = true
                 }
-                .frame(width: 10, height: 10)
             }
             .sharedBackgroundVisibility(.hidden)
         }

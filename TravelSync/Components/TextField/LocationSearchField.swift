@@ -35,7 +35,7 @@ struct LocationSearchField: View {
                     TextField(text: $text) {
                         Text(fieldContent)
                     }
-                    .textCase(.lowercase)
+                    
                     .foregroundStyle(.primary)
                     .onSubmit {
                         selectedCompletion = false
@@ -61,10 +61,10 @@ struct LocationSearchField: View {
                         if !locationService.completions.isEmpty {
                             VStack(alignment: .leading) {
                                 ForEach(
-                                    locationService.completions.prefix(5)
+                                    locationService.completions.prefix(4)
                                 ) { completion in
                                     Button {
-                                        text = completion.title
+                                        text = completion.title + ", " + completion.subTitle
                                         selectedCompletion = true
                                     } label: {
                                         VStack(alignment: .leading) {
@@ -81,18 +81,21 @@ struct LocationSearchField: View {
                                                 .foregroundStyle(.secondaryText)
                                         }
                                         .padding(10)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
                                     }
                                 }
                             }
                             .padding()
                             .createCardBackgroud()
-                            .offset(y: 180)
+                            .offset(y: 150)
                         }
                     }
                 )
-                .onChange(of: text) {
-                    locationService.update(queryFragement: text)
-                }
+                .onChange(of: text, { oldValue, newValue in
+                    if !newValue.isEmpty {
+                        locationService.update(queryFragement: newValue)
+                    }
+                })
             }
         }
     }

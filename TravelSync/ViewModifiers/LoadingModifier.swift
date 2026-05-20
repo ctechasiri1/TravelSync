@@ -15,11 +15,11 @@ struct LoadingModifier: ViewModifier {
         ZStack {
             content
                 .disabled(isLoading)
-                .blur(radius: isLoading ? 3 : 0)
+                .blur(radius: isLoading ? 4 : 0)
             
             if isLoading {
                 ZStack {
-                    Color.gray.opacity(0.1)
+                    Color.gray.opacity(0.09)
                         .ignoresSafeArea()
                     
                     LottieView(animation: .named("travelsync-loading"))
