@@ -88,7 +88,7 @@ struct TripDetailScreen: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) {
-                        ItineraryScreen(events: Event.example)
+                        MapScreen()
                     }
                 }
                 .padding(.horizontal)

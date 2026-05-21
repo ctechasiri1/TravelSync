@@ -41,7 +41,7 @@ class AppState {
     }
     
     func makePlanNewTripViewModel() -> PlanNewTripViewModel {
-        PlanNewTripViewModel(tripService: services.tripService)
+        PlanNewTripViewModel(tripService: services.tripService, locationSearchService: services.locationSearchService)
     }
     
     func makeUserSessionViewModel() -> UserSessionViewModel {

@@ -7,17 +7,47 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "2E2AE81B-BAF3-4A5C-B15D-849059D807BE"
+            uuid = "821D09BD-0D83-46BC-A76B-8D9C091EBF0B"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TravelSync/Components/TextField/InputTextField.swift"
+            filePath = "TravelSync/Core/Trips/ViewModels/PlanNewTripViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "66"
-            endingLineNumber = "66"
-            landmarkName = "body"
-            landmarkType = "24">
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "addTrip()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "821D09BD-0D83-46BC-A76B-8D9C091EBF0B - 814e4eb0ee180087"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(1) suspend resume partial function for TravelSync.PlanNewTripViewModel.addTrip() async -&gt; ()"
+                  moduleName = "TravelSync.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Core/Trips/ViewModels/PlanNewTripViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50">
+               </Location>
+               <Location
+                  uuid = "821D09BD-0D83-46BC-A76B-8D9C091EBF0B - fc0a25055b83198"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "(2) await resume partial function for TravelSync.PlanNewTripViewModel.addTrip() async -&gt; ()"
+                  moduleName = "TravelSync.debug.dylib"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Core/Trips/ViewModels/PlanNewTripViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "50"
+                  endingLineNumber = "50">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

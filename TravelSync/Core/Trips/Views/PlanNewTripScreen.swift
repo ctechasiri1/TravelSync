@@ -5,6 +5,7 @@
 //  Created by Chiraphat Techasiri on 2/24/26.
 //
 
+import MapKit
 import SwiftUI
 
 struct PlanNewTripScreen: View {
@@ -36,20 +37,17 @@ struct PlanNewTripScreen: View {
                 }
                 .padding(.vertical, 8)
                 
-//                InputTextField(
-//                    text: $viewModel.locationName,
-//                    fieldTitle: "LOCATION",
-//                    fieldImage: "location.fill",
-//                    fieldContent: "City, airport, or hotel",
-//                    iconColor: .secondaryText
-//                )
                 LocationSearchField(
                     text: $viewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
-                    iconColor: .secondaryText
-                )
+                    iconColor: .secondaryText,
+                    completions: viewModel.locationSearchService.completions) {
+                        viewModel.resetCompletions()
+                    } onChangeAction: {
+                        viewModel.updateLocationSearchResults()
+                    }
                 .zIndex(1)
                 .padding(.vertical, 8)
                 
@@ -150,6 +148,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService()), locationSearchService: LocationSearchService(completer: MKLocalSearchCompleter())))
         .environment(AppState())
 }

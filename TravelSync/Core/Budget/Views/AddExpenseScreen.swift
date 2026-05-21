@@ -133,7 +133,7 @@ private struct ExpenseOptionButton: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            SquareIcon(
+            CircleIcon(
                 iconName: expense.imageName,
                 iconColor: isSelected ? .accentPrimary : .secondaryText
                     .opacity(0.5),

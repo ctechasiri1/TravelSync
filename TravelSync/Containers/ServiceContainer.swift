@@ -5,10 +5,12 @@
 //  Created by Chiraphat Techasiri on 4/15/26.
 //
 
+import MapKit
 import Foundation
 
 final class ServiceContainer {
     let netowrkService: NetworkRequestService
+    let locationSearchService: LocationSearchService
     let keychainService: KeychainService
     
     let authService: UserAuthServiceProtocol
@@ -16,9 +18,10 @@ final class ServiceContainer {
     let tripService: TripServiceProtocol
     let expenseService: ExpenseServiceProtocol
     
-    init(netowrkService: NetworkRequestService = NetworkRequestService(), keychainService: KeychainService = KeychainService()) {
+    init(netowrkService: NetworkRequestService = NetworkRequestService(), keychainService: KeychainService = KeychainService(), locationSearchService: LocationSearchService = LocationSearchService(completer: MKLocalSearchCompleter())) {
         self.netowrkService = netowrkService
         self.keychainService = keychainService
+        self.locationSearchService = locationSearchService
         
         self.authService = UserAuthService(networkService: netowrkService, keychainService: keychainService)
         self.userService = UserService(networkService: netowrkService, keychainService: keychainService)

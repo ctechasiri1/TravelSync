@@ -14,95 +14,89 @@ struct LocationSearchField: View {
     let fieldImage: String
     let fieldContent: String
     let iconColor: Color
+    let completions: [SearchCompletions]
+    let onSubmitAction: () -> ()
+    let onChangeAction: () -> ()
     
-    @State private var locationService = LocationSearchService(completer: .init())
     @State private var selectedCompletion: Bool = false
     
     var body: some View {
-        VStack {
-            VStack(alignment: .leading) {
-                Text(fieldTitle)
-                    .foregroundStyle(Color.primaryText)
-                    .font(.system(size: 15, weight: .semibold))
-                    .padding(.leading, 5)
-                
-                HStack {
-                    if text.isEmpty {
-                        Image(systemName: fieldImage)
-                            .foregroundStyle(iconColor)
-                    }
-                    
-                    TextField(text: $text) {
-                        Text(fieldContent)
-                    }
-                    
-                    .foregroundStyle(.primary)
-                    .onSubmit {
-                        selectedCompletion = false
-                        locationService.completions = []
-                    }
+        VStack(alignment: .leading) {
+            Text(fieldTitle)
+                .foregroundStyle(Color.primaryText)
+                .font(.system(size: 15, weight: .semibold))
+                .padding(.leading, 5)
+            
+            
+            HStack {
+                if text.isEmpty {
+                    Image(systemName: fieldImage)
+                        .foregroundStyle(iconColor)
                 }
-                .padding()
-                .background(
-                    RoundedRectangle(cornerRadius: 30)
-                        .stroke(
-                            Color.secondaryText.opacity(0.2),
-                            style: StrokeStyle(lineWidth: 1)
-                        )
-                )
-                .overlay(
-                    VStack {
-                        RoundedRectangle(cornerRadius: 30)
-                            .stroke(
-                                Color.secondaryText.opacity(0),
-                                style: StrokeStyle(lineWidth: 1)
-                            )
-
-                        if !locationService.completions.isEmpty {
-                            VStack(alignment: .leading) {
-                                ForEach(
-                                    locationService.completions.prefix(4)
-                                ) { completion in
-                                    Button {
-                                        text = completion.title + ", " + completion.subTitle
-                                        selectedCompletion = true
-                                    } label: {
-                                        VStack(alignment: .leading) {
-                                            Text(completion.title)
-                                                .font(
-                                                    .system(
-                                                        size: 14,
-                                                        weight: .semibold
-                                                    )
+                
+                TextField(text: $text) {
+                    Text(fieldContent)
+                }
+                .foregroundStyle(.primary)
+                .onSubmit {
+                    onSubmitAction()
+                    selectedCompletion = false
+                }
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(
+                        Color.secondaryText.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 1)
+                    )
+            )
+            .overlay(alignment: .top, content: {
+                VStack {
+                    if !completions.isEmpty {
+                        VStack(alignment: .leading) {
+                            ForEach(
+                                completions.prefix(4)
+                            ) { completion in
+                                Button {
+                                    text = completion.title + ", " + completion.subTitle
+                                    selectedCompletion = true
+                                } label: {
+                                    VStack(alignment: .leading) {
+                                        Text(completion.title)
+                                            .font(
+                                                .system(
+                                                    size: 14,
+                                                    weight: .semibold
                                                 )
-                                                .foregroundStyle(.black)
-                                            Text(completion.subTitle)
-                                                .font(.system(size: 10))
-                                                .foregroundStyle(.secondaryText)
-                                        }
-                                        .padding(10)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                            )
+                                            .foregroundStyle(.black)
+                                        Text(completion.subTitle)
+                                            .font(.system(size: 10))
+                                            .foregroundStyle(.secondaryText)
                                     }
+                                    .padding(10)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                             }
-                            .padding()
-                            .createCardBackgroud()
-                            .offset(y: 150)
                         }
+                        .padding()
+                        .createCardBackgroud()
+                        .padding(.top, 55)
                     }
-                )
-                .onChange(of: text, { oldValue, newValue in
-                    if !newValue.isEmpty {
-                        locationService.update(queryFragement: newValue)
-                    }
-                })
-            }
+                }
+            })
+            .onChange(of: text, { oldValue, newValue in
+                if !newValue.isEmpty {
+                    onChangeAction()
+                }
+            })
         }
     }
 }
 
-#Preview {
-    @Previewable @State var exampleText: String = ""
-    
-    LocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary)
-}
+//#Preview {
+//    @Previewable @State var exampleText: String = ""
+//    
+//    LocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary, locationService: LocationSearchService(completer: MKLocalSearchCompleter()))
+//}

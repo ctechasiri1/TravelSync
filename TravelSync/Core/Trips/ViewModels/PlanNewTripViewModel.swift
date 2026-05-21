@@ -5,6 +5,7 @@
 //  Created by Chiraphat Techasiri on 4/12/26.
 //
 
+import MapKit
 import Observation
 import Foundation
 import SwiftUI
@@ -17,15 +18,18 @@ class PlanNewTripViewModel {
     var isFavorite: Bool = false
     var startDate: Date? = nil
     var endDate: Date? = nil
+    var coordinate: CLLocationCoordinate2D? = nil
     var coverUIImage: UIImage? = nil
     
     var pushNotificationsIsOn: Bool = true
     var isNetworkActive: Bool = false
     
+    let locationSearchService: LocationSearchService
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol) {
+    init(tripService: TripServiceProtocol, locationSearchService: LocationSearchService) {
         self.tripService = tripService
+        self.locationSearchService = locationSearchService
     }
     
     var canCreateTrip: Bool {
@@ -42,6 +46,8 @@ class PlanNewTripViewModel {
         defer { isNetworkActive = false }
         
         isNetworkActive = true
+        
+        await searchLocationCoordinates(locationName)
         
         do {
             guard let start = startDate, let end = endDate else {
@@ -75,6 +81,23 @@ class PlanNewTripViewModel {
         } catch {
             print("There was an unexpected error.")
         }
+    }
+    
+    func updateLocationSearchResults() {
+        locationSearchService.update(queryFragement: locationName)
+    }
+    
+    func searchLocationCoordinates(_ location: String) async {
+        do {
+            let coordinates = try await locationSearchService.search(with: locationName)
+            coordinate = coordinates.first?.location
+        } catch {
+            print("There was an error starting the MKLocalSearch Engine.")
+        }
+    }
+    
+    func resetCompletions() {
+        locationSearchService.completions = []
     }
     
     func resetForm() -> Void {

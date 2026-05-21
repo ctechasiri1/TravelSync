@@ -50,7 +50,7 @@ struct CustomDatePicker: View {
                 .labelsHidden()
                 .colorMultiply(.clear)
                 .compositingGroup()
-                .scaleEffect(x: 10, y: 1.5)
+                .scaleEffect(x: 3, y: 1.5)
             }
         }
         .padding(.vertical)
