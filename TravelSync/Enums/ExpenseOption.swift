@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 enum ExpenseOption: Int, CaseIterable, Identifiable {
-    case resturant, transport, shopping, hotel, activities
+    case resturant, transport, shopping, activities
     
     init(fromRawValue: Int) {
         self = ExpenseOption(rawValue: fromRawValue) ?? .resturant
@@ -20,13 +20,11 @@ enum ExpenseOption: Int, CaseIterable, Identifiable {
     var title: String {
         switch self {
         case .resturant:
-            "Restaurant"
+            "Food & Dining"
         case .transport:
             "Transport"
         case .shopping:
             "Shopping"
-        case .hotel:
-            "Hotel"
         case .activities:
             "Activities"
         }
@@ -40,8 +38,6 @@ enum ExpenseOption: Int, CaseIterable, Identifiable {
             "car.fill"
         case .shopping:
             "bag.fill"
-        case .hotel:
-            "bed.double.fill"
         case .activities:
             "ticket.fill"
         }
@@ -55,8 +51,6 @@ enum ExpenseOption: Int, CaseIterable, Identifiable {
             .accentConfirmation
         case .shopping:
             .orange
-        case .hotel:
-            .accentPrimary
         case .activities:
             .purple
         }

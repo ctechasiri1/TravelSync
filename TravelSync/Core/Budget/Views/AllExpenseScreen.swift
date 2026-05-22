@@ -10,11 +10,11 @@ import SwiftUI
 struct AllExpenseScreen: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: BudgetViewModel
-    let trip: Trip
+    @Binding var trip: Trip
     
-    init(viewModel: BudgetViewModel, trip: Trip) {
+    init(viewModel: BudgetViewModel, trip: Binding<Trip>) {
         _viewModel = State(wrappedValue: viewModel)
-        self.trip = trip
+        _trip = trip
     }
     var body: some View {
         List {
@@ -98,7 +98,7 @@ private struct ExpenseItem: View {
     }
 }
 
-#Preview {
-    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: Trip.example)
-        .environment(AppState())
-}
+//#Preview {
+//    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: Trip.example)
+//        .environment(AppState())
+//}

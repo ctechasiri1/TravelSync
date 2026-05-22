@@ -65,6 +65,7 @@ struct SignUpScreen: View {
                             iconColor: .gray
                         )
                     }
+                    .textInputAutocapitalization(.never)
                         
                     MultipurposeButton(
                         text: "Sign Up",

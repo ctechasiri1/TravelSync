@@ -48,6 +48,8 @@ class TripsFeedViewModel {
                         id: $0.id,
                         tripName: $0.tripName,
                         location: $0.location,
+                        longitude: $0.longitude,
+                        latitude: $0.latitude,
                         budget: $0.budget,
                         totalSpending: $0.totalSpending,
                         isFavorite: $0.isFavorite,

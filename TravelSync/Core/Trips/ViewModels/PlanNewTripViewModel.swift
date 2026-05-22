@@ -59,9 +59,15 @@ class PlanNewTripViewModel {
                 throw TripError.emptyLocation
             }
             
+            guard let longtitude = coordinate?.longitude, let latitude = coordinate?.latitude else {
+                throw TripError.missingCoordinates
+            }
+            
             let newTrip = TripCreateRequest(
                 tripName: tripName,
                 location: locationName,
+                longitude: longtitude,
+                latitude: latitude,
                 budget: budget ?? 0,
                 isFavorite: false,
                 startDate: start,
@@ -76,6 +82,8 @@ class PlanNewTripViewModel {
             print(TripError.missingDates.errorDescription)
         } catch TripError.emptyLocation {
             print(TripError.emptyLocation.errorDescription)
+        } catch TripError.missingCoordinates {
+            print(TripError.missingCoordinates.errorDescription)
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

@@ -13,11 +13,11 @@ struct AddExpenseScreen: View {
     @State private var textWidth = 10.0
     @State private var viewModel: AddExpenseViewModel
     
-    let trip: Trip
+    @Binding var trip: Trip
     
-    init(trip: Trip, viewModel: AddExpenseViewModel) {
+    init(viewModel: AddExpenseViewModel, trip: Binding<Trip>) {
         _viewModel = State(wrappedValue: viewModel)
-        self.trip = trip
+        _trip = trip
     }
     
     var body: some View {
@@ -189,15 +189,15 @@ private struct ReceiptUploadButton: View {
     }
 }
 
-#Preview {
-    AddExpenseScreen(
-        trip: Trip.example,
-        viewModel: AddExpenseViewModel(
-            expenseService: ExpenseService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            )
-        )
-    )
-    .environment(AppState())
-}
+//#Preview {
+//    AddExpenseScreen(
+//        trip: Trip.example,
+//        viewModel: AddExpenseViewModel(
+//            expenseService: ExpenseService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            )
+//        )
+//    )
+//    .environment(AppState())
+//}

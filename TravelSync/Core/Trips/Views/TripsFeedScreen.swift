@@ -109,7 +109,7 @@ private struct UpcomingTrips: View {
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
-                TripCard(viewModel: viewModel, trip: firstUpcomingTrip, height: 350, upcomingTrip: true, firstUpcomingTrip: true)
+                TripCard(trip: firstUpcomingTrip, viewModel: viewModel, height: 350, upcomingTrip: true, firstUpcomingTrip: true)
                     .padding(.horizontal, 25)
             }
             
@@ -121,7 +121,7 @@ private struct UpcomingTrips: View {
             }
             
             ForEach(upcomingTrips.dropFirst()) { trip in
-                TripCard(viewModel: viewModel, trip: trip, height: 250, upcomingTrip: true)
+                TripCard(trip: trip, viewModel: viewModel, height: 250, upcomingTrip: true)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 25)
             }
@@ -166,7 +166,7 @@ private struct PastTrips: View {
                 .padding(.leading, 20)
             
             ForEach(pastTrips) { trip in
-                TripCard(viewModel: viewModel, trip: trip, height: 300, upcomingTrip: false)
+                TripCard(trip: trip, viewModel: viewModel, height: 300, upcomingTrip: false)
                     .padding(.bottom, 20)
                     .padding(.horizontal, 25)
             }
@@ -197,12 +197,13 @@ private struct PastTrips: View {
 
 private struct TripCard: View {
     @Environment(AppState.self) private var appState
-    @State private var isFavorite: Bool = false
+    @State var trip: Trip
     let viewModel: TripsFeedViewModel
-    let trip: Trip
     let height: CGFloat
     let upcomingTrip: Bool
     var firstUpcomingTrip: Bool = false
+    
+    @State private var isFavorite: Bool = false
 
     var body: some View {
         VStack {
@@ -286,7 +287,7 @@ private struct TripCard: View {
                                 Spacer()
                                 
                                 DetailsButton {
-                                    TripDetailScreen(viewModel: appState.makeTripDetailViewModel(), trip: trip, upcomingTrip: upcomingTrip)
+                                    TripDetailScreen(viewModel: appState.makeTripDetailViewModel(), trip: $trip, upcomingTrip: upcomingTrip)
                                 }
                             }
                             .padding(.horizontal)

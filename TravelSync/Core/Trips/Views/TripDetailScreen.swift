@@ -12,12 +12,12 @@ struct TripDetailScreen: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: TripDetailViewModel
     
-    let trip: Trip
+    @Binding var trip: Trip
     let upcomingTrip: Bool
     
-    init(viewModel: TripDetailViewModel, trip: Trip, upcomingTrip: Bool) {
+    init(viewModel: TripDetailViewModel, trip: Binding<Trip>, upcomingTrip: Bool) {
         _viewModel = State(wrappedValue: viewModel)
-        self.trip = trip
+        _trip = trip
         self.upcomingTrip = upcomingTrip
     }
     
@@ -88,7 +88,7 @@ struct TripDetailScreen: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) {
-                        MapScreen()
+                        MapScreen(trip: trip)
                     }
                 }
                 .padding(.horizontal)
@@ -100,7 +100,7 @@ struct TripDetailScreen: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(trip: trip, viewModel: appState.makeBudgetViewModel(tripId: trip.id))
+                    BudgetScreen(viewModel: appState.makeBudgetViewModel(), trip: $trip)
                 }
                 .padding()
             }
@@ -257,10 +257,10 @@ private struct TripBudgetCard<T: View>: View {
     }
 }
 
-#Preview {
-    TripDetailScreen(
-        viewModel: AppState().makeTripDetailViewModel(),
-        trip: Trip.example,
-        upcomingTrip: true)
-        .environment(AppState())
-}
+//#Preview {
+//    TripDetailScreen(
+//        viewModel: AppState().makeTripDetailViewModel(),
+//        trip: Trip.example,
+//        upcomingTrip: true)
+//        .environment(AppState())
+//}

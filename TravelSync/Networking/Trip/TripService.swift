@@ -43,6 +43,8 @@ actor TripService: TripServiceProtocol {
         let fields: [(String, String)] = [
             ("title", trip.tripName),
             ("location", trip.location),
+            ("longitude", String(trip.longitude)),
+            ("latitude", String(trip.latitude)),
             ("start_date", isoFormatter.string(from: trip.startDate)),
             ("end_date", isoFormatter.string(from: trip.endDate)),
             ("budget", String(trip.budget)),

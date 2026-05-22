@@ -28,10 +28,8 @@ class BudgetViewModel {
     
     private let expenseService: ExpenseServiceProtocol
     private let tripsService: TripServiceProtocol
-    private let tripId: Int
     
-    init(tripId: Int, expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol) {
-        self.tripId = tripId
+    init(expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol) {
         self.expenseService = expenseService
         self.tripsService = tripService
     }
@@ -71,6 +69,8 @@ class BudgetViewModel {
                     id: tripPayload.id,
                     tripName: tripPayload.tripName,
                     location: tripPayload.location,
+                    longitude: tripPayload.longitude,
+                    latitude: tripPayload.latitude,
                     budget: tripPayload.budget,
                     totalSpending: tripPayload.totalSpending,
                     isFavorite: tripPayload.isFavorite,
@@ -86,10 +86,11 @@ class BudgetViewModel {
         }
     }
 
-    func getExpenses() async -> Void {
+    func getExpenses(tripId: Int) async -> Void {
         do {
             var fetchedExpenses: [Expense] = []
             let expensePayload = try await expenseService.getExpenses(tripId: tripId)
+            await getTrip(tripId: tripId)
             await MainActor.run {
                 for expenseDTO in expensePayload {
                     let expenseDomain = Expense(
@@ -118,7 +119,7 @@ class BudgetViewModel {
         
         do {
             let _ = try await (Task.sleep(nanoseconds: 500_000_000), expenseService.deleteExpense(tripId: tripId, expenseId: expenseId))
-            await getExpenses()
+            await getExpenses(tripId: tripId)
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

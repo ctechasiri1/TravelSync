@@ -67,6 +67,7 @@ struct PlanNewTripScreen: View {
                     fieldContent: "e.g. 10,000",
                     iconColor: .secondaryText
                 )
+                .keyboardType(.decimalPad)
                 .padding(.vertical, 8)
                 
                 HStack {

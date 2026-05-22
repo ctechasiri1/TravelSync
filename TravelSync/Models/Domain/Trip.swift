@@ -13,6 +13,8 @@ struct Trip: Identifiable, Equatable {
     let id: Int
     let tripName: String
     let location: String
+    let longitude: Double
+    let latitude: Double
     let budget: Int
     let totalSpending: Int
     let isFavorite: Bool
@@ -26,6 +28,8 @@ struct Trip: Identifiable, Equatable {
             id: 1,
             tripName: "Mango Sticky Rice Summer",
             location: "Bangkok, Thailand",
+            longitude: 13.7563,
+            latitude: 100.5018,
             budget: 5000,
             totalSpending: 30,
             isFavorite: true,

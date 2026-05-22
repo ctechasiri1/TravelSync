@@ -10,6 +10,8 @@ import Foundation
 struct TripCreateRequest {
     let tripName: String
     let location: String
+    let longitude: Double
+    let latitude: Double
     let budget: Int
     let isFavorite: Bool
     let startDate: Date

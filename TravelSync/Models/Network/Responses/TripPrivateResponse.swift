@@ -11,6 +11,8 @@ struct TripPrivateResponse: nonisolated Codable, Sendable {
     let id: Int
     let tripName: String
     let location: String
+    let longitude: Double
+    let latitude: Double
     let totalSpending: Int
     let budget: Int
     let isFavorite: Bool
@@ -19,15 +21,17 @@ struct TripPrivateResponse: nonisolated Codable, Sendable {
     let imageURLString: String
     
     enum CodingKeys: String, CodingKey {
-            case id
-            case tripName = "title"
-            case location
-            case totalSpending = "total_spending"
-            case budget
-            case isFavorite = "is_favorite"
-            case startDateString = "start_date"
-            case endDateString = "end_date"
-            case imageURLString = "cover_image_url"
+        case id
+        case tripName = "title"
+        case location
+        case longitude
+        case latitude
+        case totalSpending = "total_spending"
+        case budget
+        case isFavorite = "is_favorite"
+        case startDateString = "start_date"
+        case endDateString = "end_date"
+        case imageURLString = "cover_image_url"
         }
 }
 
