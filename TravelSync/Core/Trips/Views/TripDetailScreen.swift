@@ -57,7 +57,7 @@ struct TripDetailScreen: View {
                         
                     TripInformationCard(
                         title: trip.city,
-                        value: "18 ℃",
+                        value: viewModel.temperature,
                         iconName: "sun.max.trianglebadge.exclamationmark.fill",
                         iconColor: .accentPrimary,
                         textColor: .black
@@ -107,6 +107,9 @@ struct TripDetailScreen: View {
         }
         .navigationTitle("\(trip.tripName)")
         .navigationBarTitleDisplayMode(.inline)
+        .task {
+            await viewModel.getWeather(longitude: trip.longitude, latitude: trip.latitude)
+        }
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
                 CustomDeleteButton {
@@ -257,10 +260,10 @@ private struct TripBudgetCard<T: View>: View {
     }
 }
 
-//#Preview {
-//    TripDetailScreen(
-//        viewModel: AppState().makeTripDetailViewModel(),
-//        trip: Trip.example,
-//        upcomingTrip: true)
-//        .environment(AppState())
-//}
+#Preview {
+    TripDetailScreen(
+        viewModel: AppState().makeTripDetailViewModel(),
+        trip: .constant(Trip.example),
+        upcomingTrip: true)
+        .environment(AppState())
+}

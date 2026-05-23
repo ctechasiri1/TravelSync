@@ -24,12 +24,12 @@ class PlanNewTripViewModel {
     var pushNotificationsIsOn: Bool = true
     var isNetworkActive: Bool = false
     
-    let locationSearchService: LocationSearchService
+    private let locationSearchManager: LocationSearchManager
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol, locationSearchService: LocationSearchService) {
+    init(tripService: TripServiceProtocol, locationSearchManager: LocationSearchManager) {
         self.tripService = tripService
-        self.locationSearchService = locationSearchService
+        self.locationSearchManager = locationSearchManager
     }
     
     var canCreateTrip: Bool {
@@ -91,13 +91,17 @@ class PlanNewTripViewModel {
         }
     }
     
+    func getCompletions() -> [SearchCompletions] {
+        return locationSearchManager.completions
+    }
+    
     func updateLocationSearchResults() {
-        locationSearchService.update(queryFragement: locationName)
+        locationSearchManager.update(queryFragement: locationName)
     }
     
     func searchLocationCoordinates(_ location: String) async {
         do {
-            let coordinates = try await locationSearchService.search(with: locationName)
+            let coordinates = try await locationSearchManager.search(with: locationName)
             coordinate = coordinates.first?.location
         } catch {
             print("There was an error starting the MKLocalSearch Engine.")
@@ -105,7 +109,7 @@ class PlanNewTripViewModel {
     }
     
     func resetCompletions() {
-        locationSearchService.completions = []
+        locationSearchManager.completions = []
     }
     
     func resetForm() -> Void {

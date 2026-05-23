@@ -1,5 +1,5 @@
 //
-//  LocationSearchService.swift
+//  LocationSearchManager.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/19/26.
@@ -9,27 +9,8 @@ import MapKit
 import Observation
 import Foundation
 
-struct SearchCompletions: Identifiable {
-    let id = UUID()
-    let title: String
-    let subTitle: String
-}
-
-struct SearchResult: Identifiable, Hashable {
-    let id = UUID()
-    let location: CLLocationCoordinate2D
-    
-    static func == (lhs: SearchResult, rhs: SearchResult) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
 @Observable
-final class LocationSearchService: NSObject, MKLocalSearchCompleterDelegate {
+final class LocationSearchManager: NSObject, MKLocalSearchCompleterDelegate {
     private let completer: MKLocalSearchCompleter
     var completions = [SearchCompletions]()
     

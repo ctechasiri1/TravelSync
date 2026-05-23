@@ -95,8 +95,12 @@ struct LocationSearchField: View {
     }
 }
 
-//#Preview {
-//    @Previewable @State var exampleText: String = ""
-//    
-//    LocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary, locationService: LocationSearchService(completer: MKLocalSearchCompleter()))
-//}
+#Preview {
+    @Previewable @State var exampleText: String = ""
+    
+    LocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary, completions: []) {
+        
+    } onChangeAction: {
+        
+    }
+}

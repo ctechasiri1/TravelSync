@@ -15,9 +15,11 @@ class AppState {
     var isDarkModeEnabled: Bool = false
     
     let services: ServiceContainer
+    let managers: ManagerContainer
     
-    init(services: ServiceContainer = ServiceContainer()) {
+    init(services: ServiceContainer = ServiceContainer(), managers: ManagerContainer = ManagerContainer()) {
         self.services = services
+        self.managers = managers
     }
     
     func navigate(to flow: LoginState) {
@@ -37,11 +39,11 @@ class AppState {
     }
     
     func makeTripDetailViewModel() -> TripDetailViewModel {
-        TripDetailViewModel(tripService: services.tripService)
+        TripDetailViewModel(tripService: services.tripService, weatherManager: managers.weatherManager)
     }
     
     func makePlanNewTripViewModel() -> PlanNewTripViewModel {
-        PlanNewTripViewModel(tripService: services.tripService, locationSearchService: services.locationSearchService)
+        PlanNewTripViewModel(tripService: services.tripService, locationSearchManager: managers.locationSearchManager)
     }
     
     func makeUserSessionViewModel() -> UserSessionViewModel {

@@ -43,7 +43,7 @@ struct PlanNewTripScreen: View {
                     fieldImage: "location.fill",
                     fieldContent: "City, airport, or hotel",
                     iconColor: .secondaryText,
-                    completions: viewModel.locationSearchService.completions) {
+                    completions: viewModel.getCompletions()) {
                         viewModel.resetCompletions()
                     } onChangeAction: {
                         viewModel.updateLocationSearchResults()
@@ -149,6 +149,6 @@ private struct CreateTripButton: View {
 }
 
 #Preview {
-    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService()), locationSearchService: LocationSearchService(completer: MKLocalSearchCompleter())))
+    PlanNewTripScreen(viewModel: PlanNewTripViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService()), locationSearchManager: LocationSearchManager(completer: MKLocalSearchCompleter())))
         .environment(AppState())
 }

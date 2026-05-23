@@ -26,7 +26,7 @@ struct BudgetScreen: View {
                 .font(.system(.title2, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            LazyVGrid(columns: [GridItem(.flexible(minimum: 100, maximum: .infinity)), GridItem(.flexible(minimum: 100, maximum: .infinity))], spacing: 10) {
+            LazyVGrid(columns: [GridItem(.flexible(minimum: 100, maximum: .infinity)), GridItem(.flexible(minimum: 100, maximum: .infinity))], spacing: 15) {
                 ForEach(ExpenseOption.allCases) { expenseType in
                     ExpenseBreakdownOption(
                         title: expenseType.title,
@@ -84,7 +84,7 @@ struct BudgetScreen: View {
                 await viewModel.getExpenses(tripId: trip.id)
             }
         }, content: {
-            AddExpenseScreen(viewModel: appState.makeAddExpenseViewModel(), trip: $trip)
+            AddExpenseScreen(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
         })
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
@@ -222,7 +222,7 @@ private struct ExpenseBreakdownOption: View {
     let totalSpend: Int
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 5) {
             HStack {
                 CircleIcon(
                     iconName: iconName,
@@ -236,7 +236,7 @@ private struct ExpenseBreakdownOption: View {
             }
             
             Text(title)
-                .font(.system(size: 14, weight: .semibold))
+                .font(.system(size: 14))
 
             VStack(alignment: .leading, spacing: 5) {
                 Text("$" + Double(amount).toString)
@@ -249,7 +249,7 @@ private struct ExpenseBreakdownOption: View {
         }
         .padding()
         .createCardBackgroud()
-        .padding(.horizontal, 2)
+        .padding(.horizontal, 5)
     }
 }
 
@@ -298,7 +298,7 @@ private struct RecentActivities: View {
     }
 }
 
-//#Preview {
-//    BudgetScreen(trip: Trip.example, viewModel: BudgetViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-//        .environment(AppState())
-//}
+#Preview {
+    BudgetScreen(viewModel: BudgetViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: .constant(Trip.example))
+        .environment(AppState())
+}
