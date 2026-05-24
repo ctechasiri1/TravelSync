@@ -112,6 +112,7 @@ struct LoginScreen: View {
                 }
             }
         }
+        .showToast(toastOption: viewModel.didLoginSucceed ? .success : .failure, text: "Login")
     }
 }
 

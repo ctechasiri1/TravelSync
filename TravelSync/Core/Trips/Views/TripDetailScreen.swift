@@ -49,7 +49,7 @@ struct TripDetailScreen: View {
                 HStack(spacing: 20){
                     TripInformationCard(
                         title: "STATUS",
-                        value: "\(trip.dateDifference)",
+                        value: trip.dateDifference.capitalized,
                         iconName: "gauge.with.needle.fill",
                         iconColor: .accentPrimary,
                         textColor: .black
@@ -57,8 +57,8 @@ struct TripDetailScreen: View {
                         
                     TripInformationCard(
                         title: trip.city,
-                        value: viewModel.temperature,
-                        iconName: "sun.max.trianglebadge.exclamationmark.fill",
+                        value: "\(viewModel.temperature) °C",
+                        iconName: viewModel.weatherIconName,
                         iconColor: .accentPrimary,
                         textColor: .black
                     )
@@ -87,7 +87,7 @@ struct TripDetailScreen: View {
                         iconName: "map.fill",
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
-                    ) {
+                    ) { 
                         MapScreen(trip: trip)
                     }
                 }
@@ -155,9 +155,10 @@ private struct TripImageOverlay: View {
                     Text(trip.dateRangeString)
                     
                     Image(systemName: "circle.fill")
-                        .imageScale(.small)
+                        .resizable()
+                        .frame(width: 5, height: 5)
                     
-                    Text(trip.dateDifference)
+                    Text(trip.dateDifference.capitalized)
                 }
                 .font(.subheadline)
             }
@@ -177,29 +178,28 @@ private struct TripInformationCard: View {
     
     var body: some View {
         OptionsCard(title: "") {
-            HStack {
-                VStack(alignment: .leading, spacing: 5) {
-                    Text(title)
-                        .foregroundStyle(.secondaryText)
-                        .font(.system(size: 12, weight: .semibold))
+            VStack(alignment: .leading, spacing: 5) {
+                Text(title)
+                    .foregroundStyle(.secondaryText)
+                    .font(.system(size: 12, weight: .semibold))
                     
+                HStack {
                     Text(value)
                         .font(.system(size: 18, weight: .semibold))
                         .foregroundStyle(textColor)
+                        
+                    Spacer()
+                        
+                    CircleIcon(
+                        iconName: iconName,
+                        iconColor: iconColor,
+                        width: 35,
+                        height: 35
+                    )
+                    .padding(.trailing, 5)
                 }
-                .padding(5)
-                
-                Spacer()
-                
-                CircleIcon(
-                    iconName: iconName,
-                    iconColor: iconColor,
-                    width: 35,
-                    height: 35
-                )
-                .padding(.trailing, 5)
             }
-            .padding(12)
+            .padding()
         }
     }
 }

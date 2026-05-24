@@ -10,10 +10,8 @@ import Foundation
 
 final class ManagerContainer {
     let locationSearchManager: LocationSearchManager
-    let weatherManager: WeatherManager
     
-    init(locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter()), weatherManger: WeatherManager = WeatherManager()) {
+    init(locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter())) {
         self.locationSearchManager = locationSearchManager
-        self.weatherManager = weatherManger
     }
 }

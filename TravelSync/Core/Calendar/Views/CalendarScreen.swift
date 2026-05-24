@@ -87,16 +87,6 @@ struct EventCard: View {
         OptionsCard(title: "") {
             HStack {
                 VStack {
-                    Image(systemName: "ellipsis")
-                    Image(systemName: "ellipsis")
-                }
-                .frame(width: 0)
-                .foregroundStyle(.secondaryText.opacity(0.4))
-                .font(.system(size: 20))
-                .rotationEffect(Angle(degrees: 90))
-                .padding()
-                
-                VStack {
                     Text("12:00")
                         .foregroundStyle(.primaryText)
                         .font(.system(size: 14, weight: .semibold))

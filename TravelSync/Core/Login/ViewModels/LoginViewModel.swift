@@ -14,6 +14,7 @@ class LoginViewModel {
     var password: String = ""
 
     var showErrorAlert: Bool = false
+    var loginSuccessful: Bool = false
     var errorMessage: String?
     
     var didLoginSucceed: Bool = false
@@ -32,9 +33,12 @@ class LoginViewModel {
             let _ = try await userAuthService.login(requestBody: request)
             
             didLoginSucceed = true
+            loginSuccessful = true
         } catch let error as APIError {
+            loginSuccessful = false
             print("There was a network error: \(error).")
         } catch {
+            loginSuccessful = false
             print("There was an unexpected error.")
         }
     }

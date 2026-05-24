@@ -39,7 +39,7 @@ class AppState {
     }
     
     func makeTripDetailViewModel() -> TripDetailViewModel {
-        TripDetailViewModel(tripService: services.tripService, weatherManager: managers.weatherManager)
+        TripDetailViewModel(tripService: services.tripService, weatherKitService: services.weatherKitService)
     }
     
     func makePlanNewTripViewModel() -> PlanNewTripViewModel {

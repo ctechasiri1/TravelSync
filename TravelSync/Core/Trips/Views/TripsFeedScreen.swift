@@ -229,7 +229,7 @@ private struct TripCard: View {
                         HStack {
                             Image(systemName: "clock.fill")
                             
-                            Text(trip.dateDifference)
+                            Text(trip.dateDifference.capitalized)
                         }
                         .font(.system(.subheadline, weight: .semibold))
                         .padding(.vertical, 10)
@@ -281,7 +281,7 @@ private struct TripCard: View {
                                     
                                     Text(trip.dateRangeString)
                                 }
-                                .font(.system(size: firstUpcomingTrip ? 14 : 13, weight: .semibold))
+                                .font(.system(size: 14, weight: .semibold))
                                 .foregroundStyle(.white)
                                 
                                 Spacer()

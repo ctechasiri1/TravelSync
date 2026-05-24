@@ -7,67 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "90C0FDBE-8A28-4061-B1FF-35744D273652"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TravelSync/Managers/WeatherManager.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "fetch(for:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "90C0FDBE-8A28-4061-B1FF-35744D273652 - 11b186cfd61d4dbe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21">
-               </Location>
-               <Location
-                  uuid = "90C0FDBE-8A28-4061-B1FF-35744D273652 - 11b186cfd61d4dbe"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21">
-               </Location>
-               <Location
-                  uuid = "90C0FDBE-8A28-4061-B1FF-35744D273652 - d930ed1d270213bd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8DF803FB-A5AC-4791-BE23-A5539262B74D"
+            uuid = "5E17372C-C6AB-4EDE-85E2-8F36AA2B925A"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -78,64 +18,22 @@
             endingLineNumber = "18"
             landmarkName = "fetch(for:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8DF803FB-A5AC-4791-BE23-A5539262B74D - d930ed1d27021350"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(3) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "8DF803FB-A5AC-4791-BE23-A5539262B74D - 6835b778c8db5756"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(1) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "8DF803FB-A5AC-4791-BE23-A5539262B74D - acb624118613f7ec"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(2) await resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-               <Location
-                  uuid = "8DF803FB-A5AC-4791-BE23-A5539262B74D - 11b186cfd61d4d53"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(4) suspend resume partial function for TravelSync.WeatherManager.fetch(for: __C.CLLocation) async throws -&gt; Swift.String"
-                  moduleName = "TravelSync.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/chiraphattechasiri/Desktop/IOS%20Projects/TravelSync/TravelSync/Managers/WeatherManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "18"
-                  endingLineNumber = "18">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5F1CFF27-826D-4C5D-B742-99E1F1F16A96"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "TravelSync/Managers/WeatherManager.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "fetch(for:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

@@ -9,16 +9,16 @@ import MapKit
 import Observation
 import WeatherKit
 
-@Observable
-final class WeatherManager {
+final class WeatherKitService {
     private let service = WeatherService.shared
     
-    func fetch(for location: CLLocation) async throws -> String {
+    func fetch(for location: CLLocation) async throws -> (String, String) {
         do {
             let weather = try await service.weather(for: location)
             let currTemp = weather.currentWeather.temperature
+            let iconName = weather.currentWeather.symbolName
             
-            return currTemp.value.toString
+            return (currTemp.value.toString, iconName)
         } catch {
             throw APIError.invalidPayload
         }
