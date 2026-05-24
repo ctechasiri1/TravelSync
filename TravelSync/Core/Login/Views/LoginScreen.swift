@@ -108,11 +108,13 @@ struct LoginScreen: View {
         .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
             withAnimation {
                 if succeeded {
-                    appState.navigate(to: .home)
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+//                        appState.navigate(to: .home)
+//                    }
                 }
             }
         }
-        .showToast(toastOption: viewModel.didLoginSucceed ? .success : .failure, text: "Login")
+        .showToast(toastOption: viewModel.toastOption, text: "Login")
     }
 }
 

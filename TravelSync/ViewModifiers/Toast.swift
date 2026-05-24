@@ -8,13 +8,13 @@
 import SwiftUI
 
 enum ToastOption {
-    case success, failure
+    case success, failure, idle
 }
 
 struct Toast: ViewModifier {
     let toastOption: ToastOption
     let text: String
-    
+
     func body(content: Content) -> some View {
         content
             .overlay(alignment: .bottom) {
@@ -25,13 +25,22 @@ struct Toast: ViewModifier {
                         
                         Text(text + " successful")
                     }
-                    .createCardBackgroud()
+                    .padding()
+                    .foregroundStyle(.accentConfirmation.opacity(0.5))
+                    .background(.accentConfirmation.opacity(0.2))
+                    .clipShape(RoundedRectangle(cornerRadius: 40))
                 case .failure:
                     HStack {
                         Image(systemName: "x.circle")
                         
-                        Text(text + " successful")
+                        Text("Error " + text)
                     }
+                    .padding()
+                    .foregroundStyle(.accentWarning)
+                    .background(.accentWarning.opacity(0.5))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                case .idle:
+                    EmptyView()
                 }
             }
     }
