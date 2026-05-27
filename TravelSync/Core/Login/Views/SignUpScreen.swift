@@ -120,6 +120,7 @@ struct SignUpScreen: View {
             }
         }
         .showLoading(isLoading: viewModel.isNetworkActive)
+        .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage ?? "Sign up")
     }
 }
 

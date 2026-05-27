@@ -17,6 +17,7 @@ class SignUpViewModel {
     
     var isNetworkActive: Bool = false
     var showErrorAlert: Bool = false
+    var toastOption: ToastOption = .idle
     var errorMessage: String?
     
     var didSignUpSucceed: Bool = false
@@ -37,11 +38,16 @@ class SignUpViewModel {
             let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
             let _ = try await (Task.sleep(nanoseconds: 500_000_000), userAuthService.signUp(requestBody: request))
             
-            didSignUpSucceed = true
+            toastOption = .success
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.didSignUpSucceed = true
+            }
         } catch let error as APIError {
-            print("There was a network error: \(error).")
+            toastOption = .failure
+            errorMessage = error.errorDescription
         } catch {
-            print("There was an unexpected error.")
+            toastOption = .failure
+            errorMessage = "There was an unexpected error"
         }
     }
 }

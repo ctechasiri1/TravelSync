@@ -32,14 +32,17 @@ class LoginViewModel {
             let request = UserLoginRequest(username: username, password: password)
             let _ = try await userAuthService.login(requestBody: request)
             
-            didLoginSucceed = true
             toastOption = .success
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                self.didLoginSucceed = true
+            }
         } catch let error as APIError {
             toastOption = .failure
-            print("There was a network error: \(error).")
+            errorMessage = error.errorDescription
         } catch {
             toastOption = .failure
-            print("There was an unexpected error.")
+            errorMessage = "There was an unexpected error"
         }
     }
 }

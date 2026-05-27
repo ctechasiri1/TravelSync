@@ -18,7 +18,7 @@ final class NetworkRequestService: Sendable {
             
             /// 2. checks the response (convert it to HTTPURLResponse type) making sure it has a successful status code
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                throw APIError.invalidResponse
+                throw APIError.invalidResponse(try JSONDecoder().decode(ErrorResponse.self, from: data))
             }
             
             /// 3. decode it to the DTO (UserPrivateResponse)
