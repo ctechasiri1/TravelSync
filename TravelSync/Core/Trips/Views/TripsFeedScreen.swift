@@ -307,11 +307,11 @@ private struct TripCard: View {
 }
 
 private struct DetailsButton<T: View>: View {
-    @ViewBuilder let content: T
+    @ViewBuilder let content: () -> T
     
     var body: some View {
         NavigationLink {
-            content
+            content()
         } label: {
             HStack {
                 Text("Detail")

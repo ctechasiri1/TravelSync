@@ -8,7 +8,7 @@
 import Foundation
 
 extension Double {
-    var toString: String {
+    nonisolated var toString: String {
         return String(format: "%.2f", self)
     }
     

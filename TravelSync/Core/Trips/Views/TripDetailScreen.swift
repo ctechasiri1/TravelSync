@@ -88,7 +88,7 @@ struct TripDetailScreen: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) { 
-                        MapScreen(trip: trip)
+                        EventMapScreen(trip: trip, viewModel: appState.makeEventMapViewModel())
                     }
                 }
                 .padding(.horizontal)
@@ -107,7 +107,8 @@ struct TripDetailScreen: View {
         }
         .navigationTitle("\(trip.tripName)")
         .navigationBarTitleDisplayMode(.inline)
-        .task {
+        .task(id: trip.id) {
+            guard !Task.isCancelled else { return }
             await viewModel.getWeather(longitude: trip.longitude, latitude: trip.latitude)
         }
         .toolbar{
@@ -120,11 +121,9 @@ struct TripDetailScreen: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .confirmDelete(showDeleteConfirmation:$viewModel.enableDeleteAlert) {
+            dismiss()
             Task {
                 await viewModel.deleteTrip(tripId: trip.id)
-                await MainActor.run {
-                    dismiss()
-                }
             }
         }
         .showLoading(isLoading: viewModel.isNetworkActive)
@@ -210,7 +209,7 @@ private struct TripBudgetCard<T: View>: View {
     let budget: Int
     let iconName: String
     let iconColor: Color
-    @ViewBuilder let content: T
+    @ViewBuilder let content: () -> T
     
     var body: some View {
         OptionsCard(title: "") {
@@ -236,7 +235,7 @@ private struct TripBudgetCard<T: View>: View {
                     Spacer()
 
                     NavigationLink {
-                        content
+                        content()
                     } label: {
                         HStack {
                             Image(systemName: "chevron.right")

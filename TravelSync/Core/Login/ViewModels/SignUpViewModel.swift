@@ -18,7 +18,7 @@ class SignUpViewModel {
     var isNetworkActive: Bool = false
     var showErrorAlert: Bool = false
     var toastOption: ToastOption = .idle
-    var errorMessage: String?
+    var errorMessage: String = "Sign up"
     
     var didSignUpSucceed: Bool = false
     
@@ -32,7 +32,8 @@ class SignUpViewModel {
         defer { isNetworkActive = false }
         
         isNetworkActive = true
-        errorMessage = nil
+        
+        errorMessage = "Sign up"
         
         do {
             let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
@@ -43,11 +44,11 @@ class SignUpViewModel {
                 self.didSignUpSucceed = true
             }
         } catch let error as APIError {
-            toastOption = .failure
             errorMessage = error.errorDescription
-        } catch {
             toastOption = .failure
+        } catch {
             errorMessage = "There was an unexpected error"
+            toastOption = .failure
         }
     }
 }

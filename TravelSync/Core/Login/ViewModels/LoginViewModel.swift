@@ -15,7 +15,7 @@ class LoginViewModel {
 
     var showErrorAlert: Bool = false
     var toastOption: ToastOption = .idle
-    var errorMessage: String?
+    var errorMessage: String = "Login"
     
     var didLoginSucceed: Bool = false
     
@@ -26,7 +26,7 @@ class LoginViewModel {
     }
     
     func login() async {
-        errorMessage = nil
+        errorMessage = "Login"
         
         do {
             let request = UserLoginRequest(username: username, password: password)
@@ -38,11 +38,11 @@ class LoginViewModel {
                 self.didLoginSucceed = true
             }
         } catch let error as APIError {
-            toastOption = .failure
             errorMessage = error.errorDescription
-        } catch {
             toastOption = .failure
+        } catch {
             errorMessage = "There was an unexpected error"
+            toastOption = .failure
         }
     }
 }

@@ -19,20 +19,20 @@ struct Toast: ViewModifier {
     @State private var remaining = 3.0
     func body(content: Content) -> some View {
         content
-            .overlay(alignment: .top) {
+            .overlay {
                 VStack {
                     switch toastOption {
                     case .success:
                         HStack {
-                            Image(systemName: "checkmark.circle")
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundStyle(.accentConfirmation)
                             
                             Text(text + " successful")
+                                .foregroundStyle(.black.opacity(0.5))
                         }
                         .padding()
-                        .foregroundStyle(.white)
                         .font(.system(size: 12, weight: .semibold))
-                        .background(.accentConfirmation.opacity(0.8))
-                        .clipShape(RoundedRectangle(cornerRadius: 40))
+                        .createCardBackgroud()
                         .onReceive(
                             Timer
                                 .publish(every: 0.2, on: .main, in: .default)
@@ -49,14 +49,14 @@ struct Toast: ViewModifier {
                     case .failure:
                         HStack {
                             Image(systemName: "x.circle.fill")
+                                .foregroundStyle(.accentWarning)
                             
                             Text(text)
+                                .foregroundStyle(.black.opacity(0.5))
                         }
                         .padding()
-                        .foregroundStyle(.white)
                         .font(.system(size: 12, weight: .semibold))
-                        .background(.accentWarning.opacity(0.8))
-                        .clipShape(RoundedRectangle(cornerRadius: 40))
+                        .createCardBackgroud()
                         .onReceive(
                             Timer
                                 .publish(every: 0.2, on: .main, in: .default)
@@ -73,6 +73,7 @@ struct Toast: ViewModifier {
                     case .idle:
                         EmptyView()
                     }
+                    
                     Spacer()
                 }
             }

@@ -61,4 +61,8 @@ class AppState {
     func makeCalendarViewModel() -> CalendarViewModel {
         CalendarViewModel()
     }
+    
+    func makeEventMapViewModel() -> EventMapViewModel {
+        EventMapViewModel()
+    }
 }

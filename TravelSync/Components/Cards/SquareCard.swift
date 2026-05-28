@@ -13,11 +13,11 @@ struct SquareCard<T:View>: View {
     let iconName: String
     let iconColor: Color
     let arrowColor: Color
-    @ViewBuilder let content: T
+    @ViewBuilder let content: () -> T
     
     var body: some View {
         NavigationLink {
-            content
+            content()
         } label: {
             OptionsCard(title: "") {
                 HStack {

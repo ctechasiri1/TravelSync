@@ -62,6 +62,8 @@ struct LoginScreen: View {
                         
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.top, 5)
+                    .padding(.bottom, 15)
                     
                     MultipurposeButton(
                         text: "Login",
@@ -104,6 +106,7 @@ struct LoginScreen: View {
                 .padding()
             }
             .padding()
+            .padding(.vertical, 10)
         }
         .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
             withAnimation {
@@ -112,7 +115,7 @@ struct LoginScreen: View {
                 }
             }
         }
-        .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage ?? "Login")
+        .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
     }
 }
 

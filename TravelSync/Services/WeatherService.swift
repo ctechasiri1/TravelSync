@@ -12,7 +12,7 @@ import WeatherKit
 final class WeatherKitService {
     private let service = WeatherService.shared
     
-    func fetch(for location: CLLocation) async throws -> (String, String) {
+    nonisolated func fetch(for location: CLLocation) async throws -> (String, String) {
         do {
             let weather = try await service.weather(for: location)
             let currTemp = weather.currentWeather.temperature
