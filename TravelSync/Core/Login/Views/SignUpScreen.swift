@@ -42,7 +42,7 @@ struct SignUpScreen: View {
                         InputTextField(
                             text: $viewModel.username,
                             fieldTitle: "Username",
-                            fieldImage: "person.fill",
+                            fieldImage: "person",
                             fieldContent: "Enter your username",
                             iconColor: .gray
                         )

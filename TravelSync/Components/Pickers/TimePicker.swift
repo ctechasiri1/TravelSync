@@ -1,31 +1,30 @@
 //
-//  CustomDatePicker.swift
+//  TimePicker.swift
 //  TravelSync
 //
-//  Created by Chiraphat Techasiri on 4/10/26.
+//  Created by Chiraphat Techasiri on 5/28/26.
 //
 
 import SwiftUI
 
-struct CustomDatePicker: View {
-    @Binding var selectedDate: Date?
+struct TimePicker: View {
+    @Binding var selectedTime: Date?
     let pickerTitle: String
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text(pickerTitle)
                 .foregroundStyle(Color.primaryText)
                 .font(.system(size: 15, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
             
             HStack {
-                Text(selectedDate?.formatted(date: .abbreviated, time: .omitted) ?? "Select Date")
-                    .foregroundStyle(selectedDate == nil ? .secondary : .primary)
-                    .animation(.default, value: selectedDate)
+                Text(selectedTime?.formatted(date: .omitted, time: .shortened) ?? "Select Time")
+                    .foregroundStyle(selectedTime == nil ? .secondary : .primary)
+                    .animation(.default, value: selectedTime)
                 
-                Spacer()
-                
-                Image(systemName: "calendar")
+                Image(systemName: "clock")
                     .foregroundStyle(.secondaryText)
             }
             .padding()
@@ -35,17 +34,14 @@ struct CustomDatePicker: View {
                         Color.secondaryText.opacity(0.2),
                         style: StrokeStyle(lineWidth: 1)
                     )
-
             )
             .overlay {
                 DatePicker(
                     "",
                     selection: Binding(
-                        get: { selectedDate ?? .now },
-                        set: { selectedDate = $0 }
-                    ),
-                    in: Date.now..., 
-                    displayedComponents: .date
+                        get: { selectedTime ?? .now },
+                        set: { selectedTime = $0 }),
+                    displayedComponents: .hourAndMinute
                 )
                 .labelsHidden()
                 .colorMultiply(.clear)
@@ -53,12 +49,11 @@ struct CustomDatePicker: View {
                 .scaleEffect(x: 3, y: 1.5)
             }
         }
-        .padding(.vertical)
     }
 }
 
 #Preview {
-    @Previewable @State var date: Date? = .now
+    @Previewable @State var date: Date? = nil
     
-    CustomDatePicker(selectedDate: $date, pickerTitle: "Transaction Date")
+    TimePicker(selectedTime: $date, pickerTitle: "START TIME")
 }

@@ -43,7 +43,7 @@ struct CalendarScreen: View {
                                     .opacity(viewModel.isSelectDay(date: day) ? 1 : 0)
                             }
                             .foregroundStyle(viewModel.isSelectDay(date: day) ? .white : .secondaryText.opacity(0.5))
-                            .frame(width: 60, height: 90)
+                            .frame(width: 70, height: 110)
                             .background(
                                 Capsule()
                                     .fill(viewModel.isSelectDay(date: day) ? .accentPrimary : .white)
@@ -71,8 +71,10 @@ struct CalendarScreen: View {
                 if viewModel.eventForToday.isEmpty {
                     
                 } else {
-                    ForEach(viewModel.eventForToday, id: \.self) {
-                        EventCard(event: $0)
+                    VStack(spacing: 0) {
+                        ForEach(viewModel.eventForToday, id: \.self) {
+                            EventCard(event: $0)
+                        }
                     }
                 }
             }
@@ -84,58 +86,89 @@ struct EventCard: View {
     let event: Event
     
     var body: some View {
-        OptionsCard(title: "") {
+        HStack {
             HStack {
                 VStack {
-                    Text("12:00")
-                        .foregroundStyle(.primaryText)
-                        .font(.system(size: 14, weight: .semibold))
-                        .padding(8)
+                    Rectangle()
+                        .frame(width: 2)
+                        .foregroundColor(.secondaryText.opacity(0.1))
+                    
+                    Circle()
+                        .foregroundStyle(.accentPrimary.opacity(0.8))
+                        .frame(width: 50, height: 15)
                         .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .fill(.secondaryText.opacity(0.06))
+                            Circle()
+                                .fill(.accentPrimary.opacity(0.2))
+                                .frame(width: 80, height: 25)
                         )
                     
                     Rectangle()
                         .frame(width: 2)
                         .foregroundColor(.secondaryText.opacity(0.1))
+                        .frame(height: 150)
                 }
-                .padding(.vertical)
                 
-                VStack(alignment: .leading) {
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    HStack {
+                        Text(event.startTime.formatted(date: .omitted, time: .shortened))
+                            .foregroundStyle(.primaryText)
+                            .font(.system(size: 16))
+                            .padding(14)
+                            .background(
+                                RoundedRectangle(cornerRadius: 30)
+                                    .fill(.secondaryText.opacity(0.06))
+                                    
+                            )
+                        
+                        Image(systemName: event.category.imageName)
+                            .foregroundColor(.secondaryText.opacity(0.6))
+                        
+                        Spacer()
+                        
+                        Image(systemName: "trash")
+                            .foregroundColor(.secondaryText.opacity(0.6))
+                            .fontWeight(.semibold)
+                            .padding(.horizontal, 12)
+                    }
+                    
                     HStack {
                         Text(event.title)
                             .font(.system(size: 18, weight: .semibold))
                         
                         Spacer()
-                        
-                        Image(systemName: "trash.fill")
-                            .foregroundColor(.secondaryText.opacity(0.6))
-                            .padding(.horizontal, 12)
                     }
-                    
-                    Text(event.location)
-                        .font(.system(size: 14))
-                        .foregroundColor(.secondaryText)
                     
                     HStack {
-                        Image(systemName: "clock.fill")
-                        Text("2h30m")
+                        Image(systemName: "map")
+                        
+                        Text(event.location)
+                    }
+                    .font(.system(size: 14))
+                    .foregroundColor(.secondaryText)
+                    
+                    HStack {
+                        Image(systemName: "clock")
+                        Text("2h 30m")
                     }
                     .foregroundStyle(.secondaryText)
-                    .font(.system(size: 10, weight: .semibold))
+                    .font(.system(size: 12, weight: .semibold))
                     .padding(8)
                     .background(
-                        RoundedRectangle(cornerRadius: 10)
+                        RoundedRectangle(cornerRadius: 20)
                             .fill(.secondaryText.opacity(0.06))
                     )
                 }
-                .padding(.leading, 8)
-                .padding(.vertical)
+                .padding(25)
+                .background(
+                    RoundedRectangle(cornerRadius: 40)
+                        .fill(.white)
+                )
+                .shadow(color: Color.black.opacity(0.1), radius: 5, y: 2)
+                .padding()
+
             }
-            .padding(5)
         }
-        .padding(10)
     }
 }
 

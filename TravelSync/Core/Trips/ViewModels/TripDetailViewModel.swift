@@ -26,6 +26,9 @@ class TripDetailViewModel {
     }
     
     func getWeather(longitude: Double, latitude: Double) async {
+        defer { isNetworkActive = false }
+        
+        isNetworkActive = true
         let coordinates = CLLocation(latitude: latitude, longitude: longitude)
         do {
             let weatherPayload = try await weatherKitService.fetch(for: coordinates)

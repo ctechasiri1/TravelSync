@@ -21,6 +21,7 @@ struct SheetToolbar: View {
             } label: {
                 Text("Cancel")
             }
+            .fontWeight(.semibold)
             .frame(maxWidth: .infinity)
             .foregroundStyle(.accentPrimary)
             
@@ -35,6 +36,7 @@ struct SheetToolbar: View {
             } label: {
                 Text("Save")
             }
+            .fontWeight(.semibold)
             .foregroundStyle(.accentPrimary)
             .frame(maxWidth: .infinity)
             .disabled(!enableSave)

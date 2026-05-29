@@ -28,11 +28,18 @@ struct Toast: ViewModifier {
                                 .foregroundStyle(.accentConfirmation)
                             
                             Text(text + " successful")
-                                .foregroundStyle(.black.opacity(0.5))
+                                .foregroundStyle(.black)
                         }
                         .padding()
                         .font(.system(size: 12, weight: .semibold))
-                        .createCardBackgroud()
+                        .background(
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(.white)
+                                .stroke(
+                                    Color.secondaryText.opacity(0.2),
+                                    style: StrokeStyle(lineWidth: 0.5)
+                                )
+                        )
                         .onReceive(
                             Timer
                                 .publish(every: 0.2, on: .main, in: .default)
@@ -52,11 +59,18 @@ struct Toast: ViewModifier {
                                 .foregroundStyle(.accentWarning)
                             
                             Text(text)
-                                .foregroundStyle(.black.opacity(0.5))
+                                .foregroundStyle(.black.opacity(0.8))
                         }
                         .padding()
                         .font(.system(size: 12, weight: .semibold))
-                        .createCardBackgroud()
+                        .background(
+                            RoundedRectangle(cornerRadius: 30)
+                                .fill(.white)
+                                .stroke(
+                                    Color.secondaryText.opacity(0.2),
+                                    style: StrokeStyle(lineWidth: 0.5)
+                                )
+                        )
                         .onReceive(
                             Timer
                                 .publish(every: 0.2, on: .main, in: .default)

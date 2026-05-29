@@ -60,24 +60,19 @@ struct AddExpenseScreen: View {
                 VStack(alignment: .leading) {
                     Text("CATEGORY")
                         .font(.system(.subheadline, weight: .semibold))
-                        .padding(.horizontal)
+                        .padding(.horizontal, 20)
                     
                     ScrollView(.horizontal) {
                         HStack(spacing: 0) {
                             ForEach(ExpenseOption.allCases) { expense in
-                                Button {
-                                    withAnimation(.easeInOut(duration: 0.6)) {
+                                ExpenseOptionButton(
+                                    expense: expense,
+                                    isSelected: viewModel.selectedExpense == expense) {
                                         viewModel.selectedExpense = expense
                                     }
-                                } label: {
-                                    ExpenseOptionButton(
-                                        expense: expense,
-                                        isSelected: viewModel.selectedExpense == expense
-                                    )
                                     .padding(.vertical, 5)
-                                }
                             }
-                            .padding(.horizontal, 12)
+                            .padding(.horizontal, 10)
                         }
                     }
                     .scrollIndicators(.hidden)
@@ -130,29 +125,36 @@ struct AddExpenseScreen: View {
 private struct ExpenseOptionButton: View {
     let expense: ExpenseOption
     let isSelected: Bool
+    let action: () -> Void
     
     var body: some View {
-        VStack(alignment: .center) {
-            CircleIcon(
-                iconName: expense.imageName,
-                iconColor: isSelected ? .accentPrimary : .secondaryText
-                    .opacity(0.5),
-                width: 50,
-                height: 50
-            )
-            .padding([.top, .leading, .trailing])
-                
-            Text(expense.title)
-                .foregroundStyle(
-                    isSelected ? .accentPrimary : .secondaryText.opacity(0.5)
-                )
-                .font(.system(size: 12, weight: .semibold))
-                .padding(.top)
-        }
-        .padding()
-        .overlay {
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(isSelected ? .accentPrimary.opacity(0.5) : .clear, lineWidth: 1)
+        Button {
+            action()
+        } label: {
+            HStack {
+                Spacer()
+                VStack(alignment: .center) {
+                    CircleIcon(
+                        iconName: expense.imageName,
+                        iconColor: isSelected ? .accentPrimary : .secondaryText
+                            .opacity(0.5),
+                        width: 40,
+                        height: 40
+                    )
+                    .padding([.top, .leading, .trailing])
+                    
+                    Text(expense.title)
+                        .foregroundStyle(
+                            isSelected ? .accentPrimary : .secondaryText.opacity(0.5)
+                        )
+                        .font(.system(size: 12, weight: .semibold))
+                        .padding(.top, 10)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 15)
+            .createCardBackgroud()
         }
     }
 }
