@@ -8,11 +8,34 @@
 import SwiftUI
 
 struct EventDetailScreen: View {
+    let event: Event
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack {
+                Text(event.title)
+                
+                VStack {
+                    HStack {
+                        Text("SCHEDULE")
+                        
+                        Spacer()
+                        
+                        Image(systemName: "clock")
+                    }
+                    
+                    HStack {
+                        Text("\(event.startTime)")
+                        
+                        Text("\(event.endTime)")
+                    }
+                    
+                }
+            }
+        }
     }
 }
 
 #Preview {
-    EventDetailScreen()
+    EventDetailScreen(event: Event.example.first!)
 }
