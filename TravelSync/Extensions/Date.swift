@@ -96,6 +96,10 @@ extension Date {
         return outputFormatter.string(from: self)
     }
     
+    var formattedYearMonthDay: String {
+        return self.formatted(date: .complete, time: .omitted)
+    }
+    
     /// Converts the difference between two Dates into a formatted duration String
     ///```
     /// Convert 2 hours and 30 minutes difference to "2 hr, 30 min"

@@ -24,35 +24,10 @@ struct EventMapScreen: View {
         Map(position: $viewModel.position, selection: $viewModel.selectedEvent) {
             ForEach(viewModel.locations, id: \.self) { event in
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)) {
-                    VStack(spacing: 2) {
-                        Circle()
-                            .fill(.accentPrimary)
-                            .frame(width: 40, height: 40)
-                            .overlay {
-                                Image(systemName: "map.circle.fill")
-                                    .resizable()
-                                    .foregroundStyle(.white)
-                                    .frame(width: 30, height: 30)
-                            }
-                        
-                        Image(systemName: "triangle.fill")
-                            .foregroundStyle(.accentPrimary)
-                            .frame(width: 2, height: 2)
-                            .rotationEffect(Angle(degrees: 180))
-                            .padding(.bottom, 5)
-                        
-                        ZStack {
-                            Text(event.title)
-                                .foregroundStyle(.white)
-                                .font(.system(size: 12.5, weight: .bold))
-                            
-                            Text(event.title)
-                                .foregroundStyle(.black.opacity(0.9))
-                                .font(.system(size: 12, weight: .bold))
-                        }
-                    }
-                    .scaleEffect(viewModel.selectedEvent == event ? 1.1 : 1)
-                    .animation(.easeInOut, value: viewModel.selectedEvent == event)
+                    CustomAnnotation(
+                        event: event,
+                        selectedEvent: viewModel.selectedEvent
+                    )
                 }
             }
         }
@@ -123,8 +98,8 @@ private struct EventMapCard: View {
                         .clipShape(RoundedRectangle(cornerRadius: 30))
                     }
                     
-                    Button {
-                        
+                    NavigationLink {
+                        EventDetailScreen(event: unwrapped)
                     } label: {
                         HStack {
                             Image(systemName: "calendar")
@@ -147,6 +122,7 @@ private struct EventMapCard: View {
             }
             .padding()
             .createCardBackgroud()
+            // TODO: Segment this out to a reusbale viewmodifier
             .offset(y: verticalDragAmount)
             .opacity(opacityAmount)
             .onChange(of: event, { oldValue, newValue in
@@ -181,6 +157,43 @@ private struct EventMapCard: View {
             )
             .padding()
         }
+    }
+}
+
+private struct CustomAnnotation: View {
+    let event: Event
+    let selectedEvent: Event?
+    
+    var body: some View {
+        VStack(spacing: 2) {
+            Circle()
+                .fill(.accentPrimary)
+                .frame(width: 40, height: 40)
+                .overlay {
+                    Image(systemName: "map.circle.fill")
+                        .resizable()
+                        .foregroundStyle(.white)
+                        .frame(width: 30, height: 30)
+                }
+            
+            Image(systemName: "triangle.fill")
+                .foregroundStyle(.accentPrimary)
+                .frame(width: 2, height: 2)
+                .rotationEffect(Angle(degrees: 180))
+                .padding(.bottom, 5)
+            
+            ZStack {
+                Text(event.title)
+                    .foregroundStyle(.white)
+                    .font(.system(size: 12.5, weight: .bold))
+                
+                Text(event.title)
+                    .foregroundStyle(.black.opacity(0.9))
+                    .font(.system(size: 12, weight: .bold))
+            }
+        }
+        .scaleEffect(selectedEvent == event ? 1.1 : 1)
+        .animation(.easeInOut, value: selectedEvent == event)
     }
 }
 

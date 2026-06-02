@@ -17,11 +17,12 @@ struct Event: Identifiable, Hashable {
     let date: Date
     let startTime: Date
     let endTime: Date
+    let notes: String
     
     @MainActor
     static let example = [
-        Event(id: 1, title: "Shopping Spree", location: "Siam Paragon", category: .sightseeing, longitude: 100.5348, latitude: 13.7461, date: .now, startTime: .now, endTime: .now + 2),
-        Event(id: 2, title: "Floating Market", location: "Damnoen Saduak Floating Market", category: .sightseeing, longitude: 99.9577, latitude: 13.5186, date: .now, startTime: .now, endTime: .now + 3)
+        Event(id: 1, title: "Shopping Spree", location: "Siam Paragon", category: .sightseeing, longitude: 100.5348, latitude: 13.7461, date: .now, startTime: .now, endTime: .now + 2, notes: "Siam Paragon is one of Thailand's largest and most luxurious shopping destinations."),
+        Event(id: 2, title: "Floating Market", location: "Damnoen Saduak Floating Market", category: .sightseeing, longitude: 99.9577, latitude: 13.5186, date: .now, startTime: .now, endTime: .now + 3, notes: "Located in Ratchburi Province, about 100 km southwest of Bangkok, Damnoen Saduak is Thailand's most famous and iconic floasting market.")
         ]
 }
 
