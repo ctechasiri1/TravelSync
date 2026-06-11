@@ -94,7 +94,7 @@ struct TripDetailView: View {
         }
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
-                CustomDeleteButton {
+                ToolBarDeleteButton {
                     viewModel.toggleDeleteAlert()
                 }
             }

@@ -23,7 +23,7 @@ struct AddExpenseScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                SheetToolbar(
+                SheetToolBar(
                     title: "Add Expense",
                     enableSave: viewModel.enableSave
                 ) {

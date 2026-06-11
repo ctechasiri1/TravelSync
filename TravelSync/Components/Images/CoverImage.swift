@@ -9,8 +9,8 @@ import PhotosUI
 import SwiftUI
 
 struct CoverImage: View {
-    @Environment(AppState.self) private var appState
     @Binding var coverUIImage: UIImage?
+    
     @State private var selectedImage: PhotosPickerItem?
     
     var body: some View {

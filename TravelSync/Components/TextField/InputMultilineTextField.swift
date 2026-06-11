@@ -1,5 +1,5 @@
 //
-//  MultiInputTextField.swift
+//  InputMultilineTextField.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/28/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct MultiInputTextField: View {
+struct InputMultilineTextField: View {
     @Binding var notesContent: String?
     let fieldTitle: String
     
@@ -41,5 +41,5 @@ struct MultiInputTextField: View {
 
 #Preview {
     @Previewable @State var notesContent: String? = nil
-    MultiInputTextField(notesContent: $notesContent, fieldTitle: "Notes")
+    InputMultilineTextField(notesContent: $notesContent, fieldTitle: "Notes")
 }

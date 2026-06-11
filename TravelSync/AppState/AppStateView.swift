@@ -21,10 +21,10 @@ struct AppStateView: View {
                 LoginScreen(viewModel: appState.makeLoginViewModel())
             case .home:
                 TabBarView()
-                    .transition(.blurReplace)
+                    .transition(.opacity)
             }
         }
-        .animation(.smooth, value: appState.currentAuthScreen)
+        .animation(.easeInOut(duration: 0.3), value: appState.currentAuthScreen)
     }
 }
 

@@ -1,5 +1,5 @@
 //
-//  CustomDeleteButton.swift
+//  ToolBarDeleteButton.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/3/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CustomDeleteButton: View {
+struct ToolBarDeleteButton: View {
     let action: () -> Void
     var body: some View {
         Button {
@@ -21,5 +21,5 @@ struct CustomDeleteButton: View {
 }
 
 #Preview {
-    CustomDeleteButton(action: { })
+    ToolBarDeleteButton(action: { })
 }

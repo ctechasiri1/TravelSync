@@ -1,5 +1,5 @@
 //
-//  AddButton.swift
+//  ToolBarAddButton.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/20/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddButton: View {
+struct ToolBarAddButton: View {
     let action: () -> Void
     
     var body: some View {
@@ -25,5 +25,5 @@ struct AddButton: View {
 }
 
 #Preview {
-    AddButton(action: { })
+    ToolBarAddButton(action: { })
 }

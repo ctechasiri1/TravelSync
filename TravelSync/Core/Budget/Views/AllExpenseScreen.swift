@@ -32,7 +32,7 @@ struct AllExpenseScreen: View {
                             type: expense.type
                         )
                         .swipeActions(edge: .trailing) {
-                            CustomDeleteButton {
+                            ToolBarDeleteButton {
                                 Task {
                                     await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
                                 }

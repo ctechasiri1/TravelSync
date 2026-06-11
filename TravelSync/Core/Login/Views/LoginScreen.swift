@@ -73,20 +73,6 @@ struct LoginScreen: View {
                                 await viewModel.login()
                             }
                         }
-                    
-                    AuthDivider(text: "Or continue with")
-                        .padding()
-                            
-                    HStack(spacing: 20) {
-                        SocialLoginButton(iconImage: "google_icon",text: "Google") {
-                                    
-                        }
-                            
-                        SocialLoginButton(iconImage: "apple_icon", text: "Apple") {
-                                    
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
                             
                     Spacer()
                             
@@ -129,6 +115,21 @@ private struct LoginIcon: View {
                     .fill(.accentPrimary)
                     .frame(width: 50, height: 50)
             )
+    }
+}
+
+struct TextNavigationButton: View {
+    let text: String
+    let action: () -> Void
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Text(text)
+                .font(.system(.subheadline, weight: .semibold))
+                .foregroundStyle(.accentPrimary)
+        }
     }
 }
 

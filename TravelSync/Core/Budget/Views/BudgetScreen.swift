@@ -88,7 +88,7 @@ struct BudgetScreen: View {
         })
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
-                AddButton {
+                ToolBarAddButton {
                     viewModel.showAddExpense = true
                 }
                 .imageScale(.medium)

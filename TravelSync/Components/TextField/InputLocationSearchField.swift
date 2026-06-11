@@ -1,5 +1,5 @@
 //
-//  LocationSearchField.swift
+//  InputLocationSearchField.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/19/26.
@@ -8,7 +8,7 @@
 import SwiftUI
 import MapKit
 
-struct LocationSearchField: View {
+struct InputLocationSearchField: View {
     @Binding var text: String
     let fieldTitle: String
     let fieldImage: String
@@ -98,7 +98,7 @@ struct LocationSearchField: View {
 #Preview {
     @Previewable @State var exampleText: String = ""
     
-    LocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary, completions: []) {
+    InputLocationSearchField(text: $exampleText, fieldTitle: "password", fieldImage: "lock", fieldContent: "Enter password", iconColor: .accentPrimary, completions: []) {
         
     } onChangeAction: {
         

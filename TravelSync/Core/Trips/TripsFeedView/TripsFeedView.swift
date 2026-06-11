@@ -24,7 +24,7 @@ struct TripsFeedView: View {
                         
                 Spacer()
                     
-                AddButton {
+                ToolBarAddButton {
                     viewModel.toggleShowPlanNewTrip()
                 }
                 .padding(.horizontal, 20)
@@ -115,7 +115,7 @@ private struct NoTripsView: View {
                     backgroundColor: .accentPrimary) {
                         planNewTripToggle()
                     }
-                    .padding(.horizontal)
+                    .padding(.horizontal, 50)
             }
         }
         .padding(.top, 80)

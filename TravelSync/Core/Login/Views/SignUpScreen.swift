@@ -77,22 +77,6 @@ struct SignUpScreen: View {
                         }
                         .padding(.top)
                         
-                    AuthDivider(text: "Or sign up with")
-                        .padding()
-                        
-                    HStack(spacing: 20) {
-                        SocialLoginButton(
-                            iconImage: "google_icon",
-                            text: "Google"
-                        ) {
- 
-                        }
-                        SocialLoginButton(iconImage: "apple_icon",text: "Apple") {
- 
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
-                        
                     Spacer()
                         
                     HStack {

@@ -1,5 +1,5 @@
 //
-//  SheetToolbar.swift
+//  SheetToolBar.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/7/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SheetToolbar: View {
+struct SheetToolBar: View {
     @Environment(\.dismiss) private var dismiss
     
     let title: String
@@ -47,5 +47,5 @@ struct SheetToolbar: View {
 }
 
 #Preview {
-    SheetToolbar(title: "Add a Trip", enableSave: true) { }
+    SheetToolBar(title: "Add a Trip", enableSave: true) { }
 }

@@ -18,7 +18,7 @@ struct PlanNewTripView: View {
     
     var body: some View {
         ScrollView {
-            SheetToolbar(
+            SheetToolBar(
                 title: "Add a Trip",
                 enableSave: viewModel.canCreateTrip
             ) {
@@ -39,7 +39,7 @@ struct PlanNewTripView: View {
                 }
                 .padding(.vertical, 8)
                 
-                LocationSearchField(
+                InputLocationSearchField(
                     text: $viewModel.locationName,
                     fieldTitle: "LOCATION",
                     fieldImage: "location.fill",

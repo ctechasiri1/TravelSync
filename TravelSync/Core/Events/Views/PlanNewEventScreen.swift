@@ -17,7 +17,7 @@ struct PlanNewEventScreen: View {
     
     var body: some View {
         ScrollView {
-            SheetToolbar(title: "Add Event", enableSave: true) {
+            SheetToolBar(title: "Add Event", enableSave: true) {
                 
             }
             
@@ -57,7 +57,7 @@ struct PlanNewEventScreen: View {
                         iconColor: .secondaryText
                     )
                     
-                    LocationSearchField(
+                    InputLocationSearchField(
                         text: $viewModel.location,
                         fieldTitle: "LOCATION",
                         fieldImage: "magnifyingglass",
@@ -86,7 +86,7 @@ struct PlanNewEventScreen: View {
                         )
                     }
                     
-                    MultiInputTextField(
+                    InputMultilineTextField(
                         notesContent: $viewModel.notes,
                         fieldTitle: "NOTES"
                     )
