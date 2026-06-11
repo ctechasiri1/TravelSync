@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeScreen: View {
+struct TabBarView: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
@@ -38,6 +38,6 @@ struct HomeScreen: View {
 }
 
 #Preview {
-    HomeScreen()
+    TabBarView()
         .environment(AppState())
 }

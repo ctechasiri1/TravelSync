@@ -41,7 +41,7 @@ struct SheetToolbar: View {
             .frame(maxWidth: .infinity)
             .disabled(!enableSave)
             .opacity(!enableSave ? 0.5 : 1.0)
-            .animation(.easeInOut, value: enableSave)
+            .animation(.smooth, value: enableSave)
         }
     }
 }

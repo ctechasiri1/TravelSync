@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TripCardView: View {
+struct TripFeedCardView: View {
     @State var trip: Trip
     let viewModel: TripsFeedViewModel
     let height: CGFloat
@@ -165,7 +165,7 @@ private struct DetailsButton<T: View>: View {
 }
 
 #Preview {
-    TripCardView(
+    TripFeedCardView(
         trip: Trip.example,
         viewModel: TripsFeedViewModel(
             tripService: TripService(

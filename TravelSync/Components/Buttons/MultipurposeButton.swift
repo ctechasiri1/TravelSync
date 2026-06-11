@@ -8,34 +8,63 @@
 import SwiftUI
 
 struct MultipurposeButton: View {
-    @State private var isPressed: Bool = false
-    let text: String
+    let buttonImageString: String?
+    let buttonText: LocalizedStringKey
     let foregroundColor: Color
     let backgroundColor: Color
-    let action: () -> Void
+    let onButtonPressed: () -> Void
+    
+    @State private var isButtonPressed: Bool = false
+    
+    init(
+        buttonImageString: String? = nil,
+        buttonText: LocalizedStringKey,
+        foregroundColor: Color,
+        backgroundColor: Color,
+        onButtonPressed: @escaping () -> Void,
+    ) {
+        self.buttonImageString = buttonImageString
+        self.buttonText = buttonText
+        self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
+        self.onButtonPressed = onButtonPressed
+    }
 
     var body: some View {
         Button {
-            action()
+            onButtonPressed()
         } label: {
-            Text(text)
-                .font(.system(.subheadline, weight: .semibold))
-                .padding()
-                .foregroundStyle(foregroundColor)
-                .frame(maxWidth: .infinity)
-                .background(backgroundColor)
-                .clipShape(RoundedRectangle(cornerRadius: 30))
-                .scaleEffect(isPressed ? 0.90 : 1.0)
-                .onLongPressGesture {
-                    isPressed.toggle()
-                } onPressingChanged: { pressing in
-                    isPressed = pressing
+            HStack {
+                if let imageString = buttonImageString {
+                    Image(systemName: imageString)
+                        .foregroundStyle(foregroundColor)
                 }
-                .shadow(color: .gray.opacity(0.2), radius: 5, x: 1, y: 2)
+                
+                Text(buttonText)
+            }
+            .font(.system(.subheadline, weight: .semibold))
+            .padding()
+            .foregroundStyle(foregroundColor)
+            .frame(maxWidth: .infinity)
+            .background(backgroundColor)
+            .clipShape(RoundedRectangle(cornerRadius: 30))
+            .scaleEffect(isButtonPressed ? 0.90 : 1.0)
+            .onLongPressGesture {
+                isButtonPressed.toggle()
+            } onPressingChanged: { pressing in
+                isButtonPressed = pressing
+            }
+            .shadow(color: .gray.opacity(0.2), radius: 5, x: 1, y: 2)
+            
         }
     }
 }
 
 #Preview {
-    MultipurposeButton(text: "Login", foregroundColor: .accentPrimary, backgroundColor: .white, action: { })
+    MultipurposeButton(
+        buttonText: "Login",
+        foregroundColor: .accentPrimary,
+        backgroundColor: .white,
+        onButtonPressed: {
+        })
 }

@@ -12,7 +12,7 @@ import WeatherKit
 
 @Observable
 class TripDetailViewModel {
-    var enableDeleteAlert: Bool = false
+    var showDeleteAlert: Bool = false
     var isNetworkActive: Bool = false
     var temperature: String = "0"
     var weatherIconName: String = "sun.max.trianglebadge.exclamationmark.fill"
@@ -20,9 +20,16 @@ class TripDetailViewModel {
     private let tripService: TripServiceProtocol
     private let weatherKitService: WeatherKitService
     
-    init(tripService: TripServiceProtocol, weatherKitService: WeatherKitService) {
+    init(
+        tripService: TripServiceProtocol,
+        weatherKitService: WeatherKitService
+    ) {
         self.tripService = tripService
         self.weatherKitService = weatherKitService
+    }
+    
+    func toggleDeleteAlert() {
+        showDeleteAlert = true
     }
     
     func getWeather(longitude: Double, latitude: Double) async {
@@ -31,7 +38,9 @@ class TripDetailViewModel {
         isNetworkActive = true
         let coordinates = CLLocation(latitude: latitude, longitude: longitude)
         do {
-            let weatherPayload = try await weatherKitService.fetch(for: coordinates)
+            let weatherPayload = try await weatherKitService.fetch(
+                for: coordinates
+            )
             temperature = weatherPayload.0
             weatherIconName = weatherPayload.1
         } catch let error as APIError {
@@ -47,7 +56,10 @@ class TripDetailViewModel {
         isNetworkActive = true
         
         do {
-            let _ = try await (Task.sleep(nanoseconds: 500_000_000), tripService.deleteTrip(tripId: tripId))
+            let _ = try await (
+                Task.sleep(nanoseconds: 500_000_000),
+                tripService.deleteTrip(tripId: tripId)
+            )
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

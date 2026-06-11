@@ -68,7 +68,7 @@ struct SignUpScreen: View {
                     .textInputAutocapitalization(.never)
                         
                     MultipurposeButton(
-                        text: "Sign Up",
+                        buttonText: "Sign Up",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             Task {

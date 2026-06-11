@@ -12,13 +12,13 @@ struct PreferencesOptions: View {
     
     var body: some View {
         OptionsCard(title: "PREFERNCES") {
-            ToggleOptionRow(title: "Notifications", iconName: "bell.fill", isOn: $viewModel.emailNotificationsIsOn)
+            ToggleOptionRow(isOn: $viewModel.emailNotificationsIsOn, title: "Notifications", iconName: "bell.fill")
                 .padding(.top, 20)
                 .padding(.bottom, 10)
             
             Divider()
             
-            ToggleOptionRow(title: "Dark Mode", iconName: "moon.fill", isOn: $viewModel.darkModeIsOn)
+            ToggleOptionRow(isOn: $viewModel.darkModeIsOn, title: "Dark Mode", iconName: "moon.fill")
                 .padding(.top, 10)
                 .padding(.bottom, 20)
         }

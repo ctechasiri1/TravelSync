@@ -92,7 +92,7 @@ struct PlanNewEventScreen: View {
                     )
                     
                     MultipurposeButton(
-                        text: "Save to Itinerary",
+                        buttonText: "Save to Itinerary",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             

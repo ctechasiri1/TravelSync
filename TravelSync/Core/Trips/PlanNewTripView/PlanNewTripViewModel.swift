@@ -21,19 +21,24 @@ class PlanNewTripViewModel {
     var coordinate: CLLocationCoordinate2D? = nil
     var coverUIImage: UIImage? = nil
     
-    var pushNotificationsIsOn: Bool = true
+    var isPushNotificationOn: Bool = true
     var isNetworkActive: Bool = false
     
     private let locationSearchManager: LocationSearchManager
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol, locationSearchManager: LocationSearchManager) {
+    init(
+        tripService: TripServiceProtocol,
+        locationSearchManager: LocationSearchManager
+    ) {
         self.tripService = tripService
         self.locationSearchManager = locationSearchManager
     }
     
     var canCreateTrip: Bool {
-        let hasLocation = !locationName.trimmingCharacters(in: .whitespaces).isEmpty
+        let hasLocation = !locationName.trimmingCharacters(
+            in: .whitespaces
+        ).isEmpty
         let hasDates = startDate != nil && endDate != nil
         
         if let start = startDate, let end = endDate {
@@ -54,7 +59,9 @@ class PlanNewTripViewModel {
                 throw TripError.missingDates
             }
             
-            let trimmedLocation = locationName.trimmingCharacters(in: .whitespaces)
+            let trimmedLocation = locationName.trimmingCharacters(
+                in: .whitespaces
+            )
             guard !trimmedLocation.isEmpty else {
                 throw TripError.emptyLocation
             }
@@ -75,7 +82,10 @@ class PlanNewTripViewModel {
                 coverImageData: coverUIImage?.convertImageToData
             )
             
-            let _ = try await (Task.sleep(nanoseconds: 500_000_000), tripService.createTrip(trip: newTrip))
+            let _ = try await (
+                Task.sleep(nanoseconds: 500_000_000),
+                tripService.createTrip(trip: newTrip)
+            )
             
             resetForm()
         } catch TripError.missingDates {
@@ -101,7 +111,9 @@ class PlanNewTripViewModel {
     
     func searchLocationCoordinates(_ location: String) async {
         do {
-            let coordinates = try await locationSearchManager.search(with: locationName)
+            let coordinates = try await locationSearchManager.search(
+                with: locationName
+            )
             coordinate = coordinates.first?.location
         } catch {
             print("There was an error starting the MKLocalSearch Engine.")

@@ -14,7 +14,6 @@ class TripsFeedViewModel {
     var trips: [Trip] = []
     
     var selection: TripOption = .upcoming
-//    var tripsFeedState: TripsFeedState = .noTrips
     
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false

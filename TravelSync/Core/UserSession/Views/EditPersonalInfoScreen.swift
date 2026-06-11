@@ -62,7 +62,7 @@ struct EditPersonalInfoScreen: View {
             .padding()
             
             MultipurposeButton(
-                text: "Save Changes",
+                buttonText: "Save Changes",
                 foregroundColor: .white,
                 backgroundColor: .accentPrimary
             ) {

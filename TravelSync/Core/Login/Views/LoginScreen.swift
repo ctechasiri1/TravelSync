@@ -66,7 +66,7 @@ struct LoginScreen: View {
                     .padding(.bottom, 15)
                     
                     MultipurposeButton(
-                        text: "Login",
+                        buttonText: "Login",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             Task {

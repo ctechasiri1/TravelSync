@@ -9,9 +9,9 @@ import SwiftUI
 
 struct InputNumberField: View {
     @Binding var currency: Int?
-    let fieldTitle: String
+    let fieldTitle: LocalizedStringKey
     let fieldImage: String
-    let fieldContent: String
+    let fieldContent: LocalizedStringKey
     let iconColor: Color
     
     var body: some View {

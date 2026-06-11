@@ -8,14 +8,18 @@
 import SwiftUI
 
 struct TripDetailView: View {
+    @Binding var trip: Trip
+    let isUpcomingTrip: Bool
+    
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
     @State private var viewModel: TripDetailViewModel
     
-    @Binding var trip: Trip
-    let isUpcomingTrip: Bool
-    
-    init(viewModel: TripDetailViewModel, trip: Binding<Trip>, isUpcomingTrip: Bool) {
+    init(
+        viewModel: TripDetailViewModel,
+        trip: Binding<Trip>,
+        isUpcomingTrip: Bool
+    ) {
         _viewModel = State(wrappedValue: viewModel)
         _trip = trip
         self.isUpcomingTrip = isUpcomingTrip
@@ -24,46 +28,16 @@ struct TripDetailView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Group {
-                    AsyncImage(url: trip.imageURLString) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .clipShape(RoundedRectangle(cornerRadius: 15))
-
-                    } placeholder: {
-                        ZStack {
-                            Color.gray.opacity(0.5)
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                            
-                            ProgressView()
-                                .frame(width: 300, height: 200)
-                        }
+                CachedAsyncImage(imageURL: trip.imageURLString, height: 200)
+                    .overlay {
+                        TripDetailImageOverlay(
+                            trip: trip,
+                            upcomingTrip: isUpcomingTrip
+                        )
                     }
-                }
-                .overlay {
-                    TripImageOverlay(trip: trip, upcomingTrip: isUpcomingTrip)
-                }
-                .padding()
+                    .padding()
 
-                HStack(spacing: 20){
-                    TripInformationCard(
-                        title: "STATUS",
-                        value: trip.dateDifference.capitalized,
-                        iconName: "gauge.with.needle.fill",
-                        iconColor: .accentPrimary,
-                        textColor: .black
-                    )
-                        
-                    TripInformationCard(
-                        title: trip.city,
-                        value: "\(viewModel.temperature) °C",
-                        iconName: viewModel.weatherIconName,
-                        iconColor: .accentPrimary,
-                        textColor: .black
-                    )
-                }
-                .padding(.horizontal)
+                TripDetailInformationView(trip: trip, viewModel: viewModel)
                     
                 Text("Quick Access")
                     .font(.system(.title3, weight: .semibold))
@@ -78,7 +52,7 @@ struct TripDetailView: View {
                         iconColor: .orange,
                         arrowColor: .orange
                     ) {
-                        ItineraryScreen(events: Event.example)
+                        
                     }
                         
                     SquareCard(
@@ -88,7 +62,10 @@ struct TripDetailView: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) { 
-                        EventMapScreen(trip: trip, viewModel: appState.makeEventMapViewModel())
+                        EventMapScreen(
+                            trip: trip,
+                            viewModel: appState.makeEventMapViewModel()
+                        )
                     }
                 }
                 .padding(.horizontal)
@@ -100,7 +77,10 @@ struct TripDetailView: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(viewModel: appState.makeBudgetViewModel(), trip: $trip)
+                    BudgetScreen(
+                        viewModel: appState.makeBudgetViewModel(),
+                        trip: $trip
+                    )
                 }
                 .padding()
             }
@@ -109,18 +89,19 @@ struct TripDetailView: View {
         .navigationBarTitleDisplayMode(.inline)
         .task(id: trip.id) {
             guard !Task.isCancelled else { return }
-            await viewModel.getWeather(longitude: trip.longitude, latitude: trip.latitude)
+            await viewModel
+                .getWeather(longitude: trip.longitude, latitude: trip.latitude)
         }
         .toolbar{
             ToolbarItem(placement: .topBarTrailing) {
                 CustomDeleteButton {
-                    viewModel.enableDeleteAlert = true
+                    viewModel.toggleDeleteAlert()
                 }
             }
             .sharedBackgroundVisibility(.hidden)
         }
         .toolbar(.hidden, for: .tabBar)
-        .confirmDelete(showDeleteConfirmation:$viewModel.enableDeleteAlert) {
+        .confirmDelete(showDeleteConfirmation:$viewModel.showDeleteAlert) {
             dismiss()
             Task {
                 await viewModel.deleteTrip(tripId: trip.id)
@@ -130,7 +111,7 @@ struct TripDetailView: View {
     }
 }
 
-private struct TripImageOverlay: View {
+private struct TripDetailImageOverlay: View {
     let trip: Trip
     let upcomingTrip: Bool
     
@@ -157,7 +138,7 @@ private struct TripImageOverlay: View {
                         .resizable()
                         .frame(width: 5, height: 5)
                     
-                    Text(trip.dateDifference.capitalized)
+                    Text(trip.dateDifference)
                 }
                 .font(.subheadline)
             }
@@ -168,7 +149,33 @@ private struct TripImageOverlay: View {
     }
 }
 
-private struct TripInformationCard: View {
+private struct TripDetailInformationView: View {
+    let trip: Trip
+    let viewModel: TripDetailViewModel
+    
+    var body: some View {
+        HStack(spacing: 20){
+            TripDetailInformationCard(
+                title: "STATUS",
+                value: trip.dateDifference,
+                iconName: "gauge.with.needle.fill",
+                iconColor: .accentPrimary,
+                textColor: .black
+            )
+                
+            TripDetailInformationCard(
+                title: trip.city,
+                value: "\(viewModel.temperature) °C",
+                iconName: viewModel.weatherIconName,
+                iconColor: .accentPrimary,
+                textColor: .black
+            )
+        }
+        .padding(.horizontal)
+    }
+}
+
+private struct TripDetailInformationCard: View {
     let title: String
     let value: String
     let iconName: String

@@ -18,7 +18,7 @@ struct TripsFeedView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("my_trips")
+                Text("trip_feed_title")
                     .font(.system(.largeTitle, weight: .bold))
                     .padding()
                         
@@ -38,15 +38,23 @@ struct TripsFeedView: View {
             ScrollView {
                 Group {
                     if viewModel.trips.isEmpty {
-                        NoTripsView(isUpcomingSelected: viewModel.isUpcomingSelected) {
+                        NoTripsView(
+                            isUpcomingSelected: viewModel.isUpcomingSelected
+                        ) {
                             viewModel.toggleShowPlanNewTrip()
                         }
                     } else {
                         Group {
                             if viewModel.isUpcomingSelected {
-                                UpcomingTripsView(upcomingTrips: viewModel.upcomingTrips, viewModel: viewModel)
+                                UpcomingTripsView(
+                                    upcomingTrips: viewModel.upcomingTrips,
+                                    viewModel: viewModel
+                                )
                             } else {
-                                PastTripsView(pastTrips: viewModel.pastTrips, viewModel: viewModel)
+                                PastTripsView(
+                                    pastTrips: viewModel.pastTrips,
+                                    viewModel: viewModel
+                                )
                             }
                         }
                     }
@@ -55,8 +63,8 @@ struct TripsFeedView: View {
         }
         .setScrollViewBackground()
         .refreshable {
-             await viewModel.getTrip()
-         }
+            await viewModel.getTrip()
+        }
         .task {
             await viewModel.getTrip()
         }
@@ -66,7 +74,7 @@ struct TripsFeedView: View {
             }
         })
         .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
-            PlanNewTripScreen(viewModel: appState.makePlanNewTripViewModel())
+            PlanNewTripView(viewModel: appState.makePlanNewTripViewModel())
         })
     }
 }
@@ -84,22 +92,30 @@ private struct NoTripsView: View {
                 .clipped()
         
             VStack {
-                Text(isUpcomingSelected ? "empty_trips_title" : "empty_past_trips_title")
-                    .font(.system(.largeTitle, weight: .bold))
+                Text(
+                    isUpcomingSelected ? "trip_feed_empty_upcoming_title" : "trip_feed_empty_past_title"
+                )
+                .font(.system(.largeTitle, weight: .bold))
             
-                Text(isUpcomingSelected ? "empty_trips_description" : "empty_past_trips_description")
-                    .foregroundStyle(.secondaryText)
-                    .font(.system(.subheadline, weight: .light))
-                    .multilineTextAlignment(.center)
-                    .frame(width: 200)
+                Text(
+                    isUpcomingSelected ? "trip_feed_empty_upcoming_description" : "trip_feed_empty_past_description"
+                )
+                .foregroundStyle(.secondaryText)
+                .font(.system(.subheadline, weight: .light))
+                .multilineTextAlignment(.center)
+                .frame(width: 200)
             }
             .padding()
             
             if isUpcomingSelected {
-                AddTripButton {
-                    planNewTripToggle()
-                }
-                .padding()
+                MultipurposeButton(
+                    buttonImageString: "plus.circle.fill",
+                    buttonText: "trip_feed_plan_new_trip",
+                    foregroundColor: .white,
+                    backgroundColor: .accentPrimary) {
+                        planNewTripToggle()
+                    }
+                    .padding(.horizontal)
             }
         }
         .padding(.top, 80)
@@ -114,12 +130,12 @@ private struct UpcomingTripsView: View {
     
     var body: some View {
         if !upcomingTrips.isEmpty {
-            Text("next_adventure")
+            Text("trip_feed_next_adventure")
                 .sectionTitleStyle()
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
-                TripCardView(
+                TripFeedCardView(
                     trip: firstUpcomingTrip,
                     viewModel: viewModel,
                     height: 350,
@@ -130,21 +146,21 @@ private struct UpcomingTripsView: View {
             }
             
             if upcomingTrips.count > 1 {
-                Text("future_plans")
+                Text("trip_feed_future_plans")
                     .sectionTitleStyle()
                     .padding(.top)
                     .padding(.leading, 20)
             }
             
             ForEach(upcomingTrips.dropFirst()) { trip in
-                TripCardView(
+                TripFeedCardView(
                     trip: trip,
                     viewModel: viewModel,
                     height: 250,
                     isUpcomingTrip: true
                 )
-                    .padding(.bottom, 20)
-                    .padding(.horizontal, 25)
+                .padding(.bottom, 20)
+                .padding(.horizontal, 25)
             }
         } else {
             NoTripsView(isUpcomingSelected: viewModel.isUpcomingSelected) {
@@ -160,19 +176,21 @@ private struct PastTripsView: View {
     
     var body: some View {
         if !pastTrips.isEmpty {
-            Text(pastTrips.count == 1 ? "recent_adventure" : "recent_adventures")
-                .sectionTitleStyle()
-                .padding(.leading, 20)
+            Text(
+                pastTrips.count == 1 ? "trip_feed_recent_adventure_singular" : "trip_feed_recent_adventure_plural"
+            )
+            .sectionTitleStyle()
+            .padding(.leading, 20)
             
             ForEach(pastTrips) { trip in
-                TripCardView(
+                TripFeedCardView(
                     trip: trip,
                     viewModel: viewModel,
                     height: 300,
                     isUpcomingTrip: false
                 )
-                    .padding(.bottom, 20)
-                    .padding(.horizontal, 25)
+                .padding(.bottom, 20)
+                .padding(.horizontal, 25)
             }
         } else {
             NoTripsView(isUpcomingSelected: viewModel.isUpcomingSelected) {
@@ -182,32 +200,14 @@ private struct PastTripsView: View {
     }
 }
 
-private struct AddTripButton: View {
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            HStack {
-                Image(systemName: "plus.circle.fill")
-                
-                Text("plan_new_trip")
-                    .font(.system(size: 18, weight: .semibold, design: .default))
-            }
-            .foregroundStyle(.white)
-            .frame(height: 60)
-            .frame(maxWidth: .infinity)
-            .background(
-                RoundedRectangle(cornerRadius: 30)
-                    .fill(Color(Color.accentPrimary))
-            )
-            .padding(.horizontal, 25)
-        }
-    }
-}
-
 #Preview {
-    TripsFeedView(viewModel: TripsFeedViewModel(tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-        .environment(AppState())
+    TripsFeedView(
+        viewModel: TripsFeedViewModel(
+            tripService: TripService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            )
+        )
+    )
+    .environment(AppState())
 }

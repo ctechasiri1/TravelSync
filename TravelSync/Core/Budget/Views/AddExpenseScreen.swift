@@ -100,7 +100,7 @@ struct AddExpenseScreen: View {
                     .padding(.vertical)
                     
                     MultipurposeButton(
-                        text: "Confirm Transaction",
+                        buttonText: "Confirm Transaction",
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary
                     ) {

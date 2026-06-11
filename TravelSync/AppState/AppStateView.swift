@@ -20,7 +20,8 @@ struct AppStateView: View {
             case .login:
                 LoginScreen(viewModel: appState.makeLoginViewModel())
             case .home:
-                HomeScreen()
+                TabBarView()
+                    .transition(.blurReplace)
             }
         }
         .animation(.smooth, value: appState.currentAuthScreen)

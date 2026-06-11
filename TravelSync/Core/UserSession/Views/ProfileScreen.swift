@@ -62,7 +62,7 @@ struct ProfileScreen: View {
                             .padding(.vertical, 25)
                         
                         MultipurposeButton(
-                            text: "Log Out",
+                            buttonText: "Log Out",
                             foregroundColor: .accentPrimary,
                             backgroundColor: .white) {
                                 

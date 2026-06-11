@@ -71,9 +71,9 @@ struct NavigationOptionRow<Destination: View>: View {
 }
 
 struct ToggleOptionRow: View {
+    @Binding var isOn: Bool
     let title: String
     let iconName: String
-    @Binding var isOn: Bool
     
     var body: some View {
         Toggle(isOn: $isOn) {
@@ -100,7 +100,7 @@ struct ToggleOptionRow: View {
         
         Divider()
         
-        ToggleOptionRow(title: "Favorite Places", iconName: "person.fill", isOn: .constant(false))
+        ToggleOptionRow(isOn: .constant(false), title: "Favorite Places", iconName: "person.fill")
             .padding(.vertical, 5)
         
         Divider()

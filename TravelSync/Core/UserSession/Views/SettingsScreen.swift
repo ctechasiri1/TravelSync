@@ -31,7 +31,7 @@ struct SettingsScreen: View {
                     SupportOptions()
                     
                     MultipurposeButton(
-                        text: "Log Out",
+                        buttonText: "Log Out",
                         foregroundColor: .accentPrimary,
                         backgroundColor: .white) {
                             
