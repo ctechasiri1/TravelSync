@@ -5,6 +5,35 @@
 //  Created by Chiraphat Techasiri on 2/25/26.
 //
 
+// MARK: This is for the 'Sign Up' screen
+"create_account" = "Create Your Account";
+"start_adventure_today" = "Start your next adventure today.";
+"full_name" = "Full Name";
+"enter_name" = "Enter your name";
+"enter_username" = "Enter your username";
+"example_email" = "hello@example.com";
+"sign_up" = "Sign Up";
+"sign_in" = "Sign In";
+"hidden_password" = "••••••••••";
+"sign_up_with" = "Or sign up with";
+"already_have_account" = "Already have an account?";
+"authentication_username" = "Username";
+"authentication_email" = "Email";
+"authentication_password" = "Password";
+
+
+// MARK: This is for the 'Trip Feed' screen
+"my_trips" = "My Trips";
+"plan_new_trip" = "Plan a new trip";
+"recent_adventure" = "Recent Adventure";
+"recent_adventures" = "Recent Adventures";
+"future_plans" = "Future Plans";
+"next_adventure" = "Next Adventure";
+"empty_trips_title" = "Where to next?";
+"empty_trips_description" = "Your travel adventure starts here. Plan your first trip to see it listed.";
+"empty_past_trips_title" = "No past trips yet";
+"empty_past_trips_description" = "Your completed adventures and travel memories will appear here.";
+
 //MARK: This is for the 'Terms of Service' screen
 "warning_content" = "Please read thse Terms of Service ('Terms', 'Terms of Service') carefully before using the TravelSync mobile application (the 'Service') operated by TravelSync Inc. ('us', 'we', or 'our').";
 
@@ -55,12 +84,6 @@
 
 "contact_us_title" = "5. Contact User";
 "contact_us_content" = "If you have any questions about this privacy policy or our privacy practices, please contact our data privacy manager.";
-
-//MARK: This is for the 'Trips Feed' screen
-"empty_trips_title" = "Where to next?";
-"empty_trips_description" = "Your travel adventure starts here. Plan your first trip to see it listed.";
-"empty_past_trips_title" = "No past trips yet";
-"empty_past_trips_description" = "Your completed adventures and travel memories will appear here.";
 
 //MARK: This is for the delete confirmation view modifier
 "delete_trip_title" = "Delete Trip?";

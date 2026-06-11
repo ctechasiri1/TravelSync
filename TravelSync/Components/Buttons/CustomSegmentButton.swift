@@ -10,11 +10,10 @@ import SwiftUI
 struct CustomSegmentButton: View {
     @Namespace private var namespace
     @Binding var selection: TripOption
-    let options: [TripOption]
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(options, id: \.self) { option in
+            ForEach(TripOption.allCases, id: \.self) { option in
                 Button {
                     withAnimation(.easeInOut) {
                         selection = option
@@ -53,5 +52,5 @@ struct CustomSegmentButton: View {
 #Preview {
     @State @Previewable var selection: TripOption = .upcoming
     
-    CustomSegmentButton(selection: $selection, options: TripOption.allCases)
+    CustomSegmentButton(selection: $selection)
 }

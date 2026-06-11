@@ -46,7 +46,7 @@ extension Trip {
     }
     
     var dateDifference: String {
-        return startDate.relativeCalendarDescription()
+        return startDate.relativeCalendarDescription().capitalized
     }
     
     var city: String {

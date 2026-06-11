@@ -1,5 +1,5 @@
 //
-//  TripDetailScreen.swift
+//  TripDetailView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/7/26.
@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct TripDetailScreen: View {
+struct TripDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(AppState.self) private var appState
     @State private var viewModel: TripDetailViewModel
     
     @Binding var trip: Trip
-    let upcomingTrip: Bool
+    let isUpcomingTrip: Bool
     
-    init(viewModel: TripDetailViewModel, trip: Binding<Trip>, upcomingTrip: Bool) {
+    init(viewModel: TripDetailViewModel, trip: Binding<Trip>, isUpcomingTrip: Bool) {
         _viewModel = State(wrappedValue: viewModel)
         _trip = trip
-        self.upcomingTrip = upcomingTrip
+        self.isUpcomingTrip = isUpcomingTrip
     }
     
     var body: some View {
@@ -42,7 +42,7 @@ struct TripDetailScreen: View {
                     }
                 }
                 .overlay {
-                    TripImageOverlay(trip: trip, upcomingTrip: upcomingTrip)
+                    TripImageOverlay(trip: trip, upcomingTrip: isUpcomingTrip)
                 }
                 .padding()
 
@@ -260,9 +260,9 @@ private struct TripBudgetCard<T: View>: View {
 }
 
 #Preview {
-    TripDetailScreen(
+    TripDetailView(
         viewModel: AppState().makeTripDetailViewModel(),
         trip: .constant(Trip.example),
-        upcomingTrip: true)
-        .environment(AppState())
+        isUpcomingTrip: true)
+    .environment(AppState())
 }

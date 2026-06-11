@@ -13,7 +13,7 @@ struct HomeScreen: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TripsFeedScreen(viewModel: appState.makeTripFeedViewModel())
+                TripsFeedView(viewModel: appState.makeTripFeedViewModel())
             }
             .tabItem {
                 Label("Home", systemImage: "house.fill")

@@ -14,6 +14,7 @@ class TripsFeedViewModel {
     var trips: [Trip] = []
     
     var selection: TripOption = .upcoming
+//    var tripsFeedState: TripsFeedState = .noTrips
     
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false
@@ -34,8 +35,12 @@ class TripsFeedViewModel {
         return trips.filter { $0.startDate < Date.now }
     }
     
-    var isUpcomingTrip: Bool {
-        return selection == .upcoming
+    var isUpcomingSelected: Bool {
+        selection == .upcoming
+    }
+    
+    func toggleShowPlanNewTrip() {
+        showPlanNewTrip = true
     }
     
     func getTrip() async -> Void {
