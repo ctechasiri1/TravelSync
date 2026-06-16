@@ -28,6 +28,10 @@ class AddExpenseViewModel {
         return !expenseAmount.isEmpty && transactionDate != nil && !notes.isEmpty && isExpenseInputValid
     }
     
+    func selectExpense(expense: ExpenseOption) {
+        selectedExpense = expense
+    }
+    
     func createExpense(tripId: Int) async -> Void {
         defer { isNetworkActive = false }
         isNetworkActive = true

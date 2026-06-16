@@ -77,7 +77,7 @@ struct TripDetailView: View {
                     iconName: "dollarsign",
                     iconColor: .accentConfirmation
                 ) {
-                    BudgetScreen(
+                    BudgetView(
                         viewModel: appState.makeBudgetViewModel(),
                         trip: $trip
                     )

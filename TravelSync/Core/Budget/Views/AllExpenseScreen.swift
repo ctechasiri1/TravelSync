@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AllExpenseScreen: View {
-    @Environment(AppState.self) private var appState
     @State private var viewModel: BudgetViewModel
     @Binding var trip: Trip
     
@@ -20,8 +19,10 @@ struct AllExpenseScreen: View {
         List {
             ForEach(viewModel.expenseGroupByDate.keys.sorted(by: >), id: \.self) { date in
                 Text(date.formattedNumericDate)
-                    .padding(.horizontal, 20)
-                    .sectionTitleStyle()
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Color.textColor.placeholderText)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 25)
                 
                 if let expenseList = viewModel.expenseGroupByDate[date] {
                     ForEach(Array(expenseList), id: \.self) { expense in
@@ -98,7 +99,19 @@ private struct ExpenseItem: View {
     }
 }
 
-//#Preview {
-//    AllExpenseScreen(viewModel: BudgetViewModel(tripId: 1, expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: Trip.example)
-//        .environment(AppState())
-//}
+#Preview {
+    @Previewable @State var trip: Trip = Trip.example
+    AllExpenseScreen(
+        viewModel: BudgetViewModel(
+            expenseService: ExpenseService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            ),
+            tripService: TripService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            )
+        ),
+        trip: $trip
+    )
+}

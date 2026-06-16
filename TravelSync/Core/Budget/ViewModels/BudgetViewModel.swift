@@ -33,6 +33,28 @@ class BudgetViewModel {
         self.expenseService = expenseService
         self.tripsService = tripService
     }
+
+    var transactionDateRange: Int {
+        guard let recentExpenseDate = sortedExpenses.first?.transactionDate,
+              let leastRecentExpenseDate = sortedExpenses.last?.transactionDate else {
+            return 0
+        }
+        
+        let daysInBetween = Int(recentExpenseDate.timeIntervalSince(leastRecentExpenseDate) / 86400)
+        return daysInBetween
+    }
+    
+    var recentExpenses: [Expense] {
+        Array(sortedExpenses.prefix(4))
+    }
+    
+    func toggleShowAllExpense() -> Void {
+        showAllExpense = true
+    }
+    
+    func toggleShowAddExpense() -> Void {
+        showAddExpense = true
+    }
     
     func updateSortedExpenses() -> Void {
         sortedExpenses = expenses.sorted { $0.transactionDate > $1.transactionDate }
@@ -54,11 +76,11 @@ class BudgetViewModel {
         expenseGroupByDate = dateDict
     }
     
-    func getCategorySum(categoryType: String) -> Int {
+    func getCategorySum(categoryType: String) -> String {
         guard let categorySum = categorySums[categoryType] else {
-            return 0
+            return "0"
         }
-        return categorySum
+        return Double(categorySum).toString
     }
     
     func getTrip(tripId: Int) async -> Void {

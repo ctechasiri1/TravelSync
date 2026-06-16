@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: need to think of edge cases for this
 struct InputNumberField: View {
     @Binding var currency: Int?
     let fieldTitle: LocalizedStringKey

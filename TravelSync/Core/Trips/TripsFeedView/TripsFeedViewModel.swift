@@ -31,7 +31,7 @@ class TripsFeedViewModel {
     }
     
     var pastTrips: [Trip] {
-        return trips.filter { $0.startDate < Date.now }
+        trips.filter { $0.startDate < Date.now }
     }
     
     var isUpcomingSelected: Bool {

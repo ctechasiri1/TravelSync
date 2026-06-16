@@ -9,7 +9,6 @@ import SwiftUI
 
 struct AddExpenseScreen: View {
     @Environment(\.dismiss) private var dismiss
-    @Environment(AppState.self) private var appState
     @State private var textWidth = 10.0
     @State private var viewModel: AddExpenseViewModel
     
@@ -68,7 +67,7 @@ struct AddExpenseScreen: View {
                                 ExpenseOptionButton(
                                     expense: expense,
                                     isSelected: viewModel.selectedExpense == expense) {
-                                        viewModel.selectedExpense = expense
+                                        viewModel.selectExpense(expense: expense)
                                     }
                                     .padding(.vertical, 5)
                             }
@@ -125,11 +124,11 @@ struct AddExpenseScreen: View {
 private struct ExpenseOptionButton: View {
     let expense: ExpenseOption
     let isSelected: Bool
-    let action: () -> Void
+    let selectExpense: () -> Void
     
     var body: some View {
         Button {
-            action()
+            selectExpense()
         } label: {
             HStack {
                 Spacer()
@@ -200,5 +199,4 @@ private struct ReceiptUploadButton: View {
             )
         ), trip: Trip.example
     )
-    .environment(AppState())
 }

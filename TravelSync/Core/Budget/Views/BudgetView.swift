@@ -1,5 +1,5 @@
 //
-//  BudgetScreen.swift
+//  BudgetView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/6/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct BudgetScreen: View {
+struct BudgetView: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: BudgetViewModel
     @Binding var trip: Trip
@@ -19,7 +19,11 @@ struct BudgetScreen: View {
     
     var body: some View {
         ScrollView {
-            BudgetOverview(budget: trip.budget, totalSpend: trip.totalSpending, avgSpend: dailyAvgExpense())
+            BudgetSummaryView(
+                budget: trip.budget,
+                totalSpend: trip.totalSpending,
+                avgSpend: dailyAvgExpense()
+            )
             
             Text("Expenses Breakdown")
                 .padding()
@@ -28,7 +32,7 @@ struct BudgetScreen: View {
             
             LazyVGrid(columns: [GridItem(.flexible(minimum: 100, maximum: .infinity)), GridItem(.flexible(minimum: 100, maximum: .infinity))], spacing: 15) {
                 ForEach(ExpenseOption.allCases) { expenseType in
-                    ExpenseBreakdownOption(
+                    ExpenseBreakdownOptionView(
                         title: expenseType.title,
                         iconName: expenseType.imageName,
                         iconColor: expenseType.color,
@@ -40,32 +44,9 @@ struct BudgetScreen: View {
             .padding(.horizontal)
             
             if !viewModel.expenses.isEmpty {
-                HStack {
-                    Text("Recent Activity")
-                        .padding()
-                        .font(.system(.title2, weight: .semibold))
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    Button {
-                        viewModel.showAllExpense = true
-                    } label: {
-                        HStack {
-                            Text("View All")
-                            
-                            Image(systemName: "arrow.up.forward.app")
-                        }
-                        .padding(.vertical, 10)
-                        .padding(.horizontal, 15)
-                        .foregroundStyle(.secondaryText)
-                        .font(.system(size: 14, weight: .semibold))
-                        .background(.gray.opacity(0.1))
-                        .clipShape(RoundedRectangle(cornerRadius: 20))
-                    }
-                    .padding(.horizontal)
+                RecentActivitiesView(recentExpenses: viewModel.recentExpenses) {
+                    viewModel.toggleShowAllExpense()
                 }
-                
-                RecentActivities(expenses: Array(viewModel.sortedExpenses.prefix(4)))
-                    .padding(.horizontal)
             }
         }
         .navigationTitle("Budget Details")
@@ -89,9 +70,8 @@ struct BudgetScreen: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 ToolBarAddButton {
-                    viewModel.showAddExpense = true
+                    viewModel.toggleShowAddExpense()
                 }
-                .imageScale(.medium)
             }
             .sharedBackgroundVisibility(.hidden)
         }
@@ -99,12 +79,15 @@ struct BudgetScreen: View {
     }
     
     private func dailyAvgExpense() -> Int {
-        let secondsBetween = Date.now.timeIntervalSince(trip.startDate)
-        return Int(secondsBetween / 86400)
+        if viewModel.transactionDateRange == 0 {
+            return 0
+        } else {
+            return Int(trip.totalSpending / viewModel.transactionDateRange)
+        }
     }
 }
 
-private struct BudgetOverview: View {
+private struct BudgetSummaryView: View {
     let budget: Int
     let totalSpend: Int
     let avgSpend: Int
@@ -139,14 +122,18 @@ private struct BudgetOverview: View {
                     .foregroundStyle(.secondaryText)
                     
                 LinearProgressBar(
-                    value: Double(totalSpend) / Double(budget),
+                    value: currentSpend(),
                     shape: RoundedRectangle(cornerRadius: 20)
                 )
                 .tint(.accentConfirmation)
                 .frame(height: 15)
                 .padding(.vertical)
                     
-                ExpenseSummary(budget: budget, totalSpend: totalSpend, avgSpend: avgSpend)
+                BudgetMetericsView(
+                    budget: budget,
+                    totalSpend: totalSpend,
+                    avgSpend: avgSpend
+                )
             }
             .padding()
                 
@@ -156,9 +143,13 @@ private struct BudgetOverview: View {
         .createCardBackgroud()
         .padding()
     }
+    
+    private func currentSpend() -> Double {
+        Double(totalSpend) / Double(budget)
+    }
 }
 
-private struct ExpenseSummary: View {
+private struct BudgetMetericsView: View {
     let budget: Int
     let totalSpend: Int
     let avgSpend: Int
@@ -174,10 +165,10 @@ private struct ExpenseSummary: View {
                 
                 VStack(alignment: .leading) {
                     Text("Daily Avg")
-                        .font(.system(size: 16))
+                        .font(.system(size: 15))
                         .foregroundStyle(.secondaryText)
                     
-                    Text("\(avgSpend >= 0 ? avgSpend : 0)")
+                    Text("$\(avgSpend)")
                         .fontWeight(.semibold)
                 }
             }
@@ -188,7 +179,7 @@ private struct ExpenseSummary: View {
             .frame(maxWidth: .infinity)
             
             HStack {
-                Image(systemName: "dollarsign")
+                Image(systemName: "banknote")
                     .fontWeight(.bold)
                     .foregroundStyle(.accentConfirmation)
                 
@@ -196,10 +187,10 @@ private struct ExpenseSummary: View {
                 
                 VStack(alignment: .leading) {
                     Text("Left")
-                        .font(.system(size: 16))
+                        .font(.system(size: 15))
                         .foregroundStyle(.secondaryText)
                     
-                    Text("\(budget - totalSpend)")
+                    Text("$\(totalBdugetRemaining())")
                         .fontWeight(.semibold)
                 }
                 
@@ -212,53 +203,43 @@ private struct ExpenseSummary: View {
             .frame(maxWidth: .infinity)
         }
     }
-}
-
-private struct ExpenseBreakdownOption: View {
-    let title: String
-    let iconName: String
-    let iconColor: Color
-    let amount: Int
-    let totalSpend: Int
     
-    var body: some View {
-        VStack(alignment: .leading, spacing: 5) {
-            HStack {
-                CircleIcon(
-                    iconName: iconName,
-                    iconColor: iconColor,
-                    width: 45,
-                    height: 45
-                )
-                .padding()
-                
-                Spacer()
-            }
-            
-            Text(title)
-                .font(.system(size: 14))
-
-            VStack(alignment: .leading, spacing: 5) {
-                Text("$" + Double(amount).toString)
-                    .font(.system(size: 18, weight: .semibold))
-                
-                Text((Double(amount) / Double(totalSpend)).toPercentage + "%")
-                    .foregroundStyle(iconColor)
-                    .font(.system(size: 12))
-            }
-        }
-        .padding()
-        .createCardBackgroud()
-        .padding(.horizontal, 5)
+    private func totalBdugetRemaining() -> Int {
+        budget - totalSpend
     }
 }
 
-private struct RecentActivities: View {
-    let expenses: [Expense]
+private struct RecentActivitiesView: View {
+    let recentExpenses: [Expense]
+    let showAllExpenseToggle: () -> Void
     
     var body: some View {
+        HStack {
+            Text("Recent Activity")
+                .padding()
+                .font(.system(.title2, weight: .semibold))
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Button {
+                showAllExpenseToggle()
+            } label: {
+                HStack {
+                    Text("View All")
+                    
+                    Image(systemName: "arrow.up.forward.app")
+                }
+                .padding(.vertical, 10)
+                .padding(.horizontal, 15)
+                .foregroundStyle(.secondaryText)
+                .font(.system(size: 14, weight: .semibold))
+                .background(.gray.opacity(0.1))
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+            }
+            .padding(.horizontal)
+        }
+        
         VStack {
-            ForEach(expenses.sorted(by: { $0.amount > $1.amount })) { expense in
+            ForEach(recentExpenses) { expense in
                 HStack {
                     CircleIcon(
                         iconName: expense.type.imageName,
@@ -273,7 +254,7 @@ private struct RecentActivities: View {
                             .font(.system(size: 16, weight: .semibold))
                         
                         HStack {
-                            Text(expense.transactionDate.formatDate)
+                            Text(expense.formattedTransactionDate)
                             
                             Circle()
                                 .imageScale(.small)
@@ -287,7 +268,7 @@ private struct RecentActivities: View {
                     
                     Spacer()
                     
-                    Text("-$" + Double(expense.amount).toString)
+                    Text("-$" + expense.amountString)
                         .font(.system(size: 16, weight: .semibold))
                 }
             }
@@ -295,10 +276,58 @@ private struct RecentActivities: View {
         }
         .padding()
         .createCardBackgroud()
+        .padding(.horizontal)
+    }
+}
+
+private struct ExpenseBreakdownOptionView: View {
+    let title: String
+    let iconName: String
+    let iconColor: Color
+    let amount: String
+    let totalSpend: Int
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 5) {
+            HStack {
+                CircleIcon(
+                    iconName: iconName,
+                    iconColor: iconColor,
+                    width: 40,
+                    height: 40
+                )
+                .padding()
+                
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(title)
+                        .font(.system(size: 12))
+                    
+                    Text("$" + amount)
+                        .font(.system(size: 16, weight: .semibold))
+                }
+                
+                Spacer()
+            }
+        }
+        .padding()
+        .createCardBackgroud()
+        .padding(.horizontal, 5)
     }
 }
 
 #Preview {
-    BudgetScreen(viewModel: BudgetViewModel(expenseService: ExpenseService(networkService: NetworkRequestService(), keychainService: KeychainService()), tripService: TripService(networkService: NetworkRequestService(), keychainService: KeychainService())), trip: .constant(Trip.example))
-        .environment(AppState())
+    BudgetView(
+        viewModel: BudgetViewModel(
+            expenseService: ExpenseService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            ),
+            tripService: TripService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            )
+        ),
+        trip: .constant(Trip.example)
+    )
+    .environment(AppState())
 }

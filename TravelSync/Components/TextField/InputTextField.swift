@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+// TODO: There's a bug here when it pass the limit it converts everything to lowercase
+// TODO: need to think of edge cases for this
 struct InputTextField: View {
     @Binding var text: String
     @State var isSecureField: Bool = false

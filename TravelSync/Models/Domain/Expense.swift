@@ -25,3 +25,13 @@ struct Expense: Identifiable, Hashable {
         )
     }
 }
+
+extension Expense {
+    var amountString: String {
+        Double(amount).toString
+    }
+    
+    var formattedTransactionDate: String {
+        transactionDate.formatDate
+    }
+}

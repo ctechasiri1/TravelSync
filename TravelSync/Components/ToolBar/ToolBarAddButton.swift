@@ -20,6 +20,7 @@ struct ToolBarAddButton: View {
                 .padding(8)
                 .background(.accentPrimary)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
+                .imageScale(.medium)
         }
     }
 }
