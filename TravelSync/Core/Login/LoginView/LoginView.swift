@@ -21,7 +21,6 @@ struct LoginView: View {
             
             OptionsCard {
                 VStack(alignment: .leading) {
-                    
                     TitleSection()
                     
                     VStack(spacing: 15) {
@@ -92,6 +91,7 @@ struct LoginView: View {
             }
         }
         .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

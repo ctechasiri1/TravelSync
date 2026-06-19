@@ -43,6 +43,10 @@ struct SheetToolBar: View {
             .opacity(!enableSave ? 0.5 : 1.0)
             .animation(.smooth, value: enableSave)
         }
+        .background(
+            VariableBlurView(maxBlurRadius: 8)
+                .ignoresSafeArea()
+        )
     }
 }
 

@@ -19,7 +19,7 @@ struct SquareCard<T:View>: View {
         NavigationLink {
             content()
         } label: {
-            OptionsCard(title: "") {
+            OptionsCard {
                 HStack {
                     VStack(alignment: .leading) {
                         SquareIcon(
@@ -28,10 +28,10 @@ struct SquareCard<T:View>: View {
                             width: 50,
                             height: 50
                         )
+                        
                         .padding(.leading, 10)
                         .padding(.top, 10)
                         .padding(.bottom, 5)
-                        .imageScale(.large)
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text(title)
@@ -49,10 +49,12 @@ struct SquareCard<T:View>: View {
                                     .imageScale(.small)
                                     .foregroundStyle(arrowColor)
                             }
+                            .padding([.trailing, .bottom], 5)
                         }
+                        
                         .padding([.top, .bottom, .trailing], 15)
                     }
-                    .padding([.top, .leading], 20)
+                    .padding([.top, .leading], 30)
                     .padding(.trailing, 5)
                 }
             }
@@ -70,4 +72,5 @@ struct SquareCard<T:View>: View {
     ) {
 
     }
+    .padding()
 }

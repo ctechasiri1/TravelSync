@@ -87,6 +87,7 @@ struct TripDetailView: View {
         }
         .navigationTitle("\(trip.tripName)")
         .navigationBarTitleDisplayMode(.inline)
+        // TODO: Make sure this loads once, and not many times
         .task(id: trip.id) {
             guard !Task.isCancelled else { return }
             await viewModel
@@ -183,30 +184,30 @@ private struct TripDetailInformationCard: View {
     let textColor: Color
     
     var body: some View {
-        OptionsCard {
-            VStack(alignment: .leading, spacing: 5) {
-                Text(title)
-                    .foregroundStyle(.secondaryText)
-                    .font(.system(size: 12, weight: .semibold))
+            HStack {
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(title)
+                        .foregroundStyle(.secondaryText)
+                        .font(.system(size: 12, weight: .semibold))
                     
-                HStack {
                     Text(value)
                         .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(textColor)
-                        
-                    Spacer()
-                        
-                    CircleIcon(
-                        iconName: iconName,
-                        iconColor: iconColor,
-                        width: 35,
-                        height: 35
-                    )
-                    .padding(.trailing, 5)
                 }
+
+                Spacer()
+                
+                CircleIcon(
+                    iconName: iconName,
+                    iconColor: iconColor,
+                    width: 35,
+                    height: 35
+                )
+                .padding(.trailing, 5)
             }
-            .padding()
-        }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
+            .createCardBackgroud()
     }
 }
 
@@ -261,7 +262,7 @@ private struct TripBudgetCard<T: View>: View {
                 .padding(.vertical, 4)
                 .padding(.horizontal)
             }
-            .padding()
+            .padding(22)
         }
     }
 }

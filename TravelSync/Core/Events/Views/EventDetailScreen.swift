@@ -12,29 +12,32 @@ struct EventDetailScreen: View {
     let event: Event
     
     @State private var tempPosition: MapCameraPosition
-    private let linearGradientColor: [Color] = [
-        Color.white,
-        Color.white.opacity(0.5),
-        Color.white.opacity(0.2),
-        Color.white.opacity(0.1),
-        Color.white.opacity(0.05),
-        Color.white.opacity(0.01),
-        Color.white.opacity(0.05),
-        Color.white.opacity(0.1),
-        Color.white.opacity(0.2),
-        Color.white.opacity(0.5),
-        Color.white
-    ]
+    @State private var showEventNotes: Bool
+    private let linearGradientColor: [Color]
     
     init(event: Event) {
         self.event = event
         self.tempPosition = .region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude), span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)))
+        self.showEventNotes = false
+        self.linearGradientColor = [
+            Color.white,
+            Color.white.opacity(0.5),
+            Color.white.opacity(0.2),
+            Color.white.opacity(0.1),
+            Color.white.opacity(0.05),
+            Color.white.opacity(0.01),
+            Color.white.opacity(0.05),
+            Color.white.opacity(0.1),
+            Color.white.opacity(0.2),
+            Color.white.opacity(0.5),
+            Color.white
+        ]
     }
     
     var body: some View {
         ScrollView {
             ZStack {
-                VStack(spacing: 50) {
+                VStack {
                     Map(position: $tempPosition) {
                         Marker(event.title, coordinate: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude))
                     }
@@ -46,26 +49,16 @@ struct EventDetailScreen: View {
                             endPoint: .bottom
                         )
                     }
-                    
-                    Spacer()
-                    
-                    VStack {
-                        if !event.notes.isEmpty {
-                            VStack(alignment: .leading, spacing: 8) {
-                                Text("EVENT NOTES")
-                                    .foregroundStyle(Color.secondaryText)
-                                    .font(.system(size: 15, weight: .semibold))
-                                
-                                Text(event.notes)
-                            }
-                            .padding(.horizontal)
-                        }
-                        
-                        LocationButton(event: event)
+                    .overlay {
+                        EventDetailCard(event: event)
+                            .padding(.top, 300)
                     }
+                    .padding(.bottom, 80)
+                    
+                    EventNotesButton(showNotes: $showEventNotes, event: event)
+                    
+                    LocationButton(event: event)
                 }
-
-                EventDetailCard(event: event)
             }
         }
     }
@@ -75,12 +68,11 @@ private struct EventDetailCard: View {
     let event: Event
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text("EXPERIENCE")
                     .foregroundStyle(Color.accentPrimary)
                     .font(.system(size: 15, weight: .semibold))
-                    .padding(.leading, 5)
                 
                 Spacer()
             }
@@ -88,7 +80,8 @@ private struct EventDetailCard: View {
             
             Text(event.title)
                 .font(.system(size: 40, weight: .semibold))
-                .padding(5)
+                .padding(.horizontal)
+                .padding(.top, 5)
             
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
@@ -130,49 +123,96 @@ private struct EventDetailCard: View {
     }
 }
 
-private struct LocationButton: View {
+private struct EventNotesButton: View {
+    @Binding var showNotes: Bool
     let event: Event
     
     var body: some View {
-        HStack {
-            CircleIcon(
-                iconName: "map",
-                iconColor: .accentPrimary,
-                width: 50,
-                height: 50
-            )
-            .padding()
-            
-            VStack(alignment: .leading, spacing: 2) {
-                Text("Location")
-                    .foregroundStyle(Color.secondaryText)
-                    .font(.system(size: 15, weight: .semibold))
+        VStack {
+            HStack {
+                CircleIcon(
+                    iconName: "line.3.horizontal",
+                    iconColor: .accentPrimary,
+                    width: 50,
+                    height: 50
+                )
+                .padding()
                 
-                Text(event.location)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .lineLimit(2)
-                    .multilineTextAlignment(.leading)
-                    .font(.system(size: 16, weight: .semibold))
-                    .minimumScaleFactor(0.5)
-            }
-            
-            Spacer()
-            
-            Button {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Event Notes")
+                        .font(.system(size: 15, weight: .semibold))
+                }
                 
-            } label: {
-                Text("Open Maps")
+                Spacer()
+                
+                Button {
+                    showNotes.toggle()
+                } label: {
+                    Image(systemName: "chevron.down")
+                        .foregroundStyle(.secondaryText)
+                        .rotationEffect(Angle(degrees: showNotes ? 180 : 0))
+                }
             }
-            .foregroundStyle(.white)
-            .padding()
-            .background(.accentPrimary)
-            .clipShape(RoundedRectangle(cornerRadius: 30))
+            if showNotes {
+                Text(event.notes)
+                    .foregroundStyle(.secondaryText)
+                    .padding()
+            }
         }
         .padding(20)
         .createCardBackgroud()
         .padding()
     }
 }
+
+private struct LocationButton: View {
+    let event: Event
+    
+    var body: some View {
+        VStack {
+            HStack {
+                CircleIcon(
+                    iconName: "map",
+                    iconColor: .accentPrimary,
+                    width: 50,
+                    height: 50
+                )
+                .padding()
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Location")
+                        .foregroundStyle(Color.secondaryText)
+                        .font(.system(size: 15, weight: .semibold))
+                    
+                    Text(event.location)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(2)
+                        .multilineTextAlignment(.leading)
+                        .font(.system(size: 16, weight: .semibold))
+                        .minimumScaleFactor(0.5)
+                }
+                
+                Spacer()
+            }
+            Button {
+                
+            } label: {
+                Text("Open Maps")
+            }
+            .padding()
+            .frame(maxWidth: .infinity)
+            .foregroundStyle(.white)
+            .background(.accentPrimary)
+            .clipShape(RoundedRectangle(cornerRadius: 30))
+            
+        }
+        .padding(20)
+        .createCardBackgroud()
+        .padding()
+    }
+}
+
+
 
 #Preview {
     EventDetailScreen(event: Event.example.last!)

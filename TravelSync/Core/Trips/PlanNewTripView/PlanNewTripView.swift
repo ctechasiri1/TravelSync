@@ -18,15 +18,6 @@ struct PlanNewTripView: View {
     
     var body: some View {
         ScrollView {
-            SheetToolBar(
-                title: "Add a Trip",
-                enableSave: viewModel.canCreateTrip
-            ) {
-                Task {
-                    await viewModel.addTrip()
-                }
-            }
-            
             CoverImage(coverUIImage: $viewModel.coverUIImage)
                 .padding(.horizontal, 10)
             
@@ -102,6 +93,16 @@ struct PlanNewTripView: View {
         }
         .toolbar(.hidden, for: .tabBar)
         .scrollIndicators(.hidden)
+        .safeAreaInset(edge: .top, content: {
+            SheetToolBar(
+                title: "Add a Trip",
+                enableSave: viewModel.canCreateTrip
+            ) {
+                Task {
+                    await viewModel.addTrip()
+                }
+            }
+        })
         .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }

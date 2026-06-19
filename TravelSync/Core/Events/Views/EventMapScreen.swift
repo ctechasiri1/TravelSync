@@ -64,7 +64,7 @@ private struct EventMapCard: View {
                 Capsule()
                     .frame(width: 50, height: 5)
                     .foregroundStyle(.secondaryText.opacity(0.2))
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 8)
                     
                 VStack(alignment: .leading) {
                     HStack(spacing: 20) {
@@ -88,11 +88,12 @@ private struct EventMapCard: View {
                                 .foregroundStyle(.secondaryText)
                         }
                     }
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding()
+                .padding(12)
                     
                 HStack {
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text("SCHEDULE")
                             .foregroundStyle(.secondary)
                             .font(.system(size: 12, weight: .semibold))
@@ -104,12 +105,12 @@ private struct EventMapCard: View {
                             Text(
                                 unwrappedEvent.startTimeToString + ", " + unwrappedEvent.dateToString
                             )
-                            .font(.system(size: 12, weight: .semibold))
+                            .font(.system(size: 14, weight: .semibold))
                         }
                     }
                     .frame(maxWidth: .infinity)
                         
-                    VStack(alignment: .leading) {
+                    VStack(alignment: .leading, spacing: 5) {
                         Text("DURATION")
                             .foregroundStyle(.secondary)
                             .font(.system(size: 12, weight: .semibold))
@@ -119,12 +120,14 @@ private struct EventMapCard: View {
                                 .foregroundStyle(.accentPrimary)
                                 
                             Text(unwrappedEvent.timeDuration)
-                                .font(.system(size: 12, weight: .semibold))
+                                .font(.system(size: 14, weight: .semibold))
                         }
                     }
                     .frame(maxWidth: .infinity)
                 }
-                .padding(.vertical, 10)
+                .padding()
+                .background(.secondaryText.opacity(0.02))
+                .clipShape(RoundedRectangle(cornerRadius: 30))
                     
                 HStack(alignment: .center) {
                     MultipurposeButton(
@@ -149,9 +152,9 @@ private struct EventMapCard: View {
                         )
                     }
                 }
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
             }
-            .padding()
+            .padding(22)
             .createCardBackgroud()
             .offset(y: verticalDragAmount)
             .opacity(opacityAmount)
@@ -233,9 +236,6 @@ private struct CustomAnnotation: View {
                     .foregroundStyle(.black.opacity(0.9))
                     .font(.system(size: 12, weight: .bold))
             }
-//            .padding()
-//            .background(.primaryBackground)
-//            .clipShape(RoundedRectangle(cornerRadius: 30))
         }
         .scaleEffect(selectedEvent == event ? 1.1 : 1.0)
         .animation(.easeInOut, value: selectedEvent == event)

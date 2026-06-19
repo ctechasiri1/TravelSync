@@ -92,7 +92,7 @@ private struct ExpenseItem: View {
             Text("-$" + Double(amount).toString)
                 .font(.system(size: 16, weight: .semibold))
         }
-        .padding()
+        .padding(20)
         .createCardBackgroud()
         .padding(.vertical, 5)
         .padding(.horizontal)

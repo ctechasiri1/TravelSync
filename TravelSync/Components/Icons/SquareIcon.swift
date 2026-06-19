@@ -15,11 +15,11 @@ struct SquareIcon: View {
     
     var body: some View {
         Image(systemName: iconName)
-            .imageScale(.medium)
+            .frame(width: 20, height: 20)
             .bold()
             .foregroundStyle(iconColor)
             .background(
-                RoundedRectangle(cornerRadius: 12)
+                RoundedRectangle(cornerRadius: 20)
                     .fill(iconColor.opacity(0.1))
                     .frame(width: width, height: height)
             )
