@@ -11,7 +11,7 @@ struct CardViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                RoundedRectangle(cornerRadius: 20)
+                RoundedRectangle(cornerRadius: 30)
                     .foregroundStyle(Color.backgroundColor.secondaryBackground)
             )
             .shadow(color: Color.black.opacity(0.1), radius: 5, y: 2)

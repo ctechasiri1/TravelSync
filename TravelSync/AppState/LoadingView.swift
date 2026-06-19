@@ -1,5 +1,5 @@
 //
-//  LoadingScreen.swift
+//  LoadingView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/22/26.
@@ -9,7 +9,7 @@ import Combine
 import Lottie
 import SwiftUI
 
-struct LoadingScreen: View {
+struct LoadingView: View {
     @Environment(AppState.self) private var appState
     @State private var progress: Double = 0.0
     
@@ -58,6 +58,6 @@ struct LoadingScreen: View {
 }
 
 #Preview {
-    LoadingScreen()
+    LoadingView()
         .environment(AppState())
 }

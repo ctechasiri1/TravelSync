@@ -1,5 +1,5 @@
 //
-//  LoginScreen.swift
+//  LoginView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/22/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginScreen: View {
+struct LoginView: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: LoginViewModel
     
@@ -18,22 +18,11 @@ struct LoginScreen: View {
     var body: some View {
         ZStack {
             Color.secondaryBackground
-            OptionsCard(title: "") {
+            
+            OptionsCard {
                 VStack(alignment: .leading) {
-                    LoginIcon()
-                        .padding()
-                        .padding(.top, 20)
-                            
-                    Text("Welcome Back,")
-                        .font(.system(.title, weight: .semibold))
-                            
-                    Text("Explorer!")
-                        .font(.system(.title, weight: .semibold))
-                        .foregroundStyle(.accentPrimary)
-                            
-                    Text("Continue to your adventure where you left off.")
-                        .font(.system(.subheadline))
-                        .foregroundStyle(.secondaryText.opacity(0.6))
+                    
+                    TitleSection()
                     
                     VStack(spacing: 15) {
                         InputTextField(
@@ -58,7 +47,7 @@ struct LoginScreen: View {
                         .textInputAutocapitalization(.never)
                     }
                             
-                    TextNavigationButton(text: "Forgot Password?") {
+                    TextButton(text: "Forgot Password?") {
                         
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -67,6 +56,7 @@ struct LoginScreen: View {
                     
                     MultipurposeButton(
                         buttonText: "Login",
+                        isLoading: viewModel.isLoading,
                         foregroundColor: .white,
                         backgroundColor: .accentPrimary) {
                             Task {
@@ -80,7 +70,7 @@ struct LoginScreen: View {
                         Text("Don't have an account?")
                             .foregroundStyle(.secondaryText.opacity(0.6))
                                 
-                        TextNavigationButton(text: "Sign Up") {
+                        TextButton(text: "Sign Up") {
                             appState.navigate(to: .signUp)
                         }
                     }
@@ -105,36 +95,36 @@ struct LoginScreen: View {
     }
 }
 
-private struct LoginIcon: View {
+private struct TitleSection: View {
     var body: some View {
-        Image(systemName: "safari")
-            .bold()
-            .foregroundStyle(.white)
-            .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(.accentPrimary)
-                    .frame(width: 50, height: 50)
-            )
-    }
-}
-
-struct TextNavigationButton: View {
-    let text: String
-    let action: () -> Void
-    
-    var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .font(.system(.subheadline, weight: .semibold))
+        VStack(alignment: .leading) {
+            Image(systemName: "safari")
+                .bold()
+                .foregroundStyle(.white)
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.accentPrimary)
+                        .frame(width: 50, height: 50)
+                )
+                .padding()
+                .padding(.top, 20)
+            
+            Text("Welcome Back,")
+                .font(.system(.title, weight: .semibold))
+            
+            Text("Explorer!")
+                .font(.system(.title, weight: .semibold))
                 .foregroundStyle(.accentPrimary)
+            
+            Text("Continue to your adventure where you left off.")
+                .font(.system(.subheadline))
+                .foregroundStyle(.secondaryText.opacity(0.6))
         }
     }
 }
 
 #Preview {
-    LoginScreen(viewModel: LoginViewModel(userAuthService:
+    LoginView(viewModel: LoginViewModel(userAuthService:
                                             UserAuthService(
                                                 networkService: NetworkRequestService(),
                                                 keychainService: KeychainService()

@@ -1,5 +1,5 @@
 //
-//  SignUpScreen.swift
+//  SignUpView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/22/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SignUpScreen: View {
+struct SignUpView: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: SignUpViewModel
     
@@ -19,7 +19,7 @@ struct SignUpScreen: View {
         ZStack {
             Color.secondaryBackground
 
-            OptionsCard(title: "") {
+            OptionsCard {
                 VStack(alignment: .center) {
                     Text("Create Your Account")
                         .font(.system(.title, weight: .semibold))
@@ -83,7 +83,7 @@ struct SignUpScreen: View {
                         Text("Already have an account?")
                             .foregroundStyle(.secondaryText.opacity(0.6))
                             
-                        TextNavigationButton(text: "Sign In") {
+                        TextButton(text: "Sign In") {
                             appState.navigate(to: .login)
                         }
                     }
@@ -109,6 +109,6 @@ struct SignUpScreen: View {
 }
 
 #Preview {
-    SignUpScreen(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    SignUpView(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())
 }

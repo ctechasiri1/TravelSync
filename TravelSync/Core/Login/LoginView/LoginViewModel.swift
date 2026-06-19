@@ -18,6 +18,7 @@ class LoginViewModel {
     var errorMessage: String = "Login"
     
     var didLoginSucceed: Bool = false
+    var isLoading: Bool? = nil
     
     private let userAuthService: UserAuthServiceProtocol
         
@@ -26,12 +27,13 @@ class LoginViewModel {
     }
     
     func login() async {
-        errorMessage = "Login"
+        isLoading = true
         
         do {
             let request = UserLoginRequest(username: username, password: password)
             let _ = try await userAuthService.login(requestBody: request)
             
+            isLoading = nil
             toastOption = .success
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

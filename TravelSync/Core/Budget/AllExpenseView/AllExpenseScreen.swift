@@ -1,5 +1,5 @@
 //
-//  AllExpenseScreen.swift
+//  AllExpenseView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/11/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AllExpenseScreen: View {
+struct AllExpenseView: View {
     @State private var viewModel: BudgetViewModel
     @Binding var trip: Trip
     
@@ -101,7 +101,8 @@ private struct ExpenseItem: View {
 
 #Preview {
     @Previewable @State var trip: Trip = Trip.example
-    AllExpenseScreen(
+    
+    AllExpenseView(
         viewModel: BudgetViewModel(
             expenseService: ExpenseService(
                 networkService: NetworkRequestService(),

@@ -14,17 +14,17 @@ struct AppStateView: View {
         Group {
             switch appState.currentAuthScreen {
             case .loading:
-                LoadingScreen()
+                LoadingView()
             case .signUp:
-                SignUpScreen(viewModel: appState.makeSignUpViewModel())
+                SignUpView(viewModel: appState.makeSignUpViewModel())
             case .login:
-                LoginScreen(viewModel: appState.makeLoginViewModel())
+                LoginView(viewModel: appState.makeLoginViewModel())
             case .home:
                 TabBarView()
-                    .transition(.opacity)
+                    .transition(.blurReplace)
             }
         }
-        .animation(.easeInOut(duration: 0.3), value: appState.currentAuthScreen)
+        .animation(.smooth, value: appState.currentAuthScreen)
     }
 }
 

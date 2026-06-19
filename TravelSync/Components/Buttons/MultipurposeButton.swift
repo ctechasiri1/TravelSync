@@ -10,6 +10,7 @@ import SwiftUI
 struct MultipurposeButton: View {
     let buttonImageString: String?
     let buttonText: LocalizedStringKey
+    let isLoading: Bool?
     let foregroundColor: Color
     let backgroundColor: Color
     let onButtonPressed: () -> Void
@@ -19,12 +20,14 @@ struct MultipurposeButton: View {
     init(
         buttonImageString: String? = nil,
         buttonText: LocalizedStringKey,
+        isLoading: Bool? = nil,
         foregroundColor: Color,
         backgroundColor: Color,
         onButtonPressed: @escaping () -> Void,
     ) {
         self.buttonImageString = buttonImageString
         self.buttonText = buttonText
+        self.isLoading = isLoading
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
         self.onButtonPressed = onButtonPressed
@@ -35,19 +38,19 @@ struct MultipurposeButton: View {
             onButtonPressed()
         } label: {
             HStack {
-                if let imageString = buttonImageString {
-                    Image(systemName: imageString)
-                        .foregroundStyle(foregroundColor)
+                if let isLoading {
+                    ProgressView()
+                        .tint(.white)
+                } else {
+                    if let imageString = buttonImageString {
+                        Image(systemName: imageString)
+                            .foregroundStyle(foregroundColor)
+                    }
+                    
+                    Text(buttonText)
                 }
-                
-                Text(buttonText)
             }
-            .font(.system(.subheadline, weight: .semibold))
-            .padding()
-            .foregroundStyle(foregroundColor)
-            .frame(maxWidth: .infinity)
-            .background(backgroundColor)
-            .clipShape(RoundedRectangle(cornerRadius: 30))
+            .applyButtonStyle(foregroundColor: foregroundColor, backgroundColor: backgroundColor)
             .scaleEffect(isButtonPressed ? 0.90 : 1.0)
             .onLongPressGesture {
                 isButtonPressed.toggle()
@@ -55,7 +58,6 @@ struct MultipurposeButton: View {
                 isButtonPressed = pressing
             }
             .shadow(color: .gray.opacity(0.2), radius: 5, x: 1, y: 2)
-            
         }
     }
 }

@@ -58,14 +58,14 @@ struct BudgetView: View {
             trip = newValue
         })
         .navigationDestination(isPresented: $viewModel.showAllExpense, destination: {
-            AllExpenseScreen(viewModel: viewModel, trip: $trip)
+            AllExpenseView(viewModel: viewModel, trip: $trip)
         })
         .fullScreenCover(isPresented: $viewModel.showAddExpense, onDismiss: {
             Task {
                 await viewModel.getExpenses(tripId: trip.id)
             }
         }, content: {
-            AddExpenseScreen(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
+            AddExpenseView(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
         })
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {

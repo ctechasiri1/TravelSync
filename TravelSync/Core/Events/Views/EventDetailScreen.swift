@@ -12,6 +12,19 @@ struct EventDetailScreen: View {
     let event: Event
     
     @State private var tempPosition: MapCameraPosition
+    private let linearGradientColor: [Color] = [
+        Color.white,
+        Color.white.opacity(0.5),
+        Color.white.opacity(0.2),
+        Color.white.opacity(0.1),
+        Color.white.opacity(0.05),
+        Color.white.opacity(0.01),
+        Color.white.opacity(0.05),
+        Color.white.opacity(0.1),
+        Color.white.opacity(0.2),
+        Color.white.opacity(0.5),
+        Color.white
+    ]
     
     init(event: Event) {
         self.event = event
@@ -28,19 +41,7 @@ struct EventDetailScreen: View {
                     .frame(width: 400, height: 400)
                     .overlay {
                         LinearGradient(
-                            colors: [
-                                Color.white,
-                                Color.white.opacity(0.5),
-                                Color.white.opacity(0.2),
-                                Color.white.opacity(0.1),
-                                Color.white.opacity(0.05),
-                                Color.white.opacity(0.01),
-                                Color.white.opacity(0.05),
-                                Color.white.opacity(0.1),
-                                Color.white.opacity(0.2),
-                                Color.white.opacity(0.5),
-                                Color.white
-                            ],
+                            colors: linearGradientColor,
                             startPoint: .top,
                             endPoint: .bottom
                         )

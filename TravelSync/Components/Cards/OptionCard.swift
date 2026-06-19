@@ -7,15 +7,21 @@
 
 import SwiftUI
 
+// TODO: All of this needs to be seperated out too, i can rethink to make this simplier
 // This creates a 'group' for multiples views to be passed into
 struct OptionsCard<T: View>: View {
     let title: String?
     @ViewBuilder let content: () -> T
     
+    init(title: String? = nil, @ViewBuilder content: @escaping () -> T) {
+        self.title = title
+        self.content = content
+    }
+    
     var body: some View {
         VStack(spacing: 10) {
-            if let title = title, !title.isEmpty {
-                Text(title)
+            if let unwrappedTitle = title {
+                Text(unwrappedTitle)
                     .sectionTitleStyle()
                     .padding(.leading, 5)
             }

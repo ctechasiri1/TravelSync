@@ -42,7 +42,7 @@ struct TripDetailView: View {
                 Text("Quick Access")
                     .font(.system(.title3, weight: .semibold))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
+                    .padding([.top, .horizontal])
                     
                 HStack(spacing: 20) {
                     SquareCard(
@@ -183,7 +183,7 @@ private struct TripDetailInformationCard: View {
     let textColor: Color
     
     var body: some View {
-        OptionsCard(title: "") {
+        OptionsCard {
             VStack(alignment: .leading, spacing: 5) {
                 Text(title)
                     .foregroundStyle(.secondaryText)
@@ -191,7 +191,7 @@ private struct TripDetailInformationCard: View {
                     
                 HStack {
                     Text(value)
-                        .font(.system(size: 18, weight: .semibold))
+                        .font(.system(size: 16, weight: .semibold))
                         .foregroundStyle(textColor)
                         
                     Spacer()
@@ -219,7 +219,7 @@ private struct TripBudgetCard<T: View>: View {
     @ViewBuilder let content: () -> T
     
     var body: some View {
-        OptionsCard(title: "") {
+        OptionsCard {
             VStack {
                 HStack(spacing: 30) {
                     SquareIcon(

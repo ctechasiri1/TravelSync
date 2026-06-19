@@ -57,7 +57,7 @@ private struct ProfileInformation: View {
 
     
     var body: some View {
-        OptionsCard(title: "") {
+        OptionsCard {
             HStack(spacing: 0) {
                 ProfileImage(
                     imageURL: user.profileImage,

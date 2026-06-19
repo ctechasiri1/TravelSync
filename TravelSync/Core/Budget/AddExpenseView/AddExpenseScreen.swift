@@ -1,5 +1,5 @@
 //
-//  AddExpenseScreen.swift
+//  AddExpenseView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/7/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AddExpenseScreen: View {
+struct AddExpenseView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var textWidth = 10.0
     @State private var viewModel: AddExpenseViewModel
@@ -191,7 +191,7 @@ private struct ReceiptUploadButton: View {
 }
 
 #Preview {
-    AddExpenseScreen(
+    AddExpenseView(
         viewModel: AddExpenseViewModel(
             expenseService: ExpenseService(
                 networkService: NetworkRequestService(),
