@@ -21,4 +21,36 @@ class EventMapViewModel {
         mapItem.name = name
         mapItem.openInMaps()
     }
+    
+    func findNextLocation(currentEvent: Event) {
+        let eventsCount = events.count
+        for (index, event) in events.enumerated() {
+            if event == currentEvent {
+                selectedEvent = events[(index + 1) % eventsCount]
+            }
+        }
+    }
+    
+    func findPrevLocation(currentEvent: Event) {
+        let eventsCount = events.count
+        for (index, event) in events.enumerated() {
+            if event == currentEvent {
+                selectedEvent = events[abs(index - 1) % eventsCount]
+            }
+        }
+    }
+    
+    func updateSelectedEvent(newEvent: Event?) {
+        if let latitude = newEvent?.latitude, let longitude = newEvent?.longitude {
+            position = .region(
+                MKCoordinateRegion(
+                    center: CLLocationCoordinate2D(
+                        latitude: latitude,
+                        longitude: longitude
+                    ),
+                    latitudinalMeters: 10000,
+                    longitudinalMeters: 10000)
+            )
+        }
+    }
 }

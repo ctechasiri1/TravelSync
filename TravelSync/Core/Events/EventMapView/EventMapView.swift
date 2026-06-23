@@ -20,33 +20,40 @@ struct EventMapView: View {
     }
 
     var body: some View {
-        Map(position: $viewModel.position, selection: $viewModel.selectedEvent) {
+        Map(position: $viewModel.position) {
             ForEach(viewModel.events, id: \.self) { event in
                 Annotation("", coordinate: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)) {
-                        CustomAnnotation(event: event)
-                            .scaleEffect(event == viewModel.selectedEvent  ? 1.1 : 1.0)
-                            .animation(.easeInOut, value: event == viewModel.selectedEvent)
+                    CustomAnnotation(selectedEvent: $viewModel.selectedEvent, event: event)
                 }
             }
         }
+        .onChange(of: viewModel.selectedEvent, { oldValue, newValue in
+            viewModel.updateSelectedEvent(newEvent: newValue)
+        })
         .overlay(alignment: .bottom) {
             VStack {
                 Spacer()
 
-                    ScrollView(.horizontal) {
-                        LazyHStack {
-                            ForEach(viewModel.events) { event in
-                                TempEventMapCard(selectedEvent: $viewModel.selectedEvent, event: event) {
+                ScrollView(.horizontal) {
+                    LazyHStack {
+                        ForEach(viewModel.events) { event in
+                            if event == viewModel.selectedEvent {
+                                TempEventMapCard(selectedEvent: $viewModel.selectedEvent, event: event, directionAction: {
                                     
-                                }
+                                }, prevLocationAction: {
+                                    viewModel.findPrevLocation(currentEvent: event)
+                                }, nextLocationAction: {
+                                    viewModel.findNextLocation(currentEvent: event)
+                                })
                                 .containerRelativeFrame(.horizontal, alignment: .center)
                             }
                         }
                     }
-                    .frame(height: 350)
-                    .scrollIndicators(.hidden)
-                    .scrollTargetLayout()
-                    .scrollTargetBehavior(.paging)
+                }
+                .frame(height: 350)
+                .scrollIndicators(.hidden)
+                .scrollTargetLayout()
+                .scrollTargetBehavior(.paging)
             }
             .ignoresSafeArea()
         }
@@ -57,7 +64,12 @@ private struct TempEventMapCard: View {
     @Binding var selectedEvent: Event?
     let event: Event
     let directionAction: () -> Void
+    let prevLocationAction: () -> Void
+    let nextLocationAction:() -> Void
 
+    @State private var horizontalDragAmount: CGFloat = 0.0
+    @State private var verticalDragAmount: CGFloat = 0.0
+    
     var body: some View {
         VStack (alignment: .center) {
             VStack(alignment: .leading) {
@@ -68,15 +80,15 @@ private struct TempEventMapCard: View {
                         width: 50,
                         height: 50
                     )
-                            
+                    
                     VStack(alignment: .leading, spacing: 5) {
                         Text("EXPERIENCE")
                             .foregroundStyle(.accentPrimary)
                             .font(.system(size: 14, weight: .semibold))
-                                
+
                         Text(event.title)
                             .font(.system(size: 20, weight: .semibold))
-                                
+                        
                         Text(event.location)
                             .font(.system(size: 14))
                             .foregroundStyle(.secondaryText)
@@ -85,17 +97,17 @@ private struct TempEventMapCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(12)
-                    
+    
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("SCHEDULE")
                         .foregroundStyle(.secondary)
                         .font(.system(size: 12, weight: .semibold))
-                            
+                        
                     HStack {
                         Image(systemName: "calendar")
                             .foregroundStyle(.accentPrimary)
-                                
+                            
                         Text(
                             event.startTimeToString + ", " + event.dateToString
                         )
@@ -103,16 +115,16 @@ private struct TempEventMapCard: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                        
+                    
                 VStack(alignment: .leading, spacing: 5) {
                     Text("DURATION")
                         .foregroundStyle(.secondary)
                         .font(.system(size: 12, weight: .semibold))
-                            
+                        
                     HStack {
                         Image(systemName: "clock")
                             .foregroundStyle(.accentPrimary)
-                                
+                            
                         Text(event.timeDuration)
                             .font(.system(size: 14, weight: .semibold))
                     }
@@ -122,7 +134,7 @@ private struct TempEventMapCard: View {
             .padding()
             .background(.secondaryText.opacity(0.02))
             .clipShape(RoundedRectangle(cornerRadius: 30))
-                    
+
             HStack(alignment: .center) {
                 MultipurposeButton(
                     buttonImageString: "arrow.triangle.turn.up.right.circle",
@@ -131,13 +143,13 @@ private struct TempEventMapCard: View {
                     backgroundColor: .accentPrimary) {
                         directionAction()
                     }
-                        
+                
                 NavigationLink {
                     EventDetailView(event: event)
                 } label: {
                     HStack {
                         Image(systemName: "calendar")
-                                
+                        
                         Text("View Event")
                     }
                     .applyButtonStyle(
@@ -150,14 +162,37 @@ private struct TempEventMapCard: View {
         }
         .padding(22)
         .createCardBackgroud()
+        .offset(x: horizontalDragAmount)
+        .animation(.smooth, value: horizontalDragAmount)
+        .gesture(
+            DragGesture()
+                .onChanged({ value in
+                    horizontalDragAmount = value.translation.width
+                })
+                .onEnded({ value in
+                    if value.translation.width < -50 {
+                        withAnimation(.easeIn) {
+                            horizontalDragAmount = 0
+                        }
+                        nextLocationAction()
+                    } else if value.translation.width > 50 {
+                        withAnimation(.easeOut) {
+                            horizontalDragAmount = 0
+                        }
+                        prevLocationAction()
+                    } else {
+                        withAnimation(.smooth) {
+                            horizontalDragAmount = 0
+                        }
+                    }
+                })
+        )
         .padding()
-        .onAppear {
-            selectedEvent = event
-        }
     }
 }
 
 private struct CustomAnnotation: View {
+    @Binding var selectedEvent: Event?
     let event: Event
     
     var body: some View {
@@ -187,6 +222,11 @@ private struct CustomAnnotation: View {
                     .foregroundStyle(.black.opacity(0.9))
                     .font(.system(size: 12, weight: .bold))
             }
+        }
+        .scaleEffect(selectedEvent == event ? 1.1 : 1.0)
+        .animation(.easeInOut, value: selectedEvent == event)
+        .onTapGesture {
+            selectedEvent = event
         }
     }
 }
