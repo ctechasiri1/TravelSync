@@ -34,6 +34,7 @@ struct OptionsCard<T: View>: View {
     }
 }
 
+// TODO: I need to segment this out some more 
 // This creates the option that can navigate to another screen
 struct NavigationOptionRow<Destination: View>: View {
     let title: String

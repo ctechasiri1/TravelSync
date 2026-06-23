@@ -41,7 +41,6 @@ struct CoverImage: View {
                             .fill(.white.opacity(0.3))
                             .strokeBorder(Color.white, lineWidth: 1)
                             .frame(width: 150, height: 40)
-                            .foregroundStyle(Color.accentBlue)
                     )
             }
             .offset(x: -40, y: -25)

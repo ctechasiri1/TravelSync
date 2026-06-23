@@ -1,5 +1,5 @@
 //
-//  EventDetailScreen.swift
+//  EventDetailView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/28/26.
@@ -8,7 +8,7 @@
 import MapKit
 import SwiftUI
 
-struct EventDetailScreen: View {
+struct EventDetailView: View {
     let event: Event
     
     @State private var tempPosition: MapCameraPosition
@@ -215,6 +215,5 @@ private struct LocationButton: View {
 
 
 #Preview {
-    EventDetailScreen(event: Event.example.last!)
-    .environment(AppState())
+    EventDetailView(event: Event.example.last!)
 }

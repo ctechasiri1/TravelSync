@@ -62,7 +62,7 @@ struct TripDetailView: View {
                         iconColor: .accentBlue,
                         arrowColor: .accentBlue
                     ) { 
-                        EventMapScreen(
+                        EventMapView(
                             trip: trip,
                             viewModel: appState.makeEventMapViewModel()
                         )

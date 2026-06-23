@@ -12,7 +12,7 @@ import Foundation
 @Observable
 class EventMapViewModel {
     var position: MapCameraPosition = .automatic
-    var locations: [Event] = Event.example
+    var events: [Event] = Event.example
     var selectedEvent: Event? = nil
     
     func openInMaps(latitude: Double, longitude: Double, name: String) {

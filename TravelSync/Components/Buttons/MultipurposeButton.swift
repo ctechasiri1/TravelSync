@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MultipurposeButton: View {
     let buttonImageString: String?
-    let buttonText: LocalizedStringKey
+    let buttonText: String
     let isLoading: Bool?
     let foregroundColor: Color
     let backgroundColor: Color
@@ -19,7 +19,7 @@ struct MultipurposeButton: View {
     
     init(
         buttonImageString: String? = nil,
-        buttonText: LocalizedStringKey,
+        buttonText: String,
         isLoading: Bool? = nil,
         foregroundColor: Color,
         backgroundColor: Color,

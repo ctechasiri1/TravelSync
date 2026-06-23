@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: I need to decouple this more its too specific to TripOption
 struct CustomSegmentButton: View {
     @Namespace private var namespace
     @Binding var selection: TripOption

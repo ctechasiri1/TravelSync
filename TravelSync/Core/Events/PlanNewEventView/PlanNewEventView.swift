@@ -1,5 +1,5 @@
 //
-//  PlanNewEventScreen.swift
+//  PlanNewEventView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/28/26.
@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct PlanNewEventScreen: View {
-    @Environment(AppState.self) var appState
+struct PlanNewEventView: View {
     @State private var viewModel: PlanNewEventViewModel
     
     init(viewModel: PlanNewEventViewModel) {
@@ -142,6 +141,5 @@ private struct EventOptionButton: View {
 }
 
 #Preview {
-    PlanNewEventScreen(viewModel: PlanNewEventViewModel())
-        .environment(AppState())
+    PlanNewEventView(viewModel: PlanNewEventViewModel())
 }
