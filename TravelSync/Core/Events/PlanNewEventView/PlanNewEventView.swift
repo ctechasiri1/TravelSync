@@ -90,10 +90,8 @@ struct PlanNewEventView: View {
                         fieldTitle: "NOTES"
                     )
                     
-                    MultipurposeButton(
-                        buttonText: "Save to Itinerary",
-                        foregroundColor: .white,
-                        backgroundColor: .accentPrimary) {
+                    FillButton(
+                        text: "Save to Itinerary") {
                             
                         }
                 }

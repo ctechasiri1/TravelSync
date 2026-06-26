@@ -98,19 +98,16 @@ struct AddExpenseView: View {
                     }
                     .padding(.vertical)
                     
-                    MultipurposeButton(
-                        buttonText: "Confirm Transaction",
-                        foregroundColor: .white,
-                        backgroundColor: .accentPrimary
-                    ) {
-                        Task {
-                            await viewModel.createExpense(tripId: trip.id)
-                            await MainActor.run {
-                                dismiss()
+                    FillButton(
+                        text: "Confirm Transaction") {
+                            Task {
+                                await viewModel.createExpense(tripId: trip.id)
+                                await MainActor.run {
+                                    dismiss()
+                                }
                             }
                         }
-                    }
-                    .padding(.vertical)
+                        .padding(.vertical)
                 }
                 .padding(.horizontal)
                 

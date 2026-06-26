@@ -72,11 +72,9 @@ struct PlanNewTripView: View {
                     isPushNotificationOn: $viewModel.isPushNotificationOn
                 )
                 
-                MultipurposeButton(
-                    buttonImageString: "plus.circle.fill",
-                    buttonText: "Create Trip",
-                    foregroundColor: .white,
-                    backgroundColor: .accentPrimary) {
+                FillButton(
+                    text: "Create Trip",
+                    imageString: "plus.circle.fill") {
                         Task {
                             await viewModel.addTrip()
                             await MainActor.run {
@@ -87,7 +85,6 @@ struct PlanNewTripView: View {
                     .padding(.vertical)
                     .disabled(!viewModel.canCreateTrip)
                     .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
-                    .animation(.smooth, value: viewModel.canCreateTrip)
             }
             .padding(.horizontal)
         }

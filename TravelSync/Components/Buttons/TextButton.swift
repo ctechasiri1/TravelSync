@@ -8,20 +8,41 @@
 import SwiftUI
 
 struct TextButton: View {
+    
     let text: String
+    let foregroundColor: Color
+    let backgroundColor: Color
     let action: () -> Void
     
+    init(
+        text: String,
+        foregroundColor: Color = .accentPrimary,
+        backgroundColor: Color = .clear,
+        action: @escaping () -> Void
+    ) {
+        self.text = text
+        self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
+        self.action = action
+    }
+    
     var body: some View {
-        Button {
-            action()
-        } label: {
-            Text(text)
-                .font(.system(.subheadline, weight: .semibold))
-                .foregroundStyle(.accentPrimary)
-        }
+        Text(text)
+            .styledButton(
+                buttonStyle: .text,
+                foregroundColor: foregroundColor,
+                backgroundColor: backgroundColor) {
+                    action()
+                }
     }
 }
 
 #Preview {
-    TextButton(text: "Test", action: { })
+    TextButton(
+        text: "Login",
+        foregroundColor: .accentPrimary,
+        backgroundColor: .clear
+    ) {
+ 
+    }
 }

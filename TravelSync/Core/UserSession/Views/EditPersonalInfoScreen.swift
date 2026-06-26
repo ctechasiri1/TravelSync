@@ -61,14 +61,11 @@ struct EditPersonalInfoScreen: View {
             }
             .padding()
             
-            MultipurposeButton(
-                buttonText: "Save Changes",
-                foregroundColor: .white,
-                backgroundColor: .accentPrimary
-            ) {
-                
-            }
-            .padding()
+            FillButton(
+                text: "Save Changes") {
+                    
+                }
+                .padding()
         }
         .toolbar(.hidden, for: .tabBar)
         .navigationTitle("Personal Information")

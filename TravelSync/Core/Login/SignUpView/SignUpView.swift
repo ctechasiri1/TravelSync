@@ -66,11 +66,9 @@ struct SignUpView: View {
                         )
                     }
                     .textInputAutocapitalization(.never)
-                        
-                    MultipurposeButton(
-                        buttonText: "Sign Up",
-                        foregroundColor: .white,
-                        backgroundColor: .accentPrimary) {
+                    
+                    FillButton(
+                        text: "Sign Up") {
                             Task {
                                 await viewModel.signup()
                             }

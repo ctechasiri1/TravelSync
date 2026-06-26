@@ -61,13 +61,17 @@ struct ProfileScreen: View {
                         PreferencesOptions(viewModel: viewModel)
                             .padding(.vertical, 25)
                         
-                        MultipurposeButton(
-                            buttonText: "Log Out",
+                        FillButton(
+                            text: "Log Out",
                             foregroundColor: .accentPrimary,
-                            backgroundColor: .white) {
+                            backgroundColor: .white,
+                            action: {
                                 
                             }
-                            .padding(.vertical)
+                        )
+                        .padding(.vertical)
+    
+                            
                     }
                     .padding(.horizontal)
                     

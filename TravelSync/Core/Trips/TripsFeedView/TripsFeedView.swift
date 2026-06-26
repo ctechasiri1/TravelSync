@@ -108,11 +108,9 @@ private struct NoTripsView: View {
             .padding()
             
             if isUpcomingSelected {
-                MultipurposeButton(
-                    buttonImageString: "plus.circle.fill",
-                    buttonText: "trip_feed_plan_new_trip",
-                    foregroundColor: .white,
-                    backgroundColor: .accentPrimary) {
+                FillButton(
+                    text: "trip_feed_plan_new_trip",
+                    imageString: "plus.circle.fill") {
                         planNewTripToggle()
                     }
                     .padding(.horizontal, 50)

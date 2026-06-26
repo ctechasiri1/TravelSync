@@ -53,11 +53,9 @@ struct LoginView: View {
                     .padding(.top, 5)
                     .padding(.bottom, 15)
                     
-                    MultipurposeButton(
-                        buttonText: "Login",
-                        isLoading: viewModel.isLoading,
-                        foregroundColor: .white,
-                        backgroundColor: .accentPrimary) {
+                    FillButton(
+                        text: "Login",
+                        isLoading: viewModel.isLoading) {
                             Task {
                                 await viewModel.login()
                             }

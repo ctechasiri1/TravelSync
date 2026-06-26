@@ -36,18 +36,15 @@ struct DeleteConfirmationViewModifier: ViewModifier {
                         .padding(.bottom, 20)
                             
                         HStack {
-                            MultipurposeButton(
-                                buttonText: "Cancel",
+                            FillButton(
+                                text: "Cancel",
                                 foregroundColor: .accentPrimary,
-                                backgroundColor: .secondaryBackground
-                                    .opacity(0.8)) {
-                                        showDeleteConfirmation = false
-                                    }
-                                
-                            MultipurposeButton(
-                                buttonText: "Delete",
-                                foregroundColor: .white,
-                                backgroundColor: .accentPrimary) {
+                                backgroundColor: .secondaryBackground.opacity(0.8)) {
+                                    showDeleteConfirmation = false
+                                }
+                            
+                            FillButton(
+                                text: "Delete") {
                                     deleteAction()
                                     showDeleteConfirmation = false
                                 }

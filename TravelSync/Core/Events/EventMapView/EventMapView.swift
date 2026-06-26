@@ -136,27 +136,17 @@ private struct TempEventMapCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 30))
 
             HStack(alignment: .center) {
-                MultipurposeButton(
-                    buttonImageString: "arrow.triangle.turn.up.right.circle",
-                    buttonText: "Directions",
-                    foregroundColor: .white,
-                    backgroundColor: .accentPrimary) {
+                FillButton(
+                    text: "Directions",
+                    imageString: "arrow.triangle.turn.up.right.circle") {
                         directionAction()
                     }
                 
-                NavigationLink {
-                    EventDetailView(event: event)
-                } label: {
-                    HStack {
-                        Image(systemName: "calendar")
-                        
-                        Text("View Event")
+                LinkedButton(
+                    text: "View Event",
+                    imageString: "calendar") {
+                        EventDetailView(event: event)
                     }
-                    .applyButtonStyle(
-                        foregroundColor: .black,
-                        backgroundColor: .secondaryBackground
-                    )
-                }
             }
             .padding(.vertical, 12)
         }
