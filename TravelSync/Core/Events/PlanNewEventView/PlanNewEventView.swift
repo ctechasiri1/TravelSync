@@ -27,7 +27,7 @@ struct PlanNewEventView: View {
                 VStack (alignment: .leading){
                     Text("CATEGORY")
                         .padding(.horizontal)
-                        .foregroundStyle(Color.primaryText)
+                        .foregroundStyle(.primaryText)
                         .font(.system(size: 15, weight: .semibold))
                         .padding(.leading, 5)
                     
@@ -133,7 +133,7 @@ private struct EventOptionButton: View {
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 15)
-            .createCardBackgroud()
+            .cardBackground()
         }
     }
 }

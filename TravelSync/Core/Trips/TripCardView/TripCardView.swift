@@ -77,18 +77,12 @@ private struct CardContent: View {
                 
                 Spacer()
                 
-                Button {
-                    isFavorite.toggle()
-                    onFavoriteToggle()
-                } label: {
-                    CircleIcon(
-                        iconName: isFavorite ? "heart.fill" : "heart",
-                        iconColor: .pink,
-                        width: 10,
-                        height: 10
-                    )
-                }
-                .padding(.horizontal)
+                Image(systemName: isFavorite ? "heart.fill" : "heart")
+                    .styledButton(buttonStyle: .text, foregroundColor: .accentPrimary, backgroundColor: .clear, action: {
+                        isFavorite.toggle()
+                        onFavoriteToggle()
+                    })
+                    .padding(.horizontal)
             }
             
             Spacer()
@@ -176,4 +170,5 @@ private struct DetailsButton<T: View>: View {
         height: 350,
         isUpcomingTrip: true
     )
+    .environment(AppState())
 }

@@ -20,7 +20,7 @@ struct AllExpenseView: View {
             ForEach(viewModel.expenseGroupByDate.keys.sorted(by: >), id: \.self) { date in
                 Text(date.formattedNumericDate)
                     .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(Color.textColor.placeholderText)
+                    .foregroundStyle(.placeholderText)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 25)
                 
@@ -93,7 +93,7 @@ private struct ExpenseItem: View {
                 .font(.system(size: 16, weight: .semibold))
         }
         .padding(20)
-        .createCardBackgroud()
+        .cardBackground()
         .padding(.vertical, 5)
         .padding(.horizontal)
     }

@@ -28,7 +28,7 @@ struct TermsOfServiceScreen: View {
                 Divider()
                 
                 Text("questions_content")
-                    .foregroundStyle(Color.secondaryText)
+                    .foregroundStyle(.secondaryText)
                     .font(.system(size: 12))
                     .multilineTextAlignment(.center)
                     .padding()
@@ -52,7 +52,7 @@ private struct TermsOfServiceSection: View {
             
             Text(content)
                 .multilineTextAlignment(.leading)
-                .foregroundStyle(Color.secondaryText)
+                .foregroundStyle(.secondaryText)
                 .font(.system(.subheadline))
         }
         .padding(15)

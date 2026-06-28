@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Security: View {
     var body: some View {
-        OptionsCard(title: "LOGIN & RECOVERY") {
+        GroupCard(title: "LOGIN & RECOVERY") {
             Text("login")
         }
     }

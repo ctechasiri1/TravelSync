@@ -39,7 +39,7 @@ struct SettingsScreen: View {
                     
                     Text("Version 2.4.0 (145)")
                         .font(.subheadline)
-                        .foregroundStyle(Color.textColor.secondaryText)
+                        .foregroundStyle(.secondaryText)
                 }
                 .padding(.top)
                 .padding(.horizontal)
@@ -57,7 +57,7 @@ private struct ProfileInformation: View {
 
     
     var body: some View {
-        OptionsCard {
+        GroupCard {
             HStack(spacing: 0) {
                 ProfileImage(
                     imageURL: user.profileImage,
@@ -87,7 +87,7 @@ private struct AccountOptions: View {
     
     let viewModel: UserSessionViewModel
     var body: some View {
-        OptionsCard(title: "ACCOUNT") {
+        GroupCard(title: "ACCOUNT") {
             NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: EditPersonalInfoScreen(user: user, viewModel: viewModel), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)
@@ -103,7 +103,7 @@ private struct AccountOptions: View {
 
 private struct SupportOptions: View {
     var body: some View {
-        OptionsCard(title: "SUPPORT") {
+        GroupCard(title: "SUPPORT") {
             NavigationOptionRow(title: "Help Center", iconName: "questionmark.app.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
                 .padding(.top, 20)
                 .padding(.bottom, 10)

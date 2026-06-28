@@ -45,7 +45,7 @@ struct TripDetailView: View {
                     .padding([.top, .horizontal])
                     
                 HStack(spacing: 20) {
-                    SquareCard(
+                    NavigationCard(
                         title: "Itinerary",
                         value: "\(trip.dateDifference) Left",
                         iconName: "backpack.fill",
@@ -55,7 +55,7 @@ struct TripDetailView: View {
                         
                     }
                         
-                    SquareCard(
+                    NavigationCard(
                         title: "Map",
                         value: "\(trip.dateDifference) Left",
                         iconName: "map.fill",
@@ -102,7 +102,7 @@ struct TripDetailView: View {
             .sharedBackgroundVisibility(.hidden)
         }
         .toolbar(.hidden, for: .tabBar)
-        .confirmDelete(showDeleteConfirmation:$viewModel.showDeleteAlert) {
+        .deleteConfirmation(isPresented:$viewModel.showDeleteAlert) {
             dismiss()
             Task {
                 await viewModel.deleteTrip(tripId: trip.id)
@@ -207,7 +207,7 @@ private struct TripDetailInformationCard: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
-            .createCardBackgroud()
+            .cardBackground()
     }
 }
 
@@ -220,7 +220,7 @@ private struct TripBudgetCard<T: View>: View {
     @ViewBuilder let content: () -> T
     
     var body: some View {
-        OptionsCard {
+        GroupCard {
             VStack {
                 HStack(spacing: 30) {
                     SquareIcon(

@@ -61,7 +61,7 @@ struct TripsFeedView: View {
                 }
             }
         }
-        .setScrollViewBackground()
+        .scrollViewBackground()
         .refreshable {
             await viewModel.getTrip()
         }
@@ -129,7 +129,7 @@ private struct UpcomingTripsView: View {
     var body: some View {
         if !upcomingTrips.isEmpty {
             Text("trip_feed_next_adventure")
-                .sectionTitleStyle()
+                .sectionTitle()
                 .padding(.leading, 20)
             
             if let firstUpcomingTrip = upcomingTrips.first {
@@ -145,7 +145,7 @@ private struct UpcomingTripsView: View {
             
             if upcomingTrips.count > 1 {
                 Text("trip_feed_future_plans")
-                    .sectionTitleStyle()
+                    .sectionTitle()
                     .padding(.top)
                     .padding(.leading, 20)
             }
@@ -177,7 +177,7 @@ private struct PastTripsView: View {
             Text(
                 pastTrips.count == 1 ? "trip_feed_recent_adventure_singular" : "trip_feed_recent_adventure_plural"
             )
-            .sectionTitleStyle()
+            .sectionTitle()
             .padding(.leading, 20)
             
             ForEach(pastTrips) { trip in

@@ -73,39 +73,6 @@ struct EditPersonalInfoScreen: View {
     }
 }
 
-private struct EditCard: View {
-    @Binding var field: String
-    let cardName: String
-    let placeholder: String
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(cardName)
-                .sectionTitleStyle()
-            
-            HStack {
-                TextField(placeholder, text: $field)
-                    .font(.system(.body, weight: .medium))
-                    .foregroundStyle(.primaryText)
-                    .autocorrectionDisabled()
-                
-                if !field.isEmpty {
-                    Button {
-                        field = ""
-                    } label: {
-                        Image(systemName: "xmark.circle.fill")
-                            .foregroundStyle(Color.secondary.opacity(0.5))
-                    }
-                }
-            }
-            .padding(.horizontal, 26)
-            .padding(.vertical, 12)
-        }
-        .padding(.vertical)
-        .createCardBackgroud()
-    }
-}
-
 #Preview {
     EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
         .environment(AppState())

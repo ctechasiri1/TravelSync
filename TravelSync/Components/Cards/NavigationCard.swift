@@ -1,5 +1,5 @@
 //
-//  SquareCard.swift
+//  NavigationCard.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/8/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct SquareCard<T:View>: View {
+struct NavigationCard<T:View>: View {
     let title: String
     let value: String
     let iconName: String
@@ -19,7 +19,7 @@ struct SquareCard<T:View>: View {
         NavigationLink {
             content()
         } label: {
-            OptionsCard {
+            GroupCard {
                 HStack {
                     VStack(alignment: .leading) {
                         SquareIcon(
@@ -63,7 +63,7 @@ struct SquareCard<T:View>: View {
 }
 
 #Preview {
-    SquareCard(
+    NavigationCard(
         title: "Documents",
         value: "Left",
         iconName: "ticket.fill",

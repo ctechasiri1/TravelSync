@@ -22,7 +22,7 @@ struct CalendarScreen: View {
                     .font(.system(.largeTitle, weight: .bold))
                 
                 Text(Date().formattedAbbreviatedDate)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.secondaryText.opacity(0.6))
             }
             .padding()
             

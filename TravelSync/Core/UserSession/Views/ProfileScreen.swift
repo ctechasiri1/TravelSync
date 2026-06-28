@@ -78,7 +78,7 @@ struct ProfileScreen: View {
                     Spacer()
                 }
             }
-            .setScrollViewBackground()
+            .scrollViewBackground()
             .task {
                 await viewModel.getUser()
             }
@@ -127,7 +127,7 @@ private struct StatisticsSection: View {
             .foregroundStyle(.secondaryText)
         }
         .padding()
-        .createCardBackgroud()
+        .cardBackground()
     }
 }
 
@@ -165,15 +165,15 @@ private struct FuturePlansOptions: View {
                     Image(systemName: "chevron.right")
                 }
                 .padding()
-                .createCardBackgroud()
+                .cardBackground()
             }
             
             HStack(spacing: 15) {
-                SquareCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
+                NavigationCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
                     
                 }
                 
-                SquareCard(title: "Favorite Places", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
+                NavigationCard(title: "Favorite Places", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
                     
                 }
             }

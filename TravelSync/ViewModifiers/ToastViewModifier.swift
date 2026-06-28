@@ -1,5 +1,5 @@
 //
-//  Toast.swift
+//  ToastViewModifier.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/23/26.

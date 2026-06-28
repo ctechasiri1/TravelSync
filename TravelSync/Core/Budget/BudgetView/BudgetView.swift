@@ -140,7 +140,7 @@ private struct BudgetSummaryView: View {
             Spacer()
         }
         .padding()
-        .createCardBackgroud()
+        .cardBackground()
         .padding()
     }
     
@@ -220,21 +220,29 @@ private struct RecentActivitiesView: View {
                 .font(.system(.title2, weight: .semibold))
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            Button {
-                showAllExpenseToggle()
-            } label: {
-                HStack {
-                    Text("View All")
-                    
-                    Image(systemName: "arrow.up.forward.app")
+            FillButton(
+                text: "View All",
+                imageString: "arrow.up.forward.app",
+                foregroundColor: .secondaryText,
+                backgroundColor: .gray.opacity(0.1)) {
+                    showAllExpenseToggle()
                 }
-                .padding(.vertical, 10)
-                .padding(.horizontal, 15)
-                .foregroundStyle(.secondaryText)
-                .font(.system(size: 14, weight: .semibold))
-                .background(.gray.opacity(0.1))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-            }
+            
+//            Button {
+//                showAllExpenseToggle()
+//            } label: {
+//                HStack {
+//                    Text()
+//                    
+//                    Image(systemName: )
+//                }
+//                .padding(.vertical, 10)
+//                .padding(.horizontal, 15)
+//                .foregroundStyle()
+//                .font(.system(size: 14, weight: .semibold))
+//                .background()
+//                .clipShape(RoundedRectangle(cornerRadius: 20))
+//            }
             .padding(.horizontal)
         }
         
@@ -275,7 +283,7 @@ private struct RecentActivitiesView: View {
             .padding(.vertical)
         }
         .padding()
-        .createCardBackgroud()
+        .cardBackground()
         .padding(.horizontal)
     }
 }
@@ -310,7 +318,7 @@ private struct ExpenseBreakdownOptionView: View {
             }
         }
         .padding()
-        .createCardBackgroud()
+        .cardBackground()
         .padding(.horizontal, 5)
     }
 }

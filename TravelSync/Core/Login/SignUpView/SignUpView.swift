@@ -19,7 +19,7 @@ struct SignUpView: View {
         ZStack {
             Color.secondaryBackground
 
-            OptionsCard {
+            GroupCard {
                 VStack(alignment: .center) {
                     Text("Create Your Account")
                         .font(.system(.title, weight: .semibold))

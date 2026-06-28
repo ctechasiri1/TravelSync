@@ -19,7 +19,7 @@ struct LoginView: View {
         ZStack {
             Color.secondaryBackground
             
-            OptionsCard {
+            GroupCard {
                 VStack(alignment: .leading) {
                     TitleSection()
                     
@@ -46,7 +46,7 @@ struct LoginView: View {
                         .textInputAutocapitalization(.never)
                     }
                             
-                    TextButton(text: "Forgot Password?") {
+                    TextButton(text: "Forgot Password?", fontStyle: .footnote) {
                         
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)

@@ -36,7 +36,7 @@ struct AddExpenseView: View {
                 
                 VStack(alignment: .center) {
                     Text("AMOUNT")
-                        .foregroundStyle(.gray.opacity(0.6))
+                        .foregroundStyle(.secondaryText.opacity(0.6))
                         .font(.system(.subheadline, weight: .semibold))
                     
                     HStack(alignment: .center) {
@@ -118,6 +118,7 @@ struct AddExpenseView: View {
     }
 }
 
+// TODO: Create a component for this whole horizontal scrollview
 private struct ExpenseOptionButton: View {
     let expense: ExpenseOption
     let isSelected: Bool
@@ -150,7 +151,7 @@ private struct ExpenseOptionButton: View {
             }
             .padding(.horizontal, 8)
             .padding(.vertical, 15)
-            .createCardBackgroud()
+            .cardBackground()
         }
     }
 }
@@ -161,7 +162,7 @@ private struct ReceiptUploadButton: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("ATTACH RECEIPT")
-                .foregroundStyle(Color.primaryText)
+                .foregroundStyle(.primaryText)
                 .font(.system(size: 15, weight: .semibold))
                 .padding(.leading, 5)
             

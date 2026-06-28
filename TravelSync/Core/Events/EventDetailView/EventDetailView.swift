@@ -71,7 +71,7 @@ private struct EventDetailCard: View {
         VStack(alignment: .leading) {
             HStack {
                 Text("EXPERIENCE")
-                    .foregroundStyle(Color.accentPrimary)
+                    .foregroundStyle(.accentPrimary)
                     .font(.system(size: 15, weight: .semibold))
                 
                 Spacer()
@@ -86,7 +86,7 @@ private struct EventDetailCard: View {
             HStack {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("SCHEDULE")
-                        .foregroundStyle(Color.secondaryText)
+                        .foregroundStyle(.secondaryText)
                         .font(.system(size: 15, weight: .semibold))
                     
                     HStack {
@@ -103,7 +103,7 @@ private struct EventDetailCard: View {
                 
                 VStack(alignment: .leading, spacing: 10){
                     Text("DURATION")
-                        .foregroundStyle(Color.secondaryText)
+                        .foregroundStyle(.secondaryText)
                         .font(.system(size: 15, weight: .semibold))
                     
                     HStack {
@@ -118,7 +118,7 @@ private struct EventDetailCard: View {
             }
         }
         .padding()
-        .createCardBackgroud()
+        .cardBackground()
         .padding()
     }
 }
@@ -153,6 +153,7 @@ private struct EventNotesButton: View {
                         .rotationEffect(Angle(degrees: showNotes ? 180 : 0))
                 }
             }
+            
             if showNotes {
                 Text(event.notes)
                     .foregroundStyle(.secondaryText)
@@ -160,7 +161,7 @@ private struct EventNotesButton: View {
             }
         }
         .padding(20)
-        .createCardBackgroud()
+        .cardBackground()
         .padding()
     }
 }
@@ -181,7 +182,7 @@ private struct LocationButton: View {
                 
                 VStack(alignment: .leading, spacing: 2) {
                     Text("Location")
-                        .foregroundStyle(Color.secondaryText)
+                        .foregroundStyle(.secondaryText)
                         .font(.system(size: 15, weight: .semibold))
                     
                     Text(event.location)
@@ -194,6 +195,7 @@ private struct LocationButton: View {
                 
                 Spacer()
             }
+            
             Button {
                 
             } label: {
@@ -207,7 +209,7 @@ private struct LocationButton: View {
             
         }
         .padding(20)
-        .createCardBackgroud()
+        .cardBackground()
         .padding()
     }
 }

@@ -26,7 +26,7 @@ struct PlanNewTripView: View {
                     Text("Where to next?")
                         .font(.system(size: 30, weight: .semibold))
                     Text("Start planning your next adventure.")
-                        .foregroundStyle(Color.secondaryText)
+                        .foregroundStyle(.secondaryText)
                 }
                 .padding(.vertical, 8)
                 
@@ -131,7 +131,7 @@ private struct PlanNewTripPreferenceView: View {
     @Binding var isPushNotificationOn: Bool
     
     var body: some View {
-        OptionsCard(title: "PREFERNCES") {
+        GroupCard(title: "PREFERNCES") {
             ToggleOptionRow(
                 isOn: $isPushNotificationOn,
                 title: "Auto Time Zone",

@@ -101,7 +101,7 @@ private struct TempEventMapCard: View {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("SCHEDULE")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.secondaryText)
                         .font(.system(size: 12, weight: .semibold))
                         
                     HStack {
@@ -118,7 +118,7 @@ private struct TempEventMapCard: View {
                     
                 VStack(alignment: .leading, spacing: 5) {
                     Text("DURATION")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.secondaryText)
                         .font(.system(size: 12, weight: .semibold))
                         
                     HStack {
@@ -151,7 +151,7 @@ private struct TempEventMapCard: View {
             .padding(.vertical, 12)
         }
         .padding(22)
-        .createCardBackgroud()
+        .cardBackground()
         .offset(x: horizontalDragAmount)
         .animation(.smooth, value: horizontalDragAmount)
         .gesture(
@@ -209,7 +209,7 @@ private struct CustomAnnotation: View {
                     .font(.system(size: 12.5, weight: .bold))
                 
                 Text(event.title)
-                    .foregroundStyle(.black.opacity(0.9))
+                    .foregroundStyle(.primaryText.opacity(0.9))
                     .font(.system(size: 12, weight: .bold))
             }
         }

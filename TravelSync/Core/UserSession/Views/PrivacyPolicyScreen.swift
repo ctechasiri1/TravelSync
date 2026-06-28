@@ -44,7 +44,7 @@ struct PrivacyPolicyScreen: View {
                     
                     HStack {
                         Image(systemName: "envelope.fill")
-                            .foregroundStyle(Color.accentPrimary)
+                            .foregroundStyle(.accentPrimary)
                         
                         Text("privacy@travelsync.com")
                     }
@@ -70,7 +70,7 @@ private struct PrivacyPolicySection: View {
                 .padding(.bottom, 10)
             
             Text(content)
-                .foregroundStyle(Color.secondaryText)
+                .foregroundStyle(.secondaryText)
                 .multilineTextAlignment(.leading)
                 .font(.system(.subheadline))
         }
@@ -92,7 +92,7 @@ private struct PrivacyPolicyBulletPoint: View {
             Text(" ") +
             
             Text(bulletPointContent)
-                .foregroundStyle(Color.secondaryText)
+                .foregroundStyle(.secondaryText)
             )
         }
         .font(.system(.subheadline))

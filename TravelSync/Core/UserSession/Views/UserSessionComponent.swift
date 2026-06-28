@@ -11,7 +11,7 @@ struct PreferencesOptions: View {
     @Bindable var viewModel: UserSessionViewModel
     
     var body: some View {
-        OptionsCard(title: "PREFERNCES") {
+        GroupCard(title: "PREFERNCES") {
             ToggleOptionRow(isOn: $viewModel.emailNotificationsIsOn, title: "Notifications", iconName: "bell.fill")
                 .padding(.top, 20)
                 .padding(.bottom, 10)

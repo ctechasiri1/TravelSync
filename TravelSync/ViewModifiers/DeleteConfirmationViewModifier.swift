@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct DeleteConfirmationViewModifier: ViewModifier {
-    @Binding var showDeleteConfirmation: Bool
+    @Binding var isPresented: Bool
     let deleteAction: () -> Void
     
     func body(content: Content) -> some View {
         content
-            .fullScreenCover(isPresented: $showDeleteConfirmation) {
+            .fullScreenCover(isPresented: $isPresented) {
                 ZStack {
                     Rectangle()
                         .fill(.ultraThickMaterial.opacity(0.8))
                         .ignoresSafeArea()
                         .onTapGesture {
-                            showDeleteConfirmation = false
+                            dismissDeleteConformation()
                         }
                         
                     VStack {
@@ -40,19 +40,19 @@ struct DeleteConfirmationViewModifier: ViewModifier {
                                 text: "Cancel",
                                 foregroundColor: .accentPrimary,
                                 backgroundColor: .secondaryBackground.opacity(0.8)) {
-                                    showDeleteConfirmation = false
+                                    dismissDeleteConformation()
                                 }
                             
                             FillButton(
                                 text: "Delete") {
                                     deleteAction()
-                                    showDeleteConfirmation = false
+                                    dismissDeleteConformation()
                                 }
                         }
                         .font(.system(size: 12, weight: .semibold))
                     }
                     .padding(25)
-                    .createCardBackgroud()
+                    .cardBackground()
                     .padding()
                 }
                 .presentationBackground(.clear)
@@ -61,13 +61,17 @@ struct DeleteConfirmationViewModifier: ViewModifier {
                 transaction.disablesAnimations = true
             }
     }
+    
+    private func dismissDeleteConformation() {
+        isPresented = false
+    }
 }
 
 extension View {
-    func confirmDelete(showDeleteConfirmation: Binding<Bool>, onDelete: @escaping () -> Void) -> some View {
+    func deleteConfirmation(isPresented: Binding<Bool>, onDelete: @escaping () -> Void) -> some View {
         modifier(
             DeleteConfirmationViewModifier(
-                showDeleteConfirmation: showDeleteConfirmation,
+                isPresented: isPresented,
                 deleteAction: onDelete
             )
         )

@@ -81,7 +81,7 @@ struct InputLocationSearchField: View {
                             }
                         }
                         .padding()
-                        .createCardBackgroud()
+                        .cardBackground()
                         .padding(.top, 55)
                     }
                 }
