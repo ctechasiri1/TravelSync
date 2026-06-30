@@ -13,7 +13,7 @@ import WeatherKit
 @Observable
 class TripDetailViewModel {
     var showDeleteAlert: Bool = false
-    var isNetworkActive: Bool = false
+    var isNetworkActive: Bool = true
     var temperature: String = "0"
     var weatherIconName: String = "sun.max.trianglebadge.exclamationmark.fill"
     
@@ -33,7 +33,7 @@ class TripDetailViewModel {
     }
     
     func getWeather(longitude: Double, latitude: Double) async {
-        defer { isNetworkActive = false }
+//        defer { isNetworkActive = false }
         
         isNetworkActive = true
         let coordinates = CLLocation(latitude: latitude, longitude: longitude)

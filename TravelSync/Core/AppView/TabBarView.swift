@@ -12,12 +12,15 @@ struct TabBarView: View {
     
     var body: some View {
         TabView {
-            NavigationStack {
-                TripsFeedView(viewModel: appState.makeTripFeedViewModel())
+            ZStack {
+                NavigationStack {
+                    TripsFeedView(viewModel: appState.makeTripFeedViewModel())
+                }
+                .tabItem {
+                    Label("Home", systemImage: "house.fill")
+                }
             }
-            .tabItem {
-                Label("Home", systemImage: "house.fill")
-            }
+            .showLoading(isLoading: )
             
             NavigationStack {
                 CalendarScreen(viewModel: appState.makeCalendarViewModel())

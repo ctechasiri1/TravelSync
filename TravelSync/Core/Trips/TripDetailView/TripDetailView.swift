@@ -26,86 +26,88 @@ struct TripDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                CachedAsyncImage(imageURL: trip.imageURLString, height: 200)
-                    .overlay {
-                        TripDetailImageOverlay(
-                            trip: trip,
-                            upcomingTrip: isUpcomingTrip
+        ZStack {
+            ScrollView {
+                VStack {
+                    CachedAsyncImage(imageURL: trip.imageURLString, height: 200)
+                        .overlay {
+                            TripDetailImageOverlay(
+                                trip: trip,
+                                upcomingTrip: isUpcomingTrip
+                            )
+                        }
+                        .padding()
+                    
+                    TripDetailInformationView(trip: trip, viewModel: viewModel)
+                    
+                    Text("Quick Access")
+                        .font(.system(.title3, weight: .semibold))
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding([.top, .horizontal])
+                    
+                    HStack(spacing: 20) {
+                        NavigationCard(
+                            title: "Itinerary",
+                            value: "\(trip.dateDifference) Left",
+                            iconName: "backpack.fill",
+                            iconColor: .orange,
+                            arrowColor: .orange
+                        ) {
+                            
+                        }
+                        
+                        NavigationCard(
+                            title: "Map",
+                            value: "\(trip.dateDifference) Left",
+                            iconName: "map.fill",
+                            iconColor: .accentBlue,
+                            arrowColor: .accentBlue
+                        ) {
+                            EventMapView(
+                                trip: trip,
+                                viewModel: appState.makeEventMapViewModel()
+                            )
+                        }
+                    }
+                    .padding(.horizontal)
+                    
+                    TripBudgetCard(
+                        title: "Budget",
+                        totalSpend: trip.totalSpending,
+                        budget: trip.budget,
+                        iconName: "dollarsign",
+                        iconColor: .accentConfirmation
+                    ) {
+                        BudgetView(
+                            viewModel: appState.makeBudgetViewModel(),
+                            trip: $trip
                         )
                     }
                     .padding()
-
-                TripDetailInformationView(trip: trip, viewModel: viewModel)
-                    
-                Text("Quick Access")
-                    .font(.system(.title3, weight: .semibold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding([.top, .horizontal])
-                    
-                HStack(spacing: 20) {
-                    NavigationCard(
-                        title: "Itinerary",
-                        value: "\(trip.dateDifference) Left",
-                        iconName: "backpack.fill",
-                        iconColor: .orange,
-                        arrowColor: .orange
-                    ) {
-                        
-                    }
-                        
-                    NavigationCard(
-                        title: "Map",
-                        value: "\(trip.dateDifference) Left",
-                        iconName: "map.fill",
-                        iconColor: .accentBlue,
-                        arrowColor: .accentBlue
-                    ) { 
-                        EventMapView(
-                            trip: trip,
-                            viewModel: appState.makeEventMapViewModel()
-                        )
-                    }
-                }
-                .padding(.horizontal)
-                    
-                TripBudgetCard(
-                    title: "Budget",
-                    totalSpend: trip.totalSpending,
-                    budget: trip.budget,
-                    iconName: "dollarsign",
-                    iconColor: .accentConfirmation
-                ) {
-                    BudgetView(
-                        viewModel: appState.makeBudgetViewModel(),
-                        trip: $trip
-                    )
-                }
-                .padding()
-            }
-        }
-        .navigationTitle("\(trip.tripName)")
-        .navigationBarTitleDisplayMode(.inline)
-        // TODO: Make sure this loads once, and not many times
-        .task(id: trip.id) {
-            guard !Task.isCancelled else { return }
-            await viewModel
-                .getWeather(longitude: trip.longitude, latitude: trip.latitude)
-        }
-        .toolbar{
-            ToolbarItem(placement: .topBarTrailing) {
-                ToolBarDeleteButton {
-                    viewModel.toggleDeleteAlert()
                 }
             }
-            .sharedBackgroundVisibility(.hidden)
-        }
-        .toolbar(.hidden, for: .tabBar)
-        .deleteConfirmation(isPresented:$viewModel.showDeleteAlert) {
-            dismiss()
-            Task {
-                await viewModel.deleteTrip(tripId: trip.id)
+            .navigationTitle("\(trip.tripName)")
+            .navigationBarTitleDisplayMode(.inline)
+            // TODO: Make sure this loads once, and not many times
+            .task(id: trip.id) {
+                guard !Task.isCancelled else { return }
+                await viewModel
+                    .getWeather(longitude: trip.longitude, latitude: trip.latitude)
+            }
+            .toolbar{
+                ToolbarItem(placement: .topBarTrailing) {
+                    ToolBarDeleteButton {
+                        viewModel.toggleDeleteAlert()
+                    }
+                }
+                .sharedBackgroundVisibility(.hidden)
+            }
+            .toolbar(.hidden, for: .tabBar)
+            .deleteConfirmation(isPresented:$viewModel.showDeleteAlert) {
+                dismiss()
+                Task {
+                    await viewModel.deleteTrip(tripId: trip.id)
+                }
             }
         }
         .showLoading(isLoading: viewModel.isNetworkActive)
@@ -268,9 +270,11 @@ private struct TripBudgetCard<T: View>: View {
 }
 
 #Preview {
-    TripDetailView(
-        viewModel: AppState().makeTripDetailViewModel(),
-        trip: .constant(Trip.example),
-        isUpcomingTrip: true)
+    NavigationStack {
+        TripDetailView(
+            viewModel: AppState().makeTripDetailViewModel(),
+            trip: .constant(Trip.example),
+            isUpcomingTrip: true)
+    }
     .environment(AppState())
 }
