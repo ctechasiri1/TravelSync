@@ -114,7 +114,7 @@ struct AddExpenseView: View {
                 Spacer()
             }
         }
-        .showLoading(isLoading: viewModel.isNetworkActive)
+//        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

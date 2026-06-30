@@ -50,7 +50,7 @@ struct AllExpenseView: View {
         .scrollContentBackground(.hidden)
         .navigationTitle("All Expenses")
         .navigationBarTitleDisplayMode(.inline)
-        .showLoading(isLoading: viewModel.isNetworkActive)
+//        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

@@ -10,8 +10,10 @@ import Foundation
 
 final class ManagerContainer {
     let locationSearchManager: LocationSearchManager
+    let loadingManager: LoadingManager
     
-    init(locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter())) {
+    init(locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter()), loadingManager: LoadingManager = .shared) {
         self.locationSearchManager = locationSearchManager
+        self.loadingManager = loadingManager
     }
 }

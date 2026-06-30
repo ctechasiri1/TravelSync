@@ -100,7 +100,7 @@ struct PlanNewTripView: View {
                 }
             }
         })
-        .showLoading(isLoading: viewModel.isNetworkActive)
+//        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

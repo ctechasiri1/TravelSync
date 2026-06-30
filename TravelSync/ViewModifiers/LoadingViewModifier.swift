@@ -9,15 +9,15 @@ import Lottie
 import SwiftUI
 
 struct LoadingViewModifier: ViewModifier {
-    let isLoading: Bool
+    @Environment(AppState.self) private var appState
     
     func body(content: Content) -> some View {
         ZStack {
             content
-                .disabled(isLoading)
-                .blur(radius: isLoading ? 4 : 0)
+                .disabled(appState.managers.loadingManager.isLoading)
+                .blur(radius: appState.managers.loadingManager.isLoading ? 4 : 0)
                 
-                if isLoading {
+            if appState.managers.loadingManager.isLoading {
                     ZStack {
                         Color.gray.opacity(0.09)
                             .ignoresSafeArea()
@@ -31,12 +31,12 @@ struct LoadingViewModifier: ViewModifier {
                     .transition(.opacity)
                 }
         }
-        .animation(.easeInOut(duration: 0.2), value: isLoading)
+        .animation(.easeInOut(duration: 0.2), value: appState.managers.loadingManager.isLoading)
     }
 }
 
 extension View {
-    func showLoading(isLoading: Bool) -> some View {
-        modifier(LoadingViewModifier(isLoading: isLoading))
+    func showLoading() -> some View {
+        modifier(LoadingViewModifier())
     }
 }

@@ -101,7 +101,7 @@ struct SignUpView: View {
                 appState.navigate(to: .login)
             }
         }
-        .showLoading(isLoading: viewModel.isNetworkActive)
+//        .showLoading(isLoading: viewModel.isNetworkActive)
         .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
     }
 }

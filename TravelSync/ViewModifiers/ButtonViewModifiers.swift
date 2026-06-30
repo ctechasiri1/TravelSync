@@ -47,7 +47,7 @@ struct TextButtonStyle: ButtonStyle {
 
 extension View {
     @ViewBuilder
-    func styledButton(buttonStyle: ButtonStyleOption, foregroundColor: Color = .black, backgroundColor: Color = .clear,  action: @escaping () -> Void) -> some View {
+    func styledButton(buttonStyle: ButtonStyleOption, foregroundColor: Color = .black, backgroundColor: Color = .clear, action: @escaping () -> Void) -> some View {
         switch buttonStyle {
         case .filled:
             filledButton(
@@ -63,8 +63,6 @@ extension View {
             )
         }
     }
-    
-    
     
     private func filledButton(foregroundColor: Color, backgroundColor: Color, action: @escaping () -> Void) -> some View {
         Button {

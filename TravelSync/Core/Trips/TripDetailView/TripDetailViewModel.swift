@@ -13,18 +13,20 @@ import WeatherKit
 @Observable
 class TripDetailViewModel {
     var showDeleteAlert: Bool = false
-    var isNetworkActive: Bool = true
     var temperature: String = "0"
     var weatherIconName: String = "sun.max.trianglebadge.exclamationmark.fill"
     
     private let tripService: TripServiceProtocol
+    private let loadingManager: LoadingManager
     private let weatherKitService: WeatherKitService
     
     init(
         tripService: TripServiceProtocol,
+        loadingManager: LoadingManager = .shared,
         weatherKitService: WeatherKitService
     ) {
         self.tripService = tripService
+        self.loadingManager = loadingManager
         self.weatherKitService = weatherKitService
     }
     
@@ -33,9 +35,9 @@ class TripDetailViewModel {
     }
     
     func getWeather(longitude: Double, latitude: Double) async {
-//        defer { isNetworkActive = false }
+        defer { loadingManager.hide() }
         
-        isNetworkActive = true
+        loadingManager.show()
         let coordinates = CLLocation(latitude: latitude, longitude: longitude)
         do {
             let weatherPayload = try await weatherKitService.fetch(
@@ -51,9 +53,9 @@ class TripDetailViewModel {
     }
     
     func deleteTrip(tripId: Int) async -> Void {
-        defer { isNetworkActive = false }
+        defer { loadingManager.hide() }
         
-        isNetworkActive = true
+        loadingManager.show()
         
         do {
             let _ = try await (

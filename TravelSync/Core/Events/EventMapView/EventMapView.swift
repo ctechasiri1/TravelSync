@@ -38,7 +38,7 @@ struct EventMapView: View {
                     LazyHStack {
                         ForEach(viewModel.events) { event in
                             if event == viewModel.selectedEvent {
-                                TempEventMapCard(selectedEvent: $viewModel.selectedEvent, event: event, directionAction: {
+                                EventMapCard(selectedEvent: $viewModel.selectedEvent, event: event, directionAction: {
                                     
                                 }, prevLocationAction: {
                                     viewModel.findPrevLocation(currentEvent: event)
@@ -60,7 +60,7 @@ struct EventMapView: View {
     }
 }
 
-private struct TempEventMapCard: View {
+private struct EventMapCard: View {
     @Binding var selectedEvent: Event?
     let event: Event
     let directionAction: () -> Void
@@ -215,6 +215,7 @@ private struct CustomAnnotation: View {
         }
         .scaleEffect(selectedEvent == event ? 1.1 : 1.0)
         .animation(.easeInOut, value: selectedEvent == event)
+        .contentShape(Rectangle())
         .onTapGesture {
             selectedEvent = event
         }
