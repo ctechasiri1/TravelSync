@@ -162,7 +162,8 @@ private struct PlanNewTripPreferenceView: View {
             ),
             locationSearchManager: LocationSearchManager(
                 completer: MKLocalSearchCompleter()
-            )
+            ),
+            loadingManager: LoadingManager()
         )
     )
     .environment(AppState())

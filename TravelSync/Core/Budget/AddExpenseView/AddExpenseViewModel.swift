@@ -15,13 +15,14 @@ class AddExpenseViewModel {
     var transactionDate: Date? = nil
     var notes: String = ""
     
-    var isNetworkActive: Bool = false
     var isExpenseInputValid: Bool = true
     
     private let expenseService: ExpenseServiceProtocol
+    private let loadingManager: LoadingManager
     
-    init(expenseService: ExpenseServiceProtocol) {
+    init(expenseService: ExpenseServiceProtocol, loadingManager: LoadingManager) {
         self.expenseService = expenseService
+        self.loadingManager = loadingManager
     }
     
     var enableSave: Bool {
@@ -33,8 +34,10 @@ class AddExpenseViewModel {
     }
     
     func createExpense(tripId: Int) async -> Void {
-        defer { isNetworkActive = false }
-        isNetworkActive = true
+        defer { loadingManager.hide() }
+        
+        loadingManager.show()
+        
         do {
             guard let expenseAmount = Int(expenseAmount) else {
                 throw ExpenseError.invalidExpense

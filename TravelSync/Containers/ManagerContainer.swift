@@ -11,9 +11,17 @@ import Foundation
 final class ManagerContainer {
     let locationSearchManager: LocationSearchManager
     let loadingManager: LoadingManager
+    let deleteConfirmationManager: DeleteConfirmationManager
     
-    init(locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter()), loadingManager: LoadingManager = .shared) {
+    init(
+        locationSearchManager: LocationSearchManager = LocationSearchManager(
+            completer: MKLocalSearchCompleter()
+        ),
+        loadingManager: LoadingManager = LoadingManager(),
+        deleteConfirmationManager: DeleteConfirmationManager = DeleteConfirmationManager()
+    ) {
         self.locationSearchManager = locationSearchManager
         self.loadingManager = loadingManager
+        self.deleteConfirmationManager = deleteConfirmationManager
     }
 }

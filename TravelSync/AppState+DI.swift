@@ -31,7 +31,7 @@ class AppState {
     }
     
     func makeSignUpViewModel() -> SignUpViewModel {
-        SignUpViewModel(userAuthService: services.authService)
+        SignUpViewModel(userAuthService: services.authService, loadingManager: managers.loadingManager)
     }
     
     func makeTripFeedViewModel() -> TripsFeedViewModel {
@@ -39,11 +39,11 @@ class AppState {
     }
     
     func makeTripDetailViewModel() -> TripDetailViewModel {
-        TripDetailViewModel(tripService: services.tripService, weatherKitService: services.weatherKitService)
+        TripDetailViewModel(tripService: services.tripService, loadingManager: managers.loadingManager, weatherKitService: services.weatherKitService)
     }
     
     func makePlanNewTripViewModel() -> PlanNewTripViewModel {
-        PlanNewTripViewModel(tripService: services.tripService, locationSearchManager: managers.locationSearchManager)
+        PlanNewTripViewModel(tripService: services.tripService, locationSearchManager: managers.locationSearchManager, loadingManager: managers.loadingManager)
     }
     
     func makeUserSessionViewModel() -> UserSessionViewModel {
@@ -51,11 +51,11 @@ class AppState {
     }
     
     func makeBudgetViewModel() -> BudgetViewModel {
-        BudgetViewModel(expenseService: services.expenseService, tripService: services.tripService)
+        BudgetViewModel(expenseService: services.expenseService, tripService: services.tripService, loadingManager: managers.loadingManager)
     }
     
     func makeAddExpenseViewModel() -> AddExpenseViewModel {
-        AddExpenseViewModel(expenseService: services.expenseService)
+        AddExpenseViewModel(expenseService: services.expenseService, loadingManager: managers.loadingManager)
     }
     
     func makeCalendarViewModel() -> CalendarViewModel {

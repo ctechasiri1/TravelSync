@@ -10,6 +10,8 @@ import SwiftUI
 struct ToolBarAddButton: View {
     let action: () -> Void
     
+    @State private var isPressed: Bool = false
+    
     var body: some View {
         Button {
             action()
@@ -22,6 +24,7 @@ struct ToolBarAddButton: View {
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .imageScale(.medium)
         }
+        .pressEffect(isPressed: $isPressed)
     }
 }
 

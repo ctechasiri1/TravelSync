@@ -35,6 +35,7 @@ struct TabBarView: View {
         }
         .tint(.accentPrimary)
         .showLoading()
+        .deleteConfirmation()
     }
 }
 

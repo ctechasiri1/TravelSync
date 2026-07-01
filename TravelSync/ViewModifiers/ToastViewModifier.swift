@@ -13,6 +13,7 @@ enum ToastOption {
 }
 
 struct Toast: ViewModifier {
+    
     @Binding var toastOption: ToastOption
     let text: String
 
@@ -43,6 +44,7 @@ struct Toast: ViewModifier {
 }
 
 private struct SuccessView: View {
+    
     @Binding var remainingTime: Double
     @Binding var toastOption: ToastOption
     let text: String
@@ -82,9 +84,11 @@ private struct SuccessView: View {
 }
 
 private struct FailureView: View {
+    
     @Binding var remainingTime: Double
     @Binding var toastOption: ToastOption
     let text: String
+    
     var body: some View {
         HStack {
             Image(systemName: "x.circle.fill")

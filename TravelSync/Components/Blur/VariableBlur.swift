@@ -2,7 +2,7 @@
 //  VariableBlur.swift
 //  TravelSync
 //
-//  Created by Chiraphat Techasiri on 6/19/26.
+//  Created by Chiraphat Techasiri on 7/1/26.
 //
 
 import SwiftUI

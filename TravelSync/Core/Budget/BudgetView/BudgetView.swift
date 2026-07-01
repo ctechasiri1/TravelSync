@@ -213,6 +213,8 @@ private struct RecentActivitiesView: View {
     let recentExpenses: [Expense]
     let showAllExpenseToggle: () -> Void
     
+    @State private var isPresssed: Bool =  false
+    
     var body: some View {
         HStack {
             Text("Recent Activity")
@@ -238,6 +240,7 @@ private struct RecentActivitiesView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 20))
             }
             .padding(.horizontal)
+            .pressEffect(isPressed: $isPresssed)
         }
         
         VStack {
@@ -327,7 +330,8 @@ private struct ExpenseBreakdownOptionView: View {
             tripService: TripService(
                 networkService: NetworkRequestService(),
                 keychainService: KeychainService()
-            )
+            ),
+            loadingManager: LoadingManager()
         ),
         trip: .constant(Trip.example)
     )

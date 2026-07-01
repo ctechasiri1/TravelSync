@@ -8,11 +8,12 @@
 import SwiftUI
 
 struct SheetToolBar: View {
-    @Environment(\.dismiss) private var dismiss
     
     let title: String
     let enableSave: Bool
     let saveAction: () -> Void
+    
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         HStack {

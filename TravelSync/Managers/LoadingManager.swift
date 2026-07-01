@@ -13,8 +13,6 @@ import Foundation
 class LoadingManager {
     var isLoading = false
     
-    static let shared = LoadingManager()
-    
     func show() {
         self.isLoading = true
     }

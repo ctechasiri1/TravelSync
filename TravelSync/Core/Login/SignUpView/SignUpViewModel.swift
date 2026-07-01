@@ -23,15 +23,17 @@ class SignUpViewModel {
     var didSignUpSucceed: Bool = false
     
     private let userAuthService: UserAuthServiceProtocol
+    private let loadingManger: LoadingManager
         
-    init(userAuthService: UserAuthServiceProtocol) {
+    init(userAuthService: UserAuthServiceProtocol, loadingManager: LoadingManager) {
         self.userAuthService = userAuthService
+        self.loadingManger = loadingManager
     }
     
     func signup() async {
-        defer { isNetworkActive = false }
+        defer { loadingManger.hide() }
         
-        isNetworkActive = true
+        loadingManger.show()
         
         errorMessage = "Sign up"
         

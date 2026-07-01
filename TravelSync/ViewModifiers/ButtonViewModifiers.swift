@@ -24,6 +24,7 @@ struct FilledButtonStyle: ButtonStyle {
             .frame(maxWidth: .infinity)
             .background(backgroundColor)
             .clipShape(RoundedRectangle(cornerRadius: 30))
+            .shadow(color: .primaryText.opacity(0.1), radius: 4, x: 0, y: 4)
             .scaleEffect(configuration.isPressed ? 0.9 : 1.0)
             .animation(.smooth, value: configuration.isPressed)
     }
@@ -92,8 +93,6 @@ extension View {
         )
     }
 }
-
-
 
 #Preview {
     HStack {

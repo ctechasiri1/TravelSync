@@ -97,20 +97,17 @@ struct TripDetailView: View {
             .toolbar{
                 ToolbarItem(placement: .topBarTrailing) {
                     ToolBarDeleteButton {
-                        viewModel.toggleDeleteAlert()
+                        appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
+                            Task {
+                                await viewModel.deleteTrip(tripId: trip.id)
+                            }
+                        }
                     }
                 }
                 .sharedBackgroundVisibility(.hidden)
             }
             .toolbar(.hidden, for: .tabBar)
-            .deleteConfirmation(isPresented:$viewModel.showDeleteAlert) {
-                dismiss()
-                Task {
-                    await viewModel.deleteTrip(tripId: trip.id)
-                }
-            }
         }
-//        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 

@@ -17,21 +17,18 @@ class TripDetailViewModel {
     var weatherIconName: String = "sun.max.trianglebadge.exclamationmark.fill"
     
     private let tripService: TripServiceProtocol
+    // TODO: i need to fix this injection
     private let loadingManager: LoadingManager
     private let weatherKitService: WeatherKitService
     
     init(
         tripService: TripServiceProtocol,
-        loadingManager: LoadingManager = .shared,
+        loadingManager: LoadingManager,
         weatherKitService: WeatherKitService
     ) {
         self.tripService = tripService
         self.loadingManager = loadingManager
         self.weatherKitService = weatherKitService
-    }
-    
-    func toggleDeleteAlert() {
-        showDeleteAlert = true
     }
     
     func getWeather(longitude: Double, latitude: Double) async {

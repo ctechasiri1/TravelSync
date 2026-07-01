@@ -24,14 +24,15 @@ class BudgetViewModel {
     
     var showAddExpense: Bool = false
     var showAllExpense: Bool = false
-    var isNetworkActive: Bool = false
     
     private let expenseService: ExpenseServiceProtocol
     private let tripsService: TripServiceProtocol
+    private let loadingManager: LoadingManager
     
-    init(expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol) {
+    init(expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol, loadingManager: LoadingManager) {
         self.expenseService = expenseService
         self.tripsService = tripService
+        self.loadingManager = loadingManager
     }
 
     var transactionDateRange: Int {
@@ -135,9 +136,9 @@ class BudgetViewModel {
     }
     
     func deleteExpense(tripId: Int, expenseId: Int) async {
-        defer { isNetworkActive = false }
+        defer { loadingManager.hide() }
         
-        isNetworkActive = true
+        loadingManager.show()
         
         do {
             let _ = try await (Task.sleep(nanoseconds: 500_000_000), expenseService.deleteExpense(tripId: tripId, expenseId: expenseId))

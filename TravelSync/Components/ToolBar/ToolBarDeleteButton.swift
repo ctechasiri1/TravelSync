@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ToolBarDeleteButton: View {
     let action: () -> Void
+    
+    @State private var isPressed: Bool = false
+    
     var body: some View {
         Button {
             action()
@@ -17,6 +20,7 @@ struct ToolBarDeleteButton: View {
                 .foregroundStyle(.accentPrimary)
                 .imageScale(.large)
         }
+        .pressEffect(isPressed: $isPressed)
     }
 }
 

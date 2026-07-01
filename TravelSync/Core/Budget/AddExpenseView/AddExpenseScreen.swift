@@ -114,7 +114,6 @@ struct AddExpenseView: View {
                 Spacer()
             }
         }
-//        .showLoading(isLoading: viewModel.isNetworkActive)
     }
 }
 
@@ -194,7 +193,8 @@ private struct ReceiptUploadButton: View {
             expenseService: ExpenseService(
                 networkService: NetworkRequestService(),
                 keychainService: KeychainService()
-            )
+            ),
+            loadingManager: LoadingManager()
         ), trip: Trip.example
     )
 }

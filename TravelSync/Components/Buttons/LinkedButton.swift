@@ -13,7 +13,8 @@ struct LinkedButton<Destination: View>: View {
     let imageString: String
     @ViewBuilder var destination: () -> Destination
     
-    @State private var isButtonPressed: Bool = false
+    @State private var isPressed: Bool = false
+    
     var body: some View {
         NavigationLink(destination: destination) {
             HStack {
@@ -24,13 +25,7 @@ struct LinkedButton<Destination: View>: View {
 
         }
         .styledButton(buttonStyle: .filled, foregroundColor: .black, backgroundColor: .white) { }
-        .onLongPressGesture {
-            isButtonPressed.toggle()
-        } onPressingChanged: { pressing in
-            isButtonPressed = pressing
-        }
-        .scaleEffect(isButtonPressed ? 0.9 : 1.0)
-        .animation(.smooth, value: isButtonPressed)
+        .pressEffect(isPressed: $isPressed)
     }
 }
 

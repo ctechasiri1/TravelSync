@@ -38,7 +38,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				Localizable.strings,
+				Localizable/Localizable.strings,
 			);
 			target = 510725682F0374CB003E21C0 /* TravelSync */;
 		};
@@ -49,7 +49,7 @@
 			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
 			buildPhase = 510725652F0374CB003E21C0 /* Sources */;
 			membershipExceptions = (
-				Localizable.strings,
+				Localizable/Localizable.strings,
 			);
 		};
 /* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */

@@ -19,11 +19,13 @@ struct SettingsScreen: View {
     }
     
     var body: some View {
-        NavigationStack {
+        ZStack {
+            Color.secondaryBackground.opacity(0.5)
+            
             ScrollView {
                 VStack(spacing: 30) {
                     ProfileInformation(user: viewModel.currentUser, selectedProfileImage: viewModel.selectedProfileImage)
-
+                    
                     AccountOptions(user: user, viewModel: viewModel)
                     
                     PreferencesOptions(viewModel: viewModel)

@@ -22,17 +22,19 @@ class PlanNewTripViewModel {
     var coverUIImage: UIImage? = nil
     
     var isPushNotificationOn: Bool = true
-    var isNetworkActive: Bool = false
     
     private let locationSearchManager: LocationSearchManager
     private let tripService: TripServiceProtocol
+    private let loadingManager: LoadingManager
     
     init(
         tripService: TripServiceProtocol,
-        locationSearchManager: LocationSearchManager
+        locationSearchManager: LocationSearchManager,
+        loadingManager: LoadingManager
     ) {
         self.tripService = tripService
         self.locationSearchManager = locationSearchManager
+        self.loadingManager = loadingManager
     }
     
     var canCreateTrip: Bool {
@@ -48,9 +50,9 @@ class PlanNewTripViewModel {
     }
 
     func addTrip() async {
-        defer { isNetworkActive = false }
+        defer { loadingManager.hide() }
         
-        isNetworkActive = true
+        loadingManager.show()
         
         await searchLocationCoordinates(locationName)
         

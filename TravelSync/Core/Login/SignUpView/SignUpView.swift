@@ -101,12 +101,19 @@ struct SignUpView: View {
                 appState.navigate(to: .login)
             }
         }
-//        .showLoading(isLoading: viewModel.isNetworkActive)
         .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
     }
 }
 
 #Preview {
-    SignUpView(viewModel: SignUpViewModel(userAuthService: UserAuthService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-        .environment(AppState())
+    SignUpView(
+        viewModel: SignUpViewModel(
+            userAuthService: UserAuthService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            ),
+            loadingManager: LoadingManager()
+        )
+    )
+    .environment(AppState())
 }

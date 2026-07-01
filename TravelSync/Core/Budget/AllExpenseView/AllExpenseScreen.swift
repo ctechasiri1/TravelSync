@@ -111,7 +111,8 @@ private struct ExpenseItem: View {
             tripService: TripService(
                 networkService: NetworkRequestService(),
                 keychainService: KeychainService()
-            )
+            ),
+            loadingManager: LoadingManager()
         ),
         trip: $trip
     )
