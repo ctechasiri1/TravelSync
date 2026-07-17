@@ -67,14 +67,11 @@ struct BudgetView: View {
         }, content: {
             AddExpenseView(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
         })
-        .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                ToolBarAddButton {
-                    viewModel.toggleShowAddExpense()
-                }
+        .toolbar(content: {
+            ToolBarButton(option: .add, placement: .topBarTrailing) {
+                viewModel.toggleShowAddExpense()
             }
-            .sharedBackgroundVisibility(.hidden)
-        }
+        })
         .toolbar(.hidden, for: .tabBar)
     }
     

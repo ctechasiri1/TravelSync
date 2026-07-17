@@ -23,11 +23,12 @@ struct TripsFeedView: View {
                     .padding()
                         
                 Spacer()
-                    
-                ToolBarAddButton {
-                    viewModel.toggleShowPlanNewTrip()
-                }
-                .padding(.horizontal, 20)
+                
+                // TODO: Need to fix this with a regular button
+//                ToolBarAddButton {
+//                    viewModel.toggleShowPlanNewTrip()
+//                }
+//                .padding(.horizontal, 20)
             }
             
             CustomSegmentButton(

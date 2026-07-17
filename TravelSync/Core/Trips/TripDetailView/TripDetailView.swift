@@ -95,16 +95,13 @@ struct TripDetailView: View {
                     .getWeather(longitude: trip.longitude, latitude: trip.latitude)
             }
             .toolbar{
-                ToolbarItem(placement: .topBarTrailing) {
-                    ToolBarDeleteButton {
-                        appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
-                            Task {
-                                await viewModel.deleteTrip(tripId: trip.id)
-                            }
+                ToolBarButton(option: .delete, placement: .topBarTrailing) {
+                    appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
+                        Task {
+                            await viewModel.deleteTrip(tripId: trip.id)
                         }
                     }
                 }
-                .sharedBackgroundVisibility(.hidden)
             }
             .toolbar(.hidden, for: .tabBar)
         }

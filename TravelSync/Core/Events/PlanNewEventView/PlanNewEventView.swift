@@ -15,87 +15,85 @@ struct PlanNewEventView: View {
     }
     
     var body: some View {
-        ScrollView {
-            SheetToolBar(title: "Add Event", enableSave: true) {
-                
-            }
-            
-            VStack(spacing: 30) {
-                CoverImage(coverUIImage: $viewModel.eventCoverImage)
-                    .padding(.horizontal, 10)
-                
-                VStack (alignment: .leading){
-                    Text("CATEGORY")
-                        .padding(.horizontal)
-                        .foregroundStyle(.primaryText)
-                        .font(.system(size: 15, weight: .semibold))
-                        .padding(.leading, 5)
+        NavigationStack {
+            ScrollView {
+                VStack(spacing: 30) {
+                    CoverImage(coverUIImage: $viewModel.eventCoverImage)
+                        .padding(.horizontal, 10)
                     
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(EventOption.allCases, id: \.self) { event in
-                                EventOptionButton(
-                                    event: event,
-                                    isSelected: viewModel.selectedEvent == event) {
-                                        viewModel.selectedEvent = event
-                                    }
-                                    .padding(.vertical, 8)
+                    VStack (alignment: .leading){
+                        Text("CATEGORY")
+                            .padding(.horizontal)
+                            .foregroundStyle(.primaryText)
+                            .font(.system(size: 15, weight: .semibold))
+                            .padding(.leading, 5)
+                        
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(EventOption.allCases, id: \.self) { event in
+                                    EventOptionButton(
+                                        event: event,
+                                        isSelected: viewModel.selectedEvent == event) {
+                                            viewModel.selectedEvent = event
+                                        }
+                                        .padding(.vertical, 8)
+                                }
+                                .padding(.horizontal, 8)
                             }
-                            .padding(.horizontal, 8)
                         }
-                    }
-                    .scrollIndicators(.hidden)
-                }
-                
-                Group {
-                    InputTextField(
-                        text: $viewModel.eventName,
-                        fieldTitle: "EVENT NAME",
-                        fieldImage: "pencil",
-                        fieldContent: "e.g. Sushi Dinner",
-                        iconColor: .secondaryText
-                    )
-                    
-                    InputLocationSearchField(
-                        text: $viewModel.location,
-                        fieldTitle: "LOCATION",
-                        fieldImage: "magnifyingglass",
-                        fieldContent: "Search for a place...",
-                        iconColor: .secondaryText,
-                        completions: viewModel.completions) {
-                            
-                        } onChangeAction: {
-                            
-                        }
-                    
-                    HStack {
-                        TimePicker(
-                            selectedTime: $viewModel.startTime,
-                            pickerTitle: "START TIME"
-                        )
-                        
-                        Image(systemName: "arrow.right")
-                            .foregroundStyle(.secondaryText)
-                            .padding(.top, 25)
-                            .padding(.horizontal, 10)
-                        
-                        TimePicker(
-                            selectedTime: $viewModel.endTime,
-                            pickerTitle: "END TIME"
-                        )
+                        .scrollIndicators(.hidden)
                     }
                     
-                    InputMultilineTextField(
-                        notesContent: $viewModel.notes,
-                        fieldTitle: "NOTES"
-                    )
-                    
-                    FillButton(
-                        text: "Save to Itinerary") {
+                    Group {
+                        InputTextField(
+                            text: $viewModel.eventName,
+                            fieldTitle: "EVENT NAME",
+                            fieldImage: "pencil",
+                            fieldContent: "e.g. Sushi Dinner",
+                            iconColor: .secondaryText
+                        )
+                        
+                        InputLocationSearchField(
+                            text: $viewModel.location,
+                            fieldTitle: "LOCATION",
+                            fieldImage: "magnifyingglass",
+                            fieldContent: "Search for a place...",
+                            iconColor: .secondaryText,
+                            completions: viewModel.completions) {
+                                
+                            } onChangeAction: {
+                                
+                            }
+                        
+                        HStack {
+                            TimePicker(
+                                selectedTime: $viewModel.startTime,
+                                pickerTitle: "START TIME"
+                            )
                             
+                            Image(systemName: "arrow.right")
+                                .foregroundStyle(.secondaryText)
+                                .padding(.top, 25)
+                                .padding(.horizontal, 10)
+                            
+                            TimePicker(
+                                selectedTime: $viewModel.endTime,
+                                pickerTitle: "END TIME"
+                            )
                         }
+                        
+                        InputMultilineTextField(
+                            notesContent: $viewModel.notes,
+                            fieldTitle: "NOTES"
+                        )
+                        
+                        FillButton(
+                            text: "Save to Itinerary") {
+                                
+                            }
+                    }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
         }
     }

@@ -17,90 +17,90 @@ struct PlanNewTripView: View {
     }
     
     var body: some View {
-        ScrollView {
-            CoverImage(coverUIImage: $viewModel.coverUIImage)
-                .padding(.horizontal, 10)
-            
-            VStack(alignment: .leading) {
+        NavigationStack {
+            ScrollView {
+                CoverImage(coverUIImage: $viewModel.coverUIImage)
+                    .padding(.horizontal, 10)
+                
                 VStack(alignment: .leading) {
-                    Text("Where to next?")
-                        .font(.system(size: 30, weight: .semibold))
-                    Text("Start planning your next adventure.")
-                        .foregroundStyle(.secondaryText)
-                }
-                .padding(.vertical, 8)
-                
-                InputLocationSearchField(
-                    text: $viewModel.locationName,
-                    fieldTitle: "LOCATION",
-                    fieldImage: "location.fill",
-                    fieldContent: "City, airport, or hotel",
-                    iconColor: .secondaryText,
-                    completions: viewModel.getCompletions()) {
-                        viewModel.resetCompletions()
-                    } onChangeAction: {
-                        viewModel.updateLocationSearchResults()
+                    VStack(alignment: .leading) {
+                        Text("Where to next?")
+                            .font(.system(size: 30, weight: .semibold))
+                        Text("Start planning your next adventure.")
+                            .foregroundStyle(.secondaryText)
                     }
-                    .zIndex(1)
                     .padding(.vertical, 8)
-                
-                InputTextField(
-                    text: $viewModel.tripName,
-                    fieldTitle: "TRIP NAME",
-                    fieldImage: "pencil",
-                    fieldContent: "e.g. Summer in Toyko",
-                    iconColor: .secondaryText
-                )
-                .padding(.vertical, 8)
-                
-                InputNumberField(
-                    currency: $viewModel.budget,
-                    fieldTitle: "BUDGET",
-                    fieldImage: "banknote.fill",
-                    fieldContent: "e.g. 10,000",
-                    iconColor: .secondaryText
-                )
-                .keyboardType(.decimalPad)
-                .padding(.vertical, 8)
-                
-                PlanNewTripSelectDateView(
-                    startDate: $viewModel.startDate,
-                    endDate: $viewModel.endDate
-                )
-                
-                PlanNewTripPreferenceView(
-                    isPushNotificationOn: $viewModel.isPushNotificationOn
-                )
-                
-                FillButton(
-                    text: "Create Trip",
-                    imageString: "plus.circle.fill") {
-                        Task {
-                            await viewModel.addTrip()
-                            await MainActor.run {
-                                dismiss()
+                    
+                    InputLocationSearchField(
+                        text: $viewModel.locationName,
+                        fieldTitle: "LOCATION",
+                        fieldImage: "location.fill",
+                        fieldContent: "City, airport, or hotel",
+                        iconColor: .secondaryText,
+                        completions: viewModel.getCompletions()) {
+                            viewModel.resetCompletions()
+                        } onChangeAction: {
+                            viewModel.updateLocationSearchResults()
+                        }
+                        .zIndex(1)
+                        .padding(.vertical, 8)
+                    
+                    InputTextField(
+                        text: $viewModel.tripName,
+                        fieldTitle: "TRIP NAME",
+                        fieldImage: "pencil",
+                        fieldContent: "e.g. Summer in Toyko",
+                        iconColor: .secondaryText
+                    )
+                    .padding(.vertical, 8)
+                    
+                    InputNumberField(
+                        currency: $viewModel.budget,
+                        fieldTitle: "BUDGET",
+                        fieldImage: "banknote.fill",
+                        fieldContent: "e.g. 10,000",
+                        iconColor: .secondaryText
+                    )
+                    .keyboardType(.decimalPad)
+                    .padding(.vertical, 8)
+                    
+                    PlanNewTripSelectDateView(
+                        startDate: $viewModel.startDate,
+                        endDate: $viewModel.endDate
+                    )
+                    
+                    PlanNewTripPreferenceView(
+                        isPushNotificationOn: $viewModel.isPushNotificationOn
+                    )
+                    
+                    FillButton(
+                        text: "Create Trip",
+                        imageString: "plus.circle.fill") {
+                            Task {
+                                await viewModel.addTrip()
+                                await MainActor.run {
+                                    dismiss()
+                                }
                             }
                         }
-                    }
-                    .padding(.vertical)
-                    .disabled(!viewModel.canCreateTrip)
-                    .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
+                        .padding(.vertical)
+                        .disabled(!viewModel.canCreateTrip)
+                        .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
+                }
+                .padding(.horizontal)
             }
-            .padding(.horizontal)
-        }
-        .toolbar(.hidden, for: .tabBar)
-        .scrollIndicators(.hidden)
-        .safeAreaInset(edge: .top, content: {
-            SheetToolBar(
-                title: "Add a Trip",
-                enableSave: viewModel.canCreateTrip
-            ) {
+            .navigationTitle("Add a Trip")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
+            .scrollIndicators(.hidden)
+            .saveCancelToolbar(isEnabled: viewModel.canCreateTrip, cancelAction: {
                 Task {
                     await viewModel.addTrip()
                 }
-            }
-        })
-//        .showLoading(isLoading: viewModel.isNetworkActive)
+            }, saveAction: {
+                dismiss()
+            })
+        }
     }
 }
 

@@ -33,11 +33,13 @@ struct AllExpenseView: View {
                             type: expense.type
                         )
                         .swipeActions(edge: .trailing) {
-                            ToolBarDeleteButton {
-                                Task {
-                                    await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
-                                }
-                            }
+                            
+                            // TODO: This needs to be fixed with a new button modifier with an enum pattern
+//                            ToolBarDeleteButton {
+//                                Task {
+//                                    await viewModel.deleteExpense(tripId: trip.id, expenseId: expense.id)
+//                                }
+//                            }
                         }
                     }
                 }
