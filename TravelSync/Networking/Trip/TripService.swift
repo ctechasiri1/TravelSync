@@ -10,14 +10,14 @@ import Foundation
 actor TripService: TripServiceProtocol {
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService
-    private var activeTask: Task<[TripPrivateResponse], Error>?
+    private var activeTask: Task<[TripResponse], Error>?
     
     init(networkService: NetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }
     
-    func createTrip(trip: TripCreateRequest) async throws -> TripPrivateResponse {
+    func createTrip(trip: TripCreateRequest) async throws -> TripResponse {
         guard let urlEndpoint = URL(string: "http://127.0.0.1:8000/api/trips") else {
             throw APIError.invalidURL
         }
@@ -73,20 +73,20 @@ actor TripService: TripServiceProtocol {
         
         let response = try await networkService.sendRequest(
             request: request,
-            responseType: TripPrivateResponse.self
+            responseType: TripResponse.self
         )
         
         return response
     }
     
-    func getTrips() async throws -> [TripPrivateResponse] {
+    func getTrips() async throws -> [TripResponse] {
         defer { activeTask = nil }
         
         if let existing = activeTask {
             return try await existing.value
         }
         
-        let task = Task<[TripPrivateResponse], Error> {
+        let task = Task<[TripResponse], Error> {
             guard let url = URL(string: "http://127.0.0.1:8000/api/trips") else {
                 throw APIError.invalidURL
             }
@@ -98,7 +98,7 @@ actor TripService: TripServiceProtocol {
                 request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
             }
             
-            return try await networkService.sendRequest(request: request, responseType: [TripPrivateResponse].self)
+            return try await networkService.sendRequest(request: request, responseType: [TripResponse].self)
         }
         
         activeTask = task
@@ -106,7 +106,7 @@ actor TripService: TripServiceProtocol {
         return try await task.value
     }
     
-    func getTrip(tripId: Int) async throws -> TripPrivateResponse {
+    func getTrip(tripId: Int) async throws -> TripResponse {
         guard let url = URL(string: "http://127.0.0.1:8000/api/trips/\(tripId)") else {
             throw APIError.invalidURL
         }
@@ -118,7 +118,7 @@ actor TripService: TripServiceProtocol {
             request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         }
         
-        return try await networkService.sendRequest(request: request, responseType: TripPrivateResponse.self)
+        return try await networkService.sendRequest(request: request, responseType: TripResponse.self)
     }
     
     func updateTrip(trip: TripUpdateRequest) async throws -> EmptyResponse {

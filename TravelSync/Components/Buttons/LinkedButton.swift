@@ -22,7 +22,6 @@ struct LinkedButton<Destination: View>: View {
                 
                 Text(text)
             }
-
         }
         .styledButton(buttonStyle: .filled, foregroundColor: .black, backgroundColor: .white) { }
         .pressEffect(isPressed: $isPressed)

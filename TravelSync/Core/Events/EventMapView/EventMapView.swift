@@ -377,5 +377,5 @@ private struct CustomAnnotation: View {
 //}
 
 #Preview {
-    EventMapView(trip: Trip.example, viewModel: EventMapViewModel())
+    EventMapView(trip: Trip.mock, viewModel: EventMapViewModel())
 }

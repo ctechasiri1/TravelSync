@@ -267,7 +267,7 @@ private struct TripBudgetCard<T: View>: View {
     NavigationStack {
         TripDetailView(
             viewModel: AppState().makeTripDetailViewModel(),
-            trip: .constant(Trip.example),
+            trip: .constant(Trip.mock),
             isUpcomingTrip: true)
     }
     .environment(AppState())

@@ -102,7 +102,7 @@ private struct ExpenseItem: View {
 }
 
 #Preview {
-    @Previewable @State var trip: Trip = Trip.example
+    @Previewable @State var trip: Trip = Trip.mock
     
     AllExpenseView(
         viewModel: BudgetViewModel(

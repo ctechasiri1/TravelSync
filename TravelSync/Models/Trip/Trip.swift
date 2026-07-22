@@ -22,8 +22,7 @@ struct Trip: Identifiable, Equatable {
     let endDate: Date
     let imageURLString: URL?
     
-    @MainActor
-    static var example: Trip {
+    static var mock: Trip {
         return Trip(
             id: 1,
             tripName: "Mango Sticky Rice Summer",
@@ -37,6 +36,12 @@ struct Trip: Identifiable, Equatable {
             endDate: Calendar.current.date(byAdding: .day, value: 3, to: Date.now) ?? .now,
             imageURLString: nil
         )
+    }
+    
+    static var mocks: [Trip] {
+        return [
+            
+        ]
     }
 }
 

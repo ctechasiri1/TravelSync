@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ToggleOptionRow: View {
+    
     @Binding var isOn: Bool
     let title: String
     let iconName: String

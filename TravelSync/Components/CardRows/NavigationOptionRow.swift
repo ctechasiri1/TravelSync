@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NavigationOptionRow<Destination: View>: View {
+    
     let title: String
     let iconName: String
     let iconColor: Color

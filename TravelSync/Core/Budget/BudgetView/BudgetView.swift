@@ -330,7 +330,7 @@ private struct ExpenseBreakdownOptionView: View {
             ),
             loadingManager: LoadingManager()
         ),
-        trip: .constant(Trip.example)
+        trip: .constant(Trip.mock)
     )
     .environment(AppState())
 }

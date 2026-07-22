@@ -40,7 +40,6 @@ struct FillButton: View {
                 if let imageName =  imageString {
                     Image(systemName: imageName)
                 }
-                
                 Text(text)
             }
         }

@@ -88,9 +88,9 @@ actor ExpenseService: ExpenseServiceProtocol {
             return try await networkService.sendRequest(request: request, responseType: [ExpensePrivateResponse].self)
         }
         
-        activeTask = task
+        self.activeTask = task
         
-        defer { activeTask = nil }
+        defer { self.activeTask = nil }
         
         return try await task.value
     }

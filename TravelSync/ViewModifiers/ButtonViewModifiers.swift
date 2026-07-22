@@ -8,7 +8,8 @@
 import SwiftUI
 
 enum ButtonStyleOption {
-    case filled, text
+    case filled
+    case text
 }
 
 struct FilledButtonStyle: ButtonStyle {

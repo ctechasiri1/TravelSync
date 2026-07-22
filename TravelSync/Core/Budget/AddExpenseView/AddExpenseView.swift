@@ -198,6 +198,6 @@ private struct ReceiptUploadButton: View {
                 keychainService: KeychainService()
             ),
             loadingManager: LoadingManager()
-        ), trip: Trip.example
+        ), trip: Trip.mock
     )
 }

@@ -17,8 +17,10 @@ struct AppStateView: View {
                 LoadingView()
             case .signUp:
                 SignUpView(viewModel: appState.makeSignUpViewModel())
+                    .transition(.move(edge: .trailing))
             case .login:
                 LoginView(viewModel: appState.makeLoginViewModel())
+                    .transition(.move(edge: appState.prevAuthScreen == nil ? .leading : .trailing))
             case .home:
                 TabBarView()
                     .transition(.blurReplace)

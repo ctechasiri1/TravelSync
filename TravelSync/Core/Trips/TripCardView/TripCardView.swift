@@ -160,7 +160,7 @@ private struct DetailsButton<T: View>: View {
 
 #Preview {
     TripFeedCardView(
-        trip: Trip.example,
+        trip: Trip.mock,
         viewModel: TripsFeedViewModel(
             tripService: TripService(
                 networkService: NetworkRequestService(),

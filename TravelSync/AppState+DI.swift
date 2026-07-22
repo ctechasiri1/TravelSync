@@ -10,7 +10,13 @@ import Foundation
 
 @Observable
 class AppState {
-    var currentAuthScreen: LoginState = .loading
+    var currentAuthScreen: AuthState = .loading {
+        didSet {
+            prevAuthScreen = oldValue
+        }
+    }
+    var prevAuthScreen: AuthState?
+    
     var isNotificationEnabled: Bool = false
     var isDarkModeEnabled: Bool = false
     
@@ -22,7 +28,7 @@ class AppState {
         self.managers = managers
     }
     
-    func navigate(to flow: LoginState) {
+    func navigate(to flow: AuthState) {
         currentAuthScreen = flow
     }
     

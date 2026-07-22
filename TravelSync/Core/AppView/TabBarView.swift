@@ -12,11 +12,26 @@ struct TabBarView: View {
     
     var body: some View {
         TabView {
-            NavigationStack {
-                TripsFeedView(viewModel: appState.makeTripFeedViewModel())
-            }
+//            NavigationStack {
+//                TripsFeedView(viewModel: appState.makeTripFeedViewModel())
+//            }
+            TripsFeedView(viewModel: appState.makeTripFeedViewModel())
             .tabItem {
                 Label("Home", systemImage: "house.fill")
+            }
+            .navigationTitle("My Trips")
+            .toolbar {
+                ToolBarButton(option: .add, placement: .topBarTrailing) {
+                    
+                }
+            }
+            
+            // TODO: Implement the search for friends feature
+            NavigationStack {
+                EmptyView()
+            }
+            .tabItem {
+                Label("Search", systemImage: "magnifyingglass")
             }
             
             NavigationStack {

@@ -9,10 +9,10 @@ import MapKit
 import Observation
 import WeatherKit
 
-final class WeatherKitService {
+struct WeatherKitService {
     private let service = WeatherService.shared
     
-    nonisolated func fetch(for location: CLLocation) async throws -> (String, String) {
+    func fetch(for location: CLLocation) async throws -> (String, String) {
         do {
             let weather = try await service.weather(for: location)
             let currTemp = weather.currentWeather.temperature

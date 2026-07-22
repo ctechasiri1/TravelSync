@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LoginState {
+enum AuthState: String {
     case loading
     case signUp
     case login

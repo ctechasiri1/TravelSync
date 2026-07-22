@@ -21,38 +21,17 @@ struct LoginView: View {
             
             GroupCard {
                 VStack(alignment: .leading) {
-                    TitleSection()
+                    LoginTitleSection()
                     
-                    VStack(spacing: 15) {
-                        InputTextField(
-                            text: $viewModel.username,
-                            fieldTitle: "Email",
-                            fieldImage: "envelope",
-                            fieldContent: "hello@example.com",
-                            iconColor: .gray
-                        )
-                        .padding(.top)
-                        .textInputAutocapitalization(.never)
-                        
-                        InputTextField(
-                            text: $viewModel.password,
-                            isSecureField: true,
-                            toggleSecurityButton: true,
-                            fieldTitle: "Password",
-                            fieldImage: "lock",
-                            fieldContent: "••••••••••",
-                            iconColor: .gray
-                        )
-                        .textInputAutocapitalization(.never)
-                    }
-                            
+                    AuthFieldsSection(username: $viewModel.username, password: $viewModel.password)
+                    
                     TextButton(text: "Forgot Password?", fontStyle: .footnote) {
-                        
+                        // TODO: Insert the forgot password feature
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.top, 5)
                     .padding(.bottom, 15)
-                    
+                            
                     FillButton(
                         text: "Login",
                         isLoading: viewModel.isLoading) {
@@ -62,18 +41,10 @@ struct LoginView: View {
                         }
                             
                     Spacer()
-                            
-                    HStack {
-                        Text("Don't have an account?")
-                            .foregroundStyle(.secondaryText.opacity(0.6))
-                                
-                        TextButton(text: "Sign Up") {
-                            appState.navigate(to: .signUp)
-                        }
+                    
+                    PromptSignUpSection {
+                        appState.navigate(to: .signUp)
                     }
-                    .padding()
-                    .font(.system(.subheadline))
-                    .frame(maxWidth: .infinity, alignment: .center)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
@@ -93,7 +64,7 @@ struct LoginView: View {
     }
 }
 
-private struct TitleSection: View {
+private struct LoginTitleSection: View {
     var body: some View {
         VStack(alignment: .leading) {
             Image(systemName: "safari")
@@ -121,11 +92,64 @@ private struct TitleSection: View {
     }
 }
 
+private struct AuthFieldsSection: View {
+    
+    @Binding var username: String
+    @Binding var password: String
+    
+    var body: some View {
+        VStack(spacing: 15) {
+            InputTextField(
+                text: $username,
+                fieldTitle: "Email",
+                fieldImage: "envelope",
+                fieldContent: "hello@example.com",
+                iconColor: .gray
+            )
+            .padding(.top)
+            .textInputAutocapitalization(.never)
+            
+            InputTextField(
+                text: $password,
+                isSecureField: true,
+                toggleSecurityButton: true,
+                fieldTitle: "Password",
+                fieldImage: "lock",
+                fieldContent: "••••••••••",
+                iconColor: .gray
+            )
+            .textInputAutocapitalization(.never)
+        }
+    }
+}
+
+private struct PromptSignUpSection: View {
+    
+    var action: () -> Void
+    
+    var body: some View {
+        HStack {
+            Text("Don't have an account?")
+                .foregroundStyle(.secondaryText.opacity(0.6))
+                    
+            TextButton(text: "Sign Up") {
+                action()
+            }
+        }
+        .padding()
+        .font(.system(.subheadline))
+        .frame(maxWidth: .infinity, alignment: .center)
+    }
+}
+
 #Preview {
-    LoginView(viewModel: LoginViewModel(userAuthService:
-                                            UserAuthService(
-                                                networkService: NetworkRequestService(),
-                                                keychainService: KeychainService()
-                                            )))
-        .environment(AppState())
+    LoginView(
+        viewModel: LoginViewModel(
+            userAuthService: UserAuthService(
+                networkService: NetworkRequestService(),
+                keychainService: KeychainService()
+            )
+        )
+    )
+    .environment(AppState())
 }

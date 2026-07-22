@@ -16,68 +16,73 @@ struct TripsFeedView: View {
     }
     
     var body: some View {
-        VStack {
-            HStack {
-                Text("trip_feed_title")
-                    .font(.system(.largeTitle, weight: .bold))
-                    .padding()
-                        
-                Spacer()
+            VStack {
+                HStack {
+                    Text("trip_feed_title")
+                        .font(.system(.largeTitle, weight: .bold))
+                        .padding()
+                            
+                    Spacer()
+                    
+//                    // TODO: Need to fix this with a regular button
+//                    ToolBarAddButton {
+//                        viewModel.toggleShowPlanNewTrip()
+//                    }
+//                    .padding(.horizontal, 20)
+                }
                 
-                // TODO: Need to fix this with a regular button
-//                ToolBarAddButton {
-//                    viewModel.toggleShowPlanNewTrip()
-//                }
-//                .padding(.horizontal, 20)
-            }
-            
-            CustomSegmentButton(
-                selection: $viewModel.selection
-            )
-            .padding(.horizontal)
-            
-            ScrollView {
-                Group {
-                    if viewModel.trips.isEmpty {
-                        NoTripsView(
-                            isUpcomingSelected: viewModel.isUpcomingSelected
-                        ) {
-                            viewModel.toggleShowPlanNewTrip()
-                        }
-                    } else {
-                        Group {
-                            if viewModel.isUpcomingSelected {
-                                UpcomingTripsView(
-                                    upcomingTrips: viewModel.upcomingTrips,
-                                    viewModel: viewModel
-                                )
-                            } else {
-                                PastTripsView(
-                                    pastTrips: viewModel.pastTrips,
-                                    viewModel: viewModel
-                                )
+                CustomSegmentButton(
+                    selection: $viewModel.selection
+                )
+                .padding()
+                
+                ScrollView {
+                    Group {
+                        if viewModel.trips.isEmpty {
+                            NoTripsView(
+                                isUpcomingSelected: viewModel.isUpcomingSelected
+                            ) {
+                                viewModel.toggleShowPlanNewTrip()
+                            }
+                        } else {
+                            Group {
+                                if viewModel.isUpcomingSelected {
+                                    UpcomingTripsView(
+                                        upcomingTrips: viewModel.upcomingTrips,
+                                        viewModel: viewModel
+                                    )
+                                } else {
+                                    PastTripsView(
+                                        pastTrips: viewModel.pastTrips,
+                                        viewModel: viewModel
+                                    )
+                                }
                             }
                         }
                     }
                 }
             }
-        }
-        .scrollViewBackground()
-        .refreshable {
-            await viewModel.getTrip()
-        }
-        .task {
-            await viewModel.getTrip()
-        }
-        .onChange(of: viewModel.showPlanNewTrip, { oldValue, newValue in
-            Task {
+            .toolbar(content: {
+                ToolBarButton(option: .add, placement: .topBarTrailing) {
+                    
+                }
+            })
+            .scrollViewBackground()
+            .refreshable {
                 await viewModel.getTrip()
             }
-        })
-        .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
-            PlanNewTripView(viewModel: appState.makePlanNewTripViewModel())
-        })
-    }
+            .task {
+                await viewModel.getTrip()
+            }
+            .onChange(of: viewModel.showPlanNewTrip, { oldValue, newValue in
+                Task {
+                    await viewModel.getTrip()
+                }
+            })
+            .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
+                PlanNewTripView(viewModel: appState.makePlanNewTripViewModel())
+            })
+        }
 }
 
 private struct NoTripsView: View {
@@ -110,7 +115,7 @@ private struct NoTripsView: View {
             
             if isUpcomingSelected {
                 FillButton(
-                    text: "trip_feed_plan_new_trip",
+                    text: "Plan a new trip",
                     imageString: "plus.circle.fill") {
                         planNewTripToggle()
                     }
