@@ -19,76 +19,146 @@ struct ProfileScreen: View {
     }
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                HStack {
-                    Text("Profile")
-                        .font(.system(.largeTitle, weight: .bold))
+//        NavigationStack {
+//            VStack {
+//                Spacer()
+//                HStack {
+//                    Text("Profile")
+//                        .font(.system(.largeTitle, weight: .bold))
+//                        .padding()
+//                            
+//                    Spacer()
+//                }
+        List {
+            VStack(spacing: 30) {
+                VStack {
+                    ProfileImage(
+                        imageURL: viewModel.currentUser.profileImage,
+                        selectedImage: viewModel.selectedProfileImage,
+                    )
+                    .frame(width: 80, height: 80)
+//                    .padding(.leading, 25)
+                    
+                    Text("Hi, \(viewModel.currentUser.firstName)!")
+                        .font(.system(.title, weight: .semibold))
+                    
+                    Text(
+                        "@\(viewModel.currentUser.username.lowercased())"
+                    )
+                    .font(.system(.subheadline))
+                    
+                    StatisticsSection(trips: 10)
                         .padding()
-                            
-                    Spacer()
                 }
+                .foregroundStyle(.primaryText)
+                .font(.system(.subheadline, weight: .regular))
+            }
+            .padding(.horizontal)
+//            .frame(maxWidth: .infinity, alignment: .center)
+            .removeListRowFormatting()
+            
+            VStack(spacing: 12) {
+                FuturePlansOptions(user: viewModel.currentUser, viewModel: viewModel)
                 
-                ScrollView {
-                    VStack(spacing: 30) {
-                        VStack {
-                            ProfileImage(
-                                imageURL: viewModel.currentUser.profileImage,
-                                selectedImage: viewModel.selectedProfileImage,
-                            )
-                            .frame(width: 80, height: 80)
-                            
-                            Text("Hi, \(viewModel.currentUser.firstName)!")
-                                .font(.system(.title, weight: .semibold))
-                            
-                            Text(
-                                "@\(viewModel.currentUser.username.lowercased())"
-                            )
-                            .font(.system(.subheadline))
-                            
-                            StatisticsSection(trips: 10)
-                                .padding()
-                        }
-                        .foregroundStyle(.primaryText)
-                        .font(.system(.subheadline, weight: .regular))
-                    }
-                    .padding(.horizontal)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    
-                    Group {
-                        FuturePlansOptions(user: viewModel.currentUser, viewModel: viewModel)
+//                        PreferencesOptions(viewModel: viewModel)
+//                            .padding(.vertical, 25)
+                
+                FillButton(
+                    text: "Log Out",
+                    foregroundColor: .accentPrimary,
+                    backgroundColor: .white,
+                    action: {
                         
-                        PreferencesOptions(viewModel: viewModel)
-                            .padding(.vertical, 25)
-                        
-                        FillButton(
-                            text: "Log Out",
-                            foregroundColor: .accentPrimary,
-                            backgroundColor: .white,
-                            action: {
-                                
-                            }
-                        )
-                        .padding(.vertical)
-    
-                            
                     }
-                    .padding(.horizontal)
-                    
-                    Spacer()
-                }
+                )
+                .padding(.vertical)
             }
-            .scrollViewBackground()
-            .task {
-                await viewModel.getUser()
-            }
-            .navigationDestination(isPresented: $isShowingSettings, destination: {
-                SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
-            })
-            .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
-                EditPersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
-            })
+            .padding(.horizontal)
+            .removeListRowFormatting()
+            
         }
+        .scrollViewBackground()
+        .task {
+            await viewModel.getUser()
+        }
+        .navigationDestination(isPresented: $isShowingSettings, destination: {
+            SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
+        })
+        .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
+            EditPersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
+        })
+//
+//                ScrollView {
+////                    VStack(spacing: 30) {
+////                        VStack {
+////                            ProfileImage(
+////                                imageURL: viewModel.currentUser.profileImage,
+////                                selectedImage: viewModel.selectedProfileImage,
+////                            )
+////                            .frame(width: 80, height: 80)
+////                            .padding(.leading, 25)
+////                            
+////                            Text("Hi, \(viewModel.currentUser.firstName)!")
+////                                .font(.system(.title, weight: .semibold))
+////                            
+////                            Text(
+////                                "@\(viewModel.currentUser.username.lowercased())"
+////                            )
+////                            .font(.system(.subheadline))
+////                            
+////                            StatisticsSection(trips: 10)
+////                                .padding()
+////                        }
+////                        .foregroundStyle(.primaryText)
+////                        .font(.system(.subheadline, weight: .regular))
+////                    }
+////                    .padding(.horizontal)
+////                    .frame(maxWidth: .infinity, alignment: .center)
+//                    
+////                    Group {
+////                        FuturePlansOptions(user: viewModel.currentUser, viewModel: viewModel)
+////                        
+//////                        PreferencesOptions(viewModel: viewModel)
+//////                            .padding(.vertical, 25)
+////                        
+////                        FillButton(
+////                            text: "Log Out",
+////                            foregroundColor: .accentPrimary,
+////                            backgroundColor: .white,
+////                            action: {
+////                                
+////                            }
+////                        )
+////                        .padding(.vertical)
+////    
+////                            
+////                    }
+////                    .padding(.horizontal)
+//                    
+//                    Spacer()
+//                }
+//                .scrollViewBackground()
+//                .task {
+//                    await viewModel.getUser()
+//                }
+//                .navigationDestination(isPresented: $isShowingSettings, destination: {
+//                    SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
+//                })
+//                .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
+//                    EditPersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
+//                })
+//            }
+//            .scrollViewBackground()
+//            .task {
+//                await viewModel.getUser()
+//            }
+//            .navigationDestination(isPresented: $isShowingSettings, destination: {
+//                SettingsScreen(user: viewModel.currentUser, viewModel: viewModel)
+//            })
+//            .navigationDestination(isPresented: $isShowingPersonalInfo, destination: {
+//                EditPersonalInfoScreen(user: viewModel.currentUser, viewModel: viewModel)
+//            })
+//        }
     }
 }
 
@@ -166,22 +236,26 @@ private struct FuturePlansOptions: View {
                 }
                 .padding()
                 .cardBackground()
+                .padding(.vertical, 12)
             }
             
-            HStack(spacing: 15) {
-                NavigationCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
-                    
-                }
-                
-                NavigationCard(title: "Favorite Places", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
-                    
-                }
-            }
+//            HStack(spacing: 15) {
+//                NavigationCard(title: "My Map", value: "Tracked journeys", iconName: "map.fill", iconColor: .purple, arrowColor: .purple) {
+//                    
+//                }
+//                
+//                NavigationCard(title: "Favorite Places", value: "28 Contributions", iconName: "star.fill", iconColor: .red, arrowColor: .red) {
+//                    
+//                }
+//            }
         }
+        .navigationLinkIndicatorVisibility(.hidden)
     }
 }
 
 #Preview {
-    ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-        .environment(AppState())
+    NavigationStack {
+        ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    }
+    .environment(AppState())
 }

@@ -36,19 +36,19 @@ struct GroupCard<T: View>: View {
 
 #Preview {
     GroupCard(title: "ACCOUNT") {
-        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.red, destination: EmptyView(), useCircleIcon: true)
-            .padding(.top, 20)
-            .padding(.bottom, 10)
-        
-        Divider()
-        
-        ToggleOptionRow(isOn: .constant(false), title: "Favorite Places", iconName: "person.fill")
-            .padding(.vertical, 5)
-        
-        Divider()
-        
-        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.orange, destination: EmptyView(), useCircleIcon: false)
-            .padding(.top, 10)
-            .padding(.bottom, 20)
+//        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.red, destination: EmptyView(), useCircleIcon: true)
+//            .padding(.top, 20)
+//            .padding(.bottom, 10)
+//        
+//        Divider()
+//        
+//        ToggleOptionRow(isOn: .constant(false), title: "Favorite Places", iconName: "person.fill")
+//            .padding(.vertical, 5)
+//        
+//        Divider()
+//        
+//        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.orange, destination: EmptyView(), useCircleIcon: false)
+//            .padding(.top, 10)
+//            .padding(.bottom, 20)
     }
 }

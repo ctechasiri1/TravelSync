@@ -35,7 +35,7 @@ struct TextButton: View {
             .styledButton(
                 buttonStyle: .text,
                 foregroundColor: foregroundColor,
-                backgroundColor: backgroundColor,
+                backgroundColor: backgroundColor
             ) {
                 action()
             }

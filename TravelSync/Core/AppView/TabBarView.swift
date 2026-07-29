@@ -43,6 +43,7 @@ struct TabBarView: View {
             
             NavigationStack {
                 ProfileScreen(viewModel: appState.makeUserSessionViewModel())
+                    .navigationTitle("Profile")
             }
             .tabItem {
                 Label("Profile", systemImage: "person.fill")

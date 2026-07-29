@@ -132,22 +132,22 @@ private struct PlanNewTripPreferenceView: View {
     
     var body: some View {
         GroupCard(title: "PREFERNCES") {
-            ToggleOptionRow(
-                isOn: $isPushNotificationOn,
-                title: "Auto Time Zone",
-                iconName: "clock.fill"
-            )
-            .padding(.top, 15)
-            
-            Divider()
-                .padding(.vertical, 5)
-            
-            ToggleOptionRow(
-                isOn: $isPushNotificationOn,
-                title: "Notifications",
-                iconName: "bell.fill"
-            )
-            .padding(.bottom, 15)
+//            ToggleOptionRow(
+//                isOn: $isPushNotificationOn,
+//                title: "Auto Time Zone",
+//                iconName: "clock.fill"
+//            )
+//            .padding(.top, 15)
+//            
+//            Divider()
+//                .padding(.vertical, 5)
+//            
+//            ToggleOptionRow(
+//                isOn: $isPushNotificationOn,
+//                title: "Notifications",
+//                iconName: "bell.fill"
+//            )
+//            .padding(.bottom, 15)
         }
         .padding(.top, 20)
     }

@@ -22,44 +22,44 @@ struct SettingsScreen: View {
         ZStack {
             Color.secondaryBackground.opacity(0.5)
             
-            ScrollView {
-                VStack(spacing: 30) {
-                    ProfileInformation(user: viewModel.currentUser, selectedProfileImage: viewModel.selectedProfileImage)
-                    
-                    AccountOptions(user: user, viewModel: viewModel)
-                    
-                    PreferencesOptions(viewModel: viewModel)
-                    
-                    SupportOptions()
-                    
+            List {
+                ProfileInformationSection(user: viewModel.currentUser, selectedProfileImage: viewModel.selectedProfileImage)
+                
+                AccountOptionSection(user: user, viewModel: viewModel)
+                
+                SupportOptions()
+                
+                Group {
                     FillButton(
                         text: "Log Out",
                         foregroundColor: .accentPrimary,
                         backgroundColor: .white) {
                             
                         }
-                    
+                        .padding(.vertical, 12)
+                        
                     Text("Version 2.4.0 (145)")
                         .font(.subheadline)
                         .foregroundStyle(.secondaryText)
+                        .frame(maxWidth: .infinity)
                 }
-                .padding(.top)
-                .padding(.horizontal)
-                .navigationTitle("Settings")
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar(.hidden, for: .tabBar)
+                .removeListRowFormatting()
+                
             }
+            .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar(.hidden, for: .tabBar)
         }
     }
 }
 
-private struct ProfileInformation: View {
+private struct ProfileInformationSection: View {
+    
     let user: User
     let selectedProfileImage: UIImage?
 
-    
     var body: some View {
-        GroupCard {
+        Section {
             HStack(spacing: 0) {
                 ProfileImage(
                     imageURL: user.profileImage,
@@ -84,49 +84,47 @@ private struct ProfileInformation: View {
     }
 }
 
-private struct AccountOptions: View {
+private struct AccountOptionSection: View {
     let user: User
     
     let viewModel: UserSessionViewModel
     var body: some View {
-        GroupCard(title: "ACCOUNT") {
-            NavigationOptionRow(title: "Personal Information", iconName: "person.fill", iconColor: .secondary, destination: EditPersonalInfoScreen(user: user, viewModel: viewModel), useCircleIcon: false)
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+        Section("ACCOUNT") {
+            CardRow(cardOption: .navigation, title: "Personal Information", iconName: "person.fill", destination: EditPersonalInfoScreen(user: user, viewModel: viewModel))
+                .padding(16)
             
-            Divider()
-            
-            NavigationOptionRow(title: "Security & Password", iconName: "lock.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
-                .padding(.top, 10)
-                .padding(.bottom, 20)
+            CardRow(cardOption: .navigation, title: "Security & Password", iconName: "lock.fill", destination: EmptyView())
+                .padding(16)
         }
     }
 }
 
 private struct SupportOptions: View {
     var body: some View {
-        GroupCard(title: "SUPPORT") {
-            NavigationOptionRow(title: "Help Center", iconName: "questionmark.app.fill", iconColor: .secondary, destination: EmptyView(), useCircleIcon: false)
-                .padding(.top, 20)
-                .padding(.bottom, 10)
+        Section("SUPPORT") {
+            CardRow(cardOption: .navigation, title: "Help Center", iconName: "questionmark.app.fill", destination:  EmptyView())
+                .padding(16)
             
-            Divider()
+            CardRow(cardOption: .navigation, title: "Terms of Service", iconName: "book.pages.fill", destination: TermsOfServiceScreen())
+                .padding(16)
             
-            NavigationOptionRow(title: "Terms of Service", iconName: "book.pages.fill", iconColor: .secondary, destination: TermsOfServiceScreen(), useCircleIcon: false)
-                .padding(.top, 10)
-                .padding(.bottom, 10)
-            
-            Divider()
-            
-            NavigationOptionRow(title: "Privacy Policy", iconName: "lock.shield.fill", iconColor: .secondary, destination: PrivacyPolicyScreen(), useCircleIcon: false)
-                .padding(.top, 10)
-                .padding(.bottom, 20)
+            CardRow(cardOption: .navigation, title: "Privacy Policy", iconName: "lock.shield.fill", destination: PrivacyPolicyScreen())
+                .padding(16)
         }
     }
 }
 
-
 #Preview {
-    SettingsScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    NavigationStack {
+        SettingsScreen(
+            user: User.example,
+            viewModel: UserSessionViewModel(
+                userService: UserService(
+                    networkService: NetworkRequestService(),
+                    keychainService: KeychainService()
+                )
+            )
+        )
+    }
         .environment(AppState())
 }

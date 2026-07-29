@@ -114,6 +114,7 @@ struct ToolBarButton: ToolbarContent {
         VStack {
             Text("Toolbar Buttons")
         }
+        .navigationTitle("Toolbar Buttons")
         .toolbar {
             ToolBarButton(option: .add, placement: .topBarTrailing) { }
             ToolBarButton(option: .delete, placement: .topBarLeading, isEnabled: isEnabled) { }

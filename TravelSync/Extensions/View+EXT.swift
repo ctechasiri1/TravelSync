@@ -30,4 +30,11 @@ extension View {
             .scrollContentBackground(.hidden)
             .background(.primaryBackground)
     }
+    
+    func removeListRowFormatting() -> some View {
+        self
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+    }
 }
