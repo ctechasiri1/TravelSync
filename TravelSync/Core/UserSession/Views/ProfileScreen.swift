@@ -211,13 +211,8 @@ private struct FuturePlansOptions: View {
                 SettingsScreen(user: user, viewModel: viewModel)
             } label: {
                 HStack {
-                    SquareIcon(
-                        iconName: "gear",
-                        iconColor: .gray,
-                        width: 50,
-                        height: 50
-                    )
-                    .padding()
+                    TSIcon(iconShape: .square, iconName: TSSystemImage.gear, iconColor: .gray)
+                        .padding()
                 
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Settings")

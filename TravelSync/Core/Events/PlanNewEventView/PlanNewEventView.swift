@@ -111,14 +111,9 @@ private struct EventOptionButton: View {
             HStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    CircleIcon(
-                        iconName: event.imageName,
-                        iconColor: isSelected ? .accentPrimary : .secondaryText
-                            .opacity(0.5),
-                        width: 40,
-                        height: 40
-                    )
-                    .padding([.top, .leading, .trailing])
+                    TSIcon(iconShape: .circle, iconName: event.imageName, iconColor: isSelected ? .accentPrimary : .secondaryText
+                        .opacity(0.5))
+                        .padding([.top, .leading, .trailing])
                     
                     Text(event.title)
                         .foregroundStyle(

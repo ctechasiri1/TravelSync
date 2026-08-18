@@ -22,16 +22,10 @@ struct NavigationCard<T:View>: View {
             GroupCard {
                 HStack {
                     VStack(alignment: .leading) {
-                        SquareIcon(
-                            iconName: iconName,
-                            iconColor: iconColor,
-                            width: 50,
-                            height: 50
-                        )
-                        
-                        .padding(.leading, 10)
-                        .padding(.top, 10)
-                        .padding(.bottom, 5)
+                        TSIcon(iconShape: .square, iconName: iconName, iconColor: iconColor)
+                            .padding(.leading, 10)
+                            .padding(.top, 10)
+                            .padding(.bottom, 5)
                         
                         VStack(alignment: .leading, spacing: 5) {
                             Text(title)

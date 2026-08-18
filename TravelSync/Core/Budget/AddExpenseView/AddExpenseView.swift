@@ -133,14 +133,9 @@ private struct ExpenseOptionButton: View {
             HStack {
                 Spacer()
                 VStack(alignment: .center) {
-                    CircleIcon(
-                        iconName: expense.imageName,
-                        iconColor: isSelected ? .accentPrimary : .secondaryText
-                            .opacity(0.5),
-                        width: 40,
-                        height: 40
-                    )
-                    .padding([.top, .leading, .trailing])
+                    TSIcon(iconShape: .circle, iconName: expense.imageName, iconColor: isSelected ? .accentPrimary : .secondaryText
+                        .opacity(0.5),)
+                        .padding([.top, .leading, .trailing])
                     
                     Text(expense.title)
                         .foregroundStyle(

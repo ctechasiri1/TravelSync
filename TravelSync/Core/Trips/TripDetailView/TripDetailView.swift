@@ -193,13 +193,8 @@ private struct TripDetailInformationCard: View {
 
                 Spacer()
                 
-                CircleIcon(
-                    iconName: iconName,
-                    iconColor: iconColor,
-                    width: 35,
-                    height: 35
-                )
-                .padding(.trailing, 5)
+                TSIcon(iconShape: .circle, iconName: iconName, iconColor: iconColor, height: 35, width: 35)
+                    .padding(.trailing, 5)
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
@@ -219,13 +214,8 @@ private struct TripBudgetCard<T: View>: View {
         GroupCard {
             VStack {
                 HStack(spacing: 30) {
-                    SquareIcon(
-                        iconName: iconName,
-                        iconColor: iconColor,
-                        width: 50,
-                        height: 50
-                    )
-                    .padding(.leading)
+                    TSIcon(iconShape: .square, iconName: iconName, iconColor: iconColor)
+                        .padding(.leading)
                         
                     VStack(alignment: .leading, spacing: 5) {
                         Text(title)

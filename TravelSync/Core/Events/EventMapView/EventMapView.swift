@@ -74,12 +74,7 @@ private struct EventMapCard: View {
         VStack (alignment: .center) {
             VStack(alignment: .leading) {
                 HStack(spacing: 20) {
-                    CircleIcon(
-                        iconName: event.category.imageName,
-                        iconColor: .blue,
-                        width: 50,
-                        height: 50
-                    )
+                    TSIcon(iconShape: .circle, iconName: event.category.imageName, iconColor: .blue, height: 50, width: 50)
                     
                     VStack(alignment: .leading, spacing: 5) {
                         Text("EXPERIENCE")

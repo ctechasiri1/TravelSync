@@ -243,13 +243,8 @@ private struct RecentActivitiesView: View {
         VStack {
             ForEach(recentExpenses) { expense in
                 HStack {
-                    CircleIcon(
-                        iconName: expense.type.imageName,
-                        iconColor: .secondaryText,
-                        width: 40,
-                        height: 40
-                    )
-                    .padding(.horizontal)
+                    TSIcon(iconShape: .circle, iconName: expense.type.imageName, iconColor: .secondaryText)
+                        .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 5) {
                         Text(expense.title)
@@ -292,13 +287,8 @@ private struct ExpenseBreakdownOptionView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
-                CircleIcon(
-                    iconName: iconName,
-                    iconColor: iconColor,
-                    width: 40,
-                    height: 40
-                )
-                .padding()
+                TSIcon(iconShape: .circle, iconName: iconName, iconColor: iconColor)
+                    .padding()
                 
                 VStack(alignment: .leading, spacing: 5) {
                     Text(title)
