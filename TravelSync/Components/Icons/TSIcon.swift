@@ -20,7 +20,7 @@ enum IconShapeOption {
     var height: CGFloat {
         switch self {
         case .square: 50
-        case .circle: 50
+        case .circle: 40
         }
     }
 }

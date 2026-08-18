@@ -1,5 +1,5 @@
 //
-//  LinkedButton.swift
+//  TSLinkedButton.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 6/25/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LinkedButton<Destination: View>: View {
+struct TSLinkedButton<Destination: View>: View {
     
     let text: String
     let imageString: String
@@ -28,9 +28,9 @@ struct LinkedButton<Destination: View>: View {
     }
 }
 
-#Preview {
+#Preview("Detail Button") {
     NavigationStack {
-        LinkedButton(text: "Detail", imageString: "map") {
+        TSLinkedButton(text: "Detail", imageString: "map") {
             Text("Hello")
         }
     }

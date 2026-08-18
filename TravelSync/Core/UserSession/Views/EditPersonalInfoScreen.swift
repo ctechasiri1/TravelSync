@@ -61,8 +61,8 @@ struct EditPersonalInfoScreen: View {
             }
             .padding()
             
-            FillButton(
-                text: "Save Changes") {
+            TSFillButton(
+                title: "Save Changes") {
                     
                 }
                 .padding()

@@ -30,8 +30,8 @@ struct SignUpView: View {
                         password: $viewModel.password
                     )
                     
-                    FillButton(
-                        text: "Sign Up") {
+                    TSFillButton(
+                        title: "Sign Up") {
                             onSignUpButtonPressed()
                         }
                         .padding(.top)
@@ -134,7 +134,7 @@ private struct PromptLoginSection: View {
             Text("Already have an account?")
                 .foregroundStyle(.secondaryText.opacity(0.6))
                 
-            TextButton(text: "Sign In") {
+            TSTextButton(text: "Sign In") {
                 action()
             }
         }

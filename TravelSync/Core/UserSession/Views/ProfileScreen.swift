@@ -63,8 +63,8 @@ struct ProfileScreen: View {
 //                        PreferencesOptions(viewModel: viewModel)
 //                            .padding(.vertical, 25)
                 
-                FillButton(
-                    text: "Log Out",
+                TSFillButton(
+                    title: "Log Out",
                     foregroundColor: .accentPrimary,
                     backgroundColor: .white,
                     action: {

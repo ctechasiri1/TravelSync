@@ -43,16 +43,16 @@ struct DeleteConfirmationViewModifier: ViewModifier {
                         .padding(.bottom, 20)
                         
                         HStack {
-                            FillButton(
-                                text: "Cancel",
+                            TSFillButton(
+                                title: "Cancel",
                                 foregroundColor: .accentPrimary,
                                 backgroundColor: .secondaryBackground
                                     .opacity(0.8)) {
                                         appState.deleteConfirmationManager.hide()
                                     }
                             
-                            FillButton(
-                                text: "Delete") {
+                            TSFillButton(
+                                title: "Delete") {
                                     appState.deleteConfirmationManager.deleteAction()
                                     appState.deleteConfirmationManager.hide()
                                 }

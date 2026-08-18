@@ -68,7 +68,7 @@ struct BudgetView: View {
             AddExpenseView(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
         })
         .toolbar(content: {
-            ToolBarButton(option: .add, placement: .topBarTrailing) {
+            TSToolbarButton(option: .add, placement: .topBarTrailing) {
                 viewModel.toggleShowAddExpense()
             }
         })

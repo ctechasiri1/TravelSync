@@ -131,17 +131,13 @@ private struct EventMapCard: View {
             .clipShape(RoundedRectangle(cornerRadius: 30))
 
             HStack(alignment: .center) {
-                FillButton(
-                    text: "Directions",
-                    imageString: "arrow.triangle.turn.up.right.circle") {
-                        directionAction()
-                    }
+                TSFillButton(title: "Directions", imageString: "arrow.triangle.turn.up.right.circle") {
+                    directionAction()
+                }
                 
-                LinkedButton(
-                    text: "View Event",
-                    imageString: "calendar") {
-                        EventDetailView(event: event)
-                    }
+                TSLinkedButton(text: "View Event", imageString: "calendar") {
+                    EventDetailView(event: event)
+                }
             }
             .padding(.vertical, 12)
         }

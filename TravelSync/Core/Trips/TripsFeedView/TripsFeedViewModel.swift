@@ -13,7 +13,7 @@ import PhotosUI
 class TripsFeedViewModel {
     var trips: [Trip] = []
     
-    var selection: TripOption = .upcoming
+    var selection: String = "Upcoming"
     
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false
@@ -35,7 +35,7 @@ class TripsFeedViewModel {
     }
     
     var isUpcomingSelected: Bool {
-        selection == .upcoming
+        selection == "Upcoming"
     }
     
     func toggleShowPlanNewTrip() {

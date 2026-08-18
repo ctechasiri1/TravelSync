@@ -30,8 +30,8 @@ struct SettingsScreen: View {
                 SupportOptions()
                 
                 Group {
-                    FillButton(
-                        text: "Log Out",
+                    TSFillButton(
+                        title: "Log Out",
                         foregroundColor: .accentPrimary,
                         backgroundColor: .white) {
                             
@@ -90,11 +90,15 @@ private struct AccountOptionSection: View {
     let viewModel: UserSessionViewModel
     var body: some View {
         Section("ACCOUNT") {
-            CardRow(cardOption: .navigation, title: "Personal Information", iconName: "person.fill", destination: EditPersonalInfoScreen(user: user, viewModel: viewModel))
-                .padding(16)
+            TSNavigationRow(title: "Personal Information", iconName: TSSystemImage.personFill) {
+                EditPersonalInfoScreen(user: user, viewModel: viewModel)
+            }
+            .padding(16)
             
-            CardRow(cardOption: .navigation, title: "Security & Password", iconName: "lock.fill", destination: EmptyView())
-                .padding(16)
+            TSNavigationRow(title:"Security & Password", iconName: TSSystemImage.lockFill) {
+                EditPersonalInfoScreen(user: user, viewModel: viewModel)
+            }
+            .padding(16)
         }
     }
 }
@@ -102,14 +106,21 @@ private struct AccountOptionSection: View {
 private struct SupportOptions: View {
     var body: some View {
         Section("SUPPORT") {
-            CardRow(cardOption: .navigation, title: "Help Center", iconName: "questionmark.app.fill", destination:  EmptyView())
-                .padding(16)
+            TSNavigationRow(title:"Help Center", iconName: TSSystemImage.questionmarkAppFill) {
+                EmptyView()
+            }
+            .padding(16)
             
-            CardRow(cardOption: .navigation, title: "Terms of Service", iconName: "book.pages.fill", destination: TermsOfServiceScreen())
-                .padding(16)
+            TSNavigationRow(title:"Security & Password", iconName: TSSystemImage.bookPagesFill) {
+                TermsOfServiceScreen()
+            }
+            .padding(16)
             
-            CardRow(cardOption: .navigation, title: "Privacy Policy", iconName: "lock.shield.fill", destination: PrivacyPolicyScreen())
-                .padding(16)
+            TSNavigationRow(title:"Privacy Policy", iconName: TSSystemImage.lockShieldFill) {
+                PrivacyPolicyScreen()
+            }
+            .padding(16)
+
         }
     }
 }

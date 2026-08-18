@@ -17,24 +17,8 @@ struct TripsFeedView: View {
     
     var body: some View {
             VStack {
-                HStack {
-                    Text("trip_feed_title")
-                        .font(.system(.largeTitle, weight: .bold))
-                        .padding()
-                            
-                    Spacer()
-                    
-//                    // TODO: Need to fix this with a regular button
-//                    ToolBarAddButton {
-//                        viewModel.toggleShowPlanNewTrip()
-//                    }
-//                    .padding(.horizontal, 20)
-                }
-                
-                CustomSegmentButton(
-                    selection: $viewModel.selection
-                )
-                .padding()
+                TSSegmentButton(selectedSegment: $viewModel.selection)
+                    .padding()
                 
                 ScrollView {
                     Group {
@@ -61,11 +45,21 @@ struct TripsFeedView: View {
                         }
                     }
                 }
+
             }
+            .padding(.top, 20)
             .toolbar(content: {
-                ToolBarButton(option: .add, placement: .topBarTrailing) {
+                TSToolbarButton(option: .add, placement: .topBarTrailing) {
                     
                 }
+                
+                ToolbarItem(placement: .topBarLeading) {
+                    Text("My Trips")
+                        .font(.system(.largeTitle, weight: .bold))
+                        .padding(.top, 40)
+                        .frame(width: 200, height: 80, alignment: .leading)
+                }
+                .sharedBackgroundVisibility(.hidden)
             })
             .scrollViewBackground()
             .refreshable {
@@ -114,8 +108,8 @@ private struct NoTripsView: View {
             .padding()
             
             if isUpcomingSelected {
-                FillButton(
-                    text: "Plan a new trip",
+                TSFillButton(
+                    title: "Plan a new trip",
                     imageString: "plus.circle.fill") {
                         planNewTripToggle()
                     }
@@ -205,13 +199,15 @@ private struct PastTripsView: View {
 }
 
 #Preview {
-    TripsFeedView(
-        viewModel: TripsFeedViewModel(
-            tripService: TripService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
+    NavigationStack {
+        TripsFeedView(
+            viewModel: TripsFeedViewModel(
+                tripService: TripService(
+                    networkService: NetworkRequestService(),
+                    keychainService: KeychainService()
+                )
             )
         )
-    )
+    }
     .environment(AppState())
 }

@@ -29,7 +29,7 @@ struct TripDetailView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    CachedAsyncImage(imageURL: trip.imageURLString, height: 200)
+                    TSLazyImage(imageURL: trip.imageURLString, height: 200, width: 380)
                         .overlay {
                             TripDetailImageOverlay(
                                 trip: trip,
@@ -95,7 +95,7 @@ struct TripDetailView: View {
                     .getWeather(longitude: trip.longitude, latitude: trip.latitude)
             }
             .toolbar{
-                ToolBarButton(option: .delete, placement: .topBarTrailing) {
+                TSToolbarButton(option: .delete, placement: .topBarTrailing) {
                     appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
                         Task {
                             await viewModel.deleteTrip(tripId: trip.id)

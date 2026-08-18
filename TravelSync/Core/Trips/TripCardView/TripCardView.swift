@@ -18,7 +18,7 @@ struct TripFeedCardView: View {
 
     var body: some View {
         VStack {
-            CachedAsyncImage(imageURL: trip.imageURLString, height: height)
+            TSLazyImage(imageURL: trip.imageURLString, height: height, width: 350)
                 .overlay(alignment: .center) {
                     CardContent(
                         trip: $trip,

@@ -1,5 +1,5 @@
 //
-//  ToolBarButton.swift
+//  TSToolbarButton.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 7/17/26.
@@ -18,16 +18,13 @@ extension View {
     func saveCancelToolbar(isEnabled: Bool = true, cancelAction: @escaping () -> Void, saveAction: @escaping () -> Void) -> some View {
         self
             .toolbar {
-                ToolBarButton(option: .cancel, placement: .cancellationAction) { cancelAction()
-                }
-                ToolBarButton(option: .save, placement: .confirmationAction, isEnabled: isEnabled) {
-                    saveAction()
-                }
+                TSToolbarButton(option: .cancel, placement: .cancellationAction) { cancelAction() }
+                TSToolbarButton(option: .save, placement: .confirmationAction, isEnabled: isEnabled) { saveAction() }
             }
     }
 }
 
-struct ToolBarButton: ToolbarContent {
+struct TSToolbarButton: ToolbarContent {
     
     let option: ToolbarOption
     let placement: ToolbarItemPlacement
@@ -61,7 +58,7 @@ struct ToolBarButton: ToolbarContent {
         }
         .sharedBackgroundVisibility(.hidden)
     }
-    
+
     private var addButton: some View {
         Button {
             action()
@@ -116,8 +113,8 @@ struct ToolBarButton: ToolbarContent {
         }
         .navigationTitle("Toolbar Buttons")
         .toolbar {
-            ToolBarButton(option: .add, placement: .topBarTrailing) { }
-            ToolBarButton(option: .delete, placement: .topBarLeading, isEnabled: isEnabled) { }
+            TSToolbarButton(option: .add, placement: .topBarTrailing) { }
+            TSToolbarButton(option: .delete, placement: .topBarLeading, isEnabled: isEnabled) { }
         }
     }
 }
@@ -132,8 +129,8 @@ struct ToolBarButton: ToolbarContent {
         .navigationTitle("Toolbar Buttons")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolBarButton(option: .save, placement: .topBarTrailing) { }
-            ToolBarButton(option: .cancel, placement: .topBarLeading, isEnabled: isEnabled) { }
+            TSToolbarButton(option: .save, placement: .topBarTrailing) { }
+            TSToolbarButton(option: .cancel, placement: .topBarLeading, isEnabled: isEnabled) { }
         }
     }
 }

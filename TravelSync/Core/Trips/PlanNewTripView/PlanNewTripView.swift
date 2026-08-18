@@ -73,19 +73,17 @@ struct PlanNewTripView: View {
                         isPushNotificationOn: $viewModel.isPushNotificationOn
                     )
                     
-                    FillButton(
-                        text: "Create Trip",
-                        imageString: "plus.circle.fill") {
-                            Task {
-                                await viewModel.addTrip()
-                                await MainActor.run {
-                                    dismiss()
-                                }
+                    TSFillButton(title: "Create Trip", imageString: "plus.circle.fill") {
+                        Task {
+                            await viewModel.addTrip()
+                            await MainActor.run {
+                                dismiss()
                             }
                         }
-                        .padding(.vertical)
-                        .disabled(!viewModel.canCreateTrip)
-                        .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
+                    }
+                    .padding(.vertical)
+                    .disabled(!viewModel.canCreateTrip)
+                    .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
                 }
                 .padding(.horizontal)
             }

@@ -25,20 +25,18 @@ struct LoginView: View {
                     
                     AuthFieldsSection(username: $viewModel.username, password: $viewModel.password)
                     
-                    TextButton(text: "Forgot Password?", fontStyle: .footnote) {
+                    TSTextButton(text: "Forgot Password?", fontStyle: .footnote) {
                         // TODO: Insert the forgot password feature
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .padding(.top, 5)
                     .padding(.bottom, 15)
                             
-                    FillButton(
-                        text: "Login",
-                        isLoading: viewModel.isLoading) {
-                            Task {
-                                await viewModel.login()
-                            }
+                    TSFillButton(title: "Login", isLoading: viewModel.isLoading) {
+                        Task {
+                            await viewModel.login()
                         }
+                    }
                             
                     Spacer()
                     
@@ -132,7 +130,7 @@ private struct PromptSignUpSection: View {
             Text("Don't have an account?")
                 .foregroundStyle(.secondaryText.opacity(0.6))
                     
-            TextButton(text: "Sign Up") {
+            TSTextButton(text: "Sign Up") {
                 action()
             }
         }

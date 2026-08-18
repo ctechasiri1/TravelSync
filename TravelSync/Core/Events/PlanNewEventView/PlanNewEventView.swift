@@ -87,10 +87,9 @@ struct PlanNewEventView: View {
                             fieldTitle: "NOTES"
                         )
                         
-                        FillButton(
-                            text: "Save to Itinerary") {
+                        TSFillButton(title: "Save to Itinerary") {
                                 
-                            }
+                        }
                     }
                     .padding(.horizontal)
                 }

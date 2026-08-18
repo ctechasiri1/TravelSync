@@ -87,16 +87,15 @@ struct AddExpenseView: View {
                         }
                         .padding(.vertical)
                         
-                        FillButton(
-                            text: "Confirm Transaction") {
-                                Task {
-                                    await viewModel.createExpense(tripId: trip.id)
-                                    await MainActor.run {
-                                        dismiss()
-                                    }
+                        TSFillButton(title: "Confirm Transaction") {
+                            Task {
+                                await viewModel.createExpense(tripId: trip.id)
+                                await MainActor.run {
+                                    dismiss()
                                 }
                             }
-                            .padding(.vertical)
+                        }
+                        .padding(.vertical)
                     }
                     .padding(.horizontal)
                     
