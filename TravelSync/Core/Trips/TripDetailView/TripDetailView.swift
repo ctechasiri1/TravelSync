@@ -29,14 +29,14 @@ struct TripDetailView: View {
         ZStack {
             ScrollView {
                 VStack {
-                    TSLazyImage(imageURL: trip.imageURLString, height: 200, width: 380)
-                        .overlay {
-                            TripDetailImageOverlay(
-                                trip: trip,
-                                upcomingTrip: isUpcomingTrip
-                            )
-                        }
-                        .padding()
+//                    TSLazyImage(imageURL: trip.imageURLString, height: 200)
+//                        .overlay {
+//                            TripDetailImageOverlay(
+//                                trip: trip,
+//                                upcomingTrip: isUpcomingTrip
+//                            )
+//                        }
+//                        .padding()
                     
                     TripDetailInformationView(trip: trip, viewModel: viewModel)
                     
@@ -46,27 +46,12 @@ struct TripDetailView: View {
                         .padding([.top, .horizontal])
                     
                     HStack(spacing: 20) {
-                        NavigationCard(
-                            title: "Itinerary",
-                            value: "\(trip.dateDifference) Left",
-                            iconName: "backpack.fill",
-                            iconColor: .orange,
-                            arrowColor: .orange
-                        ) {
-                            
+                        TSNavigationCard(title: "Itinerary", subtitle: "\(trip.dateDifference) Left", iconName: TSSystemImageName.backpackFill, iconColor: .orange) {
+                            EmptyView()
                         }
                         
-                        NavigationCard(
-                            title: "Map",
-                            value: "\(trip.dateDifference) Left",
-                            iconName: "map.fill",
-                            iconColor: .accentBlue,
-                            arrowColor: .accentBlue
-                        ) {
-                            EventMapView(
-                                trip: trip,
-                                viewModel: appState.makeEventMapViewModel()
-                            )
+                        TSNavigationCard(title: "Map", subtitle: "\(trip.dateDifference) Left", iconName: TSSystemImageName.mapFill, iconColor: .accentBlue) {
+                            EventMapView(trip: trip, viewModel: appState.makeEventMapViewModel())
                         }
                     }
                     .padding(.horizontal)
@@ -193,7 +178,8 @@ private struct TripDetailInformationCard: View {
 
                 Spacer()
                 
-                TSIcon(iconShape: .circle, iconName: iconName, iconColor: iconColor, height: 35, width: 35)
+                TSIcon(iconShape: .circle, iconName: iconName, iconColor: iconColor)
+                    .frame(width: 35, height: 35)
                     .padding(.trailing, 5)
             }
             .padding(.horizontal, 20)
@@ -215,6 +201,7 @@ private struct TripBudgetCard<T: View>: View {
             VStack {
                 HStack(spacing: 30) {
                     TSIcon(iconShape: .square, iconName: iconName, iconColor: iconColor)
+                        .frame(width: 50, height: 50)
                         .padding(.leading)
                         
                     VStack(alignment: .leading, spacing: 5) {
@@ -238,11 +225,8 @@ private struct TripBudgetCard<T: View>: View {
                     }
                 }
                 .padding()
-                    
-                LinearProgressBar(
-                    value: Double(totalSpend) / Double(budget),
-                    shape: RoundedRectangle(cornerRadius: 20)
-                )
+                
+                TSLinearProgressBar(progressValue: Double(totalSpend) / Double(budget), barShape: RoundedRectangle(cornerRadius: 20))
                 .tint(.accentConfirmation)
                 .frame(height: 12)
                 .padding(.vertical, 4)

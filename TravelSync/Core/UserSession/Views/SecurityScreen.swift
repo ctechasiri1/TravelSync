@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct Security: View {
-    var body: some View {
-        GroupCard(title: "LOGIN & RECOVERY") {
-            Text("login")
-        }
-    }
-}
+//struct Security: View {
+//    var body: some View {
+//        GroupCard(title: "LOGIN & RECOVERY") {
+//            Text("login")
+//        }
+//    }
+//}
 
-#Preview {
-    Security()
-}
+//#Preview {
+//    Security()
+//}

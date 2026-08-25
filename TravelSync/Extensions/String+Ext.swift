@@ -1,5 +1,5 @@
 //
-//  String+EXT.swift
+//  String+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/7/26.

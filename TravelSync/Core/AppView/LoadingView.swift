@@ -32,8 +32,8 @@ struct LoadingView: View {
                         .foregroundStyle(.secondaryText.opacity(0.6))
                 }
                 .padding(.bottom, 40)
-                        
-                LinearProgressBar(value: progress, shape: RoundedRectangle(cornerRadius: 20))
+                
+                TSLinearProgressBar(progressValue: progress, barShape: RoundedRectangle(cornerRadius: 20))
                     .tint(.accentPrimary)
                     .frame(height: 10)
                     .padding(.horizontal, 110)

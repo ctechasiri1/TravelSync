@@ -35,20 +35,23 @@ struct GroupCard<T: View>: View {
 }
 
 #Preview {
-    GroupCard(title: "ACCOUNT") {
-//        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.red, destination: EmptyView(), useCircleIcon: true)
-//            .padding(.top, 20)
-//            .padding(.bottom, 10)
+    @State @Previewable var isOn: Bool = false
+    
+//    GroupCard(title: "ACCOUNT") {
+//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
+//            .padding()
 //        
-//        Divider()
+//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
+//            .padding()
 //        
-//        ToggleOptionRow(isOn: .constant(false), title: "Favorite Places", iconName: "person.fill")
-//            .padding(.vertical, 5)
-//        
-//        Divider()
-//        
-//        NavigationOptionRow(title: "Favorite Places", iconName: "person.fill", iconColor: Color.orange, destination: EmptyView(), useCircleIcon: false)
-//            .padding(.top, 10)
-//            .padding(.bottom, 20)
+//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
+//            .padding()
+//    }
+    
+    List {
+        Section("Account") {
+            TSToggleRow(title: "Dark Mode", iconName: TSSystemImageName.moonFill, isOn: $isOn)
+                .padding()
+        }
     }
 }

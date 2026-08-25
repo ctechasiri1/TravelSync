@@ -1,5 +1,5 @@
 //
-//  UIImage+EXT.swift
+//  UIImage+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/4/26.

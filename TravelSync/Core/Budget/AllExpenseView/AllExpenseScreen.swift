@@ -65,6 +65,7 @@ private struct ExpenseItem: View {
     var body: some View {
         HStack {
             TSIcon(iconShape: .circle, iconName: type.imageName, iconColor: type.color)
+                .frame(width: 40, height: 40)
                 .padding(.horizontal)
             
             VStack(alignment: .leading, spacing: 5) {

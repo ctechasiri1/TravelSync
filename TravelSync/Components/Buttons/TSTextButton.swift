@@ -9,14 +9,14 @@ import SwiftUI
 
 struct TSTextButton: View {
     
-    let text: String
+    let title: String
     let fontStyle: Font.TextStyle
     let foregroundColor: Color
     let backgroundColor: Color
     let action: () -> Void
     
-    init(text: String, fontStyle: Font.TextStyle = .subheadline, foregroundColor: Color = .accentPrimary, backgroundColor: Color = .clear, action: @escaping () -> Void) {
-        self.text = text
+    init(title: String, fontStyle: Font.TextStyle = .subheadline, foregroundColor: Color = .accentPrimary, backgroundColor: Color = .clear, action: @escaping () -> Void) {
+        self.title = title
         self.fontStyle = fontStyle
         self.foregroundColor = foregroundColor
         self.backgroundColor = backgroundColor
@@ -24,7 +24,7 @@ struct TSTextButton: View {
     }
     
     var body: some View {
-        Text(text)
+        Text(title)
             .font(.system(fontStyle, weight: .semibold))
             .styledButton(buttonStyle: .text, foregroundColor: foregroundColor, backgroundColor: backgroundColor) {
                 action()
@@ -33,5 +33,5 @@ struct TSTextButton: View {
 }
 
 #Preview("Login Button") {
-    TSTextButton(text: "Login", foregroundColor: .accentPrimary, backgroundColor: .clear) { }
+    TSTextButton(title: "Login", foregroundColor: .accentPrimary, backgroundColor: .clear) { }
 }

@@ -9,35 +9,17 @@ import SwiftUI
 
 enum IconShapeOption {
     case circle, square
-    
-    var width: CGFloat {
-        switch self {
-        case .square: 50
-        case .circle: 40
-        }
-    }
-    
-    var height: CGFloat {
-        switch self {
-        case .square: 50
-        case .circle: 40
-        }
-    }
 }
 
 struct TSIcon: View {
     let iconShape: IconShapeOption
     let iconName: String
     let iconColor: Color
-    let height: CGFloat
-    let width: CGFloat
     
-    init(iconShape: IconShapeOption, iconName: String, iconColor: Color, height: CGFloat? = nil, width: CGFloat? = nil) {
+    init(iconShape: IconShapeOption, iconName: String, iconColor: Color) {
         self.iconShape = iconShape
         self.iconName = iconName
         self.iconColor = iconColor
-        self.height = height ?? (iconShape.height)
-        self.width = width ?? (iconShape.width)
     }
     
     var body: some View {

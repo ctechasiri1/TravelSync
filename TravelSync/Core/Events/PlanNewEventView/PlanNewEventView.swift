@@ -18,8 +18,8 @@ struct PlanNewEventView: View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: 30) {
-                    CoverImage(coverUIImage: $viewModel.eventCoverImage)
-                        .padding(.horizontal, 10)
+//                    CoverImage(coverUIImage: $viewModel.eventCoverImage)
+//                        .padding(.horizontal, 10)
                     
                     VStack (alignment: .leading){
                         Text("CATEGORY")
@@ -112,7 +112,8 @@ private struct EventOptionButton: View {
                 VStack(alignment: .center) {
                     TSIcon(iconShape: .circle, iconName: event.imageName, iconColor: isSelected ? .accentPrimary : .secondaryText
                         .opacity(0.5))
-                        .padding([.top, .leading, .trailing])
+                    .frame(width: 40, height: 40)
+                    .padding([.top, .leading, .trailing])
                     
                     Text(event.title)
                         .foregroundStyle(

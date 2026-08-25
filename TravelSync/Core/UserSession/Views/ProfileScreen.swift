@@ -32,11 +32,12 @@ struct ProfileScreen: View {
         List {
             VStack(spacing: 30) {
                 VStack {
-                    ProfileImage(
-                        imageURL: viewModel.currentUser.profileImage,
-                        selectedImage: viewModel.selectedProfileImage,
-                    )
-                    .frame(width: 80, height: 80)
+                    // TODO: Fix this when you get a chance
+//                    ProfileImage(
+//                        imageURL: viewModel.currentUser.profileImage,
+//                        selectedImage: viewModel.selectedProfileImage,
+//                    )
+//                    .frame(width: 80, height: 80)
 //                    .padding(.leading, 25)
                     
                     Text("Hi, \(viewModel.currentUser.firstName)!")
@@ -211,7 +212,8 @@ private struct FuturePlansOptions: View {
                 SettingsScreen(user: user, viewModel: viewModel)
             } label: {
                 HStack {
-                    TSIcon(iconShape: .square, iconName: TSSystemImage.gear, iconColor: .gray)
+                    TSIcon(iconShape: .square, iconName: TSSystemImageName.gear, iconColor: .gray)
+                        .frame(width: 50, height: 50)
                         .padding()
                 
                     VStack(alignment: .leading, spacing: 5) {

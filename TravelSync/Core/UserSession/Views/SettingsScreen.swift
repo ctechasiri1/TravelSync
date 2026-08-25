@@ -61,13 +61,14 @@ private struct ProfileInformationSection: View {
     var body: some View {
         Section {
             HStack(spacing: 0) {
-                ProfileImage(
-                    imageURL: user.profileImage,
-                    selectedImage: selectedProfileImage
-                )
-                .frame(width: 40, height: 40)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 10)
+                // TODO: Fix this when you get a chance
+//                ProfileImage(
+//                    imageURL: user.profileImage,
+//                    selectedImage: selectedProfileImage
+//                )
+//                .frame(width: 40, height: 40)
+//                .padding(.horizontal, 20)
+//                .padding(.vertical, 10)
                 
                 VStack(alignment: .leading) {
                     Text(user.fullName)
@@ -90,12 +91,12 @@ private struct AccountOptionSection: View {
     let viewModel: UserSessionViewModel
     var body: some View {
         Section("ACCOUNT") {
-            TSNavigationRow(title: "Personal Information", iconName: TSSystemImage.personFill) {
+            TSNavigationRow(title: "Personal Information", iconName: TSSystemImageName.personFill) {
                 EditPersonalInfoScreen(user: user, viewModel: viewModel)
             }
             .padding(16)
             
-            TSNavigationRow(title:"Security & Password", iconName: TSSystemImage.lockFill) {
+            TSNavigationRow(title:"Security & Password", iconName: TSSystemImageName.lockFill) {
                 EditPersonalInfoScreen(user: user, viewModel: viewModel)
             }
             .padding(16)
@@ -106,17 +107,17 @@ private struct AccountOptionSection: View {
 private struct SupportOptions: View {
     var body: some View {
         Section("SUPPORT") {
-            TSNavigationRow(title:"Help Center", iconName: TSSystemImage.questionmarkAppFill) {
+            TSNavigationRow(title:"Help Center", iconName: TSSystemImageName.questionmarkAppFill) {
                 EmptyView()
             }
             .padding(16)
             
-            TSNavigationRow(title:"Security & Password", iconName: TSSystemImage.bookPagesFill) {
+            TSNavigationRow(title:"Security & Password", iconName: TSSystemImageName.bookPagesFill) {
                 TermsOfServiceScreen()
             }
             .padding(16)
             
-            TSNavigationRow(title:"Privacy Policy", iconName: TSSystemImage.lockShieldFill) {
+            TSNavigationRow(title:"Privacy Policy", iconName: TSSystemImageName.lockShieldFill) {
                 PrivacyPolicyScreen()
             }
             .padding(16)

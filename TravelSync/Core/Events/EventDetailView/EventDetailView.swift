@@ -130,7 +130,8 @@ private struct EventNotesButton: View {
     var body: some View {
         VStack {
             HStack {
-                TSIcon(iconShape: .circle, iconName: TSSystemImage.lineThreeHorizontal, iconColor: .accentPrimary, height: 50, width: 50)
+                TSIcon(iconShape: .circle, iconName: TSSystemImageName.lineThreeHorizontal, iconColor: .accentPrimary)
+                    .frame(width: 50, height: 50)
                     .padding()
                 
                 VStack(alignment: .leading, spacing: 2) {
@@ -167,7 +168,8 @@ private struct LocationButton: View {
     var body: some View {
         VStack {
             HStack {
-                TSIcon(iconShape: .circle, iconName: TSSystemImage.map, iconColor: .accentPrimary, height: 50, width: 50)
+                TSIcon(iconShape: .circle, iconName: TSSystemImageName.map, iconColor: .accentPrimary)
+                    .frame(width: 50, height: 50)
                     .padding()
                 
                 VStack(alignment: .leading, spacing: 2) {

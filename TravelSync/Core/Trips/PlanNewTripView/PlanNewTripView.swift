@@ -12,6 +12,10 @@ struct PlanNewTripView: View {
     @Environment(\.dismiss) var dismiss
     @State private var viewModel: PlanNewTripViewModel
     
+    // TODO: This is to fix later when aws is up for images
+    @State private var coverUIImage: UIImage? = nil
+    @State private var coverUIImageURL: URL? = nil
+    
     init(viewModel: PlanNewTripViewModel) {
         _viewModel = State(wrappedValue: viewModel)
     }
@@ -19,10 +23,13 @@ struct PlanNewTripView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                CoverImage(coverUIImage: $viewModel.coverUIImage)
-                    .padding(.horizontal, 10)
+//                TSCoverImage(coverUIImage: $coverUIImage, coverUIImageURL: $coverUIImageURL, width: 400, height: 220)
+//                    .padding(.horizontal, 10)
                 
                 VStack(alignment: .leading) {
+//                    TSCoverImage(coverUIImage: $coverUIImage, coverUIImageURL: $coverUIImageURL, width: 400, height: 220)
+//                        .padding(.horizontal, 10)
+                    
                     VStack(alignment: .leading) {
                         Text("Where to next?")
                             .font(.system(size: 30, weight: .semibold))
@@ -85,7 +92,7 @@ struct PlanNewTripView: View {
                     .disabled(!viewModel.canCreateTrip)
                     .opacity(!viewModel.canCreateTrip ? 0.5 : 1.0)
                 }
-                .padding(.horizontal)
+                .padding(.horizontal, 20)
             }
             .navigationTitle("Add a Trip")
             .navigationBarTitleDisplayMode(.inline)
@@ -108,19 +115,13 @@ private struct PlanNewTripSelectDateView: View {
     
     var body: some View {
         HStack {
-            CustomDatePicker(
-                selectedDate: $startDate,
-                pickerTitle: "START DATE"
-            )
+            TSDatePicker(title: "START DATE", selectedDate: $startDate)
             
             Image(systemName: "arrow.right")
                 .foregroundStyle(.secondaryText)
                 .padding(.top, 25)
             
-            CustomDatePicker(
-                selectedDate: $endDate,
-                pickerTitle: "END DATE"
-            )
+            TSDatePicker(title: "END DATE", selectedDate: $endDate)
         }
     }
 }

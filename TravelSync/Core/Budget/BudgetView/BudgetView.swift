@@ -117,11 +117,8 @@ private struct BudgetSummaryView: View {
                     
                 Text("of $\(budget) budget")
                     .foregroundStyle(.secondaryText)
-                    
-                LinearProgressBar(
-                    value: currentSpend(),
-                    shape: RoundedRectangle(cornerRadius: 20)
-                )
+                
+                TSLinearProgressBar(progressValue: currentSpend(), barShape: RoundedRectangle(cornerRadius: 20))
                 .tint(.accentConfirmation)
                 .frame(height: 15)
                 .padding(.vertical)
@@ -244,6 +241,7 @@ private struct RecentActivitiesView: View {
             ForEach(recentExpenses) { expense in
                 HStack {
                     TSIcon(iconShape: .circle, iconName: expense.type.imageName, iconColor: .secondaryText)
+                        .frame(width: 40, height: 40)
                         .padding(.horizontal)
                     
                     VStack(alignment: .leading, spacing: 5) {
@@ -288,6 +286,7 @@ private struct ExpenseBreakdownOptionView: View {
         VStack(alignment: .leading, spacing: 5) {
             HStack {
                 TSIcon(iconShape: .circle, iconName: iconName, iconColor: iconColor)
+                    .frame(width: 40, height: 40)
                     .padding()
                 
                 VStack(alignment: .leading, spacing: 5) {

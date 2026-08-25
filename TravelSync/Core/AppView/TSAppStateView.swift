@@ -1,5 +1,5 @@
 //
-//  AppStateView.swift
+//  TSAppStateView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/26/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AppStateView: View {
+struct TSAppStateView: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
@@ -15,12 +15,16 @@ struct AppStateView: View {
             switch appState.currentAuthScreen {
             case .loading:
                 LoadingView()
+                    .transition(.blurReplace)
             case .signUp:
                 SignUpView(viewModel: appState.makeSignUpViewModel())
-                    .transition(.move(edge: .trailing))
+                    .transition(.move(edge: appState.prevAuthScreen == .login ? .leading : .trailing))
             case .login:
                 LoginView(viewModel: appState.makeLoginViewModel())
-                    .transition(.move(edge: appState.prevAuthScreen == nil ? .leading : .trailing))
+                    .transition(.move(edge: appState.prevAuthScreen == .loading ? .leading : (appState.hasBooted ? .leading : .trailing)))
+                    .onAppear {
+                        appState.hasBooted = true
+                    }
             case .home:
                 TabBarView()
                     .transition(.blurReplace)
@@ -31,6 +35,6 @@ struct AppStateView: View {
 }
 
 #Preview {
-    AppStateView()
+    TSAppStateView()
         .environment(AppState())
 }

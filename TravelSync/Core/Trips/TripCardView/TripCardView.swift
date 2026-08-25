@@ -18,24 +18,24 @@ struct TripFeedCardView: View {
 
     var body: some View {
         VStack {
-            TSLazyImage(imageURL: trip.imageURLString, height: height, width: 350)
-                .overlay(alignment: .center) {
-                    CardContent(
-                        trip: $trip,
-                        isFavorite: $isFavoriteUpdated,
-                        dateDifference: trip.dateDifference,
-                        isFirstUpcomingTrip: isFirstUpcomingTrip,
-                        isUpcomingTrip: isUpcomingTrip) {
-                            Task {
-                                await viewModel.updateTrip(
-                                    tripId: trip.id,
-                                    isFavorite: isFavoriteUpdated,
-                                    coverImage: nil
-                                )
-                            }
-                        }
-                        .padding()
-                }
+//            TSLazyImage(imageURL: trip.imageURLString, height: height)
+//                .overlay(alignment: .center) {
+//                    CardContent(
+//                        trip: $trip,
+//                        isFavorite: $isFavoriteUpdated,
+//                        dateDifference: trip.dateDifference,
+//                        isFirstUpcomingTrip: isFirstUpcomingTrip,
+//                        isUpcomingTrip: isUpcomingTrip) {
+//                            Task {
+//                                await viewModel.updateTrip(
+//                                    tripId: trip.id,
+//                                    isFavorite: isFavoriteUpdated,
+//                                    coverImage: nil
+//                                )
+//                            }
+//                        }
+//                        .padding()
+//                }
         }
         .onAppear {
             setIsFavorite()

@@ -25,7 +25,7 @@ struct LoginView: View {
                     
                     AuthFieldsSection(username: $viewModel.username, password: $viewModel.password)
                     
-                    TSTextButton(text: "Forgot Password?", fontStyle: .footnote) {
+                    TSTextButton(title: "Forgot Password?", fontStyle: .footnote) {
                         // TODO: Insert the forgot password feature
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -130,7 +130,7 @@ private struct PromptSignUpSection: View {
             Text("Don't have an account?")
                 .foregroundStyle(.secondaryText.opacity(0.6))
                     
-            TSTextButton(text: "Sign Up") {
+            TSTextButton(title: "Sign Up") {
                 action()
             }
         }

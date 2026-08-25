@@ -21,12 +21,13 @@ struct EditPersonalInfoScreen: View {
     var body: some View {
         ScrollView {
             VStack {
-                ProfileImage(
-                    imageURL: viewModel.currentUser.profileImage,
-                    selectedImage: viewModel.selectedProfileImage,
-                    canEditPhoto: true
-                )
-                .frame(width: 100, height: 100)
+                // TODO: Fix this when you get a chance
+//                ProfileImage(
+//                    imageURL: viewModel.currentUser.profileImage,
+//                    selectedImage: viewModel.selectedProfileImage,
+//                    canEditPhoto: true
+//                )
+//                .frame(width: 100, height: 100)
                 
                 Text("PROFILE PHOTO")
                     .font(.system(size: 14, weight: .semibold))

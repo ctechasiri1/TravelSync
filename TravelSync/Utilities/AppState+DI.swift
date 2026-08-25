@@ -10,12 +10,9 @@ import Foundation
 
 @Observable
 class AppState {
-    var currentAuthScreen: AuthState = .loading {
-        didSet {
-            prevAuthScreen = oldValue
-        }
-    }
+    var currentAuthScreen: AuthState = .loading
     var prevAuthScreen: AuthState?
+    var hasBooted: Bool = false
     
     var isNotificationEnabled: Bool = false
     var isDarkModeEnabled: Bool = false

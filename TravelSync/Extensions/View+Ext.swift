@@ -1,5 +1,5 @@
 //
-//  View+EXT.swift
+//  View+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 6/27/26.
@@ -8,6 +8,9 @@
 import SwiftUI
 
 extension View {
+    
+    
+    
     func cardBackground() -> some View {
         self
             .background(

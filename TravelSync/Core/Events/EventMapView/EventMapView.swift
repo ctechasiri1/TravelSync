@@ -74,7 +74,8 @@ private struct EventMapCard: View {
         VStack (alignment: .center) {
             VStack(alignment: .leading) {
                 HStack(spacing: 20) {
-                    TSIcon(iconShape: .circle, iconName: event.category.imageName, iconColor: .blue, height: 50, width: 50)
+                    TSIcon(iconShape: .circle, iconName: event.category.imageName, iconColor: .blue)
+                        .frame(width: 50, height: 50)
                     
                     VStack(alignment: .leading, spacing: 5) {
                         Text("EXPERIENCE")
@@ -135,7 +136,7 @@ private struct EventMapCard: View {
                     directionAction()
                 }
                 
-                TSLinkedButton(text: "View Event", imageString: "calendar") {
+                TSLinkedButton(title: "View Event", imageString: "calendar") {
                     EventDetailView(event: event)
                 }
             }

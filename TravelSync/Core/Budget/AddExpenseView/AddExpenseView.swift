@@ -67,9 +67,7 @@ struct AddExpenseView: View {
                     }
                     
                     Group {
-                        CustomDatePicker(
-                            selectedDate: $viewModel.transactionDate,
-                            pickerTitle: "TRANSACTION DATE")
+                        TSDatePicker(title: "TRANSACTION DATE", selectedDate: $viewModel.transactionDate)
                         .padding(.bottom)
                         
                         InputTextField(
@@ -134,7 +132,8 @@ private struct ExpenseOptionButton: View {
                 VStack(alignment: .center) {
                     TSIcon(iconShape: .circle, iconName: expense.imageName, iconColor: isSelected ? .accentPrimary : .secondaryText
                         .opacity(0.5),)
-                        .padding([.top, .leading, .trailing])
+                    .frame(width: 40, height: 40)
+                    .padding([.top, .leading, .trailing])
                     
                     Text(expense.title)
                         .foregroundStyle(

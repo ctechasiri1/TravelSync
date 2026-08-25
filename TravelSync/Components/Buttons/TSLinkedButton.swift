@@ -9,18 +9,19 @@ import SwiftUI
 
 struct TSLinkedButton<Destination: View>: View {
     
-    let text: String
+    let title: String
     let imageString: String
     @ViewBuilder var destination: () -> Destination
     
     @State private var isPressed: Bool = false
     
     var body: some View {
+        // TODO: Add navigation destination and use a router to navigate here
         NavigationLink(destination: destination) {
             HStack {
                 Image(systemName: imageString)
                 
-                Text(text)
+                Text(title)
             }
         }
         .styledButton(buttonStyle: .filled, foregroundColor: .black, backgroundColor: .white) { }
@@ -30,7 +31,7 @@ struct TSLinkedButton<Destination: View>: View {
 
 #Preview("Detail Button") {
     NavigationStack {
-        TSLinkedButton(text: "Detail", imageString: "map") {
+        TSLinkedButton(title: "Detail", imageString: "map") {
             Text("Hello")
         }
     }

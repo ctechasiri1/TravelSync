@@ -11,7 +11,7 @@ import SwiftUI
 
 @Observable
 class PlanNewEventViewModel {
-    var eventCoverImage: UIImage?
+    var eventCoverImageURL: String?
     var eventName: String = ""
     var location: String = ""
     var completions: [SearchCompletions] = []

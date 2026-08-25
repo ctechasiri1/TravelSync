@@ -134,7 +134,7 @@ private struct PromptLoginSection: View {
             Text("Already have an account?")
                 .foregroundStyle(.secondaryText.opacity(0.6))
                 
-            TSTextButton(text: "Sign In") {
+            TSTextButton(title: "Sign In") {
                 action()
             }
         }

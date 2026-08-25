@@ -21,6 +21,7 @@ struct TSNavigationRow<Destination: View>: View {
         self.destination = destination
     }
     
+    // TODO: Add navigation destination and use a router to navigate here
     var body: some View {
         NavigationLink {
             destination()
@@ -40,7 +41,7 @@ struct TSNavigationRow<Destination: View>: View {
     NavigationStack {
         List {
             Section("Personal Information") {
-                TSNavigationRow(title: "Personal Information", iconName: TSSystemImage.personFill) {
+                TSNavigationRow(title: "Personal Information", iconName: TSSystemImageName.personFill) {
                     EmptyView()
                 }
                     .padding()

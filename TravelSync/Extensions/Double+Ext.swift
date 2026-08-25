@@ -1,5 +1,5 @@
 //
-//  Double+EXT.swift
+//  Double+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/13/26.

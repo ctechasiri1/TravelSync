@@ -1,5 +1,5 @@
 //
-//  AppState+EXT.swift
+//  AppState+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 6/30/26.

@@ -12,34 +12,44 @@ import SwiftUI
 struct TSLazyImage: View {
     
     let imageURL: URL?
-    let height: CGFloat
-    let width: CGFloat
     
     var body: some View {
-        LazyImage(url: imageURL) { state in
-            Group {
+        GeometryReader { geometry in
+            LazyImage(url: imageURL) { state in
                 if let image = state.image {
                     image
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                 } else if state.error != nil {
-                    Color.gray.opacity(0.5)
+                    Color.gray.opacity(0.3)
+                        .overlay {
+                            Image(systemName: "exclamationmark.triangle")
+                                .foregroundStyle(.secondaryText.opacity(0.6))
+                        }
                 } else {
-                    ZStack {
-                        Color.gray.opacity(0.5)
-                        
-                        ProgressView()
-                            .frame(height: height)
-                    }
+                    Color.gray.opacity(0.3)
+                        .overlay {
+                            ProgressView()
+                        }
                 }
             }
-            .frame(width: width, height: height)
-            .scaledToFit()
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .processors([.resize(size: geometry.size)])
+            .frame(width: geometry.size.width, height: geometry.size.height)
         }
-        .processors([.resize(width: width), .resize(height: height)])
+        .clipShape(RoundedRectangle(cornerRadius: 20))
     }
 }
 
-#Preview {
-    TSLazyImage(imageURL: nil, height: 250, width: 250)
+#Preview("Failed Image") {
+    TSLazyImage(imageURL: nil)
+        .frame(height: 200)
+        .padding()
+}
+
+#Preview("Successful Image") {
+    let url = URL(string: "https://picsum.photos/300/300")!
+    
+    TSLazyImage(imageURL: url)
+        .frame(height: 200)
+        .padding()
 }

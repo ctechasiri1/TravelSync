@@ -23,29 +23,20 @@ struct TripsFeedView: View {
                 ScrollView {
                     Group {
                         if viewModel.trips.isEmpty {
-                            NoTripsView(
-                                isUpcomingSelected: viewModel.isUpcomingSelected
-                            ) {
+                            NoTripsView(isUpcomingSelected: viewModel.isUpcomingSelected) {
                                 viewModel.toggleShowPlanNewTrip()
                             }
                         } else {
-                            Group {
+                            ZStack {
                                 if viewModel.isUpcomingSelected {
-                                    UpcomingTripsView(
-                                        upcomingTrips: viewModel.upcomingTrips,
-                                        viewModel: viewModel
-                                    )
+                                    UpcomingTripsView(upcomingTrips: viewModel.upcomingTrips, viewModel: viewModel)
                                 } else {
-                                    PastTripsView(
-                                        pastTrips: viewModel.pastTrips,
-                                        viewModel: viewModel
-                                    )
+                                    PastTripsView(pastTrips: viewModel.pastTrips, viewModel: viewModel)
                                 }
                             }
                         }
                     }
                 }
-
             }
             .padding(.top, 20)
             .toolbar(content: {
