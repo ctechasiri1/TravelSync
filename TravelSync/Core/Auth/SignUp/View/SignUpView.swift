@@ -87,41 +87,14 @@ private struct SignUpFormSection: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            InputTextField(
-                text: $fullName,
-                fieldTitle: "Full Name",
-                fieldImage: "pencil",
-                fieldContent: "Enter your name",
-                iconColor: .gray
-            )
+            TSInputTextField(inputText: $fullName, title: "Full Name", iconName: TSSystemImageName.pencil, content: "Enter your name", iconColor: .gray)
             
-            InputTextField(
-                text: $username,
-                fieldTitle: "Username",
-                fieldImage: "person",
-                fieldContent: "Enter your username",
-                iconColor: .gray
-            )
+            TSInputTextField(inputText: $username, title: "Username", iconName: TSSystemImageName.person, content: "Enter your username", iconColor: .gray)
             
-            InputTextField(
-                text: $email,
-                fieldTitle: "Email",
-                fieldImage: "envelope",
-                fieldContent: "hello@example.com",
-                iconColor: .gray
-            )
+            TSInputTextField(inputText: $email, title: "Email", iconName: TSSystemImageName.envelope, content: "hello@example.com", iconColor: .gray)
             
-            InputTextField(
-                text: $password,
-                isSecureField: true,
-                toggleSecurityButton: true,
-                fieldTitle: "Password",
-                fieldImage: "lock",
-                fieldContent: "••••••••••",
-                iconColor: .gray
-            )
+            TSInputTextField(inputText:  $password, showSecuredFieldButton: true, title: "Password", iconName: TSSystemImageName.lock, content: "••••••••••", iconColor: .gray)
         }
-        .textInputAutocapitalization(.never)
     }
 }
 

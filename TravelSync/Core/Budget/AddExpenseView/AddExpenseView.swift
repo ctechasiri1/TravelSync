@@ -68,17 +68,10 @@ struct AddExpenseView: View {
                     
                     Group {
                         TSDatePicker(title: "TRANSACTION DATE", selectedDate: $viewModel.transactionDate)
-                        .padding(.bottom)
+                            .padding(.bottom)
                         
-                        InputTextField(
-                            text: $viewModel.notes,
-                            fieldTitle: "EXPENSE NOTE",
-                            fieldImage: "pencil.and.list.clipboard",
-                            fieldContent: "Dinner at the Habor...",
-                            iconColor: .secondaryText,
-                            characterLimit: 22
-                        )
-                        .padding(.bottom)
+                        TSInputTextField(inputText: $viewModel.notes, title:  "EXPENSE NOTE", iconName: TSSystemImageName.pencilAndListClipboard, content: "Dinner at the Habor...", iconColor: .secondaryText)
+                            .padding(.bottom)
                         
                         ReceiptUploadButton {
                             

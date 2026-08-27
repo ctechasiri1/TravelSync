@@ -32,6 +32,6 @@ extension Expense {
     }
     
     var formattedTransactionDate: String {
-        transactionDate.formatDate
+        transactionDate.formattedNumericDateAndTime
     }
 }

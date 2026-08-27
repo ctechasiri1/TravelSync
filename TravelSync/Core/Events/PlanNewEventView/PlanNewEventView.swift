@@ -45,13 +45,7 @@ struct PlanNewEventView: View {
                     }
                     
                     Group {
-                        InputTextField(
-                            text: $viewModel.eventName,
-                            fieldTitle: "EVENT NAME",
-                            fieldImage: "pencil",
-                            fieldContent: "e.g. Sushi Dinner",
-                            iconColor: .secondaryText
-                        )
+                        TSInputTextField(inputText: $viewModel.eventName, title: "EVENT NAME", iconName: TSSystemImageName.pencil, content: "e.g. Sushi Dinner", iconColor:  .secondaryText)
                         
                         InputLocationSearchField(
                             text: $viewModel.location,

@@ -36,29 +36,12 @@ struct EditPersonalInfoScreen: View {
             .padding()
             
             VStack(spacing: 25) {
-                InputTextField(
-                    text: $viewModel.username,
-                    fieldTitle: "USERNAME",
-                    fieldImage: "pencil",
-                    fieldContent: "Edit Username",
-                    iconColor: .gray
-                )
+                TSInputTextField(inputText: $viewModel.username, title: "USERNAME", iconName: TSSystemImageName.pencil, content: "Edit Username", iconColor: .gray)
                 
-                InputTextField(
-                    text: $viewModel.fullName,
-                    fieldTitle: "FULL NAME",
-                    fieldImage: "person.fill",
-                    fieldContent: "Edit Name",
-                    iconColor: .gray
-                )
+                TSInputTextField(inputText: $viewModel.fullName, title: "FULL NAME", iconName: TSSystemImageName.personFill, content: "Edit Name", iconColor: .gray)
                 
-                InputTextField(
-                    text: $viewModel.email,
-                    fieldTitle: "EMAIL",
-                    fieldImage: "envelope.fill",
-                    fieldContent: "Edit Email",
-                    iconColor: .gray
-                )
+
+                TSInputTextField(inputText:  $viewModel.email, title: "EMAIL", iconName: TSSystemImageName.envelopeFill, content: "Edit Email", iconColor: .gray)
             }
             .padding()
             

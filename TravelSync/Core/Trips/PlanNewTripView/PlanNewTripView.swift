@@ -52,14 +52,8 @@ struct PlanNewTripView: View {
                         .zIndex(1)
                         .padding(.vertical, 8)
                     
-                    InputTextField(
-                        text: $viewModel.tripName,
-                        fieldTitle: "TRIP NAME",
-                        fieldImage: "pencil",
-                        fieldContent: "e.g. Summer in Toyko",
-                        iconColor: .secondaryText
-                    )
-                    .padding(.vertical, 8)
+                    TSInputTextField(inputText: $viewModel.tripName, title: "TRIP NAME", iconName: TSSystemImageName.pencil, content: "e.g. Summer in Toyko", iconColor: .secondaryText)
+                        .padding(.vertical, 8)
                     
                     InputNumberField(
                         currency: $viewModel.budget,

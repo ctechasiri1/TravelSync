@@ -8,195 +8,109 @@
 import Foundation
 
 extension Date {
-    private static let durationFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.hour, .minute, .second]
-        formatter.unitsStyle = .short
-        formatter.maximumUnitCount = 2
-        
-        return formatter
-    }()
+    /// A localized string representing the hour and minute of the date.
+    ///```
+    /// For example, `05:13:00` becomes `"5:13 AM"` (or `"05:13"` based on the user's 24-hour time setting).
+    ///```
+    var formattedHourAndMinute: String { self.formatted(.dateTime.hour().minute()) }
     
-    private static let dateRangeFormatter: DateIntervalFormatter = {
-        let formatter = DateIntervalFormatter()
-        formatter.dateStyle = .medium
-        formatter.timeStyle = .none
-        
-        return formatter
-    } ()
+    /// A localized string representing the month and day of the date.
+    ///```
+    /// For example, `2026-05-12` becomes `"May 12"` (or the equivalent in the user's current locale).
+    ///```
+    var formattedMonthAndDay: String { self.formatted(.dateTime.month().day()) }
     
-    private static let dateDifferenceFormatter: DateComponentsFormatter = {
-        let foramtter = DateComponentsFormatter()
-        foramtter.allowedUnits = .day
-        foramtter.unitsStyle = .full
-        
-        return foramtter
-    } ()
+    /// A localized string representing the date in an abbreviated format.
+    ///```
+    /// For example, `2026-05-12` becomes `"May 12, 2026"` (or the equivalent in the user's locale).
+    ///```
+    var formattedAbbreviatedDate: String { self.formatted(date: .abbreviated, time: .omitted) }
     
-    private static let directionalTimeFormatter: RelativeDateTimeFormatter = {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .full
-        formatter.dateTimeStyle = .named
-        
-        return formatter
-    }()
+    /// A localized string representing the date in a numeric format.
+    ///```
+    /// For example, `2026-05-12` becomes `"5/12/26"` (or `"12/05/2026"` depending on the user's region settings).
+    ///```
+    var formattedNumericDate: String { self.formatted(date: .numeric, time: .omitted) }
     
-    private static func makeDateFormatter(format: String) -> DateFormatter {
-        let formatter = DateFormatter()
-        
-        formatter.dateFormat = format
-        
-        return formatter
-    }
+    /// A localized string representing the date numerically and the time shortened.
+    ///```
+    /// For example, `2026-05-12T16:00:00Z` becomes `"5/12/26, 4:00 PM"` (or `"12/5/26, 16:00"` depending on device settings).
+    ///```
+    var formattedNumericDateAndTime: String { self.formatted(date: .numeric, time: .shortened) }
     
-    /// Converts a Date into a localized time String displaying only the hour and minute
+    /// A localized string representing the complete date, including the day of the week.
     ///```
-    /// Convert 05:13:00 to "5:13 AM" (or "05:13" on 24-hour devices)
+    /// For example, `2026-05-12` becomes `"Tuesday, May 12, 2026"` (or the equivalent in the user's locale).
     ///```
-    var formattedTime: String {
-        return self.formatted(.dateTime.hour().minute())
-    }
+    var formattedYearMonthAndDayComplete: String { self.formatted(date: .complete, time: .omitted) }
     
-    /// Converts a Date into a localized String displaying only the month and day
+    /// A localized string representing the date in an abbreviated format (year, month, and day).
     ///```
-    /// Convert 2026-05-12T16:00:00Z to "Apr 2"
+    /// For example, `2026-08-26` becomes `"Aug 26, 2026"` (or the equivalent in the user's locale).
     ///```
-    var formattedMonthDay: String {
-        return self.formatted(.dateTime.month().day())
-    }
+    var formattedYearMonthAndDayAbbreviated: String { self.formatted(date: .abbreviated, time: .omitted) }
     
-    /// Converts a Date into a localized String displaying only the month and day
+    /// A localized string representing only the day of the month as a number.
     ///```
-    /// Convert "2026-05-12T16:00:00Z" to "Apr 2, 2026"
+    /// A localized string representing only the day of the month as a number.
     ///```
-    var formattedAbbreviatedDate: String {
-        return self.formatted(date: .abbreviated, time: .omitted)
-    }
+    var formattedDay: String { self.formatted(.dateTime.day()) }
     
-    /// Converts an ISO 8601 date string into a formatted date and time String
+    /// A localized string representing the abbreviated day of the week.
     ///```
-    /// Convert "2026-05-12T16:00:00Z" to "05/12/26"
+    /// For example, `2026-08-26` becomes `"Wed"`.
     ///```
-    /// - Parameter isoString: A date string in ISO 8601 format e.g. "2026-05-12T16:00:00Z"
-    /// - Returns: A formatted date String, or nil if the input string is not a valid ISO 8601 date
-    var formattedNumericDate: String {
-        return self.formatted(date: .numeric, time: .omitted)
-    }
+    var formattedWeekday: String { self.formatted(.dateTime.weekday()) }
     
-    /// Converts an ISO 8601 date string into a formatted date and time String
+    /// A localized string representing the full year.
     ///```
-    /// Convert "2026-05-12T16:00:00Z" to "05/12/26, 4:00 PM"
+    /// For example, `2026-08-26` becomes `"2026"`.
     ///```
-    /// - Parameter isoString: A date string in ISO 8601 format e.g. "2026-05-12T16:00:00Z"
-    /// - Returns: A formatted date String, or nil if the input string is not a valid ISO 8601 date
-    var formatDate: String {
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MM/dd/yy, h:mm a"
-        
-        return outputFormatter.string(from: self)
-    }
-    
-    var formattedYearMonthDay: String {
-        return self.formatted(date: .complete, time: .omitted)
-    }
-    
-    /// Converts the difference between two Dates into a formatted duration String
-    ///```
-    /// Convert 2 hours and 30 minutes difference to "2 hr, 30 min"
-    ///```
-    func formattedDuration(to endTime: Date) -> String {
-        let timeDifferenceString = Date.durationFormatter.string(from: self, to: endTime)
-        return timeDifferenceString ?? "0m"
-    }
-    
-    /// Converts two Dates into a localized date range String
-    ///```
-    /// Convert April 2 and April 5 to "Apr 2 - 5, 2026"
-    ///```
-    func formattedDateRange(to endDate: Date) -> String {
-        return Date.dateRangeFormatter.string(from: self, to: endDate)
-    }
-    
-    /// Converts a Date into a highly accurate relative time String based on human calendar rules
-    ///```
-    /// Convert June 1 (from April 8) to "in 2 months"
-    /// Convert May 2 (from April 8) to "in 3 weeks"
-    /// Convert exactly today to "today"
-    ///```
-    func relativeCalendarDescription(relativeTo referenceDate: Date = .now) -> String {
-        let calendar = Calendar.current
-        
-        // 1. Strip the time out so we are only comparing pure calendar days
-        let startOfRef = calendar.startOfDay(for: referenceDate)
-        let startOfTarget = calendar.startOfDay(for: self)
-        
-        // 2. Get exact days between dates
-        let days = calendar.dateComponents(
-            [.day],
-            from: startOfRef,
-            to: startOfTarget
-        ).day ?? 0
-        
-        // 3. Handle exact day names natively so we don't rely on the formatter for these
-        if days == 0 { return "today" }
-        if days == 1 { return "tomorrow" }
-        if days == -1 { return "yesterday" }
-        
-        let absDays = abs(days)
-        var componentsToFormat = DateComponents()
-        
-        // 4. Force the boundaries manually!
-        if absDays < 7 {
-            // Less than a week -> Use days (e.g. "in 5 days", "3 days ago")
-            componentsToFormat.day = days
-            
-        } else if absDays < 30 {
-            // 1 to 4 weeks -> Use weeks (e.g. "in 3 weeks")
-            // (Using .weekOfMonth fixes the blank text bug!)
-            componentsToFormat.weekOfMonth = days / 7
-            
-        } else if absDays < 365 {
-            // Months -> Calculate the EXACT calendar month difference (April to June = 2)
-            let refMonth = calendar.component(.month, from: startOfRef)
-            let refYear = calendar.component(.year, from: startOfRef)
-            let targetMonth = calendar.component(.month, from: startOfTarget)
-            let targetYear = calendar.component(.year, from: startOfTarget)
-            
-            let monthsDiff = (targetYear - refYear) * 12 + (
-                targetMonth - refMonth
-            )
-            componentsToFormat.month = monthsDiff
-            
-        } else {
-            // Years -> Calculate the EXACT calendar year difference
-            let yearsDiff = calendar.component(.year, from: startOfTarget) - calendar.component(
-                .year,
-                from: startOfRef
-            )
-            componentsToFormat.year = yearsDiff
-        }
-        
-        // 5. Feed the exact, calculated unit into the formatter
-        return Date.directionalTimeFormatter
-            .localizedString(from: componentsToFormat)
-    }
-    
-    /// Converts a Date into a String using a custom date format pattern
-    ///```
-    /// Convert 2026-04-02 using "MM/dd/yy, h:mm a" to "04/02/26, 12:00 PM"
-    ///```
-    func formatted(format: String) -> String {
-        return Date.makeDateFormatter(format: format).string(from: self)
-    }
+    var formattedYear: String { self.formatted(.dateTime.year()) }
     
     /// Returns whether the Date falls on today's calendar day
     ///```
     /// Convert 2026-04-08 (if today is April 8) to true
     ///```
-    func isToday() -> Bool {
+    func isToday() -> Bool { Calendar.current.isDateInToday(self) }
+    
+    /// Returns a localized string representing the duration between this date and an end date.
+    ///```
+    /// For example, if the current date is 1:00 PM and the end date is 2:30 PM, this returns `"1 hr, 30 min"`.
+    ///```
+    func formattedDuration(to endTime: Date) -> String {
+        let startTime = min(self, endTime)
+        let endTime = max(self, endTime)
+        
+        return (startTime..<endTime).formatted(.components(style: .abbreviated))
+    }
+    
+    /// Returns a localized string representing the date interval between this date and an end date.
+    ///```
+    /// For example, if this date is April 2, 2026, and the end date is April 5, 2026, this returns `"Apr 2 - 5, 2026"`.
+    ///```
+    func formattedDateRange(to endDate: Date) -> String {
+        let start = min(self, endDate)
+        let end = max(self, endDate)
+        
+        return (start..<end).formatted(date: .abbreviated, time: .omitted)
+    }
+    
+    /// A localized string representing the relative calendar time between this date and a reference date.
+    ///```
+    /// For example, `2026-06-01` relative to `2026-04-08` returns `"in 2 months"`.
+    ///```
+    func relativeCalendarDescription(relativeTo referenceDate: Date = .now) -> String {
         let calendar = Calendar.current
         
-        return calendar.isDateInToday(self)
+        let startOfTarget = calendar.startOfDay(for: self)
+        let startOfRef = calendar.startOfDay(for: referenceDate)
+        
+        let formatter = RelativeDateTimeFormatter()
+        
+        formatter.dateTimeStyle = .named
+        
+        return formatter.localizedString(for: startOfTarget, relativeTo: startOfRef)
     }
 }
 

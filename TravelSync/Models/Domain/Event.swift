@@ -28,11 +28,11 @@ struct Event: Identifiable, Hashable {
 
 extension Event {
     var startTimeToString: String {
-        return startTime.formattedTime
+        return startTime.formattedHourAndMinute
     }
     
     var dateToString: String {
-        return date.formattedMonthDay
+        return date.formattedMonthAndDay
     }
     
     var timeDuration: String {

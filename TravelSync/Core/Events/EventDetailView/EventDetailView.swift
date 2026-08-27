@@ -93,7 +93,7 @@ private struct EventDetailCard: View {
                         Image(systemName: "calendar")
                             .foregroundStyle(.accentPrimary)
                         
-                        Text(event.startTime.formattedTime + ", " + event.startTime.formattedMonthDay)
+                        Text(event.startTime.formattedHourAndMinute + ", " + event.startTime.formattedMonthAndDay)
                     }
                     .font(.system(size: 18, weight: .semibold))
                 }

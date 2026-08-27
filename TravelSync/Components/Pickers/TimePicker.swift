@@ -7,6 +7,25 @@
 
 import SwiftUI
 
+struct TSTimePicker: View {
+    
+    @Binding var selectedTime: Date?
+    let title: String
+    
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .sectionTitle()
+            
+            HStack {
+//                Text()
+            }
+        }
+    }
+    
+    
+}
+
 struct TimePicker: View {
     @Binding var selectedTime: Date?
     let pickerTitle: String
@@ -56,4 +75,10 @@ struct TimePicker: View {
     @Previewable @State var date: Date? = nil
     
     TimePicker(selectedTime: $date, pickerTitle: "START TIME")
+}
+
+#Preview {
+    @State @Previewable var date: Date? = nil
+    
+    TSTimePicker(selectedTime: $date, title: "START TIME")
 }

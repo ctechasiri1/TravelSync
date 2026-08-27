@@ -73,7 +73,7 @@ private struct ExpenseItem: View {
                     .font(.system(size: 16, weight: .semibold))
                 
                 HStack {
-                    Text(transactionDate.formatDate)
+                    Text(transactionDate.formattedNumericDateAndTime)
                     
                     Circle()
                         .frame(width: 5, height: 5)

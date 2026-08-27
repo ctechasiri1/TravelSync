@@ -31,10 +31,10 @@ struct CalendarScreen: View {
                     HStack(spacing: 10) {
                         ForEach(viewModel.currentWeek, id: \.self) { day in
                             VStack {
-                                Text(day.formatted(format: "dd"))
+                                Text(day.formattedDay)
                                     .font(.system(size: 15, weight: .semibold))
                                 
-                                Text(day.formatted(format: "EEE"))
+                                Text(day.formattedWeekday)
                                     .font(.system(size: 14))
                                 
                                 Circle()
@@ -60,7 +60,7 @@ struct CalendarScreen: View {
             .padding(.vertical)
             
             HStack {
-                Text(viewModel.selectedDay.formatted(format: "MMMM, EE dd"))
+                Text(viewModel.selectedDay.formattedYearMonthAndDayAbbreviated)
                     .padding(.horizontal)
                     .font(.system(size: 18, weight: .semibold))
                 
