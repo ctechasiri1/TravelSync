@@ -98,11 +98,11 @@ struct TripResponse: nonisolated Codable, Sendable {
 
 extension TripResponse {
     var startDate: Date {
-        return startDateString.stringToDate
+        return startDateString.toDate
     }
     
     var endDate: Date {
-        return endDateString.stringToDate
+        return endDateString.toDate
     }
     
     var imageURL: URL? {

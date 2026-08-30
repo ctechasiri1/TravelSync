@@ -57,7 +57,7 @@ struct TSPhotoPicker: View {
         }
         .onChange(of: selectedImage, { oldPickerItem, newPickerItem in
             Task {
-                coverUIImage = await newPickerItem?.convertPhotoPickerItemToUIImage()
+                coverUIImage = await newPickerItem?.convertToUIImage()
             }
         })
     }

@@ -97,10 +97,9 @@ private struct AuthFieldsSection: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            TSInputTextField(inputText: $username, title: "Email", iconName: TSSystemImageName.envelope, content: "hello@example.com", iconColor: .gray)
-                .padding(.top)
+            TSInputTextField(inputText: $username, option: .email, title: "Email", content: "hello@example.com")
             
-            TSInputTextField(inputText: $password, showSecuredFieldButton: true, title: "Password", iconName: TSSystemImageName.lock, content: "••••••••••", iconColor:  .gray)
+            TSInputTextField(inputText: $password, showSecuredFieldButton: true, option: .password, title: "Password", content: "••••••••••")
         }
     }
 }

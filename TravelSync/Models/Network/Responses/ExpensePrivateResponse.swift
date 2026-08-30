@@ -29,7 +29,7 @@ struct ExpensePrivateResponse: nonisolated Codable, Sendable {
 
 extension ExpensePrivateResponse {
     var transactionDate: Date {
-        return transactionDateString.stringToDate
+        return transactionDateString.toDate
     }
 }
 

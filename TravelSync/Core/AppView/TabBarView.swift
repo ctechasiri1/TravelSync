@@ -1,5 +1,5 @@
 //
-//  HomeScreen.swift
+//  TSTabBarView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/29/25.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TabBarView: View {
+struct TSTabBarView: View {
     @Environment(AppState.self) private var appState
     
     var body: some View {
@@ -49,6 +49,6 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView()
+    TSTabBarView()
         .environment(AppState())
 }

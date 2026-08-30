@@ -75,7 +75,7 @@ class TripsFeedViewModel {
             let updatedTrip = TripUpdateRequest(
                 id: tripId,
                 isFavorite: isFavorite,
-                coverImageData: coverImage?.convertImageToData
+                coverImageData: coverImage?.toData
             )
             
             let _ = try await tripService.updateTrip(trip: updatedTrip)

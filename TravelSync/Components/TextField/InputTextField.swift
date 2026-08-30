@@ -7,27 +7,42 @@
 
 import SwiftUI
 
-// TODO: I need to consider preventing emojis being types into the textfield
+// TODO: I need to consider preventing emojis being types into the textfield and apply validation
+
+enum TextFieldOption {
+    case email, password, name, username
+    
+    var iconName: String {
+        switch self {
+        case .email:
+            TSSystemImageName.envelope
+        case .password:
+            TSSystemImageName.lockFill
+        case .name:
+            TSSystemImageName.pencil
+        case .username:
+            TSSystemImageName.personFill
+        }
+    }
+}
 
 struct TSInputTextField: View {
     
     @Binding var inputText: String
     @State var showSecuredFieldButton: Bool
     
+    let option: TextFieldOption
     let title: String
-    let iconName: String
     let content: String
-    let iconColor: Color
     
     @State private var isSecuredField: Bool = false
     
-    init(inputText: Binding<String>, showSecuredFieldButton: Bool = false, title: String, iconName: String, content: String, iconColor: Color) {
+    init(inputText: Binding<String>, showSecuredFieldButton: Bool = false, option: TextFieldOption, title: String, content: String) {
         self._inputText = inputText
         self.showSecuredFieldButton = showSecuredFieldButton
+        self.option = option
         self.title = title
-        self.iconName = iconName
         self.content = content
-        self.iconColor = iconColor
     }
     
     var body: some View {
@@ -37,8 +52,8 @@ struct TSInputTextField: View {
             
             HStack {
                 if inputText.isEmpty {
-                    Image(systemName: iconName)
-                        .foregroundStyle(iconColor)
+                    Image(systemName: option.iconName)
+                        .foregroundStyle(.gray)
                 }
                 
                 Group {
@@ -64,16 +79,9 @@ struct TSInputTextField: View {
                     }
                     .foregroundStyle(.secondaryText)
                 }
-
             }
             .padding()
-            .overlay {
-                RoundedRectangle(cornerRadius: 30)
-                    .stroke(
-                        Color.secondaryText.opacity(0.2),
-                        style: StrokeStyle(lineWidth: 1)
-                    )
-            }
+            .subtleRoundedBorder()
         }
         .onChange(of: inputText) { oldText, newText in
             if newText.count > 50 {
@@ -85,14 +93,13 @@ struct TSInputTextField: View {
 
 #Preview("No Secured Button") {
     @State @Previewable var exampleText: String = ""
-    
-    TSInputTextField(inputText: $exampleText, showSecuredFieldButton: false, title: "Password", iconName: TSSystemImageName.lockFill, content: "Enter password", iconColor: .accentPrimary)
+    TSInputTextField(inputText: $exampleText, option: .email, title: "Email", content: "Enter email")
         .padding()
 }
 
 #Preview("Secured Button") {
     @State @Previewable var exampleText: String = ""
     
-    TSInputTextField(inputText: $exampleText, showSecuredFieldButton: true, title: "Password", iconName: TSSystemImageName.lockFill, content: "Enter password", iconColor: .accentPrimary)
+    TSInputTextField(inputText: $exampleText, showSecuredFieldButton: true, option: .password, title: "Password", content: "Enter password")
         .padding()
 }

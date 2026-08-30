@@ -28,7 +28,7 @@ struct Expense: Identifiable, Hashable {
 
 extension Expense {
     var amountString: String {
-        Double(amount).toString
+        Double(amount).toTwoDecimalPlaces
     }
     
     var formattedTransactionDate: String {

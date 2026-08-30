@@ -18,7 +18,7 @@ struct WeatherKitService {
             let currTemp = weather.currentWeather.temperature
             let iconName = weather.currentWeather.symbolName
             
-            return (currTemp.value.toString, iconName)
+            return (currTemp.value.toTwoDecimalPlaces, iconName)
         } catch {
             throw APIError.invalidPayload
         }

@@ -17,7 +17,7 @@ struct PlanNewEventView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 30) {
+                VStack(spacing: 25) {
 //                    CoverImage(coverUIImage: $viewModel.eventCoverImage)
 //                        .padding(.horizontal, 10)
                     
@@ -45,7 +45,7 @@ struct PlanNewEventView: View {
                     }
                     
                     Group {
-                        TSInputTextField(inputText: $viewModel.eventName, title: "EVENT NAME", iconName: TSSystemImageName.pencil, content: "e.g. Sushi Dinner", iconColor:  .secondaryText)
+                        TSInputTextField(inputText: $viewModel.eventName, option: .name, title: "Event Name", content: "e.g. Sushi Dinner")
                         
                         InputLocationSearchField(
                             text: $viewModel.location,
@@ -60,21 +60,20 @@ struct PlanNewEventView: View {
                             }
                         
                         HStack {
-                            TimePicker(
+                            TSTimePicker(
                                 selectedTime: $viewModel.startTime,
-                                pickerTitle: "START TIME"
+                                title: "START TIME"
                             )
                             
                             Image(systemName: "arrow.right")
-                                .foregroundStyle(.secondaryText)
                                 .padding(.top, 25)
-                                .padding(.horizontal, 10)
                             
-                            TimePicker(
+                            TSTimePicker(
                                 selectedTime: $viewModel.endTime,
-                                pickerTitle: "END TIME"
+                                title: "END TIME"
                             )
                         }
+                        .frame(height: 80, alignment: .center)
                         
                         InputMultilineTextField(
                             notesContent: $viewModel.notes,

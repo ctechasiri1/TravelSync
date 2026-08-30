@@ -1,5 +1,5 @@
 //
-//  Date+Ext.swift
+//  TSDate+Ext.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 4/7/26.
@@ -67,6 +67,12 @@ extension Date {
     /// For example, `2026-08-26` becomes `"2026"`.
     ///```
     var formattedYear: String { self.formatted(.dateTime.year()) }
+    
+    /// A localized string representing the shortened time, omitting the date.
+    ///```
+    /// For example, `2026-08-28T14:00:00Z` becomes `"2:00 PM"`.
+    ///```
+    var formattedShortenedTime: String { self.formatted(date: .omitted, time: .shortened)}
     
     /// Returns whether the Date falls on today's calendar day
     ///```

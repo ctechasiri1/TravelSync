@@ -87,7 +87,7 @@ private struct ExpenseItem: View {
             
             Spacer()
             
-            Text("-$" + Double(amount).toString)
+            Text("-$" + Double(amount).toTwoDecimalPlaces)
                 .font(.system(size: 16, weight: .semibold))
         }
         .padding(20)

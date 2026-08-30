@@ -87,13 +87,13 @@ private struct SignUpFormSection: View {
     
     var body: some View {
         VStack(spacing: 15) {
-            TSInputTextField(inputText: $fullName, title: "Full Name", iconName: TSSystemImageName.pencil, content: "Enter your name", iconColor: .gray)
+            TSInputTextField(inputText: $fullName, option: .name, title: "Full Name", content: "Enter your name")
             
-            TSInputTextField(inputText: $username, title: "Username", iconName: TSSystemImageName.person, content: "Enter your username", iconColor: .gray)
+            TSInputTextField(inputText: $username, option: .username, title: "Username", content: "Enter your username")
             
-            TSInputTextField(inputText: $email, title: "Email", iconName: TSSystemImageName.envelope, content: "hello@example.com", iconColor: .gray)
+            TSInputTextField(inputText: $email, option: .email, title: "Email", content: "hello@example.com")
             
-            TSInputTextField(inputText:  $password, showSecuredFieldButton: true, title: "Password", iconName: TSSystemImageName.lock, content: "••••••••••", iconColor: .gray)
+            TSInputTextField(inputText: $password, showSecuredFieldButton: true, option: .password, title: "Password", content: "••••••••••")
         }
     }
 }

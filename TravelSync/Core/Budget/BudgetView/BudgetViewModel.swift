@@ -81,7 +81,7 @@ class BudgetViewModel {
         guard let categorySum = categorySums[categoryType] else {
             return "0"
         }
-        return Double(categorySum).toString
+        return Double(categorySum).toTwoDecimalPlaces
     }
     
     func getTrip(tripId: Int) async -> Void {

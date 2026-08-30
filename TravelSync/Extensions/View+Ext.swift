@@ -8,8 +8,16 @@
 import SwiftUI
 
 extension View {
-    
-    
+    func subtleRoundedBorder() -> some View {
+        self
+            .background(content: {
+                RoundedRectangle(cornerRadius: 30)
+                    .stroke(
+                        Color.secondaryText.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 1)
+                    )
+            })
+    }
     
     func cardBackground() -> some View {
         self
@@ -22,6 +30,7 @@ extension View {
     
     func sectionTitle() -> some View {
         self
+            .padding(.leading, 5)
             .font(.system(size: 15, weight: .bold))
             .foregroundStyle(.placeholderText)
             .frame(maxWidth: .infinity, alignment: .leading)

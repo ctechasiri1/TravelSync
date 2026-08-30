@@ -26,7 +26,7 @@ struct TSAppStateView: View {
                         appState.hasBooted = true
                     }
             case .home:
-                TabBarView()
+                TSTabBarView()
                     .transition(.blurReplace)
             }
         }

@@ -81,7 +81,7 @@ class PlanNewTripViewModel {
                 isFavorite: false,
                 startDate: start,
                 endDate: end,
-                coverImageData: coverUIImage?.convertImageToData
+                coverImageData: coverUIImage?.toData
             )
             
             let _ = try await (
