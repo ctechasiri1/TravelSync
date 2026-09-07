@@ -16,7 +16,7 @@ struct TSTabBarView: View {
                 TripsFeedView(viewModel: appState.makeTripFeedViewModel())
             }
             .tabItem {
-                Label("Home", systemImage: "house.fill")
+                Label(L10n.TSTabBarView.home, systemImage: TSSystemImageName.houseFill)
             }
             
             // TODO: Implement the search for friends feature
@@ -24,22 +24,22 @@ struct TSTabBarView: View {
                 EmptyView()
             }
             .tabItem {
-                Label("Search", systemImage: "magnifyingglass")
+                Label(L10n.TSTabBarView.search, systemImage: TSSystemImageName.magnifyingglass)
             }
             
             NavigationStack {
                 CalendarScreen(viewModel: appState.makeCalendarViewModel())
             }
             .tabItem {
-                Label("Calendar", systemImage: "calendar")
+                Label(L10n.TSTabBarView.calendar, systemImage: TSSystemImageName.calendar)
             }
             
             NavigationStack {
                 ProfileScreen(viewModel: appState.makeUserSessionViewModel())
-                    .navigationTitle("Profile")
+                    .navigationTitle(L10n.TSTabBarView.profile)
             }
             .tabItem {
-                Label("Profile", systemImage: "person.fill")
+                Label(L10n.TSTabBarView.profile, systemImage: TSSystemImageName.personFill)
             }
         }
         .tint(.accentPrimary)

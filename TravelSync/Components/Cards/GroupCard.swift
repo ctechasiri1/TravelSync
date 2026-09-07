@@ -37,17 +37,6 @@ struct GroupCard<T: View>: View {
 #Preview {
     @State @Previewable var isOn: Bool = false
     
-//    GroupCard(title: "ACCOUNT") {
-//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
-//            .padding()
-//        
-//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
-//            .padding()
-//        
-//        TSToggleRow(title: "Dark Mode", iconName: TSSystemImage.moonFill, isOn: $isOn)
-//            .padding()
-//    }
-    
     List {
         Section("Account") {
             TSToggleRow(title: "Dark Mode", iconName: TSSystemImageName.moonFill, isOn: $isOn)

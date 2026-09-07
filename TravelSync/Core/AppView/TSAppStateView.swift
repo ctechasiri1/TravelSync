@@ -20,7 +20,7 @@ struct TSAppStateView: View {
                 SignUpView(viewModel: appState.makeSignUpViewModel())
                     .transition(.move(edge: appState.prevAuthScreen == .login ? .leading : .trailing))
             case .login:
-                LoginView(viewModel: appState.makeLoginViewModel())
+                TSLoginView(viewModel: appState.makeLoginViewModel())
                     .transition(.move(edge: appState.prevAuthScreen == .loading ? .leading : (appState.hasBooted ? .leading : .trailing)))
                     .onAppear {
                         appState.hasBooted = true

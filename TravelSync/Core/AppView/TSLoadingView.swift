@@ -18,16 +18,16 @@ struct LoadingView: View {
             Color.primaryBackground.opacity(0.1).edgesIgnoringSafeArea(.all)
                     
             VStack {
-                Image("travel_sync_icon")
+                Image(.travelSyncIcon)
                     .resizable()
                     .frame(width: 150, height: 150)
                     .scaledToFit()
                         
                 VStack {
-                    Text("TravelSync")
+                    Text(L10n.TSLoadingView.title)
                         .font(.system(.largeTitle, weight: .bold))
                             
-                    Text("Plan. Track. Explore.")
+                    Text(L10n.TSLoadingView.subtitle)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(.secondaryText.opacity(0.6))
                 }
@@ -38,7 +38,7 @@ struct LoadingView: View {
                     .frame(height: 10)
                     .padding(.horizontal, 110)
                 
-                Text("LOADING YOUR JOURNEY...")
+                Text(L10n.TSLoadingView.loadingText)
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(.secondaryText.opacity(0.6))
             }

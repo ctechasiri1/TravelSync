@@ -1,5 +1,5 @@
 //
-//  LoginView.swift
+//  TSLoginView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/22/26.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct LoginView: View {
+struct TSLoginView: View {
     @Environment(AppState.self) private var appState
     @State private var viewModel: LoginViewModel
     
@@ -20,35 +20,42 @@ struct LoginView: View {
             Color.secondaryBackground
             
             GroupCard {
-                VStack(alignment: .leading) {
+                VStack(alignment: .leading, spacing: 20) {
                     LoginTitleSection()
                     
-                    AuthFieldsSection(username: $viewModel.username, password: $viewModel.password)
+                    TSInputTextField(
+                        inputText: $viewModel.username,
+                        option: .email,
+                        title: L10n.TSTextField.emailTitle,
+                        content: L10n.TSTextField.emailPlaceholder
+                    )
+                    
+                    TSInputTextField(
+                        inputText: $viewModel.password,
+                        showSecuredFieldButton: true,
+                        option: .password,
+                        title: L10n.TSTextField.passwordTitle,
+                        content: L10n.TSTextField.passwordPlaceholder
+                    )
                     
                     TSTextButton(title: "Forgot Password?", fontStyle: .footnote) {
                         // TODO: Insert the forgot password feature
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
-                    .padding(.top, 5)
-                    .padding(.bottom, 15)
-                            
+                    
                     TSFillButton(title: "Login", isLoading: viewModel.isLoading) {
-                        Task {
-                            await viewModel.login()
-                        }
+                        onLoginPressed()
                     }
-                            
+                    
                     Spacer()
                     
                     PromptSignUpSection {
                         appState.navigate(to: .signUp)
                     }
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding()
             }
             .padding()
-            .padding(.vertical, 10)
         }
         .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
             withAnimation {
@@ -58,14 +65,19 @@ struct LoginView: View {
             }
         }
         .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
-        .ignoresSafeArea(edges: .bottom)
+    }
+    
+    private func onLoginPressed() {
+        Task {
+            await viewModel.login()
+        }
     }
 }
 
 private struct LoginTitleSection: View {
     var body: some View {
         VStack(alignment: .leading) {
-            Image(systemName: "safari")
+            Image(systemName: TSSystemImageName.safari)
                 .bold()
                 .foregroundStyle(.white)
                 .background(
@@ -76,30 +88,16 @@ private struct LoginTitleSection: View {
                 .padding()
                 .padding(.top, 20)
             
-            Text("Welcome Back,")
+            Text(L10n.TSLoginView.title1)
                 .font(.system(.title, weight: .semibold))
             
-            Text("Explorer!")
+            Text(L10n.TSLoginView.title2)
                 .font(.system(.title, weight: .semibold))
                 .foregroundStyle(.accentPrimary)
             
-            Text("Continue to your adventure where you left off.")
+            Text(L10n.TSLoginView.subtitle)
                 .font(.system(.subheadline))
                 .foregroundStyle(.secondaryText.opacity(0.6))
-        }
-    }
-}
-
-private struct AuthFieldsSection: View {
-    
-    @Binding var username: String
-    @Binding var password: String
-    
-    var body: some View {
-        VStack(spacing: 15) {
-            TSInputTextField(inputText: $username, option: .email, title: "Email", content: "hello@example.com")
-            
-            TSInputTextField(inputText: $password, showSecuredFieldButton: true, option: .password, title: "Password", content: "••••••••••")
         }
     }
 }
@@ -110,10 +108,10 @@ private struct PromptSignUpSection: View {
     
     var body: some View {
         HStack {
-            Text("Don't have an account?")
+            Text(L10n.TSLoginView.signUpDescription)
                 .foregroundStyle(.secondaryText.opacity(0.6))
                     
-            TSTextButton(title: "Sign Up") {
+            TSTextButton(title: L10n.TSLoginView.signUp) {
                 action()
             }
         }
@@ -123,8 +121,8 @@ private struct PromptSignUpSection: View {
     }
 }
 
-#Preview {
-    LoginView(
+#Preview("TSLoginView") {
+    TSLoginView(
         viewModel: LoginViewModel(
             userAuthService: UserAuthService(
                 networkService: NetworkRequestService(),
