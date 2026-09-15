@@ -35,7 +35,7 @@ struct TSInputTextField: View {
     let title: String
     let content: String
     
-    @State private var isSecuredField: Bool = false
+    @State private var isSecuredField: Bool
     
     init(inputText: Binding<String>, showSecuredFieldButton: Bool = false, option: TextFieldOption, title: String, content: String) {
         self._inputText = inputText
@@ -43,6 +43,7 @@ struct TSInputTextField: View {
         self.option = option
         self.title = title
         self.content = content
+        self.isSecuredField = showSecuredFieldButton
     }
     
     var body: some View {

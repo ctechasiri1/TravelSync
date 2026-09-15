@@ -145,18 +145,18 @@ private struct PlanNewTripPreferenceView: View {
     }
 }
 
-#Preview {
-    PlanNewTripView(
-        viewModel: PlanNewTripViewModel(
-            tripService: TripService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            locationSearchManager: LocationSearchManager(
-                completer: MKLocalSearchCompleter()
-            ),
-            loadingManager: LoadingManager()
-        )
-    )
-    .environment(AppState())
-}
+//#Preview {
+//    PlanNewTripView(
+//        viewModel: PlanNewTripViewModel(
+//            tripService: TripService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            locationSearchManager: LocationSearchManager(
+//                completer: MKLocalSearchCompleter()
+//            ),
+//            loadingManager: LoadingManager()
+//        )
+//    )
+//    .environment(TSAppState())
+//}

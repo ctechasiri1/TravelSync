@@ -9,13 +9,13 @@ import SwiftUI
 
 struct DeleteConfirmationViewModifier: ViewModifier {
     
-    @Environment(AppState.self) var appState
+    @Environment(TSAppState.self) var appState
     
     func body(content: Content) -> some View {
         ZStack {
             content
-                .disabled(appState.loadingManager.isLoading)
-                .blur(radius: appState.loadingManager.isLoading ? 4 : 0)
+//                .disabled(appState.loadingManager.isLoading)
+//                .blur(radius: appState.loadingManager.isLoading ? 4 : 0)
             
             if appState.deleteConfirmationManager.isPresented {
                 ZStack {
@@ -67,7 +67,7 @@ struct DeleteConfirmationViewModifier: ViewModifier {
                 .transition(.opacity)
             }
         }
-        .animation(.easeInOut(duration: 0.2), value: appState.loadingManager.isLoading)
+//        .animation(.easeInOut(duration: 0.2), value: appState.loadingManager.isLoading)
     }
 }
 

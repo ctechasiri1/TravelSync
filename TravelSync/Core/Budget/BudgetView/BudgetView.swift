@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BudgetView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: BudgetViewModel
     @Binding var trip: Trip
     
@@ -65,7 +65,7 @@ struct BudgetView: View {
                 await viewModel.getExpenses(tripId: trip.id)
             }
         }, content: {
-            AddExpenseView(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
+//            AddExpenseView(viewModel: appState.makeAddExpenseViewModel(), trip: trip)
         })
         .toolbar(content: {
             TSToolbarButton(option: .add, placement: .topBarTrailing) {
@@ -306,20 +306,20 @@ private struct ExpenseBreakdownOptionView: View {
     }
 }
 
-#Preview {
-    BudgetView(
-        viewModel: BudgetViewModel(
-            expenseService: ExpenseService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            tripService: TripService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            loadingManager: LoadingManager()
-        ),
-        trip: .constant(Trip.mock)
-    )
-    .environment(AppState())
-}
+//#Preview {
+//    BudgetView(
+//        viewModel: BudgetViewModel(
+//            expenseService: ExpenseService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            tripService: TripService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            loadingManager: LoadingManager()
+//        ),
+//        trip: .constant(Trip.mock)
+//    )
+//    .environment(TSAppState())
+//}

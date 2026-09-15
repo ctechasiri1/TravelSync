@@ -97,21 +97,21 @@ private struct ExpenseItem: View {
     }
 }
 
-#Preview {
-    @Previewable @State var trip: Trip = Trip.mock
-    
-    AllExpenseView(
-        viewModel: BudgetViewModel(
-            expenseService: ExpenseService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            tripService: TripService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            loadingManager: LoadingManager()
-        ),
-        trip: $trip
-    )
-}
+//#Preview {
+//    @Previewable @State var trip: Trip = Trip.mock
+//    
+//    AllExpenseView(
+//        viewModel: BudgetViewModel(
+//            expenseService: ExpenseService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            tripService: TripService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            loadingManager: LoadingManager()
+//        ),
+//        trip: $trip
+//    )
+//}

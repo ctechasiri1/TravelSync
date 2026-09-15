@@ -175,14 +175,14 @@ private struct ReceiptUploadButton: View {
     }
 }
 
-#Preview {
-    AddExpenseView(
-        viewModel: AddExpenseViewModel(
-            expenseService: ExpenseService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            ),
-            loadingManager: LoadingManager()
-        ), trip: Trip.mock
-    )
-}
+//#Preview {
+//    AddExpenseView(
+//        viewModel: AddExpenseViewModel(
+//            expenseService: ExpenseService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            ),
+//            loadingManager: LoadingManager()
+//        ), trip: Trip.mock
+//    )
+//}

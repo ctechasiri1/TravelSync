@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileScreen: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var isShowingSettings: Bool = false
     @State private var isShowingPersonalInfo: Bool = false
     
@@ -254,5 +254,5 @@ private struct FuturePlansOptions: View {
     NavigationStack {
         ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
     }
-    .environment(AppState())
+    .environment(TSAppState())
 }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CalendarScreen: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: CalendarViewModel
     
     init(viewModel: CalendarViewModel) {
@@ -174,5 +174,5 @@ struct EventCard: View {
 
 #Preview {
     CalendarScreen(viewModel: CalendarViewModel())
-        .environment(AppState())
+        .environment(TSAppState())
 }

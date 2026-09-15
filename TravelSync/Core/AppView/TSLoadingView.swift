@@ -10,7 +10,7 @@ import Lottie
 import SwiftUI
 
 struct LoadingView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var progress: Double = 0.0
     
     var body: some View {
@@ -59,5 +59,5 @@ struct LoadingView: View {
 
 #Preview {
     LoadingView()
-        .environment(AppState())
+        .environment(TSAppState())
 }

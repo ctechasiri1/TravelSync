@@ -18,7 +18,11 @@ final class ServiceContainer {
     let tripService: TripServiceProtocol
     let expenseService: ExpenseServiceProtocol
     
-    init(netowrkService: NetworkRequestService = NetworkRequestService(), keychainService: KeychainService = KeychainService(), weatherKitService: WeatherKitService = WeatherKitService()) {
+    init(
+        netowrkService: NetworkRequestService = NetworkRequestService(),
+        keychainService: KeychainService = KeychainService(),
+        weatherKitService: WeatherKitService = WeatherKitService()
+    ) {
         self.netowrkService = netowrkService
         self.keychainService = keychainService
         self.weatherKitService = weatherKitService

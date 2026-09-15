@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct TSLoginView: View {
-    @Environment(AppState.self) private var appState
-    @State private var viewModel: LoginViewModel
+    @Environment(TSAppState.self) private var appState
+    @State private var viewModel: TSLoginViewModel
     
-    init(viewModel: LoginViewModel) {
+    init(viewModel: TSLoginViewModel) {
         _viewModel = State(wrappedValue: viewModel)
     }
     
@@ -43,8 +43,8 @@ struct TSLoginView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     
-                    TSFillButton(title: "Login", isLoading: viewModel.isLoading) {
-                        onLoginPressed()
+                    TSFillButton(title: "Login", isLoading: appState.isLoading) {
+                        viewModel.login()
                     }
                     
                     Spacer()
@@ -63,13 +63,6 @@ struct TSLoginView: View {
                     appState.navigate(to: .home)
                 }
             }
-        }
-        .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
-    }
-    
-    private func onLoginPressed() {
-        Task {
-            await viewModel.login()
         }
     }
 }
@@ -122,13 +115,10 @@ private struct PromptSignUpSection: View {
 }
 
 #Preview("TSLoginView") {
-    TSLoginView(
-        viewModel: LoginViewModel(
-            userAuthService: UserAuthService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            )
-        )
-    )
-    .environment(AppState())
+    let appState: TSAppState = TSAppState()
+    let viewModelFactory: TSViewModelFactory = TSViewModelFactory(appState: appState)
+    
+    TSLoginView(viewModel: viewModelFactory.makeLoginViewModel())
+        .environment(appState)
+        .environment(viewModelFactory)
 }

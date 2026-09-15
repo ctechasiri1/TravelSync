@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditPersonalInfoScreen: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: UserSessionViewModel
     
     let user: User
@@ -58,5 +58,5 @@ struct EditPersonalInfoScreen: View {
 
 #Preview {
     EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
-        .environment(AppState())
+        .environment(TSAppState())
 }

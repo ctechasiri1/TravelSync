@@ -27,12 +27,12 @@ class BudgetViewModel {
     
     private let expenseService: ExpenseServiceProtocol
     private let tripsService: TripServiceProtocol
-    private let loadingManager: LoadingManager
+//    private let loadingManager: LoadingManager
     
-    init(expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol, loadingManager: LoadingManager) {
+    init(expenseService: ExpenseServiceProtocol, tripService: TripServiceProtocol) {
         self.expenseService = expenseService
         self.tripsService = tripService
-        self.loadingManager = loadingManager
+//        self.loadingManager = loadingManager
     }
 
     var transactionDateRange: Int {
@@ -136,10 +136,10 @@ class BudgetViewModel {
     }
     
     func deleteExpense(tripId: Int, expenseId: Int) async {
-        defer { loadingManager.hide() }
-        
-        loadingManager.show()
-        
+//        defer { loadingManager.hide() }
+//        
+//        loadingManager.show()
+//        
         do {
             let _ = try await (Task.sleep(nanoseconds: 500_000_000), expenseService.deleteExpense(tripId: tripId, expenseId: expenseId))
             await getExpenses(tripId: tripId)

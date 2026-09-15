@@ -18,23 +18,23 @@ class TripDetailViewModel {
     
     private let tripService: TripServiceProtocol
     // TODO: i need to fix this injection
-    private let loadingManager: LoadingManager
+//    private let loadingManager: LoadingManager
     private let weatherKitService: WeatherKitService
     
     init(
         tripService: TripServiceProtocol,
-        loadingManager: LoadingManager,
+//        loadingManager: LoadingManager,
         weatherKitService: WeatherKitService
     ) {
         self.tripService = tripService
-        self.loadingManager = loadingManager
+//        self.loadingManager = loadingManager
         self.weatherKitService = weatherKitService
     }
     
     func getWeather(longitude: Double, latitude: Double) async {
-        defer { loadingManager.hide() }
-        
-        loadingManager.show()
+//        defer { loadingManager.hide() }
+//        
+//        loadingManager.show()
         let coordinates = CLLocation(latitude: latitude, longitude: longitude)
         do {
             let weatherPayload = try await weatherKitService.fetch(
@@ -50,9 +50,9 @@ class TripDetailViewModel {
     }
     
     func deleteTrip(tripId: Int) async -> Void {
-        defer { loadingManager.hide() }
-        
-        loadingManager.show()
+//        defer { loadingManager.hide() }
+//        
+//        loadingManager.show()
         
         do {
             let _ = try await (

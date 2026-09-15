@@ -16,8 +16,7 @@ struct Toast: ViewModifier {
     
     @Binding var toastOption: ToastOption
     let text: String
-
-    @State private var remainingTime = 3.0
+    
     func body(content: Content) -> some View {
         content
             .overlay {
@@ -25,28 +24,40 @@ struct Toast: ViewModifier {
                     VStack {
                         switch toastOption {
                         case .success:
-                            SuccessView(remainingTime: $remainingTime, toastOption: $toastOption, text: text)
+                            SuccessView(text: text)
                                 .transition(.move(edge: .top))
                         case .failure:
-                            FailureView(remainingTime: $remainingTime, toastOption: $toastOption, text: text)
+                            FailureView(text: text)
                                 .transition(.move(edge: .top))
                         case .idle:
                             EmptyView()
-                                .transition(.move(edge: .bottom))
+                                .transition(.opacity)
                         }
                         
                         Spacer()
                     }
                 }
-                .animation(.smooth, value: toastOption)
+                .animation(.easeInOut, value: toastOption)
+            }
+            .task(id: toastOption) {
+                // don't run the timer if the option is .idle
+                if toastOption == .idle { return }
+                
+                // run the timer for 1.5 seconds
+                try? await Task.sleep(for: .seconds(1.5))
+                
+                // if the task is not cancelled then set it back to .idle
+                if !Task.isCancelled {
+                    withAnimation(.smooth) {
+                        self.toastOption = .idle
+                    }
+                }
             }
     }
 }
 
 private struct SuccessView: View {
-    
-    @Binding var remainingTime: Double
-    @Binding var toastOption: ToastOption
+
     let text: String
     
     var body: some View {
@@ -54,39 +65,17 @@ private struct SuccessView: View {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundStyle(.accentConfirmation)
             
-            Text(text + " successful")
+            Text("Success: " + text)
                 .foregroundStyle(.black)
         }
         .padding()
         .font(.system(size: 12, weight: .semibold))
-        .background(
-            RoundedRectangle(cornerRadius: 30)
-                .fill(.white)
-                .stroke(
-                    Color.secondaryText.opacity(0.2),
-                    style: StrokeStyle(lineWidth: 0.5)
-                )
-        )
-        .onReceive(
-            Timer
-                .publish(every: 0.2, on: .main, in: .default)
-                .autoconnect()
-        ) { _ in
-            remainingTime -= 0.2
-            if remainingTime <= 0 {
-                withAnimation(.easeInOut) {
-                    toastOption = .idle
-                }
-                remainingTime = 3.0
-            }
-        }
+        .toastStyle()
     }
 }
 
 private struct FailureView: View {
-    
-    @Binding var remainingTime: Double
-    @Binding var toastOption: ToastOption
+
     let text: String
     
     var body: some View {
@@ -94,36 +83,28 @@ private struct FailureView: View {
             Image(systemName: "x.circle.fill")
                 .foregroundStyle(.accentWarning)
             
-            Text(text)
+            Text("Error: " + text)
                 .foregroundStyle(.black.opacity(0.8))
         }
-        .padding()
-        .font(.system(size: 12, weight: .semibold))
-        .background(
-            RoundedRectangle(cornerRadius: 30)
-                .fill(.white)
-                .stroke(
-                    Color.secondaryText.opacity(0.2),
-                    style: StrokeStyle(lineWidth: 0.5)
-                )
-        )
-        .onReceive(
-            Timer
-                .publish(every: 0.2, on: .main, in: .default)
-                .autoconnect()
-        ) { _ in
-            remainingTime -= 0.2
-            if remainingTime <= 0 {
-                withAnimation(.easeInOut) {
-                    toastOption = .idle
-                }
-                remainingTime = 3.0
-            }
-        }
+        .toastStyle()
     }
 }
 
 extension View {
+    func toastStyle() -> some View {
+        self
+            .padding(4)
+            .font(.system(size: 12, weight: .semibold))
+            .background(
+                RoundedRectangle(cornerRadius: 30)
+                    .fill(.white)
+                    .stroke(
+                        Color.secondaryText.opacity(0.2),
+                        style: StrokeStyle(lineWidth: 0.5)
+                    )
+            )
+    }
+    
     func showToast(toastOption: Binding<ToastOption>, text: String) -> some View {
         modifier(Toast(toastOption: toastOption, text: text))
     }

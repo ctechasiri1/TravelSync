@@ -25,16 +25,16 @@ class PlanNewTripViewModel {
     
     private let locationSearchManager: LocationSearchManager
     private let tripService: TripServiceProtocol
-    private let loadingManager: LoadingManager
+//    private let loadingManager: LoadingManager
     
     init(
         tripService: TripServiceProtocol,
         locationSearchManager: LocationSearchManager,
-        loadingManager: LoadingManager
+//        loadingManager: LoadingManager
     ) {
         self.tripService = tripService
         self.locationSearchManager = locationSearchManager
-        self.loadingManager = loadingManager
+//        self.loadingManager = loadingManager
     }
     
     var canCreateTrip: Bool {
@@ -50,9 +50,9 @@ class PlanNewTripViewModel {
     }
 
     func addTrip() async {
-        defer { loadingManager.hide() }
-        
-        loadingManager.show()
+//        defer { loadingManager.hide() }
+//        
+//        loadingManager.show()
         
         await searchLocationCoordinates(locationName)
         

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SettingsScreen: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: UserSessionViewModel
     
     let user: User
@@ -138,5 +138,5 @@ private struct SupportOptions: View {
             )
         )
     }
-        .environment(AppState())
+        .environment(TSAppState())
 }

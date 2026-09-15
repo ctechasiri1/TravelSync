@@ -7,11 +7,7 @@
 
 import Foundation
 
-extension AppState {
-    var loadingManager: LoadingManager {
-        managers.loadingManager
-    }
-    
+extension TSAppState {    
     var deleteConfirmationManager: DeleteConfirmationManager {
         managers.deleteConfirmationManager
     }

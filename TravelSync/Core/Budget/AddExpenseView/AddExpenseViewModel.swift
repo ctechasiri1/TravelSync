@@ -18,11 +18,9 @@ class AddExpenseViewModel {
     var isExpenseInputValid: Bool = true
     
     private let expenseService: ExpenseServiceProtocol
-    private let loadingManager: LoadingManager
     
-    init(expenseService: ExpenseServiceProtocol, loadingManager: LoadingManager) {
+    init(expenseService: ExpenseServiceProtocol) {
         self.expenseService = expenseService
-        self.loadingManager = loadingManager
     }
     
     var enableSave: Bool {
@@ -34,9 +32,9 @@ class AddExpenseViewModel {
     }
     
     func createExpense(tripId: Int) async -> Void {
-        defer { loadingManager.hide() }
-        
-        loadingManager.show()
+//        defer { loadingManager.hide() }
+//        
+//        loadingManager.show()
         
         do {
             guard let expenseAmount = Int(expenseAmount) else {

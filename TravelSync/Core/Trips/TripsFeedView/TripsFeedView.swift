@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TripsFeedView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: TripsFeedViewModel
     
     init(viewModel: TripsFeedViewModel) {
@@ -65,7 +65,7 @@ struct TripsFeedView: View {
                 }
             })
             .fullScreenCover(isPresented: $viewModel.showPlanNewTrip, content: {
-                PlanNewTripView(viewModel: appState.makePlanNewTripViewModel())
+//                PlanNewTripView(viewModel: appState.makePlanNewTripViewModel())
             })
         }
 }
@@ -200,5 +200,5 @@ private struct PastTripsView: View {
             )
         )
     }
-    .environment(AppState())
+    .environment(TSAppState())
 }

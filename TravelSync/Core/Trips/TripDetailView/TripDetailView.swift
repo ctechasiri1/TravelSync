@@ -12,7 +12,7 @@ struct TripDetailView: View {
     let isUpcomingTrip: Bool
     
     @Environment(\.dismiss) private var dismiss
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @State private var viewModel: TripDetailViewModel
     
     init(
@@ -51,7 +51,7 @@ struct TripDetailView: View {
                         }
                         
                         TSNavigationCard(title: "Map", subtitle: "\(trip.dateDifference) Left", iconName: TSSystemImageName.mapFill, iconColor: .accentBlue) {
-                            EventMapView(trip: trip, viewModel: appState.makeEventMapViewModel())
+//                            EventMapView(trip: trip, viewModel: appState.makeEventMapViewModel())
                         }
                     }
                     .padding(.horizontal)
@@ -63,10 +63,10 @@ struct TripDetailView: View {
                         iconName: "dollarsign",
                         iconColor: .accentConfirmation
                     ) {
-                        BudgetView(
-                            viewModel: appState.makeBudgetViewModel(),
-                            trip: $trip
-                        )
+//                        BudgetView(
+//                            viewModel: appState.makeBudgetViewModel(),
+//                            trip: $trip
+//                        )
                     }
                     .padding()
                 }
@@ -81,11 +81,11 @@ struct TripDetailView: View {
             }
             .toolbar{
                 TSToolbarButton(option: .delete, placement: .topBarTrailing) {
-                    appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
-                        Task {
-                            await viewModel.deleteTrip(tripId: trip.id)
-                        }
-                    }
+//                    appState.deleteConfirmationManager.show(title:  "delete_trip_title", description: "delete_trip_description") {
+//                        Task {
+//                            await viewModel.deleteTrip(tripId: trip.id)
+//                        }
+//                    }
                 }
             }
             .toolbar(.hidden, for: .tabBar)
@@ -237,12 +237,12 @@ private struct TripBudgetCard<T: View>: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        TripDetailView(
-            viewModel: AppState().makeTripDetailViewModel(),
-            trip: .constant(Trip.mock),
-            isUpcomingTrip: true)
-    }
-    .environment(AppState())
-}
+//#Preview {
+//    NavigationStack {
+//        TripDetailView(
+//            viewModel: AppState().makeTripDetailViewModel(),
+//            trip: .constant(Trip.mock),
+//            isUpcomingTrip: true)
+//    }
+//    .environment(AppState())
+//}

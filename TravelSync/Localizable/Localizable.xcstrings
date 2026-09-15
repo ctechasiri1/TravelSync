@@ -1,6 +1,303 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    " " : {
+
+    },
+    "@%@" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@," : {
+
+    },
+    "%lld" : {
+
+    },
+    "•" : {
+
+    },
+    "$" : {
+
+    },
+    "$%lld" : {
+
+    },
+    "0" : {
+
+    },
+    "1.2k" : {
+
+    },
+    "2h 30m" : {
+
+    },
+    "18" : {
+
+    },
+    "acceptance_of_terms_content" : {
+
+    },
+    "acceptance_of_terms_title" : {
+
+    },
+    "ACCOUNT" : {
+
+    },
+    "Add a Trip" : {
+
+    },
+    "Add Expense" : {
+
+    },
+    "All Expenses" : {
+
+    },
+    "AMOUNT" : {
+
+    },
+    "Any extra details, booking codes, or menu preferences ..." : {
+
+    },
+    "ATTACH RECEIPT" : {
+
+    },
+    "BUDGET" : {
+
+    },
+    "Budget Details" : {
+
+    },
+    "Cancel" : {
+
+    },
+    "CATEGORY" : {
+
+    },
+    "changes_content" : {
+
+    },
+    "changes_title" : {
+
+    },
+    "contact_us_content" : {
+
+    },
+    "contact_us_title" : {
+
+    },
+    "content_content" : {
+
+    },
+    "content_title" : {
+
+    },
+    "COUNTRIES" : {
+
+    },
+    "Current Spent: $%lld" : {
+
+    },
+    "Customize your account" : {
+
+    },
+    "Daily Avg" : {
+
+    },
+    "data_security_content" : {
+
+    },
+    "data_security_title" : {
+
+    },
+    "data_we_collect_bullet_four_content" : {
+
+    },
+    "data_we_collect_bullet_four_title" : {
+
+    },
+    "data_we_collect_bullet_one_content" : {
+
+    },
+    "data_we_collect_bullet_one_title" : {
+
+    },
+    "data_we_collect_bullet_three_content" : {
+
+    },
+    "data_we_collect_bullet_three_title" : {
+
+    },
+    "data_we_collect_bullet_two_content" : {
+
+    },
+    "data_we_collect_bullet_two_title" : {
+
+    },
+    "data_we_collect_content" : {
+
+    },
+    "data_we_collect_title" : {
+
+    },
+    "Detail" : {
+
+    },
+    "DURATION" : {
+
+    },
+    "e.g. 10,000" : {
+
+    },
+    "Event Notes" : {
+
+    },
+    "Expenses Breakdown" : {
+
+    },
+    "EXPERIENCE" : {
+
+    },
+    "Hello, World!" : {
+
+    },
+    "Hi, %@!" : {
+
+    },
+    "how_we_use_your_data_bullet_one_content" : {
+
+    },
+    "how_we_use_your_data_bullet_one_title" : {
+
+    },
+    "how_we_use_your_data_bullet_two_content" : {
+
+    },
+    "how_we_use_your_data_bullet_two_title" : {
+
+    },
+    "how_we_use_your_data_content" : {
+
+    },
+    "how_we_use_your_data_title" : {
+
+    },
+    "intellectual_property_content" : {
+
+    },
+    "intellectual_property_title" : {
+
+    },
+    "introduction_content" : {
+
+    },
+    "introduction_title" : {
+
+    },
+    "Left" : {
+
+    },
+    "Location" : {
+
+    },
+    "My Trips" : {
+
+    },
+    "of $%lld budget" : {
+
+    },
+    "Open Maps" : {
+
+    },
+    "PAST" : {
+
+    },
+    "Personal Information" : {
+
+    },
+    "PHOTOS" : {
+
+    },
+    "Privacy Policy" : {
+
+    },
+    "privacy@travelsync.com" : {
+
+    },
+    "PROFILE PHOTO" : {
+
+    },
+    "questions_content" : {
+
+    },
+    "Quick Access" : {
+
+    },
+    "Recent Activity" : {
+
+    },
+    "Save" : {
+
+    },
+    "SCHEDULE" : {
+
+    },
+    "Settings" : {
+
+    },
+    "Start planning your next adventure." : {
+
+    },
+    "SUPPORT" : {
+
+    },
+    "termination_content" : {
+
+    },
+    "termination_title" : {
+
+    },
+    "Terms of Service" : {
+
+    },
+    "Today" : {
+
+    },
+    "Total Spend" : {
+
+    },
+    "trip_feed_empty_past_description" : {
+
+    },
+    "trip_feed_empty_past_title" : {
+
+    },
+    "trip_feed_empty_upcoming_description" : {
+
+    },
+    "trip_feed_empty_upcoming_title" : {
+
+    },
+    "trip_feed_future_plans" : {
+
+    },
+    "trip_feed_next_adventure" : {
+
+    },
+    "trip_feed_recent_adventure_plural" : {
+
+    },
+    "trip_feed_recent_adventure_singular" : {
+
+    },
+    "TRIPS" : {
+
+    },
     "tsLoadingView_loading_text" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -264,6 +561,30 @@
           }
         }
       }
+    },
+    "UPCOMING" : {
+
+    },
+    "Upload Image" : {
+
+    },
+    "USD" : {
+
+    },
+    "user_accounts_content" : {
+
+    },
+    "user_accounts_title" : {
+
+    },
+    "Version 2.4.0 (145)" : {
+
+    },
+    "View All" : {
+
+    },
+    "Where to next?" : {
+
     }
   },
   "version" : "1.1"

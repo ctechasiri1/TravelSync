@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct TSTabBarView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
+    @Environment(TSViewModelFactory.self) private var viewModelFactory
     
     var body: some View {
         TabView {
             NavigationStack {
-                TripsFeedView(viewModel: appState.makeTripFeedViewModel())
+                TripsFeedView(viewModel: viewModelFactory.makeTripFeedViewModel())
             }
             .tabItem {
                 Label(L10n.TSTabBarView.home, systemImage: TSSystemImageName.houseFill)
@@ -28,14 +29,14 @@ struct TSTabBarView: View {
             }
             
             NavigationStack {
-                CalendarScreen(viewModel: appState.makeCalendarViewModel())
+                CalendarScreen(viewModel: viewModelFactory.makeCalendarViewModel())
             }
             .tabItem {
                 Label(L10n.TSTabBarView.calendar, systemImage: TSSystemImageName.calendar)
             }
             
             NavigationStack {
-                ProfileScreen(viewModel: appState.makeUserSessionViewModel())
+                ProfileScreen(viewModel: viewModelFactory.makeUserSessionViewModel())
                     .navigationTitle(L10n.TSTabBarView.profile)
             }
             .tabItem {
@@ -49,6 +50,10 @@ struct TSTabBarView: View {
 }
 
 #Preview {
+    let appState: TSAppState = TSAppState()
+    let viewModelFactory: TSViewModelFactory = TSViewModelFactory(appState: appState)
+
     TSTabBarView()
-        .environment(AppState())
+        .environment(appState)
+        .environment(viewModelFactory)
 }

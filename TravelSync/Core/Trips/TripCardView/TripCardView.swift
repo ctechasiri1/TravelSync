@@ -51,7 +51,7 @@ struct TripFeedCardView: View {
 }
 
 private struct CardContent: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
     @Binding var trip: Trip
     @Binding var isFavorite: Bool
     let dateDifference: String
@@ -120,14 +120,14 @@ private struct CardContent: View {
                         
                         Spacer()
                         
-                        DetailsButton {
-                            TripDetailView(
-                                viewModel: appState
-                                    .makeTripDetailViewModel(),
-                                trip: $trip,
-                                isUpcomingTrip: isUpcomingTrip
-                            )
-                        }
+//                        DetailsButton {
+//                            TripDetailView(
+//                                viewModel: appState
+//                                    .makeTripDetailViewModel(),
+//                                trip: $trip,
+//                                isUpcomingTrip: isUpcomingTrip
+//                            )
+//                        }
                     }
                     .padding(.horizontal)
                 }
@@ -170,5 +170,5 @@ private struct DetailsButton<T: View>: View {
         height: 350,
         isUpcomingTrip: true
     )
-    .environment(AppState())
+    .environment(TSAppState())
 }

@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct TSAppStateView: View {
-    @Environment(AppState.self) private var appState
+    @Environment(TSAppState.self) private var appState
+    @Environment(TSViewModelFactory.self) private var viewModelFactory
     
     var body: some View {
         Group {
@@ -17,24 +18,36 @@ struct TSAppStateView: View {
                 LoadingView()
                     .transition(.blurReplace)
             case .signUp:
-                SignUpView(viewModel: appState.makeSignUpViewModel())
+                TSSignUpView(viewModel: viewModelFactory.makeSignUpViewModel())
                     .transition(.move(edge: appState.prevAuthScreen == .login ? .leading : .trailing))
             case .login:
-                TSLoginView(viewModel: appState.makeLoginViewModel())
+                TSLoginView(viewModel: viewModelFactory.makeLoginViewModel())
                     .transition(.move(edge: appState.prevAuthScreen == .loading ? .leading : (appState.hasBooted ? .leading : .trailing)))
                     .onAppear {
-                        appState.hasBooted = true
+                        appState.setHasBooted(to: true)
                     }
             case .home:
                 TSTabBarView()
-                    .transition(.blurReplace)
+                    .transition(.move(edge: .trailing))
             }
         }
         .animation(.smooth, value: appState.currentAuthScreen)
+        .showToast(toastOption:
+                    Binding(
+                        get: { appState.toastOption },
+                        set: { _ in appState.hideToast() }
+                    ),
+                   text: appState.toastMessage
+        )
+        .showLoading()
     }
 }
 
 #Preview {
+    let appState: TSAppState = TSAppState()
+    let viewModelFactory: TSViewModelFactory = TSViewModelFactory(appState: appState)
+    
     TSAppStateView()
-        .environment(AppState())
+        .environment(appState)
+        .environment(viewModelFactory)
 }
