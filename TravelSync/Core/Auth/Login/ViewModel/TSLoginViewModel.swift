@@ -8,18 +8,16 @@
 import Observation
 import Foundation
 
+@MainActor
 @Observable
 class TSLoginViewModel {
     var username: String = ""
     var password: String = ""
     
-    // TODO: need to be able to pass message into the toast so errors can be customized
-    var didLoginSucceed: Bool = false
-    
-    private let userAuthService: UserAuthServiceProtocol
+    private let userAuthService: TSUserAuthService
     private let appState: TSAppState
         
-    init(appState: TSAppState, userAuthService: UserAuthServiceProtocol) {
+    init(appState: TSAppState, userAuthService: TSUserAuthService) {
         self.appState = appState
         self.userAuthService = userAuthService
     }
@@ -33,15 +31,16 @@ class TSLoginViewModel {
                 let _ = try await userAuthService.login(requestBody: request)
                 
                 appState.hideLoader()
-                appState.setToast(to: .success, with: "Login")
+                appState.setToast(to: .success(message: "Login"))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.didLoginSucceed = true
+                    self.appState.navigate(to: .home)
                 }
             } catch let error as APIError {
-                appState.setToast(to: .failure, with: error.errorDescription)
+                appState.setToast(to: .failure(message: error.errorDescription))
             } catch {
-                appState.setToast(to: .failure, with: "There was an unexpected error")
+                // TODO: there is a better way to handle this maybe just a default in the error options or localized string
+                appState.setToast(to: .failure(message: "There was an unexpected error"))
             }
         }
     }

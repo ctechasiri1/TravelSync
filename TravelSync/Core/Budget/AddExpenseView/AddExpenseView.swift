@@ -67,7 +67,7 @@ struct AddExpenseView: View {
                     }
                     
                     Group {
-                        TSDatePicker(title: "TRANSACTION DATE", selectedDate: $viewModel.transactionDate)
+                        TSDatePicker(selectedDate: $viewModel.transactionDate, title: "TRANSACTION DATE")
                             .padding(.bottom)
                         
                         TSInputTextField(inputText: $viewModel.notes, option: .name, title: "Expense Note", content: "Dinner at the Habor...")

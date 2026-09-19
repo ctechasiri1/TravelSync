@@ -108,13 +108,13 @@ private struct PlanNewTripSelectDateView: View {
     
     var body: some View {
         HStack {
-            TSDatePicker(title: "START DATE", selectedDate: $startDate)
+            TSDatePicker(selectedDate: $startDate, title: "START DATE", )
             
             Image(systemName: "arrow.right")
                 .foregroundStyle(.secondaryText)
                 .padding(.top, 25)
             
-            TSDatePicker(title: "END DATE", selectedDate: $endDate)
+            TSDatePicker(selectedDate: $endDate, title: "END DATE")
         }
     }
 }
