@@ -39,7 +39,7 @@ struct GroupCard<T: View>: View {
     
     List {
         Section("Account") {
-            TSToggleRow(title: "Dark Mode", iconName: TSSystemImageName.moonFill, isOn: $isOn)
+            TSToggleRow(isOn: $isOn, title: "Dark Mode", iconName: TSSystemImageName.moonFill)
                 .padding()
         }
     }
