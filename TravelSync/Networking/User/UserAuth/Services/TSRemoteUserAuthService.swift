@@ -1,5 +1,5 @@
 //
-//  UserAuthService.swift
+//  TSRemoteUserAuthService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/24/26.
@@ -7,7 +7,27 @@
 
 import Foundation
 
-final class UserAuthService: UserAuthServiceProtocol {
+struct TSRemoteUserAuthService {
+    private let networkService: NetworkRequestService
+    private let keychainService: KeychainService
+    
+    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+        self.networkService = networkService
+        self.keychainService = keychainService
+    }
+    
+//    func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
+//        guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users") else {
+//            throw APIError.invalidURL
+//        }
+//    }
+//    
+//    func login(requestBody: UserLoginRequest) async throws -> TokenResponse {
+//    
+//    }
+}
+
+final class UserAuthServiceRemote {
     
     private let networkService: NetworkRequestService
     private let keychainService: KeychainService

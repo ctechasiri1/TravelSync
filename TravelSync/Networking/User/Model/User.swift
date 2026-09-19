@@ -14,7 +14,6 @@ struct User {
     let email: String
     let profileImage: String
     
-    @MainActor
     static var example: User {
         return User(
             id: 1,
