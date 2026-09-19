@@ -1,5 +1,5 @@
 //
-//  LoadingViewModifier.swift
+//  TSLoadingViewModifier.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/25/26.
@@ -8,20 +8,19 @@
 import Lottie
 import SwiftUI
 
-struct LoadingViewModifier: ViewModifier {
+struct TSLoader: ViewModifier {
     
-    @Environment(TSAppState.self) private var appState
+    let isLoading: Bool
     
     func body(content: Content) -> some View {
         ZStack {
             content
-                .disabled(appState.isLoading)
-                .blur(radius: appState.isLoading ? 4 : 0)
+                .disabled(isLoading)
+                .blur(radius: isLoading ? 4 : 0)
                 
-            if appState.isLoading {
+            if isLoading {
                     ZStack {
-                        Color.gray.opacity(0.09)
-                            .ignoresSafeArea()
+                        BackdropView()
                         
                         LottieView(animation: .named("travelsync-loading"))
                             .playing(loopMode: .loop)
@@ -32,12 +31,12 @@ struct LoadingViewModifier: ViewModifier {
                     .transition(.opacity)
                 }
         }
-        .animation(.easeInOut(duration: 0.2), value: appState.isLoading)
+        .animation(.easeInOut(duration: 0.2), value: isLoading)
     }
 }
 
 extension View {
-    func showLoading() -> some View {
-        modifier(LoadingViewModifier())
+    func showLoading(for loadingState: Bool) -> some View {
+        modifier(TSLoader(isLoading: loadingState))
     }
 }

@@ -7,21 +7,29 @@
 
 import SwiftUI
 
-struct TSSegmentButton: View {
+protocol SegmentOption: Hashable, CaseIterable, Identifiable {
+    var title: String { get }
+}
+
+// MARK: All custom of type SegmentOption.self will automatically have these parameters and prevent boilerplate
+extension SegmentOption where Self: RawRepresentable, RawValue == String {
+    var id: String { rawValue }
+    var title: String { rawValue.capitalized }
+}
+
+struct TSSegmentBar<Option: SegmentOption>: View {
     
-    @Binding var selectedSegment: String
+    @Binding var selectedSegment: Option
     @Namespace var transition
-    
-    private let segments: [String] = ["Upcoming", "Past"]
     
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(segments, id: \.self) { segment in
+            ForEach(Array(Option.allCases)) { segment in
                 Button {
                     selectedSegment = segment
                 } label: {
                     VStack {
-                        Text(segment)
+                        Text(segment.title)
                             .font(.system(.headline, weight: .medium))
                             .foregroundStyle(selectedSegment == segment ? .accentPrimary : .secondary)
                         
@@ -44,8 +52,8 @@ struct TSSegmentButton: View {
     }
 }
 
-#Preview {
-    @State @Previewable var selectedSegment: String = "Upcoming"
+#Preview("TripFeedView Segment Options") {
+    @State @Previewable var selectedSegment: TripsFeedSegmentOption = .upcoming
     
-    TSSegmentButton(selectedSegment: $selectedSegment)
+    TSSegmentBar(selectedSegment: $selectedSegment)
 }
