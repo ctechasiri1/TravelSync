@@ -9,8 +9,8 @@ import SwiftUI
 
 struct TSDatePicker: View {
     
-    let title: String
     @Binding var selectedDate: Date?
+    let title: String
     
     var body: some View {
         VStack {
@@ -64,7 +64,7 @@ struct TSDatePicker: View {
         
         GroupCard {
             VStack(alignment: .leading) {
-                TSDatePicker(title: "Transaction Date", selectedDate: $date)
+                TSDatePicker(selectedDate: $date, title: "Transaction Date")
             }
             .padding()
         }
