@@ -1,5 +1,5 @@
 //
-//  TripsFeedView.swift
+//  TSTripsFeedView.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 12/31/25.
@@ -7,17 +7,17 @@
 
 import SwiftUI
 
-struct TripsFeedView: View {
+struct TSTripsFeedView: View {
     @Environment(TSAppState.self) private var appState
-    @State private var viewModel: TripsFeedViewModel
+    @State private var viewModel: TSTripsFeedViewModel
     
-    init(viewModel: TripsFeedViewModel) {
+    init(viewModel: TSTripsFeedViewModel) {
         _viewModel = State(wrappedValue: viewModel)
     }
     
     var body: some View {
             VStack {
-                TSSegmentButton(selectedSegment: $viewModel.selection)
+                TSSegmentBar(selectedSegment: $viewModel.selection)
                     .padding()
                 
                 ScrollView {
@@ -70,6 +70,10 @@ struct TripsFeedView: View {
         }
 }
 
+//private struct EmptyStateView: View {
+//    
+//}
+
 private struct NoTripsView: View {
     let isUpcomingSelected: Bool
     let planNewTripToggle: () -> Void
@@ -115,7 +119,7 @@ private struct NoTripsView: View {
 
 private struct UpcomingTripsView: View {
     let upcomingTrips: [Trip]
-    let viewModel: TripsFeedViewModel
+    let viewModel: TSTripsFeedViewModel
     
     var body: some View {
         if !upcomingTrips.isEmpty {
@@ -161,7 +165,7 @@ private struct UpcomingTripsView: View {
 
 private struct PastTripsView: View {
     let pastTrips: [Trip]
-    let viewModel: TripsFeedViewModel
+    let viewModel: TSTripsFeedViewModel
     
     var body: some View {
         if !pastTrips.isEmpty {
@@ -189,16 +193,16 @@ private struct PastTripsView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        TripsFeedView(
-            viewModel: TripsFeedViewModel(
-                tripService: TripService(
-                    networkService: NetworkRequestService(),
-                    keychainService: KeychainService()
-                )
-            )
-        )
-    }
-    .environment(TSAppState())
-}
+//#Preview {
+//    NavigationStack {
+//        TSTripsFeedView(
+//            viewModel: TSTripsFeedViewModel(
+//                tripService: TripService(
+//                    networkService: NetworkRequestService(),
+//                    keychainService: KeychainService()
+//                )
+//            )
+//        )
+//    }
+//    .environment(TSAppState())
+//}

@@ -1,5 +1,5 @@
 //
-//  TripsFeedViewModel.swift
+//  TSTripsFeedViewModel.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 1/26/26.
@@ -9,19 +9,27 @@ import Observation
 import Foundation
 import PhotosUI
 
+enum TripsFeedSegmentOption: String, SegmentOption {
+    case upcoming, Past
+}
+
+@MainActor
 @Observable
-class TripsFeedViewModel {
+class TSTripsFeedViewModel {
+    
     var trips: [Trip] = []
     
-    var selection: String = "Upcoming"
+    var selection: TripsFeedSegmentOption = .upcoming
     
     var showErrorAlert: Bool = false
     var showPlanNewTrip: Bool = false
     var isFavorite: Bool = false
     
+    private let appState: TSAppState
     private let tripService: TripServiceProtocol
     
-    init(tripService: TripServiceProtocol) {
+    init(appState: TSAppState, tripService: TripServiceProtocol) {
+        self.appState = appState
         self.tripService = tripService
     }
     
@@ -35,34 +43,33 @@ class TripsFeedViewModel {
     }
     
     var isUpcomingSelected: Bool {
-        selection == "Upcoming"
+        selection == .upcoming
     }
     
     func toggleShowPlanNewTrip() {
         showPlanNewTrip = true
     }
     
-    func getTrip() async -> Void {
+    func getTrip() async {
         do {
             let trips = try await tripService.getTrips()
             
-            await MainActor.run {
-                self.trips = trips.compactMap {
-                    Trip(
-                        id: $0.id,
-                        tripName: $0.tripName,
-                        location: $0.location,
-                        longitude: $0.longitude,
-                        latitude: $0.latitude,
-                        budget: $0.budget,
-                        totalSpending: $0.totalSpending,
-                        isFavorite: $0.isFavorite,
-                        startDate: $0.startDate,
-                        endDate: $0.endDate,
-                        imageURLString: $0.imageURL
-                    )
-                }
+            self.trips = trips.compactMap {
+                Trip(
+                    id: $0.id,
+                    tripName: $0.tripName,
+                    location: $0.location,
+                    longitude: $0.longitude,
+                    latitude: $0.latitude,
+                    budget: $0.budget,
+                    totalSpending: $0.totalSpending,
+                    isFavorite: $0.isFavorite,
+                    startDate: $0.startDate,
+                    endDate: $0.endDate,
+                    imageURLString: $0.imageURL
+                )
             }
+            
         } catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

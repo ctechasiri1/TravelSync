@@ -32,6 +32,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
 }
 
+@MainActor
 struct Dependencies {
     var viewModelFactory: TSViewModelFactory
     var appState: TSAppState
