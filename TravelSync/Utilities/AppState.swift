@@ -8,19 +8,21 @@
 import Observation
 import Foundation
 
+@MainActor
 @Observable
 class TSAppState {
     
     private(set) var currentAuthScreen: AuthState = .loading
     private(set) var prevAuthScreen: AuthState?
     private(set) var toastOption: ToastOption = .idle
+    private(set) var modalOption: ModalOption?
     
     private(set) var hasBooted: Bool = false
     private(set) var isLoading: Bool = false
+    private(set) var isModalPresented: Bool = false
+    
     var isNotificationEnabled: Bool = false
     var isDarkModeEnabled: Bool = false
-    
-    private(set) var toastMessage: String = ""
     
     let services: ServiceContainer
     let managers: ManagerContainer
@@ -34,9 +36,8 @@ class TSAppState {
         currentAuthScreen = flow
     }
     
-    func setToast(to option: ToastOption, with message: String) {
+    func setToast(to option: ToastOption) {
         toastOption = option
-        toastMessage = message
     }
     
     func hideToast() {
@@ -61,5 +62,14 @@ class TSAppState {
     
     func hideLoader() {
         isLoading = false
+    }
+    
+    func setModal(modalOption: ModalOption) {
+        self.modalOption = modalOption
+        isModalPresented = true
+    }
+    
+    func hideModal() {
+        isModalPresented = false
     }
 }

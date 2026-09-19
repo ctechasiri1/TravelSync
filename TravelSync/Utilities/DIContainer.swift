@@ -8,6 +8,7 @@
 import Observation
 import Foundation
 
+@MainActor
 @Observable
 class TSViewModelFactory {
     let appState: TSAppState
@@ -27,8 +28,8 @@ class TSViewModelFactory {
         TSSignUpViewModel(appState: appState, userAuthService: services.authService)
     }
     
-    func makeTripFeedViewModel() -> TripsFeedViewModel {
-        TripsFeedViewModel(tripService: services.tripService)
+    func makeTripFeedViewModel() -> TSTripsFeedViewModel {
+        TSTripsFeedViewModel(appState: appState, tripService: services.tripService)
     }
     
 //    func makeTripDetailViewModel() -> TripDetailViewModel {
