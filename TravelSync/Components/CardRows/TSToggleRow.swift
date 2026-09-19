@@ -9,12 +9,12 @@ import SwiftUI
 
 struct TSToggleRow: View {
     
+    @Binding var isOn: Bool
+    
     let title: String
     let iconName: String
     
-    @Binding var isOn: Bool
-    
-    init(title: String, iconName: String, isOn: Binding<Bool>) {
+    init(isOn: Binding<Bool>, title: String, iconName: String) {
         self.title = title
         self.iconName = iconName
         self._isOn = isOn
@@ -40,7 +40,7 @@ struct TSToggleRow: View {
     NavigationStack {
         List {
             Section("Personal Information") {
-                TSToggleRow(title: "Dark Mode", iconName: "moon.fill", isOn: $isOn)
+                TSToggleRow(isOn: $isOn, title: "Dark Mode", iconName: "moon.fill")
                     .padding()
             }
         }
