@@ -32,14 +32,13 @@ struct TSAppStateView: View {
             }
         }
         .animation(.smooth, value: appState.currentAuthScreen)
-        .showToast(toastOption:
+        .showToast(for:
                     Binding(
                         get: { appState.toastOption },
                         set: { _ in appState.hideToast() }
-                    ),
-                   text: appState.toastMessage
+                    )
         )
-        .showLoading()
+        .showLoading(for: appState.isLoading)
     }
 }
 

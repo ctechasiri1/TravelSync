@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TripFeedCardView: View {
     @State var trip: Trip
-    let viewModel: TripsFeedViewModel
+    let viewModel: TSTripsFeedViewModel
     let height: CGFloat
     let isUpcomingTrip: Bool
     var isFirstUpcomingTrip: Bool = false
@@ -158,17 +158,17 @@ private struct DetailsButton<T: View>: View {
     }
 }
 
-#Preview {
-    TripFeedCardView(
-        trip: Trip.mock,
-        viewModel: TripsFeedViewModel(
-            tripService: TripService(
-                networkService: NetworkRequestService(),
-                keychainService: KeychainService()
-            )
-        ),
-        height: 350,
-        isUpcomingTrip: true
-    )
-    .environment(TSAppState())
-}
+//#Preview {
+//    TripFeedCardView(
+//        trip: Trip.mock,
+//        viewModel: TSTripsFeedViewModel(
+//            tripService: TSTripService(
+//                networkService: NetworkRequestService(),
+//                keychainService: KeychainService()
+//            )
+//        ),
+//        height: 350,
+//        isUpcomingTrip: true
+//    )
+//    .environment(TSAppState())
+//}

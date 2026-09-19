@@ -9,6 +9,7 @@ import Observation
 import Foundation
 import SwiftUI
 
+@MainActor
 @Observable
 class UserSessionViewModel {
     var username: String = ""

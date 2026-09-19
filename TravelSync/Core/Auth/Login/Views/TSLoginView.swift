@@ -57,13 +57,6 @@ struct TSLoginView: View {
             }
             .padding()
         }
-        .onChange(of: viewModel.didLoginSucceed) { _, succeeded in
-            withAnimation {
-                if succeeded {
-                    appState.navigate(to: .home)
-                }
-            }
-        }
     }
 }
 
