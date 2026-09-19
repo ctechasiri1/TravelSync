@@ -59,6 +59,11 @@ struct TSSignUpView: View {
                             title: L10n.TSTextField.passwordTitle,
                             content: L10n.TSTextField.passwordPlaceholder
                         )
+                        
+                        TSFillButton(title: "Sign Up", isLoading: appState.isLoading) {
+                            viewModel.signup()
+                        }
+                        .padding(.vertical, 20)
                     }
                     
                     Spacer()
@@ -72,19 +77,6 @@ struct TSSignUpView: View {
             .padding()
         }
         .navigationBarBackButtonHidden(true)
-        .onChange(of: viewModel.didSignUpSucceed) { _, succeeded in
-            if succeeded {
-                appState.navigate(to: .login)
-            }
-        }
-        // TODO: I need to redo the showToast modifier so we are able to have appState manage it
-//        .showToast(toastOption: $viewModel.toastOption, text: viewModel.errorMessage)
-    }
-    
-    private func onSignUpButtonPressed() {
-        Task {
-            await viewModel.signup()
-        }
     }
 }
 

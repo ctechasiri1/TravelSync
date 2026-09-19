@@ -8,6 +8,7 @@
 import Observation
 import Foundation
 
+@MainActor
 @Observable
 class BudgetViewModel {
     var expenses: [Expense] = [] {
@@ -87,7 +88,7 @@ class BudgetViewModel {
     func getTrip(tripId: Int) async -> Void {
         do {
             let tripPayload = try await tripsService.getTrip(tripId: tripId)
-            await MainActor.run {
+//            await MainActor.run {
                 updatedTrip = Trip(
                     id: tripPayload.id,
                     tripName: tripPayload.tripName,
@@ -101,7 +102,7 @@ class BudgetViewModel {
                     endDate: tripPayload.endDate,
                     imageURLString: tripPayload.imageURL
                 )
-            }
+//            }
         }  catch let error as APIError {
             print("There was a network error: \(error).")
         } catch {

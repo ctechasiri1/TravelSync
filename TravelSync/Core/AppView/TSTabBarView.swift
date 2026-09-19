@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// TODO: Implement a custom tab bar for the app
 struct TSTabBarView: View {
     @Environment(TSAppState.self) private var appState
     @Environment(TSViewModelFactory.self) private var viewModelFactory
@@ -14,7 +15,10 @@ struct TSTabBarView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TripsFeedView(viewModel: viewModelFactory.makeTripFeedViewModel())
+                TSTripsFeedView(viewModel: viewModelFactory.makeTripFeedViewModel())
+                    .onAppear {
+                        
+                    }
             }
             .tabItem {
                 Label(L10n.TSTabBarView.home, systemImage: TSSystemImageName.houseFill)
@@ -44,8 +48,6 @@ struct TSTabBarView: View {
             }
         }
         .tint(.accentPrimary)
-        .showLoading()
-        .deleteConfirmation()
     }
 }
 

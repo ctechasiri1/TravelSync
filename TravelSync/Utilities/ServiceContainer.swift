@@ -13,7 +13,7 @@ final class ServiceContainer {
     let keychainService: KeychainService
     let weatherKitService: WeatherKitService
     
-    let authService: UserAuthServiceProtocol
+    let authService: TSUserAuthService
     let userService: UserServiceProtocol
     let tripService: TripServiceProtocol
     let expenseService: ExpenseServiceProtocol
