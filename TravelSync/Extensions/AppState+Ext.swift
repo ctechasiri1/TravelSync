@@ -7,8 +7,8 @@
 
 import Foundation
 
-extension TSAppState {    
-    var deleteConfirmationManager: DeleteConfirmationManager {
-        managers.deleteConfirmationManager
-    }
-}
+//extension TSAppState {    
+//    var deleteConfirmationManager: DeleteConfirmationManager {
+//        managers.deleteConfirmationManager
+//    }
+//}
