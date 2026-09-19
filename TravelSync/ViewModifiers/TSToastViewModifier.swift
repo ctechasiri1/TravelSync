@@ -8,14 +8,15 @@
 import Combine
 import SwiftUI
 
-enum ToastOption {
-    case success, failure, idle
+enum ToastOption: Equatable {
+    case success(message: String)
+    case failure(message: String)
+    case idle
 }
 
-struct Toast: ViewModifier {
+struct TSToast: ViewModifier {
     
     @Binding var toastOption: ToastOption
-    let text: String
     
     func body(content: Content) -> some View {
         content
@@ -23,11 +24,11 @@ struct Toast: ViewModifier {
                 Group {
                     VStack {
                         switch toastOption {
-                        case .success:
-                            SuccessView(text: text)
+                        case .success(let message):
+                            SuccessView(text: message)
                                 .transition(.move(edge: .top))
-                        case .failure:
-                            FailureView(text: text)
+                        case .failure(let message):
+                            FailureView(text: message)
                                 .transition(.move(edge: .top))
                         case .idle:
                             EmptyView()
@@ -105,7 +106,7 @@ extension View {
             )
     }
     
-    func showToast(toastOption: Binding<ToastOption>, text: String) -> some View {
-        modifier(Toast(toastOption: toastOption, text: text))
+    func showToast(for toastOption: Binding<ToastOption>) -> some View {
+        modifier(TSToast(toastOption: toastOption))
     }
 }
