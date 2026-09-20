@@ -33,7 +33,7 @@ extension User {
 }
 
 // MARK: DTO (Date Transfer Object) for the networking layer
-struct UserCreateRequest: Encodable {
+struct UserCreateRequest: Codable {
     let username: String
     let fullName: String
     let email: String

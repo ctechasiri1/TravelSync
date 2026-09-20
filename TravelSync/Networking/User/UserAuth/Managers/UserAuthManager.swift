@@ -8,12 +8,20 @@
 import Observation
 import Foundation
 
-//@MainActor
-//@Observable
-//class TSUserAuthManger {
-//    var service: UserAuthService
-//    
-//    init(service: UserAuthService) {
-//        self.service = service
-//    }
-//}
+@MainActor
+@Observable
+class TSUserAuthManger {
+    var service: TSUserAuthService
+    
+    init(service: TSUserAuthService) {
+        self.service = service
+    }
+    
+    func login() async throws {
+        try await service.login(requestBody: <#T##UserLoginRequest#>)
+    }
+    
+    func signUp() async throws {
+        try await service.signUp(requestBody: <#T##UserCreateRequest#>)
+    }
+}

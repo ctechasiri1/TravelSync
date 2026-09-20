@@ -27,7 +27,7 @@ final class ServiceContainer {
         self.keychainService = keychainService
         self.weatherKitService = weatherKitService
         
-        self.authService = UserAuthService(networkService: netowrkService, keychainService: keychainService)
+        self.authService = TSRemoteUserAuthService(networkService: netowrkService, keychainService: keychainService)
         self.userService = UserService(networkService: netowrkService, keychainService: keychainService)
         self.tripService = TripService(networkService: netowrkService, keychainService: keychainService)
         self.expenseService = ExpenseService(networkService: netowrkService, keychainService: keychainService)

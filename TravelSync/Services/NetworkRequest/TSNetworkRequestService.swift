@@ -1,5 +1,5 @@
 //
-//  NetworkRequestService.swift
+//  TSNetworkRequestService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/25/26.
@@ -7,42 +7,21 @@
 
 import Foundation
 
-//enum HTTPMethod: String {
-//    
-//}
-
-enum HeaderValueType: String {
-    case applicationJson
-    
-    var value: String {
-        switch self {
-        case .applicationJson:
-            "application/json"
-        }
-    }
-}
-
-enum HeaderHTTPField: String {
-    case contentType
-    
-    
-}
-
-struct NetworkRequestService: Sendable {
+struct TSNetworkRequestService: Sendable {
     
     func sendRequest<Output: Decodable>(request: URLRequest, responseType: Output.Type) async throws -> Output {
         do {
-            /// 1. this sends the data to FastAPI then waits for a response
+            /// this sends the data to FastAPI then waits for a response
             let (data, response) = try await URLSession.shared.data(for: request)
             
-            /// 2. checks the response (convert it to HTTPURLResponse type) making sure it has a successful status code
+            /// checks the response (convert it to HTTPURLResponse type) making sure it has a successful status code
             guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
                 throw APIError.invalidResponse(try JSONDecoder().decode(ErrorResponse.self, from: data))
             }
             
-            /// 3. decode it to the DTO (UserPrivateResponse)
+            /// decode it to the DTO (UserPrivateResponse)
             if httpResponse.statusCode == 204 {
-                if let empty = await EmptyResponse() as? Output {
+                if let empty = EmptyResponse() as? Output {
                     return empty
                 }
             }
@@ -55,7 +34,17 @@ struct NetworkRequestService: Sendable {
         }
     }
     
-//    func createRequest(httpMethod: String, valueType: String?, header: String?) -> URLRequest {
-//        
-//    }
+    func createRequest<T: Codable>(url: URL, httpMethod: TSHTTPMethod, valueType: TSHeaderValueType?, httpField: TSHeaderHTTPField?, body: T) throws -> URLRequest {
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod.rawValue
+        
+        if let valueType = valueType, let httpField = httpField {
+            request.setValue(valueType.rawValue, forHTTPHeaderField: httpField.rawValue)
+        }
+        
+        request.httpBody = try JSONEncoder().encode(body)
+        
+        return request
+    }
 }
