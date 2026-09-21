@@ -132,7 +132,7 @@ private struct SupportOptions: View {
             user: User.example,
             viewModel: UserSessionViewModel(
                 userService: UserService(
-                    networkService: NetworkRequestService(),
+                    networkService: TSNetworkRequestService(),
                     keychainService: KeychainService()
                 )
             )

@@ -8,18 +8,16 @@
 import MapKit
 import Foundation
 
+@MainActor
 final class ManagerContainer {
-    let locationSearchManager: LocationSearchManager
-//    let loadingManager: LoadingManager
-//    let deleteConfirmationManager: DeleteConfirmationManager
+    private let services: ServiceContainer
     
-    init(
-        locationSearchManager: LocationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter()),
-//        loadingManager: LoadingManager = LoadingManager(),
-//        deleteConfirmationManager: DeleteConfirmationManager = DeleteConfirmationManager()
-    ) {
-        self.locationSearchManager = locationSearchManager
-//        self.loadingManager = loadingManager
-//        self.deleteConfirmationManager = deleteConfirmationManager
+    private(set) var authManager: TSUserAuthManger
+    private(set) var locationSearchManager: LocationSearchManager
+    
+    init() {
+        self.services = ServiceContainer()
+        self.authManager = TSUserAuthManger(service: TSRemoteUserAuthService(networkService: services.networkService), keychainService: services.keychainService)
+        self.locationSearchManager = LocationSearchManager(completer: MKLocalSearchCompleter())
     }
 }

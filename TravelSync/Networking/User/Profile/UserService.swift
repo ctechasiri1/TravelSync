@@ -8,11 +8,11 @@
 import Foundation
 
 actor UserService: UserServiceProtocol {
-    private let networkService: NetworkRequestService
+    private let networkService: TSNetworkRequestService
     private let keychainService: KeychainService
     private var activeTask: Task<UserPrivateResponse, Error>?
     
-    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+    init(networkService: TSNetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }

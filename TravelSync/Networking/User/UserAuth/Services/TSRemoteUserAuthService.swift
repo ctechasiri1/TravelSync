@@ -9,11 +9,9 @@ import Foundation
 
 struct TSRemoteUserAuthService: TSUserAuthService {
     private let networkService: TSNetworkRequestService
-    private let keychainService: KeychainService
     
-    init(networkService: TSNetworkRequestService, keychainService: KeychainService) {
+    init(networkService: TSNetworkRequestService) {
         self.networkService = networkService
-        self.keychainService = keychainService
     }
     
     func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
@@ -27,6 +25,7 @@ struct TSRemoteUserAuthService: TSUserAuthService {
         return try await networkService.sendRequest(request: request, responseType: UserPrivateResponse.self)
     }
     
+    // TODO: This endpoint should provide us with the token and current user information
     func login(requestBody: UserLoginRequest) async throws -> TokenResponse {
         guard let endpoint = URL(string: "http://127.0.0.1:8000/api/users/token") else {
             throw APIError.invalidURL
@@ -50,10 +49,6 @@ struct TSRemoteUserAuthService: TSUserAuthService {
             
         /// sends the request to FastAPI
         let tokenResponse = try await networkService.sendRequest(request: request, responseType: TokenResponse.self)
-         
-        // TODO: I think this logic can be moved somewhere else maybe the viewModel
-        /// store the token in the keychain
-        keychainService.saveToken(tokenResponse.accessToken)
             
         return tokenResponse
     }

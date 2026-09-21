@@ -14,12 +14,12 @@ class TSLoginViewModel {
     var username: String = ""
     var password: String = ""
     
-    private let userAuthService: TSUserAuthService
     private let appState: TSAppState
+    private let authManager: TSUserAuthManger
         
-    init(appState: TSAppState, userAuthService: TSUserAuthService) {
+    init(appState: TSAppState, authManager: TSUserAuthManger) {
         self.appState = appState
-        self.userAuthService = userAuthService
+        self.authManager = authManager
     }
     
     func login() {
@@ -27,8 +27,7 @@ class TSLoginViewModel {
         
         Task {
             do {
-                let request = UserLoginRequest(username: username, password: password)
-                let _ = try await userAuthService.login(requestBody: request)
+                try await authManager.login(username: username, password: password)
                 
                 appState.hideLoader()
                 appState.setToast(to: .success(message: "Login"))

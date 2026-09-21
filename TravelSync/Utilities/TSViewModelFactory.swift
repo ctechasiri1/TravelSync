@@ -1,5 +1,5 @@
 //
-//  DIContainer.swift
+//  TSViewModelFactory.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 9/7/26.
@@ -13,7 +13,6 @@ import Foundation
 class TSViewModelFactory {
     let appState: TSAppState
 
-    private var services: ServiceContainer { appState.services }
     private var managers: ManagerContainer { appState.managers }
     
     init(appState: TSAppState) {
@@ -21,16 +20,16 @@ class TSViewModelFactory {
     }
     
     func makeLoginViewModel() -> TSLoginViewModel {
-        TSLoginViewModel(appState: appState, userAuthService: services.authService)
+        TSLoginViewModel(appState: appState, authManager: managers.authManager)
     }
     
     func makeSignUpViewModel() -> TSSignUpViewModel {
         TSSignUpViewModel(appState: appState, userAuthService: services.authService)
     }
     
-    func makeTripFeedViewModel() -> TSTripsFeedViewModel {
-        TSTripsFeedViewModel(appState: appState, tripService: services.tripService)
-    }
+//    func makeTripFeedViewModel() -> TSTripsFeedViewModel {
+//        TSTripsFeedViewModel(appState: appState, tripService: services.tripService)
+//    }
     
 //    func makeTripDetailViewModel() -> TripDetailViewModel {
 //        TripDetailViewModel(tripService: services.tripService, loadingManager: managers.loadingManager, weatherKitService: services.weatherKitService)
@@ -40,9 +39,9 @@ class TSViewModelFactory {
 //        PlanNewTripViewModel(tripService: services.tripService, locationSearchManager: managers.locationSearchManager, loadingManager: managers.loadingManager)
 //    }
     
-    func makeUserSessionViewModel() -> UserSessionViewModel {
-        UserSessionViewModel(userService: services.userService)
-    }
+//    func makeUserSessionViewModel() -> UserSessionViewModel {
+//        UserSessionViewModel(userService: services.userService)
+//    }
     
 //    func makeBudgetViewModel() -> BudgetViewModel {
 //        BudgetViewModel(expenseService: services.expenseService, tripService: services.tripService, loadingManager: managers.loadingManager)

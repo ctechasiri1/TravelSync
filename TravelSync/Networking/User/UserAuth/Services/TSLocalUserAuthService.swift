@@ -8,9 +8,9 @@
 import Foundation
 
 struct TSLocalUserAuthService {
-//    func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
-//        
-//    }
+    func signUp(requestBody: UserCreateRequest) async throws -> UserPrivateResponse {
+        UserPrivateResponse.example
+    }
 //    
 //    func login(requestBody: UserLoginRequest) async throws -> TokenResponse {
 //    

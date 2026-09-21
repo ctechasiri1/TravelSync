@@ -24,11 +24,9 @@ class TSAppState {
     var isNotificationEnabled: Bool = false
     var isDarkModeEnabled: Bool = false
     
-    let services: ServiceContainer
     let managers: ManagerContainer
     
-    init(services: ServiceContainer = ServiceContainer(), managers: ManagerContainer = ManagerContainer()) {
-        self.services = services
+    init(managers: ManagerContainer = ManagerContainer()) {
         self.managers = managers
     }
     

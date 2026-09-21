@@ -17,11 +17,11 @@ class TSSignUpViewModel {
     var password: String = ""
     
     private let appState: TSAppState
-    private let userAuthService: TSUserAuthService
+    private let authManager: TSUserAuthManger
         
-    init(appState: TSAppState, userAuthService: TSUserAuthService) {
+    init(appState: TSAppState, authManager: TSUserAuthManger) {
         self.appState = appState
-        self.userAuthService = userAuthService
+        self.authManager = authManager
     }
     
     func signup() {
@@ -31,8 +31,7 @@ class TSSignUpViewModel {
         
         Task {
             do {
-                let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
-                let _ = try await (Task.sleep(nanoseconds: 500_000_000), userAuthService.signUp(requestBody: request))
+                try await (Task.sleep(nanoseconds: 500_000_000), authManager.signUp(fullName: fullName, username: username, email: email, password: password))
                 
                 appState.setToast(to: .success(message: "Sign Up"))
                 

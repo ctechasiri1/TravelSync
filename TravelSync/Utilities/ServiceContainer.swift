@@ -9,27 +9,17 @@ import MapKit
 import Foundation
 
 final class ServiceContainer {
-    let netowrkService: NetworkRequestService
+    let networkService: TSNetworkRequestService
     let keychainService: KeychainService
     let weatherKitService: WeatherKitService
     
-    let authService: TSUserAuthService
-    let userService: UserServiceProtocol
-    let tripService: TripServiceProtocol
-    let expenseService: ExpenseServiceProtocol
-    
     init(
-        netowrkService: NetworkRequestService = NetworkRequestService(),
+        networkService: TSNetworkRequestService = TSNetworkRequestService(),
         keychainService: KeychainService = KeychainService(),
         weatherKitService: WeatherKitService = WeatherKitService()
     ) {
-        self.netowrkService = netowrkService
+        self.networkService = networkService
         self.keychainService = keychainService
         self.weatherKitService = weatherKitService
-        
-        self.authService = TSRemoteUserAuthService(networkService: netowrkService, keychainService: keychainService)
-        self.userService = UserService(networkService: netowrkService, keychainService: keychainService)
-        self.tripService = TripService(networkService: netowrkService, keychainService: keychainService)
-        self.expenseService = ExpenseService(networkService: netowrkService, keychainService: keychainService)
     }
 }

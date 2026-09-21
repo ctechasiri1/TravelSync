@@ -14,7 +14,7 @@ struct UserMockService: UserServiceProtocol {
             username: "Ctechasiri",
             fullName: "Chiraphat Techasiri",
             email: "ctechasiri@gmail.com",
-            imagePath: "http://127.0.0.1:8000/static/profile_image/default.pgn"
+            profileImageURL: "http://127.0.0.1:8000/static/profile_image/default.pgn"
         )
     }
 }
