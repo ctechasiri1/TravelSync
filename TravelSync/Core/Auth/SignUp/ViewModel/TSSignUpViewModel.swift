@@ -16,34 +16,35 @@ class TSSignUpViewModel {
     var email: String = ""
     var password: String = ""
     
-    private let appState: TSAppState
-    private let userAuthService: TSUserAuthService
+    private let overlayState: TSOverlayState
+    private let authState: TSAuthState
+    private let authManager: TSUserAuthManger
         
-    init(appState: TSAppState, userAuthService: TSUserAuthService) {
-        self.appState = appState
-        self.userAuthService = userAuthService
+    init(overlayState: TSOverlayState, authState: TSAuthState, authManager: TSUserAuthManger) {
+        self.overlayState = overlayState
+        self.authState = authState
+        self.authManager = authManager
     }
     
     func signup() {
-        defer { appState.hideLoader() }
+        defer { overlayState.hideLoader() }
         
-        appState.showLoader()
+        overlayState.showLoader()
         
         Task {
             do {
-                let request = UserCreateRequest(username: username, fullName: fullName, email: email, password: password)
-                let _ = try await (Task.sleep(nanoseconds: 500_000_000), userAuthService.signUp(requestBody: request))
+                try await (Task.sleep(nanoseconds: 500_000_000), authManager.signUp(fullName: fullName, username: username, email: email, password: password))
                 
-                appState.setToast(to: .success(message: "Sign Up"))
+                overlayState.setToast(to: .success(message: "Sign Up"))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.appState.navigate(to: .login)
+                    self.authState.navigate(to: .login)
                 }
             } catch let error as APIError {
-                appState.setToast(to: .failure(message: error.errorDescription))
+                overlayState.setToast(to: .failure(message: error.errorDescription))
             } catch {
                 // TODO: there is a better way to handle this maybe just a default in the error options or localized string
-                appState.setToast(to: .failure(message: "There was an unexpected error"))
+                overlayState.setToast(to: .failure(message: "There was an unexpected error"))
             }
         }
     }

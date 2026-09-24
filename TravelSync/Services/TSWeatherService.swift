@@ -1,5 +1,5 @@
 //
-//  WeatherManager.swift
+//  TSWeatherManager.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 5/22/26.
@@ -9,7 +9,7 @@ import MapKit
 import Observation
 import WeatherKit
 
-struct WeatherKitService {
+struct TSWeatherKitService {
     private let service = WeatherService.shared
     
     func fetch(for location: CLLocation) async throws -> (String, String) {

@@ -20,7 +20,7 @@ struct TSLoader: ViewModifier {
                 
             if isLoading {
                     ZStack {
-                        BackdropView()
+                        TSBackdropView()
                         
                         LottieView(animation: .named("travelsync-loading"))
                             .playing(loopMode: .loop)

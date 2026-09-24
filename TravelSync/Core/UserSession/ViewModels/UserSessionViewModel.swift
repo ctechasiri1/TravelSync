@@ -22,7 +22,7 @@ class UserSessionViewModel {
     var darkModeIsOn: Bool = false
     
     var privacyIsOn: Bool = false
-    var currentUser: User = User.example
+    var currentUser: User = User.mock
     
     private let userService: UserServiceProtocol
     
@@ -38,7 +38,7 @@ class UserSessionViewModel {
                 username: user.username,
                 fullName: user.fullName,
                 email: user.email,
-                profileImage: user.imagePath
+                profileImage: user.profileImageURL
             )
         } catch let error as APIError {
             print("There was a network error: \(error).")

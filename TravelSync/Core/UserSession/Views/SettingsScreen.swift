@@ -129,10 +129,10 @@ private struct SupportOptions: View {
 #Preview {
     NavigationStack {
         SettingsScreen(
-            user: User.example,
+            user: User.mock,
             viewModel: UserSessionViewModel(
                 userService: UserService(
-                    networkService: NetworkRequestService(),
+                    networkService: TSNetworkRequestService(),
                     keychainService: KeychainService()
                 )
             )

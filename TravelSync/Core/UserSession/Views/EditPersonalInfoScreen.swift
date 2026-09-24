@@ -57,6 +57,6 @@ struct EditPersonalInfoScreen: View {
 }
 
 #Preview {
-    EditPersonalInfoScreen(user: User.example, viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+    EditPersonalInfoScreen(user: User.mock, viewModel: UserSessionViewModel(userService: UserService(networkService: TSNetworkRequestService(), keychainService: KeychainService())))
         .environment(TSAppState())
 }

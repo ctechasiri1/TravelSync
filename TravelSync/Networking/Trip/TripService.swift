@@ -8,11 +8,11 @@
 import Foundation
 
 actor TripService: TripServiceProtocol {
-    private let networkService: NetworkRequestService
+    private let networkService: TSNetworkRequestService
     private let keychainService: KeychainService
     private var activeTask: Task<[TripResponse], Error>?
     
-    init(networkService: NetworkRequestService, keychainService: KeychainService) {
+    init(networkService: TSNetworkRequestService, keychainService: KeychainService) {
         self.networkService = networkService
         self.keychainService = keychainService
     }

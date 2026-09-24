@@ -1,5 +1,5 @@
 //
-//  KeychainService.swift
+//  TSKeychainService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/23/26.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class KeychainService: Sendable {
+struct TSKeychainService: Sendable {
     // THE ID: These two strings combine to make the unique identifier for the token
     private let service = "com.travelsync.token" /// 'folder'
     private let account = "authToken" /// 'file name'
     
     // MARK: Save Token
-    nonisolated func saveToken(_ token: String) {
+    func saveToken(_ token: String) {
         /// 1). conver the token string into UTF-8 bytes
         let tokenData = Data(token.utf8)
         
@@ -41,7 +41,7 @@ final class KeychainService: Sendable {
     }
     
     // MARK: Get Token
-    nonisolated func getToken() -> String? {
+    func getToken() -> String? {
         /// 1). the dictionary is 'Instruction Manual' for what we want to hand to the framework
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
@@ -68,7 +68,7 @@ final class KeychainService: Sendable {
         return nil
     }
     
-    nonisolated func deleteToken() {
+    func deleteToken() {
         /// 1). the dictionary is 'Instruction Manual' for what we want to hand to the framework
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,

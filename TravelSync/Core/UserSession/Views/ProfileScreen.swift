@@ -252,7 +252,7 @@ private struct FuturePlansOptions: View {
 
 #Preview {
     NavigationStack {
-        ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: NetworkRequestService(), keychainService: KeychainService())))
+        ProfileScreen(viewModel: UserSessionViewModel(userService: UserService(networkService: TSNetworkRequestService(), keychainService: KeychainService())))
     }
     .environment(TSAppState())
 }

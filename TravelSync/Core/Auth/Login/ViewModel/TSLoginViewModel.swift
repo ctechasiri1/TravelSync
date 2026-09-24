@@ -14,33 +14,34 @@ class TSLoginViewModel {
     var username: String = ""
     var password: String = ""
     
-    private let userAuthService: TSUserAuthService
-    private let appState: TSAppState
+    private let overlayState: TSOverlayState
+    private let authState: TSAuthState
+    private let authManager: TSUserAuthManger
         
-    init(appState: TSAppState, userAuthService: TSUserAuthService) {
-        self.appState = appState
-        self.userAuthService = userAuthService
+    init(overlayState: TSOverlayState, authState: TSAuthState, authManager: TSUserAuthManger) {
+        self.overlayState = overlayState
+        self.authState = authState
+        self.authManager = authManager
     }
     
     func login() {
-        appState.showLoader()
+        overlayState.showLoader()
         
         Task {
             do {
-                let request = UserLoginRequest(username: username, password: password)
-                let _ = try await userAuthService.login(requestBody: request)
+                try await authManager.login(username: username, password: password)
                 
-                appState.hideLoader()
-                appState.setToast(to: .success(message: "Login"))
+                overlayState.hideLoader()
+                overlayState.setToast(to: .success(message: "Login"))
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.appState.navigate(to: .home)
+                    self.authState.navigate(to: .home)
                 }
             } catch let error as APIError {
-                appState.setToast(to: .failure(message: error.errorDescription))
+                overlayState.setToast(to: .failure(message: error.errorDescription))
             } catch {
                 // TODO: there is a better way to handle this maybe just a default in the error options or localized string
-                appState.setToast(to: .failure(message: "There was an unexpected error"))
+                overlayState.setToast(to: .failure(message: "There was an unexpected error"))
             }
         }
     }
