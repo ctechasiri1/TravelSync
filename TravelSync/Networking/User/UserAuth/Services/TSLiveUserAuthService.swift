@@ -1,5 +1,5 @@
 //
-//  TSRemoteUserAuthService.swift
+//  TSLiveUserAuthService.swift
 //  TravelSync
 //
 //  Created by Chiraphat Techasiri on 3/24/26.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TSRemoteUserAuthService: TSUserAuthService {
+struct TSLiveUserAuthService: TSUserAuthService {
     private let networkService: TSNetworkRequestService
     
     init(networkService: TSNetworkRequestService) {

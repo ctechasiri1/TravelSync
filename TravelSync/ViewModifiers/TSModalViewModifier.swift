@@ -54,7 +54,7 @@ struct TSModal: ViewModifier {
             
             if isPresented {
                 ZStack {
-                    BackdropView {
+                    TSBackdropView {
                         dismissModal()
                     }
                     

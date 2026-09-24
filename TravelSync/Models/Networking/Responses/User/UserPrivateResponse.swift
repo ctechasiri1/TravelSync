@@ -22,13 +22,13 @@ struct UserPrivateResponse: Decodable, Sendable {
         case profileImageURL = "profile_image_url"
     }
     
-    static var example: UserPrivateResponse {
-        return User(
+    static var mock: UserPrivateResponse {
+        UserPrivateResponse(
             id: 1,
-            username: "ctechasiri",
+            username:  "ctechasiri",
             fullName: "Chiraphat Techasiri",
             email: "ctechasiri@gmail.com",
-            profileImage: ""
+            profileImageURL: "https://picsum.photos/200/300"
         )
     }
     

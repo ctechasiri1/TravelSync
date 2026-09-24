@@ -12,9 +12,9 @@ import Foundation
 @Observable
 class TSUserAuthManger {
     private let service: TSUserAuthService
-    private let keychainService: KeychainService
+    private let keychainService: TSKeychainService
     
-    init(service: TSUserAuthService, keychainService: KeychainService) {
+    init(service: TSUserAuthService, keychainService: TSKeychainService) {
         self.service = service
         self.keychainService = keychainService
     }

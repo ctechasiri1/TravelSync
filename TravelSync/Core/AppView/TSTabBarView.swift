@@ -15,10 +15,10 @@ struct TSTabBarView: View {
     var body: some View {
         TabView {
             NavigationStack {
-                TSTripsFeedView(viewModel: viewModelFactory.makeTripFeedViewModel())
-                    .onAppear {
-                        
-                    }
+//                TSTripsFeedView(viewModel: viewModelFactory.makeTripFeedViewModel())
+//                    .onAppear {
+//                        
+//                    }
             }
             .tabItem {
                 Label(L10n.TSTabBarView.home, systemImage: TSSystemImageName.houseFill)
@@ -40,8 +40,8 @@ struct TSTabBarView: View {
             }
             
             NavigationStack {
-                ProfileScreen(viewModel: viewModelFactory.makeUserSessionViewModel())
-                    .navigationTitle(L10n.TSTabBarView.profile)
+//                ProfileScreen(viewModel: viewModelFactory.makeUserSessionViewModel())
+//                    .navigationTitle(L10n.TSTabBarView.profile)
             }
             .tabItem {
                 Label(L10n.TSTabBarView.profile, systemImage: TSSystemImageName.personFill)

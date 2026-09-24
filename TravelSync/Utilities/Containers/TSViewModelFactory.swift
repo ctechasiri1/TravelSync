@@ -19,13 +19,13 @@ class TSViewModelFactory {
         self.appState = appState
     }
     
-    func makeLoginViewModel() -> TSLoginViewModel {
-        TSLoginViewModel(appState: appState, authManager: managers.authManager)
-    }
-    
-    func makeSignUpViewModel() -> TSSignUpViewModel {
-        TSSignUpViewModel(appState: appState, userAuthService: services.authService)
-    }
+//    func makeLoginViewModel() -> TSLoginViewModel {
+//        TSLoginViewModel(appState: appState, authManager: managers.authManager)
+//    }
+//    
+//    func makeSignUpViewModel() -> TSSignUpViewModel {
+//        TSSignUpViewModel(appState: appState, authManager: managers.authManager)
+//    }
     
 //    func makeTripFeedViewModel() -> TSTripsFeedViewModel {
 //        TSTripsFeedViewModel(appState: appState, tripService: services.tripService)

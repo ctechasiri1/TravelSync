@@ -22,7 +22,7 @@ class UserSessionViewModel {
     var darkModeIsOn: Bool = false
     
     var privacyIsOn: Bool = false
-    var currentUser: User = User.example
+    var currentUser: User = User.mock
     
     private let userService: UserServiceProtocol
     
