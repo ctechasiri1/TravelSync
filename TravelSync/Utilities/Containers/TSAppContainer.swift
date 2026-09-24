@@ -12,11 +12,11 @@ struct TSAppContainer {
     
     let authContainer: TSAuthContainer
     
-    private let overlayState: TSOverlayState = TSOverlayState()
-    private let authState: TSAuthState = TSAuthState()
-    private let appConfigState: TSAppConfigState = TSAppConfigState()
+    let overlayState: TSOverlayState = TSOverlayState()
+    let authState: TSAuthState = TSAuthState()
+    let appConfigState: TSAppConfigState = TSAppConfigState()
     
-    private let managerContainer: TSManagerContainer
+    let managerContainer: TSManagerContainer
     
     init(services: TSServiceContainer) {
         self.managerContainer = TSManagerContainer(services: services)

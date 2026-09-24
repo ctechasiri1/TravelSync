@@ -8,44 +8,41 @@
 import SwiftUI
 
 struct TSAppStateView: View {
-    @Environment(TSAppState.self) private var appState
-    @Environment(TSViewModelFactory.self) private var viewModelFactory
+    @Environment(TSAuthState.self) private var authState
+    @Environment(TSOverlayState.self) private var overlayState
     
     var body: some View {
         Group {
-            switch appState.currentAuthScreen {
+            switch authState.currentAuthScreen {
             case .loading:
                 LoadingView()
                     .transition(.blurReplace)
             case .signUp:
                 TSSignUpView(viewModel: viewModelFactory.makeSignUpViewModel())
-                    .transition(.move(edge: appState.prevAuthScreen == .login ? .leading : .trailing))
+                    .transition(.move(edge: authState.prevAuthScreen == .login ? .leading : .trailing))
             case .login:
                 TSLoginView(viewModel: viewModelFactory.makeLoginViewModel())
-                    .transition(.move(edge: appState.prevAuthScreen == .loading ? .leading : (appState.hasBooted ? .leading : .trailing)))
+                    .transition(.move(edge: authState.prevAuthScreen == .loading ? .leading : (authState.hasBooted ? .leading : .trailing)))
                     .onAppear {
-                        appState.setHasBooted(to: true)
+                        authState.setHasBooted(to: true)
                     }
             case .home:
                 TSTabBarView()
                     .transition(.move(edge: .trailing))
             }
         }
-        .animation(.smooth, value: appState.currentAuthScreen)
+        .animation(.smooth, value: authState.currentAuthScreen)
         .showToast(for:
                     Binding(
-                        get: { appState.toastOption },
-                        set: { _ in appState.hideToast() }
+                        get: { overlayState.toastOption },
+                        set: { _ in overlayState.hideToast() }
                     )
         )
-        .showLoading(for: appState.isLoading)
+        .showLoading(for: overlayState.isLoading)
     }
 }
 
 #Preview {
-    let appState: TSAppState = TSAppState()
-    let viewModelFactory: TSViewModelFactory = TSViewModelFactory(appState: appState)
-    
     TSAppStateView()
         .environment(appState)
         .environment(viewModelFactory)

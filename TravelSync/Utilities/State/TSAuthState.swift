@@ -14,6 +14,7 @@ import Foundation
 final class TSAuthState {
     private(set) var currentAuthScreen: AuthState = .loading
     private(set) var prevAuthScreen: AuthState?
+    private(set) var hasBooted: Bool = false
     
     func setAuthScreen(to screen: AuthState) {
         currentAuthScreen = screen
@@ -25,5 +26,9 @@ final class TSAuthState {
     
     func navigate(to flow: AuthState) {
         currentAuthScreen = flow
+    }
+    
+    func setHasBooted(to state: Bool) {
+        hasBooted = state
     }
 }

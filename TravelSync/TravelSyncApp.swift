@@ -10,35 +10,20 @@ import UIKit
 
 @main
 struct TravelSyncApp: App {
-    
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
+    @State private var container = TSAppContainer(
+        services: ProcessInfo.processInfo.arguments.contains("-mock") ? .mock() : .live()
+    )
     
     var body: some Scene {
         WindowGroup {
             TSAppStateView()
-                .environment(delegate.dependencies.appState)
-                .environment(delegate.dependencies.viewModelFactory)
+                .environment(container.authState)
+                .environment(container.overlayState)
         }
     }
 }
 
-class AppDelegate: NSObject, UIApplicationDelegate {
-    var dependencies: Dependencies!
-    
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
-        dependencies = Dependencies()
-        
-        return true
-    }
-}
-
-@MainActor
-struct Dependencies {
-    var viewModelFactory: TSViewModelFactory
-    var appState: TSAppState
-    
-    init() {
-        self.appState = TSAppState()
-        self.viewModelFactory = TSViewModelFactory(appState: appState)
-    }
+extension EnvironmentValues {
+    @Entry var authContainer: TSAuthContainer? = nil
 }
